@@ -1,0 +1,77 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
+	<!--Main Window Left Menu-->
+	<v:String x:Key="ListViewItemFileConverter">Файлдық конвертер</v:String>
+	<v:String x:Key="ListViewItemTextConverter">Мәтіндік конвертер</v:String>
+	<v:String x:Key="ListViewItemWords">Сөздер</v:String>
+	<v:String x:Key="ListViewItemSymbols">Таңбалар</v:String>
+	<v:String x:Key="ListViewItemSettings">Қолданбалар</v:String>
+	<v:String x:Key="ListViewItemDatabase">Деректер базасы</v:String>
+	<v:String x:Key="ListViewItemAbout">Бағдарлама туралы</v:String>
+
+	<!--Main Window Right Menu-->
+	<v:String x:Key="TextBlockUser">Қолданушы</v:String>
+	<v:String x:Key="ButtonSignIn">Кіру</v:String>
+	<v:String x:Key="ButtonSignOut">Шығу</v:String>
+	<v:String x:Key="LabelAuthorization">Авторизациялау</v:String>
+
+	<!--Page File Converter-->
+	<v:String x:Key="ButtonSelectFile">Файлды таңдау</v:String>
+	<v:String x:Key="ButtonSelectFolder">Қалтаны таңдау</v:String>
+	<v:String x:Key="TextBlockDocuments">Құжаттар</v:String>
+	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Ерекше сөздер тізбегін аудару</v:String>
+	<v:String x:Key="TextBlockCharacterTransliteration">Таңба бойынша аудару</v:String>
+	<v:String x:Key="FileNameCopy">Көшірме</v:String>
+	<v:String x:Key="TextBlockCompleted">Аяқталды</v:String>
+
+	<!--Page Text Text-->
+	<v:String x:Key="ButtonClear">Тазалау</v:String>
+	<v:String x:Key="ButtonConvert">Конвертациялау</v:String>
+	<v:String x:Key="ButtonToCopy">Көшіру</v:String>
+	<v:String x:Key="ToggleButtonRealTimeTransliteration">Нақты уақыт кезінде  аудару</v:String>
+
+	<!--Page Settings-->
+	<v:String x:Key="TextBlockDocumentAutoSave">Құжаттың түпнұсқасын автосақтау</v:String>
+
+	<!--Page DatabaseUpdate-->
+	<v:String x:Key="TextBlockDatabase">Дерекқор</v:String>
+	<v:String x:Key="TextBlockCharacterLoading">Таңбаларды жүктеу</v:String>
+	<v:String x:Key="TextBlockLoadingExceptions">Ерекше сөздерді жүктеу</v:String>
+	<v:String x:Key="TextBlockDatabaseSize">Деректер базасының көлемі</v:String>
+	<v:String x:Key="TextBlockAmountOfCharacters">Таңбалар саны</v:String>
+	<v:String x:Key="TextBlockAmountOfWords">Сөздер саны</v:String>
+	<v:String x:Key="TextBlockLastUpdate">Соңғы жаңарту</v:String>
+	<v:String x:Key="ButtonUpdate">Жаңарту</v:String>
+	<v:String x:Key="FileMb">МБ</v:String>
+	<v:String x:Key="FileKb">КБ</v:String>
+
+	<!--Window About-->
+	<v:String x:Key="TextBlockDescription">MS Word файлдарын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама</v:String>
+	<v:String x:Key="TextBlockVersion">0.1-Нұсқа</v:String>
+	<v:String x:Key="ButtonLicense">Лицензия</v:String>
+	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт уақытша жұмыс істемейді]</v:String>
+
+	<!--Snackbar-->
+	<v:String x:Key="SnackBarAuthorization">Авторизациялау</v:String>
+	<v:String x:Key="SnackBarRecordSuccessfullyAdded">Жазбаңыз сәтті орындалды</v:String>
+	<v:String x:Key="SnackBarServerSideError">Қате сервер тарапынан</v:String>
+	<v:String x:Key="SnackBarTheWordIsAlreadyInTheDatabase">Бұл сөз деректер базасында бар</v:String>
+	<v:String x:Key="SnackBarError">Қате</v:String>
+	<v:String x:Key="SnackBarAddingEntryCanceled">Жазбаны енгізу тоқтатылды</v:String>
+	<v:String x:Key="SnackBarEditingEntryCanceled">Өңдеу тоқтатылды</v:String>
+	<v:String x:Key="SnackBarWordDeleted">Сөз жойылды</v:String>
+	<v:String x:Key="SnackBarDeleteCanceled">Жойылу тоқтатылды</v:String>
+	<v:String x:Key="SnackBarRecordEdited">Жазба өзгертілді</v:String>
+	<v:String x:Key="SnackBarBadInternetConnection">Желіге қосылу төмен дәрежеде</v:String>
+	<v:String x:Key="SnackBarUpdateCompleted">Жаңарту аяқталды</v:String>
+	<v:String x:Key="SnackBarWelcome">Хош келдіңіз</v:String>
+	<v:String x:Key="SnackBarWrongLoginOrPassword">Логин немесе құпиясөз теріс</v:String>
+	<v:String x:Key="SnackBarLocalDatabaseNotFound">Жергілікті деректер базасы табылмады</v:String>
+	<v:String x:Key="SnackBarNotAllowedLength">Жол берілмеуі тиіс өлшем</v:String>
+
+	<!--DataGridTextColumn Header-->
+	<v:String x:Key="DataGridTextColumnId">Ид</v:String>
+	<v:String x:Key="DataGridTextColumnCyryllic">Кириллица</v:String>
+	<v:String x:Key="DataGridTextColumnLatin">Латиница</v:String>
+</ResourceDictionary>

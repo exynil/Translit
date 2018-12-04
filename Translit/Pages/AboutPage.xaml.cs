@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using Frame = System.Windows.Controls.Frame;
+using Label = System.Windows.Controls.Label;
 using Page = System.Windows.Controls.Page;
+using Point = System.Windows.Point;
 
 namespace Translit.Pages
 {
@@ -122,7 +126,7 @@ namespace Translit.Pages
 				{
 					text[j] = symbols[random.Next(0, symbols.Length)];
 				}
-				TextBlockOsmium.Dispatcher.Invoke(() => TextBlockOsmium.Text = text.ToString(), DispatcherPriority.Background);
+				TextBlockProgramName.Dispatcher.Invoke(() => TextBlockProgramName.Text = text.ToString(), DispatcherPriority.Background);
 
 				count++;
 				if (count == part)

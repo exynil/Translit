@@ -92,38 +92,35 @@ namespace Translit.Pages
 
 		// Транслитерация
 		private void Translit(string filename)
-        {
+		{
+			// Копируем путь нашего файла
+			string copyFileName = filename;
 			// Если автосохранение включено, выполняем резервную копию
 	        if (Settings.Default.AutoSave)
 	        {
 		        string extension = "";
-				// Копируем путь нашего файла
-		        string backupFilename = filename;
 				// Перебираем пусть с конца
-		        for (int i = backupFilename.Length - 1; i > 0; i--)
+		        for (int i = copyFileName.Length - 1; i > 0; i--)
 		        {
 					// В extension прибавлям элемент строки под текущим индексом
-			        extension = backupFilename[i] + extension;
+			        extension = copyFileName[i] + extension;
 					// Если в переборе встречается точка, выполняем следующие действия
-			        if (backupFilename[i] == '.')
+			        if (copyFileName[i] == '.')
 			        {
 						// Извлекаем подстроку пол до точки
-				        backupFilename = backupFilename.Substring(0, i);
+				        copyFileName = copyFileName.Substring(0, i);
 						// Добавляем уникальное имя и расширение файла
-				        backupFilename += " (" + System.Windows.Application.Current.Resources["FileNameCopy"] + " " + DateTime.Now.ToFileTime() + ")" + extension;
+				        copyFileName += " (" + System.Windows.Application.Current.Resources["FileNameLatin"] + ")" + extension;
 						break;
 			        }
 		        }
 				// Копируем файл
-				File.Copy(filename, backupFilename);
+				File.Copy(filename, copyFileName, true);
 	        }
 
-	        MicrosoftWord.Application app = new MicrosoftWord.Application();
-            Object fileName = filename;
-	        Object missing = Type.Missing;
-			app.Documents.Open(ref fileName);
-	        MicrosoftWord.Find find = app.Selection.Find;
-
+			MicrosoftWord.Application app = new MicrosoftWord.Application();
+			app.Documents.Open(copyFileName);
+			MicrosoftWord.Find find = app.Selection.Find;
 
 			using (LiteDatabase db = new LiteDatabase(ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString))
 	        {
@@ -131,6 +128,7 @@ namespace Translit.Pages
 
 		        ProgressBarExceptions.Value = 0;
 		        ProgressBarExceptions.Visibility = Visibility.Visible;
+		        TextBlockExceptions.Visibility = Visibility.Visible;
 				
 				for (int i = 0; i < words.Length; i++)
 				{
@@ -153,18 +151,19 @@ namespace Translit.Pages
 							cyryllic = cyryllic.First().ToString().ToUpper() + cyryllic.Substring(1);
 							latin = latin.First().ToString().ToUpper() + latin.Substring(1);
 						}
+
 						find.Text = cyryllic;
 						find.Replacement.Text = latin;
 						find.Execute(FindText: Type.Missing,
 							MatchCase: true,
 							MatchWholeWord: false,
 							MatchWildcards: false,
-							MatchSoundsLike: missing,
+							MatchSoundsLike: Type.Missing,
 							MatchAllWordForms: false,
 							Forward: true,
 							Wrap: MicrosoftWord.WdFindWrap.wdFindContinue,
 							Format: false,
-							ReplaceWith: missing,
+							ReplaceWith: Type.Missing,
 							Replace: MicrosoftWord.WdReplace.wdReplaceAll);
 					}
 					
@@ -180,6 +179,7 @@ namespace Translit.Pages
 
 				ProgressBarDocument.Value = 0;
 				ProgressBarDocument.Visibility = Visibility.Visible;
+		        TextBlockDocument.Visibility = Visibility.Visible;
 
 				for (int i = 0; i < symbols.Length; i++)
 				{
@@ -189,21 +189,22 @@ namespace Translit.Pages
 						MatchCase: true,
 						MatchWholeWord: false,
 						MatchWildcards: false,
-						MatchSoundsLike: missing,
+						MatchSoundsLike: Type.Missing,
 						MatchAllWordForms: false,
 						Forward: true,
 						Wrap: MicrosoftWord.WdFindWrap.wdFindContinue,
 						Format: false,
-						ReplaceWith: missing,
+						ReplaceWith: Type.Missing,
 						Replace: MicrosoftWord.WdReplace.wdReplaceAll);
+
 					long percent = i * 100 / (symbols.Length - 1);
 					TextBlockDocument.Text = System.Windows.Application.Current.Resources["TextBlockCharacterTransliteration"] + ": " + percent + "%";
 					ProgressBarDocument.Dispatcher.Invoke(() => ProgressBarDocument.Value = percent, DispatcherPriority.Background);
 				}
 			}
 			app.ActiveDocument.Save();
-            app.ActiveDocument.Close();
-            app.Quit();
-        }
-    }
+			app.ActiveDocument.Close();
+			app.Quit();
+		}
+	}
 }

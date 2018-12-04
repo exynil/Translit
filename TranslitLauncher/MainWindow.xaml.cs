@@ -3,7 +3,9 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,47 +19,46 @@ namespace TranslitLauncher
 	public partial class MainWindow
 	{
 		// Ссылка на api
-		private readonly string _programApi;
+		private readonly string _api;
 		// Версия программы
-		private string _programTagName;
+		private string _tagName;
 		// Ссылка на скачивание программы
-		private Uri _programUrl;
+		private Uri _url;
 
-		// Название программы
-		private readonly string _programFileName;
 		// Название загружаемого файла
-		private readonly string _downloadFileName;
+		private readonly string _downloadZipArchiveName;
 
 		public MainWindow()
 		{
 			InitializeComponent();
-			_programFileName = "Translit.exe";
-			_downloadFileName = "Translit.download";
-			_programApi = @"https://api.github.com/repos/OsmiumKZ/Translit/releases/latest";
+			_downloadZipArchiveName = "Translit.zip";
+			_api = @"https://api.github.com/repos/OsmiumKZ/Translit/releases/latest";
 		}
 
 		private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
 		{
+			Settings.Default.Version = "v0.0";
 			//Получение данных от api
 			if (DownloadData())
 			{
 				// Проверка обновления
 				if (CheckUpdate())
 				{
-					TextBlockMessage.Text = Application.Current.Resources["TextBlockNewVersionIsAvailableUpdateIsDownloading"].ToString();
+					StackPanelDownloadInfo.Visibility = Visibility.Visible;
+					TextBlockDownloadMessage.Text = Application.Current.Resources["TextBlockNewVersionIsAvailableUpdateIsDownloading"].ToString();
 					ProgressBarDownload.Visibility = Visibility.Visible;
 					DownloadUpdate();
 				}
 				else
 				{
-					TextBlockMessage.Text = Application.Current.Resources["TextBlockRunTheProgram"].ToString();
+					TextBlockInfo.Text = Application.Current.Resources["TextBlockRunTheProgram"].ToString();
 					RunProgram();
 					//Close();
 				}
 			}
 			else
 			{
-				TextBlockMessage.Text = Application.Current.Resources["TextBlockRunTheProgram"].ToString();
+				TextBlockInfo.Text = Application.Current.Resources["TextBlockRunTheProgram"].ToString();
 				RunProgram();
 				//Close();
 			}
@@ -69,11 +70,11 @@ namespace TranslitLauncher
 			try
 			{
 				// Пытаемся запустить программу
-				Process.Start(_programFileName, "Cy9I*@dw0Zh_fj_KOPbI@QBS6Perfk%k#)5kGK0@XaQCY)@sj2Tex(Rh7bJK");
+				Process.Start(@".\Translit\Translit.exe", "Cy9I*@dw0Zh_fj_KOPbI@QBS6Perfk%k#)5kGK0@XaQCY)@sj2Tex(Rh7bJK");
 			}
 			catch (Exception ex)
 			{
-				TextBlockMessage.Text = Application.Current.Resources["TextBlockAnErrorHasOccurred"] + ex.Message;
+				TextBlockInfo.Text = Application.Current.Resources["TextBlockAnErrorHasOccurred"] + ex.Message;
 			}
 		}
 
@@ -87,13 +88,13 @@ namespace TranslitLauncher
 
 			try
 			{
-				Stream stream = client.OpenRead(_programApi);
+				Stream stream = client.OpenRead(_api);
 				StreamReader streamReader = new StreamReader(stream ?? throw new InvalidOperationException());
 
 				var data = JsonConvert.DeserializeObject<GithubApi>(streamReader.ReadToEnd());
 
-				_programTagName = data.TagName;
-				_programUrl = data.Assets[0].BrowserDownloadUrl;
+				_tagName = data.TagName;
+				_url = data.Assets[0].BrowserDownloadUrl;
 
 				stream.Close();
 				streamReader.Close();
@@ -109,7 +110,7 @@ namespace TranslitLauncher
 		private bool CheckUpdate()
 		{
 			int currentVersion = int.Parse(Settings.Default.Version.Substring(1).Replace(".", ""));
-			int newVersion = int.Parse(_programTagName.Substring(1).Replace(".", ""));
+			int newVersion = int.Parse(_tagName.Substring(1).Replace(".", ""));
 
 			if (currentVersion < newVersion)
 			{
@@ -126,22 +127,32 @@ namespace TranslitLauncher
 				WebClient webClient = new WebClient();
 				webClient.DownloadFileCompleted += Completed;
 				webClient.DownloadProgressChanged += ProgressChanged;
-				webClient.DownloadFileAsync(_programUrl, _downloadFileName);
+				webClient.DownloadFileAsync(_url, _downloadZipArchiveName);
 			}
 			catch (Exception e)
 			{
-				Error(e.Message + " " + _downloadFileName);
+				Error(e.Message + " " + _downloadZipArchiveName);
 			}
 		}
 
 		private void Completed(object sender, AsyncCompletedEventArgs e)
 		{
-			// Заменяем новый скачанный файл на старый
-			File.Replace(_downloadFileName, _programFileName, null);
+			StackPanelInstallInfo.Visibility = Visibility.Visible;
+			TextBlockInstallMessage.Text = Application.Current.Resources["TextBlockProgramInstallation"].ToString();
+			// Удаляем старую версию
+			Directory.Delete("Translit", true);
+			// Распаковываем скачанный архив
+			using (ZipArchive archive = ZipFile.OpenRead("Translit.zip"))
+			{
+				archive.ExtractToDirectory(@".\");
+			}
+			File.Delete("Translit.zip");
+			StackPanelDownloadInfo.Visibility = Visibility.Hidden;
+			StackPanelInstallInfo.Visibility = Visibility.Hidden;
 			// Выводим уведомление о запуске программы
-			TextBlockMessage.Text = Application.Current.Resources["TextBlockRunTheProgram"].ToString();
+			TextBlockInfo.Text = Application.Current.Resources["TextBlockRunTheProgram"].ToString();
 			// Меняем версию программы в настрйоках
-			Settings.Default.Version = _programTagName;
+			Settings.Default.Version = _tagName;
 			// Запускаем программу
 			RunProgram();
 			// Закрываем лаунчер
@@ -159,7 +170,7 @@ namespace TranslitLauncher
 		private void Error(string message)
 		{
 			// Выводим информацию об ошибке
-			TextBlockErrorMessage.Text = message;
+			TextBlockInfo.Text = message;
 		}
 
 		// Закрытие лаунчера

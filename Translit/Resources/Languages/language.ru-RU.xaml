@@ -22,7 +22,7 @@
 	<v:String x:Key="TextBlockDocuments">Документы</v:String>
 	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Транслитерация слов исключений</v:String>
 	<v:String x:Key="TextBlockCharacterTransliteration">Посимвольная транслитерация</v:String>
-	<v:String x:Key="FileNameCopy">Копия</v:String>
+	<v:String x:Key="FileNameLatin">латиница</v:String>
 	<v:String x:Key="TextBlockCompleted">Завершено</v:String>
 
 	<!--Page Text Text-->
@@ -48,7 +48,7 @@
 
 	<!--Page About-->
 	<v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации файлов MS Word с кириллицы на латиницу</v:String>
-	<v:String x:Key="TextBlockVersion">Версия 0.1</v:String>
+	<v:String x:Key="TextBlockVersion">Версия: 0.1</v:String>
 	<v:String x:Key="ButtonLicense">Лицензия</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт временно не работает]</v:String>
 

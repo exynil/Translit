@@ -25,7 +25,7 @@ namespace TranslitLauncher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("v1.0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("v0.1")]
         public string Version {
             get {
                 return ((string)(this["Version"]));

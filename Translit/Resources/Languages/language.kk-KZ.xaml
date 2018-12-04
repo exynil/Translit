@@ -22,7 +22,7 @@
 	<v:String x:Key="TextBlockDocuments">Құжаттар</v:String>
 	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Ерекше сөздер тізбегін аудару</v:String>
 	<v:String x:Key="TextBlockCharacterTransliteration">Таңба бойынша аудару</v:String>
-	<v:String x:Key="FileNameCopy">Көшірме</v:String>
+	<v:String x:Key="FileNameLatin">латиница</v:String>
 	<v:String x:Key="TextBlockCompleted">Аяқталды</v:String>
 
 	<!--Page Text Text-->
@@ -48,7 +48,7 @@
 
 	<!--Window About-->
 	<v:String x:Key="TextBlockDescription">MS Word файлдарын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама</v:String>
-	<v:String x:Key="TextBlockVersion">0.1-Нұсқа</v:String>
+	<v:String x:Key="TextBlockVersion">Нұсқа: 0.1</v:String>
 	<v:String x:Key="ButtonLicense">Лицензия</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт уақытша жұмыс істемейді]</v:String>
 

@@ -4,4 +4,5 @@
 	<v:String x:Key="TextBlockNewVersionIsAvailableUpdateIsDownloading">Обнаружена новая версия, загрузка обновления...</v:String>
 	<v:String x:Key="TextBlockAnErrorHasOccurred">Произошла ошибка</v:String>
 	<v:String x:Key="TextBlockRunTheProgram">Запуск программы...</v:String>
+	<v:String x:Key="TextBlockProgramInstallation">Установка программы...</v:String>
 </ResourceDictionary>

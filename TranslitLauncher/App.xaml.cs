@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Web.Script.Serialization;
 using System.Windows;
 using Newtonsoft.Json;
 using TranslitLauncher.Properties;
@@ -53,12 +54,10 @@ namespace TranslitLauncher
 
 		private void App_OnStartup(object sender, StartupEventArgs e)
 		{
-			StreamReader streamReader = new StreamReader("General settings.json");
-			var json = streamReader.ReadToEnd();
-			streamReader.Close();
-			var dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-
+			StreamReader streamReader = new StreamReader(@"Translit\External settings.json");
+			var dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(streamReader.ReadToEnd());
 			Language = new CultureInfo(dictionary["language"]);
+			streamReader.Close();
 		}
 	}
 }

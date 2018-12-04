@@ -38,14 +38,14 @@ namespace Translit
 
 		public static CultureInfo Language
 		{
-			get => System.Threading.Thread.CurrentThread.CurrentUICulture;
+			get => Thread.CurrentThread.CurrentUICulture;
 			set
 			{
 				if (value == null) throw new ArgumentNullException(nameof(value));
 				if (value != Thread.CurrentThread.CurrentUICulture)
 				{
 					// 1. Меняем язык приложения:
-					System.Threading.Thread.CurrentThread.CurrentUICulture = value;
+					Thread.CurrentThread.CurrentUICulture = value;
 
 					// 2. Создаём ResourceDictionary для новой культуры
 					ResourceDictionary dict = new ResourceDictionary();
@@ -87,7 +87,7 @@ namespace Translit
 		{
 			Settings.Default.DefaultLanguage = Language;
 			GeneralSettings generalSettings = new GeneralSettings {Language = Language.CompareInfo.Name};
-			File.WriteAllText("General settings.json", JsonConvert.SerializeObject(generalSettings));
+			File.WriteAllText(@".\Translit\External settings.json", JsonConvert.SerializeObject(generalSettings));
 		}
 
 		private void App_OnExit(object sender, ExitEventArgs e)
@@ -103,14 +103,14 @@ namespace Translit
 				Arguments[i] = e.Args[i];
 			}
 
-			//if (Arguments.Length == 0)
-			//{
-			//	Environment.Exit(0);
-			//}
-			//else if (Arguments[0] != "Cy9I*@dw0Zh_fj_KOPbI@QBS6Perfk%k#)5kGK0@XaQCY)@sj2Tex(Rh7bJK")
-			//{
-			//	Environment.Exit(0);
-			//}
+			if (Arguments.Length == 0)
+			{
+				Environment.Exit(0);
+			}
+			else if (Arguments[0] != "Cy9I*@dw0Zh_fj_KOPbI@QBS6Perfk%k#)5kGK0@XaQCY)@sj2Tex(Rh7bJK")
+			{
+				Environment.Exit(0);
+			}
 		}
 	}
 }

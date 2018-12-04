@@ -18,7 +18,7 @@
 	<Grid>
 		<Grid x:Name="Field" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Grid>
 		<StackPanel VerticalAlignment="Center" Margin="10 0" Width="350">
-			<TextBlock x:Name="TextBlockOsmium" HorizontalAlignment="Center" FontSize="60" Foreground="#333" MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown">Translit</TextBlock>
+			<TextBlock x:Name="TextBlockProgramName" HorizontalAlignment="Center" FontSize="60" Foreground="#333" MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown">Translit</TextBlock>
 			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="#333" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5" Text="{DynamicResource TextBlockDescription}"></TextBlock>
 			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" Foreground="#333" TextWrapping="Wrap">
 				<Hyperlink NavigateUri="http://www.osmium.kz" RequestNavigate="Hyperlink_RequestNavigate">

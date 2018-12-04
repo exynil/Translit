@@ -62,7 +62,7 @@ namespace TranslitLauncher.Entity
 		public string Body { get; set; }
 	}
 
-	public partial class Asset
+	public class Asset
 	{
 		[JsonProperty("url")]
 		public Uri Url { get; set; }
@@ -161,7 +161,7 @@ namespace TranslitLauncher.Entity
 		public bool SiteAdmin { get; set; }
 	}
 
-	public partial class Welcome
+	public class Welcome
 	{
 		public static Welcome FromJson(string json) => JsonConvert.DeserializeObject<Welcome>(json, Converter.Settings);
 	}

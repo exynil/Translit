@@ -15,19 +15,24 @@
         BorderThickness="1">
     <Grid Background="#202020">
 		<Grid.RowDefinitions>
+			<RowDefinition Height="40"></RowDefinition>
+			<RowDefinition></RowDefinition>
 			<RowDefinition Height="50"></RowDefinition>
 			<RowDefinition></RowDefinition>
 			<RowDefinition></RowDefinition>
-			<RowDefinition Height="50"></RowDefinition>
 		</Grid.RowDefinitions>
-		<Button x:Name="ButtonCloseWindow" Grid.Row="0" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Width="50" Height="50" Padding="0" Click="ButtonCloseWindow_OnClick">
-			<materialDesign:PackIcon Kind="Close" Width="30" Height="30" Foreground="#404040"></materialDesign:PackIcon>
+		<Button x:Name="ButtonCloseWindow" HorizontalAlignment="Right" Padding="0" Height="40" Width="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#404040" Click="ButtonCloseWindow_OnClick">
+			<materialDesign:PackIcon Kind="Close" Width="40" Height="40"></materialDesign:PackIcon>
 		</Button>
-	    <TextBlock x:Name="TextBlockProgramName" Grid.Row="1" HorizontalAlignment="Center" FontSize="80" Foreground="#00FF54" VerticalAlignment="Center" MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown">Translit</TextBlock>
-		<StackPanel Grid.Row="2">
-			<TextBlock x:Name="TextBlockMessage" HorizontalAlignment="Center" FontSize="14" Margin="5" Foreground="WhiteSmoke"></TextBlock>
-			<ProgressBar x:Name="ProgressBarDownload" Visibility="Hidden" Margin="50 5" Height="2" Minimum="0" Maximum="100" Foreground="#00FF54" Background="#404040" BorderBrush="#404040"></ProgressBar>
+		<TextBlock x:Name="TextBlockProgramName" Grid.Row="1" HorizontalAlignment="Center" FontSize="80" Foreground="#00FF54" VerticalAlignment="Center" MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown">Translit</TextBlock>
+		<TextBlock x:Name="TextBlockInfo" Grid.Row="2" HorizontalAlignment="Center" FontSize="14" Foreground="#909090" VerticalAlignment="Center" MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown"></TextBlock>
+	    <StackPanel x:Name="StackPanelDownloadInfo" Grid.Row="3" Visibility="Hidden">
+			<TextBlock x:Name="TextBlockDownloadMessage" HorizontalAlignment="Center" FontSize="14" Margin="5" Foreground="#909090"></TextBlock>
+			<ProgressBar x:Name="ProgressBarDownload" Margin="50 5" Height="2" Minimum="0" Maximum="100" Foreground="#00FF54" Background="#404040" BorderBrush="#404040"></ProgressBar>
 		</StackPanel>
-		<TextBlock x:Name="TextBlockErrorMessage" Grid.Row="3" HorizontalAlignment="Center" FontSize="14" Foreground="#FF5E49" VerticalAlignment="Center" MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown"></TextBlock>
+		<StackPanel x:Name="StackPanelInstallInfo" Grid.Row="4" Visibility="Hidden">
+			<TextBlock x:Name="TextBlockInstallMessage" HorizontalAlignment="Center" FontSize="14" Margin="5" Foreground="#909090"></TextBlock>
+			<ProgressBar x:Name="ProgressBarInstall" Visibility="Hidden" Margin="50 5" Height="2" Minimum="0" Maximum="100" Foreground="#00FF54" Background="#404040" BorderBrush="#404040" IsIndeterminate="True"></ProgressBar>
+		</StackPanel>
 	</Grid>
 </Window>

@@ -23,13 +23,13 @@
 	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Ерекше сөздер тізбегін аудару</v:String>
 	<v:String x:Key="TextBlockCharacterTransliteration">Таңба бойынша аудару</v:String>
 	<v:String x:Key="FileNameLatin">латиница</v:String>
-	<v:String x:Key="TextBlockCompleted">Аяқталды</v:String>
+	<v:String x:Key="TransliterationCompleted">Транслитерация аяқталды</v:String>
 
 	<!--Page Text Text-->
 	<v:String x:Key="ButtonClear">Тазалау</v:String>
 	<v:String x:Key="ButtonConvert">Конвертациялау</v:String>
 	<v:String x:Key="ButtonToCopy">Көшіру</v:String>
-	<v:String x:Key="ToggleButtonRealTimeTransliteration">Нақты уақыт кезінде  аудару</v:String>
+	<v:String x:Key="ToggleButtonRealTimeTransliteration">Нақты уақыт кезінде аудару</v:String>
 
 	<!--Page Settings-->
 	<v:String x:Key="TextBlockDocumentAutoSave">Құжаттың түпнұсқасын автосақтау</v:String>
@@ -47,7 +47,7 @@
 	<v:String x:Key="FileKb">КБ</v:String>
 
 	<!--Window About-->
-	<v:String x:Key="TextBlockDescription">MS Word файлдарын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама</v:String>
+	<v:String x:Key="TextBlockDescription">Word құжаттарын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама</v:String>
 	<v:String x:Key="TextBlockVersion">Нұсқа: 0.1</v:String>
 	<v:String x:Key="ButtonLicense">Лицензия</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт уақытша жұмыс істемейді]</v:String>

@@ -23,7 +23,7 @@
 	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Транслитерация слов исключений</v:String>
 	<v:String x:Key="TextBlockCharacterTransliteration">Посимвольная транслитерация</v:String>
 	<v:String x:Key="FileNameLatin">латиница</v:String>
-	<v:String x:Key="TextBlockCompleted">Завершено</v:String>
+	<v:String x:Key="TransliterationCompleted">Транслитерация завершена</v:String>
 
 	<!--Page Text Text-->
 	<v:String x:Key="ButtonClear">Очистить</v:String>
@@ -32,7 +32,7 @@
 	<v:String x:Key="ToggleButtonRealTimeTransliteration">Транслитерация в режиме реального времени</v:String>
 
 	<!--Page Settings-->
-	<v:String x:Key="TextBlockDocumentAutoSave">Авто сохранение документа</v:String>
+	<v:String x:Key="TextBlockDocumentAutoSave">Автосохранение документа</v:String>
 
 	<!--Page DatabaseUpdate-->
 	<v:String x:Key="TextBlockDatabase">База данных</v:String>
@@ -47,7 +47,7 @@
 	<v:String x:Key="FileKb">КБ</v:String>
 
 	<!--Page About-->
-	<v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации файлов MS Word с кириллицы на латиницу</v:String>
+	<v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации документов Word с кириллицы на латиницу</v:String>
 	<v:String x:Key="TextBlockVersion">Версия: 0.1</v:String>
 	<v:String x:Key="ButtonLicense">Лицензия</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт временно не работает]</v:String>

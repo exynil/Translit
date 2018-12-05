@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using MicrosoftWord = Microsoft.Office.Interop.Word;
 using System.Windows.Forms;
 using System.IO;
+using System.Windows.Controls;
 using LiteDB;
 using Translit.Entity;
 using Translit.Properties;
@@ -44,7 +45,7 @@ namespace Translit.Pages
 	            ProgressBarDocument.Visibility = Visibility.Hidden;
 	            TextBlockDocument.Visibility = Visibility.Hidden;
 	            TextBlockInfo.Visibility = Visibility.Visible;
-				TextBlockInfo.Text = System.Windows.Application.Current.Resources["TextBlockCompleted"].ToString();
+				TextBlockInfo.SetResourceReference(TextBlock.TextProperty, "TransliterationCompleted");
 			}
 		}
 
@@ -85,8 +86,8 @@ namespace Translit.Pages
 	                ProgressBarDocument.Visibility = Visibility.Hidden;
 	                TextBlockDocument.Visibility = Visibility.Hidden;
 	                TextBlockInfo.Visibility = Visibility.Visible;
-					TextBlockInfo.Text = System.Windows.Application.Current.Resources["TextBlockCompleted"].ToString();
-                }
+	                TextBlockInfo.SetResourceReference(TextBlock.TextProperty, "TransliterationCompleted");
+				}
 			}
         }
 

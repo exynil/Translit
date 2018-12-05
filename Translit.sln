@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translit", "Translit\Translit.csproj", "{4721B7FF-1574-42BA-896F-BDDE5E7292E4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C349C0C1-C81D-4B90-8418-934C43A9AAA5} = {C349C0C1-C81D-4B90-8418-934C43A9AAA5}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslitLauncher", "TranslitLauncher\TranslitLauncher.csproj", "{C349C0C1-C81D-4B90-8418-934C43A9AAA5}"
 EndProject

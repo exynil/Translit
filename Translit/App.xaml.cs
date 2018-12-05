@@ -87,7 +87,7 @@ namespace Translit
 		{
 			Settings.Default.DefaultLanguage = Language;
 			GeneralSettings generalSettings = new GeneralSettings {Language = Language.CompareInfo.Name};
-			File.WriteAllText(@".\Translit\External settings.json", JsonConvert.SerializeObject(generalSettings));
+			File.WriteAllText("External settings.json", JsonConvert.SerializeObject(generalSettings));
 		}
 
 		private void App_OnExit(object sender, ExitEventArgs e)

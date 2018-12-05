@@ -23,7 +23,7 @@
 	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Transliteration of exception words</v:String>
 	<v:String x:Key="TextBlockCharacterTransliteration">Character transliteration</v:String>
 	<v:String x:Key="FileNameLatin">latin</v:String>
-	<v:String x:Key="TextBlockCompleted">Completed</v:String>
+	<v:String x:Key="TransliterationCompleted">Transliteration completed</v:String>
 
 	<!--Page Text Text-->
 	<v:String x:Key="ButtonClear">Clear</v:String>
@@ -47,7 +47,7 @@
 	<v:String x:Key="FileKb">KB</v:String>
 
 	<!--Page About-->
-	<v:String x:Key="TextBlockDescription">Program for automatic translation of MS Word files from cyrillic to latin</v:String>
+	<v:String x:Key="TextBlockDescription">Program for automatic transliteration of Word documents from cyrillic to latin</v:String>
 	<v:String x:Key="TextBlockVersion">Version: 0.1</v:String>
 	<v:String x:Key="ButtonLicense">License</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [the site is temporarily down]</v:String>

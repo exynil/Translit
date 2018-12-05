@@ -75,10 +75,8 @@ namespace Translit
 			if (macAddress == Settings.Default.MacAddress)
 			{
 				_user = new User();
-				// Расшифровываем пользователя
-				Rc4 rc4 = new Rc4(macAddress, Settings.Default.User);
-				// Получаем объект из JSON
-				_user = JsonConvert.DeserializeObject<User>(rc4.Calc());
+				// Получаем объект из расшифрованного JSON
+				_user = JsonConvert.DeserializeObject<User>(Rc4.Calc(macAddress, Settings.Default.User));
 				// Обновляем данные пользователя в редакторах слов и символов
 				_wordsEditorPage.User = _symbolsEditorPage.User = _user;
 			}
@@ -242,10 +240,8 @@ namespace Translit
 					string macAddress = NetworkInterface.GetAllNetworkInterfaces().Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback).Select(nic => nic.GetPhysicalAddress().ToString()).FirstOrDefault();
 					// Переводим нашего пользователя в строку JSON
 					string userJson = JsonConvert.SerializeObject(_user);
-					// Шифруем данные
-					Rc4 rc4 = new Rc4(macAddress, userJson);
 					// Сохраняем зашифрованного пользователя в настройках приложения
-					Settings.Default.User = rc4.Calc();
+					Settings.Default.User = Rc4.Calc(macAddress, userJson);
 					// Сохраняем MAC адресс
 					Settings.Default.MacAddress = macAddress;
 					// Удлаляем логин и пароль из окна авторизации

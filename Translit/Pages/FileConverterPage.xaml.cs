@@ -3,13 +3,13 @@ using System.Configuration;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
-using MicrosoftWord = Microsoft.Office.Interop.Word;
 using System.Windows.Forms;
 using System.IO;
+using System.IO.Compression;
 using System.Windows.Controls;
+using System.Xml.Linq;
 using LiteDB;
 using Translit.Entity;
-using Translit.Properties;
 
 namespace Translit.Pages
 {
@@ -36,9 +36,11 @@ namespace Translit.Pages
 
             if (result == true)
             {
+	            ButtonSelectFile.IsEnabled = false;
+				ButtonSelectFolder.IsEnabled = false;
 	            TextBlockInfo.Visibility = Visibility.Hidden;
 				// Транслитерация выбранного файла
-				Translit(dlg.FileName);
+	            TranslitFile(dlg.FileName);
 				// Скрываем прогресс и показываем информацию
 	            ProgressBarExceptions.Visibility = Visibility.Hidden;
 	            TextBlockExceptions.Visibility = Visibility.Hidden;
@@ -46,6 +48,8 @@ namespace Translit.Pages
 	            TextBlockDocument.Visibility = Visibility.Hidden;
 	            TextBlockInfo.Visibility = Visibility.Visible;
 				TextBlockInfo.SetResourceReference(TextBlock.TextProperty, "TransliterationCompleted");
+	            ButtonSelectFile.IsEnabled = true;
+	            ButtonSelectFolder.IsEnabled = true;
 			}
 		}
 
@@ -76,7 +80,7 @@ namespace Translit.Pages
 		            {
 			            TextBlockDocumetns.Text = System.Windows.Application.Current.Resources["TextBlockDocuments"] +  ": " + (i[0] + 1) + "/" + files.Length;
 			            ProgressBarDocuments.Dispatcher.Invoke(() => ProgressBarDocuments.Value = i[0], DispatcherPriority.Background);
-			            Translit(files[i[0]]);
+			            TranslitFile(files[i[0]]);
 		            }
 
 	                ProgressBarDocuments.Visibility = Visibility.Hidden;
@@ -91,46 +95,35 @@ namespace Translit.Pages
 			}
         }
 
-		// Транслитерация
-		private void Translit(string filename)
+		// Транслитерация файла
+		private void TranslitFile(string filename)
 		{
-			// Копируем путь нашего файла
-			string copyFileName = filename;
-			// Если автосохранение включено, выполняем резервную копию
-	        if (Settings.Default.AutoSave)
-	        {
-		        string extension = "";
-				// Перебираем пусть с конца
-		        for (int i = copyFileName.Length - 1; i > 0; i--)
-		        {
-					// В extension прибавлям элемент строки под текущим индексом
-			        extension = copyFileName[i] + extension;
-					// Если в переборе встречается точка, выполняем следующие действия
-			        if (copyFileName[i] == '.')
-			        {
-						// Извлекаем подстроку пол до точки
-				        copyFileName = copyFileName.Substring(0, i);
-						// Добавляем уникальное имя и расширение файла
-				        copyFileName += " (" + System.Windows.Application.Current.Resources["FileNameLatin"] + ")" + extension;
-						break;
-			        }
-		        }
-				// Копируем файл
-				File.Copy(filename, copyFileName, true);
-	        }
+			// Получение информации о файле
+			FileInfo fileInfo = new FileInfo(filename);
 
-			MicrosoftWord.Application app = new MicrosoftWord.Application();
-			app.Documents.Open(copyFileName);
-			MicrosoftWord.Find find = app.Selection.Find;
+			// Путь временной папки
+			string temporaryFolder = fileInfo.DirectoryName + @"\" + DateTime.Now.ToFileTime();
+
+			// Распаковка документа во временную папку
+			using (ZipArchive archive = ZipFile.OpenRead(filename))
+			{
+				archive.ExtractToDirectory(temporaryFolder);
+			}
+
+			// Определяем путь к xml файлу распакованного документа
+			string xmlPath = temporaryFolder + @"\word\document.xml";
+
+			// Открваем документ xml
+			XDocument doc = XDocument.Load(xmlPath);
 
 			using (LiteDatabase db = new LiteDatabase(ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString))
-	        {
-		        var words = db.GetCollection<Word>("Words").FindAll().ToArray();
+			{
+				var words = db.GetCollection<Word>("Words").FindAll().ToArray();
 
-		        ProgressBarExceptions.Value = 0;
-		        ProgressBarExceptions.Visibility = Visibility.Visible;
-		        TextBlockExceptions.Visibility = Visibility.Visible;
-				
+				ProgressBarExceptions.Value = 0;
+				ProgressBarExceptions.Visibility = Visibility.Visible;
+				TextBlockExceptions.Visibility = Visibility.Visible;
+
 				for (int i = 0; i < words.Length; i++)
 				{
 					// Трансформируем слово в три различных состояния [ЗАГЛАВНЫЕ, прописные и Первыя заглавная] и заменяем
@@ -147,65 +140,62 @@ namespace Translit.Pages
 						{
 							cyryllic = cyryllic.ToLower();
 							latin = latin.ToLower();
-						} else if (j == 2)
+						}
+						else if (j == 2)
 						{
 							cyryllic = cyryllic.First().ToString().ToUpper() + cyryllic.Substring(1);
 							latin = latin.First().ToString().ToUpper() + latin.Substring(1);
 						}
 
-						find.Text = cyryllic;
-						find.Replacement.Text = latin;
-						find.Execute(FindText: Type.Missing,
-							MatchCase: true,
-							MatchWholeWord: false,
-							MatchWildcards: false,
-							MatchSoundsLike: Type.Missing,
-							MatchAllWordForms: false,
-							Forward: true,
-							Wrap: MicrosoftWord.WdFindWrap.wdFindContinue,
-							Format: false,
-							ReplaceWith: Type.Missing,
-							Replace: MicrosoftWord.WdReplace.wdReplaceAll);
+						// Получение всех узлов <w:t>
+						var xElements = doc.Descendants().Where(x=>x.Name.LocalName == "t");
+
+						// Перебор и замена
+						foreach (XElement xElement in xElements)
+						{
+							xElement.Value = xElement.Value.Replace(cyryllic, latin);
+						}
 					}
-					
+
 					// Высчитываем процент текущего прогресса
 					long percent = i * 100 / (words.Length - 1);
 					// Выводим результат
-					TextBlockExceptions.Text = System.Windows.Application.Current.Resources["TextBlockTransliterationOfExceptionWords"] + ": " + percent + "%";
+					TextBlockExceptions.Text =
+						System.Windows.Application.Current.Resources["TextBlockTransliterationOfExceptionWords"] + ": " + percent +
+						"%";
 					// Изменяем прогресс
-					ProgressBarExceptions.Dispatcher.Invoke(() => ProgressBarExceptions.Value = percent, DispatcherPriority.Background);
+					ProgressBarExceptions.Dispatcher.Invoke(() => ProgressBarExceptions.Value = percent,
+						DispatcherPriority.Background);
 				}
 
 				var symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
 
 				ProgressBarDocument.Value = 0;
 				ProgressBarDocument.Visibility = Visibility.Visible;
-		        TextBlockDocument.Visibility = Visibility.Visible;
+				TextBlockDocument.Visibility = Visibility.Visible;
 
 				for (int i = 0; i < symbols.Length; i++)
 				{
-					find.Text = symbols[i].Cyryllic;
-					find.Replacement.Text = symbols[i].Latin;
-					find.Execute(FindText: Type.Missing,
-						MatchCase: true,
-						MatchWholeWord: false,
-						MatchWildcards: false,
-						MatchSoundsLike: Type.Missing,
-						MatchAllWordForms: false,
-						Forward: true,
-						Wrap: MicrosoftWord.WdFindWrap.wdFindContinue,
-						Format: false,
-						ReplaceWith: Type.Missing,
-						Replace: MicrosoftWord.WdReplace.wdReplaceAll);
+					var xElements = doc.Descendants().Where(x => x.Name.LocalName == "t");
+
+					// Перебор и замена
+					foreach (XElement xElement in xElements)
+					{
+						xElement.Value = xElement.Value.Replace(symbols[i].Cyryllic, symbols[i].Latin);
+					}
 
 					long percent = i * 100 / (symbols.Length - 1);
-					TextBlockDocument.Text = System.Windows.Application.Current.Resources["TextBlockCharacterTransliteration"] + ": " + percent + "%";
-					ProgressBarDocument.Dispatcher.Invoke(() => ProgressBarDocument.Value = percent, DispatcherPriority.Background);
+					TextBlockDocument.Text = System.Windows.Application.Current.Resources["TextBlockCharacterTransliteration"] +
+												": " + percent + "%";
+					ProgressBarDocument.Dispatcher.Invoke(() => ProgressBarDocument.Value = percent,
+						DispatcherPriority.Background);
 				}
 			}
-			app.ActiveDocument.Save();
-			app.ActiveDocument.Close();
-			app.Quit();
+
+			doc.Save(xmlPath);
+			string newDocumentFullName = fileInfo.FullName.Substring(0, fileInfo.FullName.Length - fileInfo.Extension.Length) + " (" + System.Windows.Application.Current.Resources["FileNameLatin"] + ")" + fileInfo.Extension;
+			ZipFile.CreateFromDirectory(temporaryFolder, newDocumentFullName);
+			Directory.Delete(temporaryFolder, true);
 		}
 	}
 }

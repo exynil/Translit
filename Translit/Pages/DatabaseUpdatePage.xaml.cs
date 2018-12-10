@@ -144,8 +144,6 @@ namespace Translit.Pages
 				ProgressBarWordLoading.Visibility = Visibility.Collapsed;
 				// Уведомляем об успешном завершении обновления
 				await ShowAsyncNotification("SnackBarUpdateCompleted");
-				// Получаем текущую дату
-				DateTime dateTime = DateTime.Now;
 				// Получаем информацию о файле
 				FileInfo fileInfo = new FileInfo(ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString);
 				// Выводим информацию о размере файла
@@ -162,9 +160,8 @@ namespace Translit.Pages
 				// Выводим информацию о кол-ве исключений
 				TextBlockWordsCount.Text = Application.Current.Resources["TextBlockAmountOfWords"] + ": " + wordsCount;
 				// Выводим информацию о дате последнего обновления
-				TextBlockLastUpdateDate.Text = Application.Current.Resources["TextBlockLastUpdate"] + ": " + dateTime;
+				TextBlockLastUpdateDate.Text = Application.Current.Resources["TextBlockLastUpdate"] + ": " + fileInfo.LastWriteTime;
 				// Сохраянем дату последнего обновления
-				Settings.Default.DatabaseUpdateDate = dateTime;
 				// Делаем кнопку "Обновить" активной
 				((Button)sender).IsEnabled = true;
 			});
@@ -186,7 +183,6 @@ namespace Translit.Pages
 					var words = db.GetCollection<Word>("Words");
 					var symbols = db.GetCollection<Symbol>("Symbols");
 
-					// Выводим информацию об локальной базе
 					// Выводим информацию о размере файла
 					if (fileInfo.Length < 1048576)
 					{
@@ -198,7 +194,7 @@ namespace Translit.Pages
 					}
 					TextBlockSymbolsCount.Text = Application.Current.Resources["TextBlockAmountOfCharacters"] + ": " + symbols.Count();
 					TextBlockWordsCount.Text = Application.Current.Resources["TextBlockAmountOfWords"] + ": " + words.Count();
-					TextBlockLastUpdateDate.Text = Application.Current.Resources["TextBlockLastUpdate"] + ": " + Settings.Default.DatabaseUpdateDate;
+					TextBlockLastUpdateDate.Text = Application.Current.Resources["TextBlockLastUpdate"] + ": " + fileInfo.LastWriteTime;
 				}
 			}
 			else

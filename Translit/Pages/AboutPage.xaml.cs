@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using Frame = System.Windows.Controls.Frame;
-using Label = System.Windows.Controls.Label;
-using Page = System.Windows.Controls.Page;
-using Point = System.Windows.Point;
 
 namespace Translit.Pages
 {
@@ -107,7 +101,7 @@ namespace Translit.Pages
 				"Rayimbek",
 				"Artyom",
 				"Dalila",
-				"Alexander"
+				"Alexandr"
 			};
 
 			string randomMember = team[random.Next(0, team.Length)];

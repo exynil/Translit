@@ -73,17 +73,6 @@ namespace Translit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.DateTime DatabaseUpdateDate {
-            get {
-                return ((global::System.DateTime)(this["DatabaseUpdateDate"]));
-            }
-            set {
-                this["DatabaseUpdateDate"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool RealTimeTransliteration {
             get {

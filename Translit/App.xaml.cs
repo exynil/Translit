@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
-using Newtonsoft.Json;
-using Translit.Entity;
 using Translit.Properties;
 
 namespace Translit
@@ -86,8 +84,14 @@ namespace Translit
 		private void App_LanguageChanged(Object sender, EventArgs e)
 		{
 			Settings.Default.DefaultLanguage = Language;
-			GeneralSettings generalSettings = new GeneralSettings {Language = Language.CompareInfo.Name};
-			File.WriteAllText("External settings.json", JsonConvert.SerializeObject(generalSettings));
+			try
+			{
+				Process.Start(@"..\TranslitLauncher.exe", Language.Name);
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
 		}
 
 		private void App_OnExit(object sender, ExitEventArgs e)
@@ -103,14 +107,14 @@ namespace Translit
 				Arguments[i] = e.Args[i];
 			}
 
-			if (Arguments.Length == 0)
-			{
-				Environment.Exit(0);
-			}
-			else if (Arguments[0] != "Cy9I*@dw0Zh_fj_KOPbI@QBS6Perfk%k#)5kGK0@XaQCY)@sj2Tex(Rh7bJK")
-			{
-				Environment.Exit(0);
-			}
+			//if (Arguments.Length == 0)
+			//{
+			//	Environment.Exit(0);
+			//}
+			//else if (Arguments[0] != "Cy9I*@dw0Zh_fj_KOPbI@QBS6Perfk%k#)5kGK0@XaQCY)@sj2Tex(Rh7bJK")
+			//{
+			//	Environment.Exit(0);
+			//}
 		}
 	}
 }

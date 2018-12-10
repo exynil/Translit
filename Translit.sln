@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translit", "Translit\Transl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslitLauncher", "TranslitLauncher\TranslitLauncher.csproj", "{C349C0C1-C81D-4B90-8418-934C43A9AAA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslitCollector", "TranslitCollector\TranslitCollector.csproj", "{FDDCCB81-204C-431E-9F7C-7379820C46C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C349C0C1-C81D-4B90-8418-934C43A9AAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C349C0C1-C81D-4B90-8418-934C43A9AAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C349C0C1-C81D-4B90-8418-934C43A9AAA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDDCCB81-204C-431E-9F7C-7379820C46C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDDCCB81-204C-431E-9F7C-7379820C46C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDDCCB81-204C-431E-9F7C-7379820C46C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDDCCB81-204C-431E-9F7C-7379820C46C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

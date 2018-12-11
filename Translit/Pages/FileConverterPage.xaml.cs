@@ -194,7 +194,7 @@ namespace Translit.Pages
 			                             fileInfo.Extension;
 			ZipFile.CreateFromDirectory(temporaryFolder, newDocumentFullName);
 			Directory.Delete(temporaryFolder, true);
-			if (Settings.Default.AutoSave)
+			if (!Settings.Default.AutoSave)
 			{
 				try
 				{

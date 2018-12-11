@@ -35,7 +35,7 @@ namespace Translit
 		public MainWindow()
 		{
 			InitializeComponent();
-			_fileConverterPage = new FileConverterPage();
+			_fileConverterPage = new FileConverterPage(SnackbarMain);
 			_textConverterPage = new TextConverterPage();
 			_symbolsEditorPage = new SymbolsEditorPage(SnackbarMain);
 			_symbolsPage = new SymbolsPage();

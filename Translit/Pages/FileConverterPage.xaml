@@ -17,26 +17,18 @@
 		<Grid.RowDefinitions>
 			<RowDefinition></RowDefinition>
 			<RowDefinition></RowDefinition>
-			<RowDefinition></RowDefinition>
-			<RowDefinition></RowDefinition>
-			<RowDefinition></RowDefinition>
 		</Grid.RowDefinitions>
 		<WrapPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
 			<Button x:Name="ButtonSelectFile" Content="{DynamicResource ButtonSelectFile}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonSelectFile_Click"/>
 			<Button x:Name="ButtonSelectFolder"  Content="{DynamicResource ButtonSelectFolder}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ButtonSelectFolder_Click"/>
 		</WrapPanel>
-		<TextBlock x:Name="TextBlockInfo" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"></TextBlock>
-		<StackPanel Grid.Row="2" Margin="50 0">
-			<TextBlock x:Name="TextBlockDocumetns" FontSize="15" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0 0 0 5"></TextBlock>
-			<ProgressBar Name="ProgressBarDocuments" Visibility="Hidden" Minimum="0"></ProgressBar>
-		</StackPanel>
-		<StackPanel Grid.Row="3" Margin="50 0">
-			<TextBlock x:Name="TextBlockExceptions" FontSize="15" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0 0 0 5"></TextBlock>
-			<ProgressBar Name="ProgressBarExceptions" Visibility="Hidden" Minimum="0" Maximum="100"></ProgressBar>
-		</StackPanel>
-		<StackPanel Grid.Row="4" Margin="50 0">
-			<TextBlock x:Name="TextBlockDocument" FontSize="15" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0 0 0 5"></TextBlock>
-			<ProgressBar Name="ProgressBarDocument" Visibility="Hidden" Minimum="0" Maximum="100"></ProgressBar>
+		<StackPanel x:Name="StackPanelProgress" Grid.Row="1" VerticalAlignment="Center" Visibility="Hidden">
+			<TextBlock x:Name="TextBlockDocumetns" FontSize="15" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="50 10"></TextBlock>
+			<ProgressBar x:Name="ProgressBarDocuments" Minimum="0" Margin="50 10"></ProgressBar>
+			<TextBlock x:Name="TextBlockExceptions" FontSize="15" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="50 10"></TextBlock>
+			<ProgressBar x:Name="ProgressBarExceptions" Minimum="0" Maximum="100" Margin="50 10"></ProgressBar>
+			<TextBlock x:Name="TextBlockDocument" FontSize="15" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="50 10"></TextBlock>
+			<ProgressBar x:Name="ProgressBarDocument" Minimum="0" Maximum="100" Margin="50 10"></ProgressBar>
 		</StackPanel>
 	</Grid>
 </Page>

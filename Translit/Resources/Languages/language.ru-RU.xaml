@@ -21,7 +21,7 @@
 	<v:String x:Key="ButtonSelectFolder">Выбрать папку</v:String>
 	<v:String x:Key="TextBlockDocuments">Документы</v:String>
 	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Транслитерация слов исключений</v:String>
-	<v:String x:Key="TextBlockCharacterTransliteration">Посимвольная транслитерация</v:String>
+	<v:String x:Key="TextBlockCharacterTransliteration">Транслитерация символов</v:String>
 	<v:String x:Key="FileNameLatin">латиница</v:String>
 	<v:String x:Key="TransliterationCompleted">Транслитерация завершена</v:String>
 

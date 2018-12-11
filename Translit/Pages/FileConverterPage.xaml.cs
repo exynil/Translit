@@ -1,31 +1,42 @@
 ﻿using LiteDB;
 using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using MaterialDesignThemes.Wpf;
 using Translit.Entity;
 using Translit.Properties;
+using Application = System.Windows.Application;
 
 namespace Translit.Pages
 {
 	public partial class FileConverterPage
 	{
-		public FileConverterPage()
+		public Snackbar SnackbarInfo { get; set; }
+		public FileConverterPage(Snackbar snackbar)
 		{
 			InitializeComponent();
+			SnackbarInfo = snackbar;
+		}
+
+		// Асинхронный показ уведомления
+		private async Task ShowAsyncNotification(string resourceName)
+		{
+			await Task.Factory.StartNew(() => { }).ContinueWith(t => { SnackbarInfo.MessageQueue.Enqueue(Application.Current.Resources[resourceName]); }, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		// Нажатие кнопки выбора файла Word
-		private void ButtonSelectFile_Click(object sender, RoutedEventArgs e)
+		private async void ButtonSelectFile_Click(object sender, RoutedEventArgs e)
 		{
 			// Создаем экземпляр диалогового окна выбора файла
-			Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog()
+			var dlg = new Microsoft.Win32.OpenFileDialog()
 			{
 				FileName = "Document",
 				DefaultExt = ".*",
@@ -33,67 +44,78 @@ namespace Translit.Pages
 			};
 
 			// Открываем диалоговое окно
-			bool? result = dlg.ShowDialog();
-			if (result == true)
-			{
-				ButtonSelectFile.IsEnabled = false;
-				ButtonSelectFolder.IsEnabled = false;
-				TextBlockInfo.Visibility = Visibility.Hidden;
-				// Транслитерация выбранного файла
-				TranslitFile(dlg.FileName);
-				// Скрываем прогресс и показываем информацию
-				ProgressBarExceptions.Visibility = Visibility.Hidden;
-				TextBlockExceptions.Visibility = Visibility.Hidden;
-				ProgressBarDocument.Visibility = Visibility.Hidden;
-				TextBlockDocument.Visibility = Visibility.Hidden;
-				TextBlockInfo.Visibility = Visibility.Visible;
-				TextBlockInfo.SetResourceReference(TextBlock.TextProperty, "TransliterationCompleted");
-				ButtonSelectFile.IsEnabled = true;
-				ButtonSelectFolder.IsEnabled = true;
-			}
+			var result = dlg.ShowDialog();
+			if (result != true) return;
+			ButtonSelectFile.IsEnabled = false;
+			ButtonSelectFolder.IsEnabled = false;
+
+			// Раскрываем прогресс
+			StackPanelProgress.Visibility = Visibility.Visible;
+			ProgressBarDocuments.Value = 1;
+			ProgressBarDocuments.Maximum = 1;
+			TextBlockDocumetns.Text = Application.Current.Resources["TextBlockDocuments"] + ": 1/1";
+			ProgressBarExceptions.Value = 0;
+			ProgressBarDocument.Value = 0;
+
+			// Транслитерация выбранного файла
+			await Task.Factory.StartNew(() => TranslitFile(dlg.FileName));
+			
+			// Скрываем прогресс
+			StackPanelProgress.Visibility = Visibility.Hidden;
+
+			// Выводим уведомление
+			await ShowAsyncNotification("TransliterationCompleted");
+
+			ButtonSelectFile.IsEnabled = true;
+			ButtonSelectFolder.IsEnabled = true;
 		}
 
 		// Нажатие кнопки выбора папки с документами
-		private void ButtonSelectFolder_Click(object sender, RoutedEventArgs e)
+		private async void ButtonSelectFolder_Click(object sender, RoutedEventArgs e)
 		{
 			using (var fbd = new FolderBrowserDialog())
 			{
 				// Открываем диалоговое окно
-				DialogResult result = fbd.ShowDialog();
-				if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+				var result = fbd.ShowDialog();
+				if (result != DialogResult.OK || string.IsNullOrWhiteSpace(fbd.SelectedPath)) return;
+				ButtonSelectFile.IsEnabled = false;
+				ButtonSelectFolder.IsEnabled = false;
+
+				// Получаем пути всех нескрытых файлов с расширением .doc и .docx
+				var files = new DirectoryInfo(fbd.SelectedPath).EnumerateFiles()
+					.Where(f => (f.Attributes & FileAttributes.Hidden) == 0 && (f.Extension == ".doc" || f.Extension == ".docx"))
+					.Select(f => f.FullName)
+					.ToArray();
+
+				// Раскрываем прогресс
+				StackPanelProgress.Visibility = Visibility.Visible;
+				ProgressBarDocuments.Value = 0;
+				ProgressBarDocuments.Maximum = files.Length - 1;
+
+				// Перебор и транслитерация всех полученных файлов
+				for (int[] i = { 0 }; i[0] < files.Length; i[0]++)
 				{
-					// Получаем все нескрытые файлы и с расширением .doc и .docx
-					var noHiddenDocFiles = new DirectoryInfo(fbd.SelectedPath).EnumerateFiles()
-						.Where(f => (f.Attributes & FileAttributes.Hidden) == 0 && (f.Extension == ".doc" || f.Extension == ".docx"))
-						.ToArray();
-
-					// Извлекаем полный путь всех файлов
-					string[] files = noHiddenDocFiles.Select(f => f.FullName).ToArray();
-
-					// Манипуляции с индикатором прогресса
-					ProgressBarDocuments.Value = 0;
-					ProgressBarDocuments.Maximum = files.Length - 1;
-					ProgressBarDocuments.Visibility = Visibility.Visible;
-					TextBlockInfo.Visibility = Visibility.Hidden;
-
-					// Перебор и транслитерация всех файлов
-					for (int[] i = {0}; i[0] < files.Length; i[0]++)
+					TextBlockDocumetns.Dispatcher.Invoke(() =>
 					{
-						TextBlockDocumetns.Text = System.Windows.Application.Current.Resources["TextBlockDocuments"] + ": " + (i[0] + 1) +
-						                          "/" + files.Length;
-						ProgressBarDocuments.Dispatcher.Invoke(() => ProgressBarDocuments.Value = i[0], DispatcherPriority.Background);
-						TranslitFile(files[i[0]]);
-					}
+						var text = Application.Current.Resources["TextBlockDocuments"] + ": " + (i[0] + 1) + "/" + files.Length;
+						TextBlockDocumetns.Text = text;
+					}, DispatcherPriority.Background);
 
-					ProgressBarDocuments.Visibility = Visibility.Hidden;
-					TextBlockDocumetns.Visibility = Visibility.Hidden;
-					ProgressBarExceptions.Visibility = Visibility.Hidden;
-					TextBlockExceptions.Visibility = Visibility.Hidden;
-					ProgressBarDocument.Visibility = Visibility.Hidden;
-					TextBlockDocument.Visibility = Visibility.Hidden;
-					TextBlockInfo.Visibility = Visibility.Visible;
-					TextBlockInfo.SetResourceReference(TextBlock.TextProperty, "TransliterationCompleted");
+					ProgressBarDocuments.Value = i[0];
+
+					ProgressBarExceptions.Value = 0;
+
+					ProgressBarDocument.Value = 0;
+
+					await Task.Factory.StartNew(() => TranslitFile(files[i[0]]));
 				}
+
+				StackPanelProgress.Visibility = Visibility.Hidden;
+
+				await ShowAsyncNotification("TransliterationCompleted");
+
+				ButtonSelectFile.IsEnabled = true;
+				ButtonSelectFolder.IsEnabled = true;
 			}
 		}
 
@@ -101,109 +123,155 @@ namespace Translit.Pages
 		private void TranslitFile(string filename)
 		{
 			// Получение информации о файле
-			FileInfo fileInfo = new FileInfo(filename);
+			var fileInfo = new FileInfo(filename);
 
 			// Путь временной папки
-			string temporaryFolder = fileInfo.DirectoryName + @"\" + DateTime.Now.ToFileTime();
+			var temporaryFolder = fileInfo.DirectoryName + @"\" + DateTime.Now.ToFileTime();
 
 			// Распаковка документа во временную папку
-			using (ZipArchive archive = ZipFile.OpenRead(filename))
+			using (var archive = ZipFile.OpenRead(filename))
 			{
 				archive.ExtractToDirectory(temporaryFolder);
 			}
 
 			// Определяем путь к xml файлу распакованного документа
-			string xmlPath = temporaryFolder + @"\word\document.xml";
+			var xmlPath = temporaryFolder + @"\word\document.xml";
 
 			// Открваем документ xml
-			XDocument doc = XDocument.Load(xmlPath);
-			using (LiteDatabase db =
-				new LiteDatabase(ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString))
+			var doc = XDocument.Load(xmlPath);
+
+			var connectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+
+			using (var db = new LiteDatabase(connectionString))
 			{
 				var words = db.GetCollection<Word>("Words").FindAll().ToArray();
-				ProgressBarExceptions.Value = 0;
-				ProgressBarExceptions.Visibility = Visibility.Visible;
-				TextBlockExceptions.Visibility = Visibility.Visible;
-				for (int i = 0; i < words.Length; i++)
+				
+				for (var i = 0; i < words.Length; i++)
 				{
 					// Трансформируем слово в три различных состояния [ЗАГЛАВНЫЕ, прописные и Первыя заглавная] и заменяем
-					for (int j = 0; j < 3; j++)
+					for (var j = 0; j < 3; j++)
 					{
-						string cyryllic = words[i].Cyryllic;
-						string latin = words[i].Latin;
-						if (j == 0)
+						var cyryllic = words[i].Cyryllic;
+						var latin = words[i].Latin;
+						switch (j)
 						{
-							cyryllic = cyryllic.ToUpper();
-							latin = latin.ToUpper();
-						}
-						else if (j == 1)
-						{
-							cyryllic = cyryllic.ToLower();
-							latin = latin.ToLower();
-						}
-						else if (j == 2)
-						{
-							cyryllic = cyryllic.First().ToString().ToUpper() + cyryllic.Substring(1);
-							latin = latin.First().ToString().ToUpper() + latin.Substring(1);
+							case 0:
+							{
+								cyryllic = cyryllic.ToUpper();
+								latin = latin.ToUpper();
+								break;
+							}
+							case 1:
+							{
+								cyryllic = cyryllic.ToLower();
+								latin = latin.ToLower();
+								break;
+								}
+							case 2:
+							{
+								cyryllic = cyryllic.First().ToString().ToUpper() + cyryllic.Substring(1);
+								latin = latin.First().ToString().ToUpper() + latin.Substring(1);
+								break;
+							}
 						}
 
 						// Получение всех узлов <w:t>
-						var xElements = doc.Descendants().Where(x => x.Name.LocalName == "t");
+						var elements = doc.Descendants().Where(x => x.Name.LocalName == "t");
 
 						// Перебор и замена
-						foreach (XElement xElement in xElements)
+						foreach (var e in elements)
 						{
-							xElement.Value = xElement.Value.Replace(cyryllic, latin);
+							e.Value = e.Value.Replace(cyryllic, latin);
 						}
 					}
 
 					// Высчитываем процент текущего прогресса
 					long percent = i * 100 / (words.Length - 1);
+
 					// Выводим результат
-					TextBlockExceptions.Text =
-						System.Windows.Application.Current.Resources["TextBlockTransliterationOfExceptionWords"] + ": " + percent + "%";
+					TextBlockExceptions.Dispatcher.Invoke(
+						() =>
+						{
+							var text = Application.Current.Resources["TextBlockTransliterationOfExceptionWords"] + ": " + percent + "%";
+							TextBlockExceptions.Text = text;
+						}, DispatcherPriority.Background);
 					// Изменяем прогресс
-					ProgressBarExceptions.Dispatcher.Invoke(() => ProgressBarExceptions.Value = percent,
-						DispatcherPriority.Background);
+					ProgressBarExceptions.Dispatcher.Invoke(() => ProgressBarExceptions.Value = percent, DispatcherPriority.Background);
 				}
 
 				var symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
-				ProgressBarDocument.Value = 0;
-				ProgressBarDocument.Visibility = Visibility.Visible;
-				TextBlockDocument.Visibility = Visibility.Visible;
-				for (int i = 0; i < symbols.Length; i++)
+
+				for (var i = 0; i < symbols.Length; i++)
 				{
-					var xElements = doc.Descendants().Where(x => x.Name.LocalName == "t");
+					var elements = doc.Descendants().Where(x => x.Name.LocalName == "t");
 
 					// Перебор и замена
-					foreach (XElement xElement in xElements)
+					foreach (var e in elements)
 					{
-						xElement.Value = xElement.Value.Replace(symbols[i].Cyryllic, symbols[i].Latin);
+						e.Value = e.Value.Replace(symbols[i].Cyryllic, symbols[i].Latin);
 					}
 
 					long percent = i * 100 / (symbols.Length - 1);
-					TextBlockDocument.Text = System.Windows.Application.Current.Resources["TextBlockCharacterTransliteration"] + ": " +
-					                         percent + "%";
+
+					TextBlockDocument.Dispatcher.Invoke(() =>
+					{
+						var text = Application.Current.Resources["TextBlockCharacterTransliteration"] + ": " + percent + "%";
+						TextBlockDocument.Text = text;
+					}, DispatcherPriority.Background);
 					ProgressBarDocument.Dispatcher.Invoke(() => ProgressBarDocument.Value = percent, DispatcherPriority.Background);
 				}
 			}
 
 			doc.Save(xmlPath);
-			string newDocumentFullName = fileInfo.FullName.Substring(0, fileInfo.FullName.Length - fileInfo.Extension.Length) +
-			                             " (" + System.Windows.Application.Current.Resources["FileNameLatin"] + ")" +
-			                             fileInfo.Extension;
-			ZipFile.CreateFromDirectory(temporaryFolder, newDocumentFullName);
-			Directory.Delete(temporaryFolder, true);
-			if (!Settings.Default.AutoSave)
+
+			int number = 1;
+
+			// Создание документа
+			while (true)
 			{
+				// Получение данных о новом файле
+				var directoryName = fileInfo.DirectoryName;
+				var fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
+				string label;
+
+				if (number == 1)
+				{
+					label = " (" + Application.Current.Resources["FileNameLatin"] + ")";
+				}
+				else
+				{
+					label = " (" + Application.Current.Resources["FileNameLatin"] + " " + number + ")";
+				}
+				
+				var extension = fileInfo.Extension;
+
+				// Комбинирование данных
+				var newDocument = directoryName + @"\" + fileName + label + extension;
+
+				if (File.Exists(newDocument))
+				{
+					number++;
+					continue;
+				}
+
+				ZipFile.CreateFromDirectory(temporaryFolder, newDocument);
+				
+				// Удаление временной папки
+				Directory.Delete(temporaryFolder, true);
+
+				if (Settings.Default.AutoSave) break;
+
 				try
 				{
-					File.Delete(filename);
+					// Замена файла
+					File.Replace(newDocument, filename, null);
 				}
 				catch (Exception)
 				{
 					// ignored
 				}
+
+				break;
 			}
 		}
 	}

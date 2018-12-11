@@ -39,45 +39,41 @@ namespace Translit
 			get => Thread.CurrentThread.CurrentUICulture;
 			set
 			{
-				if (value == null) throw new ArgumentNullException(nameof(value));
-				if (value != Thread.CurrentThread.CurrentUICulture)
+				// 1. Меняем язык приложения:
+				Thread.CurrentThread.CurrentUICulture = value;
+
+				// 2. Создаём ResourceDictionary для новой культуры
+				ResourceDictionary dict = new ResourceDictionary();
+				switch (value.Name)
 				{
-					// 1. Меняем язык приложения:
-					Thread.CurrentThread.CurrentUICulture = value;
-
-					// 2. Создаём ResourceDictionary для новой культуры
-					ResourceDictionary dict = new ResourceDictionary();
-					switch (value.Name)
-					{
-						case "ru-RU":
-							dict.Source = new Uri($"Resources/Languages/language.{value.Name}.xaml", UriKind.Relative);
-							break;
-						case "kk-KZ":
-							dict.Source = new Uri($"Resources/Languages/language.{value.Name}.xaml", UriKind.Relative);
-							break;
-						default:
-							dict.Source = new Uri("Resources/Languages/language.xaml", UriKind.Relative);
-							break;
-					}
-
-					// 3. Находим старую ResourceDictionary и удаляем его и добавляем новую ResourceDictionary
-					ResourceDictionary oldDict = (from d in Current.Resources.MergedDictionaries
-						where d.Source != null && d.Source.OriginalString.StartsWith("Resources/Languages/language.")
-						select d).First();
-					if (oldDict != null)
-					{
-						int ind = Current.Resources.MergedDictionaries.IndexOf(oldDict);
-						Current.Resources.MergedDictionaries.Remove(oldDict);
-						Current.Resources.MergedDictionaries.Insert(ind, dict);
-					}
-					else
-					{
-						Current.Resources.MergedDictionaries.Add(dict);
-					}
-
-					// 4. Вызываем событие для оповещения всех окон.
-					LanguageChanged?.Invoke(Current, new EventArgs());
+					case "ru-RU":
+						dict.Source = new Uri($"Resources/Languages/language.{value.Name}.xaml", UriKind.Relative);
+						break;
+					case "kk-KZ":
+						dict.Source = new Uri($"Resources/Languages/language.{value.Name}.xaml", UriKind.Relative);
+						break;
+					default:
+						dict.Source = new Uri("Resources/Languages/language.xaml", UriKind.Relative);
+						break;
 				}
+
+				// 3. Находим старую ResourceDictionary и удаляем его и добавляем новую ResourceDictionary
+				ResourceDictionary oldDict = (from d in Current.Resources.MergedDictionaries
+					where d.Source != null && d.Source.OriginalString.StartsWith("Resources/Languages/language.")
+					select d).First();
+				if (oldDict != null)
+				{
+					int ind = Current.Resources.MergedDictionaries.IndexOf(oldDict);
+					Current.Resources.MergedDictionaries.Remove(oldDict);
+					Current.Resources.MergedDictionaries.Insert(ind, dict);
+				}
+				else
+				{
+					Current.Resources.MergedDictionaries.Add(dict);
+				}
+
+				// 4. Вызываем событие для оповещения всех окон.
+				LanguageChanged?.Invoke(Current, new EventArgs());
 			}
 		}
 
@@ -106,15 +102,16 @@ namespace Translit
 			{
 				Arguments[i] = e.Args[i];
 			}
-
-			//if (Arguments.Length == 0)
-			//{
-			//	Environment.Exit(0);
-			//}
-			//else if (Arguments[0] != "Cy9I*@dw0Zh_fj_KOPbI@QBS6Perfk%k#)5kGK0@XaQCY)@sj2Tex(Rh7bJK")
-			//{
-			//	Environment.Exit(0);
-			//}
+#if !DEBUG
+			if (Arguments.Length == 0)
+			{
+				Environment.Exit(0);
+			}
+			else if (Arguments[0] != "Cy9I*@dw0Zh_fj_KOPbI@QBS6Perfk%k#)5kGK0@XaQCY)@sj2Tex(Rh7bJK")
+			{
+				Environment.Exit(0);
+			}
+#endif
 		}
 	}
 }

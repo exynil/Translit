@@ -1,13 +1,11 @@
-﻿using System;
+﻿using LiteDB;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using LiteDB;
 using Translit.Entity;
 
 namespace Translit.Pages
@@ -97,7 +95,7 @@ namespace Translit.Pages
 			{
 				range.Save(stream, DataFormats.Rtf);
 
-				Clipboard.SetData(DataFormats.Rtf, Encoding.UTF8.GetString((stream as MemoryStream).ToArray()));
+				Clipboard.SetData(DataFormats.Rtf, Encoding.UTF8.GetString(((MemoryStream) stream).ToArray()));
 			}
 		}
 

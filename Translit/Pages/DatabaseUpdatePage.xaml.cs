@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using MaterialDesignThemes.Wpf;
-using Translit.Properties;
 using System.Configuration;
 using Translit.Entity;
 
@@ -18,22 +17,22 @@ namespace Translit.Pages
 {
 	public partial class DatabaseUpdatePage
 	{
-		private readonly Snackbar _snackbar;
+		public Snackbar SnackbarInfo { get; set; }
 		public DatabaseUpdatePage(Snackbar snackbar)
 		{
 			InitializeComponent();
-			_snackbar = snackbar;
+			SnackbarInfo = snackbar;
 		}
 		// Асинхронный показ уведомления
 		private async Task ShowAsyncNotification(string resourceName)
 		{
-			await Task.Factory.StartNew(() => { }).ContinueWith(t => { _snackbar.MessageQueue.Enqueue(Application.Current.Resources[resourceName]); }, TaskScheduler.FromCurrentSynchronizationContext());
+			await Task.Factory.StartNew(() => { }).ContinueWith(t => { SnackbarInfo.MessageQueue.Enqueue(Application.Current.Resources[resourceName]); }, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		// Показ уведомления
 		private void ShowNotification(string resourceName)
 		{
-			Task.Factory.StartNew(() => { }).ContinueWith(t => { _snackbar.MessageQueue.Enqueue(Application.Current.Resources[resourceName]); }, TaskScheduler.FromCurrentSynchronizationContext());
+			Task.Factory.StartNew(() => { }).ContinueWith(t => { SnackbarInfo.MessageQueue.Enqueue(Application.Current.Resources[resourceName]); }, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		// Нажатие кнопки обновления базы

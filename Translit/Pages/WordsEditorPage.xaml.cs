@@ -16,12 +16,12 @@ namespace Translit.Pages
 	public partial class WordsEditorPage
 	{
 		public User User;
-		private readonly Snackbar _snackbar;
+		public Snackbar SnackbarInfo { get; set; }
 
 		public WordsEditorPage(Snackbar snackbar)
 		{
 			InitializeComponent();
-			_snackbar = snackbar;
+			SnackbarInfo = snackbar;
 		}
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -32,13 +32,13 @@ namespace Translit.Pages
 		// Асинхронный показ уведомления
 		private async Task ShowAsyncNotification(string resourceName)
 		{
-			await Task.Factory.StartNew(() => { }).ContinueWith(t => { _snackbar.MessageQueue.Enqueue(Application.Current.Resources[resourceName]); }, TaskScheduler.FromCurrentSynchronizationContext());
+			await Task.Factory.StartNew(() => { }).ContinueWith(t => { SnackbarInfo.MessageQueue.Enqueue(Application.Current.Resources[resourceName]); }, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		// Показ уведомления
 		private void ShowNotification(string resourceName)
 		{
-			Task.Factory.StartNew(() => { }).ContinueWith(t => { _snackbar.MessageQueue.Enqueue(Application.Current.Resources[resourceName]); }, TaskScheduler.FromCurrentSynchronizationContext());
+			Task.Factory.StartNew(() => { }).ContinueWith(t => { SnackbarInfo.MessageQueue.Enqueue(Application.Current.Resources[resourceName]); }, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		// Обновление списка

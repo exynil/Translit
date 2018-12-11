@@ -1,99 +1,101 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Configuration;
-using System.Linq;
-using System.Windows;
-using System.Windows.Threading;
-using System.Windows.Forms;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
+using System.Windows.Threading;
 using System.Xml.Linq;
-using LiteDB;
 using Translit.Entity;
+using Translit.Properties;
 
 namespace Translit.Pages
 {
-    public partial class FileConverterPage
-    {
+	public partial class FileConverterPage
+	{
 		public FileConverterPage()
-        {
-            InitializeComponent();
-        }
+		{
+			InitializeComponent();
+		}
 
 		// Нажатие кнопки выбора файла Word
-        private void ButtonSelectFile_Click(object sender, RoutedEventArgs e)
-        {
+		private void ButtonSelectFile_Click(object sender, RoutedEventArgs e)
+		{
 			// Создаем экземпляр диалогового окна выбора файла
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog()
-            {
-                FileName = "Document",
-                DefaultExt = ".*",
-                Filter = "Text documents (.doc; .docx)|*.doc;*.docx" // Фильтрация файлов
-            };
+			Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog()
+			{
+				FileName = "Document",
+				DefaultExt = ".*",
+				Filter = "Text documents (.doc; .docx)|*.doc;*.docx" // Фильтрация файлов
+			};
 
-            // Открываем диалоговое окно
-            bool? result = dlg.ShowDialog();
-
-            if (result == true)
-            {
-	            ButtonSelectFile.IsEnabled = false;
+			// Открываем диалоговое окно
+			bool? result = dlg.ShowDialog();
+			if (result == true)
+			{
+				ButtonSelectFile.IsEnabled = false;
 				ButtonSelectFolder.IsEnabled = false;
-	            TextBlockInfo.Visibility = Visibility.Hidden;
+				TextBlockInfo.Visibility = Visibility.Hidden;
 				// Транслитерация выбранного файла
-	            TranslitFile(dlg.FileName);
+				TranslitFile(dlg.FileName);
 				// Скрываем прогресс и показываем информацию
-	            ProgressBarExceptions.Visibility = Visibility.Hidden;
-	            TextBlockExceptions.Visibility = Visibility.Hidden;
-	            ProgressBarDocument.Visibility = Visibility.Hidden;
-	            TextBlockDocument.Visibility = Visibility.Hidden;
-	            TextBlockInfo.Visibility = Visibility.Visible;
+				ProgressBarExceptions.Visibility = Visibility.Hidden;
+				TextBlockExceptions.Visibility = Visibility.Hidden;
+				ProgressBarDocument.Visibility = Visibility.Hidden;
+				TextBlockDocument.Visibility = Visibility.Hidden;
+				TextBlockInfo.Visibility = Visibility.Visible;
 				TextBlockInfo.SetResourceReference(TextBlock.TextProperty, "TransliterationCompleted");
-	            ButtonSelectFile.IsEnabled = true;
-	            ButtonSelectFolder.IsEnabled = true;
+				ButtonSelectFile.IsEnabled = true;
+				ButtonSelectFolder.IsEnabled = true;
 			}
 		}
 
 		// Нажатие кнопки выбора папки с документами
-        private void ButtonSelectFolder_Click(object sender, RoutedEventArgs e)
-        {
-            using (var fbd = new FolderBrowserDialog())
-            {
+		private void ButtonSelectFolder_Click(object sender, RoutedEventArgs e)
+		{
+			using (var fbd = new FolderBrowserDialog())
+			{
 				// Открываем диалоговое окно
-                DialogResult result = fbd.ShowDialog();
-
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                {
+				DialogResult result = fbd.ShowDialog();
+				if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+				{
 					// Получаем все нескрытые файлы и с расширением .doc и .docx
-	                var noHiddenDocFiles = new DirectoryInfo(fbd.SelectedPath).EnumerateFiles().Where(f => (f.Attributes & FileAttributes.Hidden) == 0 && (f.Extension == ".doc" || f.Extension == ".docx")).ToArray();
+					var noHiddenDocFiles = new DirectoryInfo(fbd.SelectedPath).EnumerateFiles()
+						.Where(f => (f.Attributes & FileAttributes.Hidden) == 0 && (f.Extension == ".doc" || f.Extension == ".docx"))
+						.ToArray();
 
 					// Извлекаем полный путь всех файлов
-					string[] files = noHiddenDocFiles.Select(f=>f.FullName).ToArray();
+					string[] files = noHiddenDocFiles.Select(f => f.FullName).ToArray();
 
 					// Манипуляции с индикатором прогресса
-	                ProgressBarDocuments.Value = 0;
-	                ProgressBarDocuments.Maximum = files.Length - 1;
-	                ProgressBarDocuments.Visibility = Visibility.Visible;
-	                TextBlockInfo.Visibility = Visibility.Hidden;
+					ProgressBarDocuments.Value = 0;
+					ProgressBarDocuments.Maximum = files.Length - 1;
+					ProgressBarDocuments.Visibility = Visibility.Visible;
+					TextBlockInfo.Visibility = Visibility.Hidden;
 
 					// Перебор и транслитерация всех файлов
 					for (int[] i = {0}; i[0] < files.Length; i[0]++)
-		            {
-			            TextBlockDocumetns.Text = System.Windows.Application.Current.Resources["TextBlockDocuments"] +  ": " + (i[0] + 1) + "/" + files.Length;
-			            ProgressBarDocuments.Dispatcher.Invoke(() => ProgressBarDocuments.Value = i[0], DispatcherPriority.Background);
-			            TranslitFile(files[i[0]]);
-		            }
+					{
+						TextBlockDocumetns.Text = System.Windows.Application.Current.Resources["TextBlockDocuments"] + ": " + (i[0] + 1) +
+						                          "/" + files.Length;
+						ProgressBarDocuments.Dispatcher.Invoke(() => ProgressBarDocuments.Value = i[0], DispatcherPriority.Background);
+						TranslitFile(files[i[0]]);
+					}
 
-	                ProgressBarDocuments.Visibility = Visibility.Hidden;
-	                TextBlockDocumetns.Visibility = Visibility.Hidden;
-	                ProgressBarExceptions.Visibility = Visibility.Hidden;
-	                TextBlockExceptions.Visibility = Visibility.Hidden;
-	                ProgressBarDocument.Visibility = Visibility.Hidden;
-	                TextBlockDocument.Visibility = Visibility.Hidden;
-	                TextBlockInfo.Visibility = Visibility.Visible;
-	                TextBlockInfo.SetResourceReference(TextBlock.TextProperty, "TransliterationCompleted");
+					ProgressBarDocuments.Visibility = Visibility.Hidden;
+					TextBlockDocumetns.Visibility = Visibility.Hidden;
+					ProgressBarExceptions.Visibility = Visibility.Hidden;
+					TextBlockExceptions.Visibility = Visibility.Hidden;
+					ProgressBarDocument.Visibility = Visibility.Hidden;
+					TextBlockDocument.Visibility = Visibility.Hidden;
+					TextBlockInfo.Visibility = Visibility.Visible;
+					TextBlockInfo.SetResourceReference(TextBlock.TextProperty, "TransliterationCompleted");
 				}
 			}
-        }
+		}
 
 		// Транслитерация файла
 		private void TranslitFile(string filename)
@@ -115,15 +117,13 @@ namespace Translit.Pages
 
 			// Открваем документ xml
 			XDocument doc = XDocument.Load(xmlPath);
-
-			using (LiteDatabase db = new LiteDatabase(ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString))
+			using (LiteDatabase db =
+				new LiteDatabase(ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString))
 			{
 				var words = db.GetCollection<Word>("Words").FindAll().ToArray();
-
 				ProgressBarExceptions.Value = 0;
 				ProgressBarExceptions.Visibility = Visibility.Visible;
 				TextBlockExceptions.Visibility = Visibility.Visible;
-
 				for (int i = 0; i < words.Length; i++)
 				{
 					// Трансформируем слово в три различных состояния [ЗАГЛАВНЫЕ, прописные и Первыя заглавная] и заменяем
@@ -148,7 +148,7 @@ namespace Translit.Pages
 						}
 
 						// Получение всех узлов <w:t>
-						var xElements = doc.Descendants().Where(x=>x.Name.LocalName == "t");
+						var xElements = doc.Descendants().Where(x => x.Name.LocalName == "t");
 
 						// Перебор и замена
 						foreach (XElement xElement in xElements)
@@ -161,19 +161,16 @@ namespace Translit.Pages
 					long percent = i * 100 / (words.Length - 1);
 					// Выводим результат
 					TextBlockExceptions.Text =
-						System.Windows.Application.Current.Resources["TextBlockTransliterationOfExceptionWords"] + ": " + percent +
-						"%";
+						System.Windows.Application.Current.Resources["TextBlockTransliterationOfExceptionWords"] + ": " + percent + "%";
 					// Изменяем прогресс
 					ProgressBarExceptions.Dispatcher.Invoke(() => ProgressBarExceptions.Value = percent,
 						DispatcherPriority.Background);
 				}
 
 				var symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
-
 				ProgressBarDocument.Value = 0;
 				ProgressBarDocument.Visibility = Visibility.Visible;
 				TextBlockDocument.Visibility = Visibility.Visible;
-
 				for (int i = 0; i < symbols.Length; i++)
 				{
 					var xElements = doc.Descendants().Where(x => x.Name.LocalName == "t");
@@ -185,17 +182,29 @@ namespace Translit.Pages
 					}
 
 					long percent = i * 100 / (symbols.Length - 1);
-					TextBlockDocument.Text = System.Windows.Application.Current.Resources["TextBlockCharacterTransliteration"] +
-												": " + percent + "%";
-					ProgressBarDocument.Dispatcher.Invoke(() => ProgressBarDocument.Value = percent,
-						DispatcherPriority.Background);
+					TextBlockDocument.Text = System.Windows.Application.Current.Resources["TextBlockCharacterTransliteration"] + ": " +
+					                         percent + "%";
+					ProgressBarDocument.Dispatcher.Invoke(() => ProgressBarDocument.Value = percent, DispatcherPriority.Background);
 				}
 			}
 
 			doc.Save(xmlPath);
-			string newDocumentFullName = fileInfo.FullName.Substring(0, fileInfo.FullName.Length - fileInfo.Extension.Length) + " (" + System.Windows.Application.Current.Resources["FileNameLatin"] + ")" + fileInfo.Extension;
+			string newDocumentFullName = fileInfo.FullName.Substring(0, fileInfo.FullName.Length - fileInfo.Extension.Length) +
+			                             " (" + System.Windows.Application.Current.Resources["FileNameLatin"] + ")" +
+			                             fileInfo.Extension;
 			ZipFile.CreateFromDirectory(temporaryFolder, newDocumentFullName);
 			Directory.Delete(temporaryFolder, true);
+			if (Settings.Default.AutoSave)
+			{
+				try
+				{
+					File.Delete(filename);
+				}
+				catch (Exception)
+				{
+					// ignored
+				}
+			}
 		}
 	}
 }

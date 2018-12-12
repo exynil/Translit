@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -12,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Threading;
 using Translit.Entity;
 using Translit.Pages;
 using Translit.Properties;
@@ -29,7 +29,6 @@ namespace Translit
 		private readonly SettingsPage _settingsPage;
 		private readonly DatabaseUpdatePage _databaseUpdatePage;
 		private readonly AboutPage _aboutPage;
-
 		private User _user;
 
 		public MainWindow()
@@ -44,18 +43,15 @@ namespace Translit
 			_settingsPage = new SettingsPage();
 			_databaseUpdatePage = new DatabaseUpdatePage(SnackbarMain);
 			_aboutPage = new AboutPage(FrameMain);
-
 			App.LanguageChanged += LanguageChanged;
-
-			CultureInfo cultureInfo = App.Language;
+			var cultureInfo = App.Language;
 
 			//Заполняем ComboBox списком языков
 			foreach (var l in App.Languages)
 			{
-				string language = l.NativeName.Remove(l.NativeName.IndexOf("(", StringComparison.Ordinal),
+				var language = l.NativeName.Remove(l.NativeName.IndexOf("(", StringComparison.Ordinal),
 					l.NativeName.Length - l.NativeName.IndexOf("(", StringComparison.Ordinal));
-
-				ComboBoxItem comboBoxItem = new ComboBoxItem
+				var comboBoxItem = new ComboBoxItem
 				{
 					Content = language.Substring(0, 1).ToUpper() + language.Remove(0, 1),
 					Tag = l,
@@ -69,7 +65,10 @@ namespace Translit
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			// Получаем MAC адрес машины клиента
-			string macAddress = NetworkInterface.GetAllNetworkInterfaces().Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback).Select(nic => nic.GetPhysicalAddress().ToString()).FirstOrDefault();
+			var macAddress = NetworkInterface.GetAllNetworkInterfaces()
+				.Where(nic => nic.OperationalStatus == OperationalStatus.Up &&
+				              nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+				.Select(nic => nic.GetPhysicalAddress().ToString()).FirstOrDefault();
 
 			// Если MAC адрес текущей машины совпадает с MAC адресом последней машины
 			if (macAddress == Settings.Default.MacAddress)
@@ -94,43 +93,43 @@ namespace Translit
 			UpdateRightMenu();
 		}
 
-		private void LanguageChanged(Object sender, EventArgs e)
+		private void LanguageChanged(object sender, EventArgs e)
 		{
-			CultureInfo currentLanguage = App.Language;
+			var currentLanguage = App.Language;
 
 			//Отмечаем нужный пункт смены языка как выбранный язык
 			foreach (ComboBoxItem i in ComboBoxLanguages.Items)
 			{
 				i.IsSelected = i.Tag is CultureInfo ci && ci.Equals(currentLanguage);
 			}
+
 			FrameMain.NavigationService.Refresh();
 		}
 
-		private void ChangeLanguageClick(Object sender, EventArgs e)
+		private void ChangeLanguageClick(object sender, EventArgs e)
 		{
-			ComboBoxItem ci = sender as ComboBoxItem;
+			var ci = sender as ComboBoxItem;
 			if (ci?.Tag is CultureInfo lang)
 			{
 				App.Language = lang;
 			}
 		}
-		
 
 		private void ListViewMenu_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var items = ListViewMenu.Items;
-
-			for (int i = 0; i < items.Count; i++)
+			for (var i = 0; i < items.Count; i++)
 			{
-				if (i == ((ListView)sender).SelectedIndex)
+				if (i == ((ListView) sender).SelectedIndex)
 				{
-					((ListViewItem)items[i]).Foreground = new SolidColorBrush(Color.FromRgb(3, 169, 244));
+					((ListViewItem) items[i]).Foreground = new SolidColorBrush(Color.FromRgb(3, 169, 244));
 					continue;
 				}
-				((ListViewItem)items[i]).Foreground = new SolidColorBrush(Color.FromRgb(64, 64, 64));
-				
+
+				((ListViewItem) items[i]).Foreground = new SolidColorBrush(Color.FromRgb(64, 64, 64));
 			}
-			switch (((ListView)sender).SelectedIndex)
+
+			switch (((ListView) sender).SelectedIndex)
 			{
 				case 0:
 				{
@@ -155,6 +154,7 @@ namespace Translit
 					{
 						FrameMain.NavigationService.Navigate(_symbolsPage);
 					}
+
 					break;
 				}
 				case 3:
@@ -168,6 +168,7 @@ namespace Translit
 					{
 						FrameMain.NavigationService.Navigate(_wordsPage);
 					}
+
 					break;
 				}
 				case 4:
@@ -192,41 +193,41 @@ namespace Translit
 		}
 
 		// Нажатие кнопки авторизации
-		private void ButtonSignIn_OnClick(object sender, RoutedEventArgs e)
+		private async void ButtonSignIn_OnClick(object sender, RoutedEventArgs e)
 		{
 			// Если поля логина и пароля не пусты
-			if (TextBoxLogin.Text != "" && PasswordBoxPassword.Password != "")
+			if (TextBoxLogin.Text == "" || PasswordBoxPassword.Password == "") return;
+
+			// Выводим уведомление "Авторизация..."
+			await Task.Factory.StartNew(() => { })
+				.ContinueWith(t => { SnackbarMain.MessageQueue.Enqueue(GetRes("SnackBarAuthorization")); },
+					TaskScheduler.FromCurrentSynchronizationContext());
+			// Получаем логин
+			var login = TextBoxLogin.Text;
+			// Получаем пароль
+			var password = PasswordBoxPassword.Password;
+			// Генерируем ссылку
+			var link = "http://account.osmium.kz/api/auth?login=" + login + "&pass=" + password;
+			// Создаем запрос
+			var request = (HttpWebRequest) WebRequest.Create(link);
+			ButtonSignIn.IsEnabled = false;
+			await Task.Factory.StartNew(() =>
 			{
-				// Выводим уведомление "Авторизация..."
-				Task.Factory.StartNew(() => { })
-					.ContinueWith(t =>
-					{
-						SnackbarMain.MessageQueue.Enqueue(Application.Current.Resources["SnackBarAuthorization"]);
-
-					}, TaskScheduler.FromCurrentSynchronizationContext());
-				// Получаем логин
-				string login = TextBoxLogin.Text;
-				// Получаем пароль
-				string password = PasswordBoxPassword.Password;
-				// Генерируем ссылку
-				string link = "http://account.osmium.kz/api/auth?login=" + login + "&pass=" + password;
-				// Создаем запрос
-				HttpWebRequest request = (HttpWebRequest)WebRequest.Create(link);
-
 				HttpWebResponse response;
-
 				try
 				{
 					// Запрашиваем ответ от сервера
-					response = (HttpWebResponse)request.GetResponse();
+					response = (HttpWebResponse) request.GetResponse();
 				}
 				catch (Exception)
 				{
 					return;
 				}
-				
+
+				var responseStream = response.GetResponseStream();
+
 				// Считываем данные
-				using (StreamReader stream = new StreamReader(response.GetResponseStream() ?? throw new InvalidOperationException(), Encoding.UTF8))
+				using (var stream = new StreamReader(responseStream ?? throw new InvalidOperationException(), Encoding.UTF8))
 				{
 					// Получаем объект из JSON
 					_user = JsonConvert.DeserializeObject<User>(stream.ReadToEnd());
@@ -235,67 +236,53 @@ namespace Translit
 				if (_user != null)
 				{
 					// Выводим уведомление "Добро пожаловать [фамилия] [имя]"
-					Task.Factory.StartNew(() => { }).ContinueWith(t => { SnackbarMain.MessageQueue.Enqueue(Application.Current.Resources["SnackBarWelcome"] + " " + _user.LastName + " " + _user.FirstName); }, TaskScheduler.FromCurrentSynchronizationContext());
+					SnackbarMain.Dispatcher.Invoke(() =>
+					{
+						var text = GetRes("SnackBarWelcome") + " " + _user.LastName + " " + _user.FirstName;
+						SnackbarMain.MessageQueue.Enqueue(text);
+					}, DispatcherPriority.Background);
 					// Получаем MAC адрес машины клиента
-					string macAddress = NetworkInterface.GetAllNetworkInterfaces().Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback).Select(nic => nic.GetPhysicalAddress().ToString()).FirstOrDefault();
+					var macAddress = NetworkInterface.GetAllNetworkInterfaces()
+						.Where(nic => nic.OperationalStatus == OperationalStatus.Up &&
+						              nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+						.Select(nic => nic.GetPhysicalAddress().ToString()).FirstOrDefault();
 					// Переводим нашего пользователя в строку JSON
-					string userJson = JsonConvert.SerializeObject(_user);
+					var userJson = JsonConvert.SerializeObject(_user);
 					// Сохраняем зашифрованного пользователя в настройках приложения
 					Settings.Default.User = Rc4.Calc(macAddress, userJson);
 					// Сохраняем MAC адресс
 					Settings.Default.MacAddress = macAddress;
 					// Удлаляем логин и пароль из окна авторизации
-					TextBoxLogin.Text = PasswordBoxPassword.Password = "";
+					TextBoxLogin.Dispatcher.Invoke(() => TextBoxLogin.Text = "", DispatcherPriority.Background);
 					// Обновляем данные пользователя в редакторах слов и символов
 					_wordsEditorPage.User = _symbolsEditorPage.User = _user;
 					// Обновляем информацию об авторизовавшемся пользователе в правом боковом меню
-					TextBlockUser.Text = _user.LastName + " " + _user.FirstName;
+					TextBlockUser.Dispatcher.Invoke(() => TextBlockUser.Text = _user.LastName + " " + _user.FirstName,
+						DispatcherPriority.Background);
 					// Обнолвяем боковое меню
 					UpdateRightMenu();
-
-					if (FrameMain.NavigationService.Content is WordsPage)
-					{
-						FrameMain.NavigationService.Navigate(_wordsEditorPage);
-					}
-					else if (FrameMain.NavigationService.Content is SymbolsPage)
-					{
-						FrameMain.NavigationService.Navigate(_symbolsEditorPage);
-					}
+					FrameMain.Dispatcher.Invoke(() => { FrameMain.NavigationService.Navigate(_fileConverterPage); },
+						DispatcherPriority.Background);
 				}
 				else
 				{
 					// Выводим уведомление "Неверный логин или пароль"
-					Task.Factory.StartNew(() => { }).ContinueWith(t => { SnackbarMain.MessageQueue.Enqueue(Application.Current.Resources["SnackBarWrongLoginOrPassword"]); }, TaskScheduler.FromCurrentSynchronizationContext());
+					SnackbarMain.Dispatcher.Invoke(
+						() => { SnackbarMain.MessageQueue.Enqueue(GetRes("SnackBarWrongLoginOrPassword")); },
+						DispatcherPriority.Background);
 				}
-			}
-		}
-
-		// Обновление бокового меню
-		private void UpdateRightMenu()
-		{
-			// Если MAC адрес пустой раскрываем окно авторизации, иначе раскрываем окно профиля
-			if (Settings.Default.MacAddress == "")
-			{
-				RowDefinitionSignIn.Height = new GridLength(1, GridUnitType.Star);
-				RowDefinitionLogOut.Height = new GridLength(0, GridUnitType.Star);
-			}
-			else
-			{
-				RowDefinitionSignIn.Height = new GridLength(0, GridUnitType.Star);
-				RowDefinitionLogOut.Height = new GridLength(1, GridUnitType.Star);
-				TextBlockUser.Text = _user.LastName + " " + _user.FirstName;
-			}
+			});
+			ButtonSignIn.IsEnabled = true;
 		}
 
 		// Нажатие кнопки выхода из профиля
-		private void ButtonLogOut_OnClick(object sender, RoutedEventArgs e)
+		private async void ButtonLogOut_OnClick(object sender, RoutedEventArgs e)
 		{
-			string link = "http://account.osmium.kz/api/auth?token=" + _user.Token + "&id=" + _user.Id;
-			Debug.WriteLine(link);
-			Dispatcher.InvokeAsync(() =>
+			var link = "http://account.osmium.kz/api/auth?token=" + _user.Token + "&id=" + _user.Id;
+			ButtonLogOut.IsEnabled = false;
+			await Task.Factory.StartNew(() =>
 			{
-				HttpClient client = new HttpClient();
-
+				var client = new HttpClient();
 				client.DeleteAsync(link);
 
 				// Обнуляем текущего пользователя
@@ -307,62 +294,34 @@ namespace Translit
 				// Обновляем боковое меню
 				UpdateRightMenu();
 			});
+			ButtonLogOut.IsEnabled = true;
 		}
 
-		// Обработка нажатия клавиш
-		//private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-		//{
-		//	switch (e.Key)
-		//	{
-		//		case System.Windows.Input.Key.F12:
-		//		{
-		//			LoadSymbols();
-		//			break;
-		//		}
-		//	}
-		//}
+		// Обновление бокового меню
+		private void UpdateRightMenu()
+		{
+			// Если MAC адрес пустой раскрываем окно авторизации, иначе раскрываем окно профиля
+			if (Settings.Default.MacAddress == "")
+			{
+				RowDefinitionSignIn.Dispatcher.Invoke(() => RowDefinitionSignIn.Height = new GridLength(1, GridUnitType.Star),
+					DispatcherPriority.Background);
+				RowDefinitionLogOut.Dispatcher.Invoke(() => RowDefinitionLogOut.Height = new GridLength(0, GridUnitType.Star),
+					DispatcherPriority.Background);
+			}
+			else
+			{
+				RowDefinitionSignIn.Dispatcher.Invoke(() => RowDefinitionSignIn.Height = new GridLength(0, GridUnitType.Star),
+					DispatcherPriority.Background);
+				RowDefinitionLogOut.Dispatcher.Invoke(() => RowDefinitionLogOut.Height = new GridLength(1, GridUnitType.Star),
+					DispatcherPriority.Background);
+				TextBlockUser.Dispatcher.Invoke(() => TextBlockUser.Text = _user.LastName + " " + _user.FirstName,
+					DispatcherPriority.Background);
+			}
+		}
 
-		// Метод для разработчика
-		//private void LoadSymbols()
-		//{
-		//	string[] cyryllic = {
-		//		"A", "а", "Ә", "ә", "Б", "б", "Д", "д", "E", "e", "Ф", "ф", "Г", "г",
-		//		"Ғ", "ғ", "Х", "х", "И", "и", "Й", "й", "Ж", "ж", "К", "к", "Л", "л",
-		//		"М", "м", "Н", "н", "Ң", "ң", "О", "о", "Ө", "ө", "П", "п", "Қ", "қ",
-		//		"Р", "р", "С", "с", "Ш", "ш", "Ч", "ч", "Т", "т", "Ұ", "ұ", "Ү", "ү",
-		//		"В", "в", "Ы", "ы", "У", "у", "З", "з", "Я", "я", "Ц", "ц", "Ю", "ю",
-		//		"Щ", "щ", "Ъ", "ъ", "Ь", "ь", "Ё", "ё", "Э", "э"
-		//	};
-		//	string[] latin = {
-		//		"A", "a", "Á", "á", "B", "b", "D", "d", "E", "e", "F", "f", "G", "g",
-		//		"Ǵ", "ǵ", "H", "h", "І", "і", "Í", "í", "J", "j", "K", "k", "L", "l",
-		//		"M", "m", "N", "n", "Ń", "ń", "O", "o", "Ó", "ó", "P", "p", "Q", "q",
-		//		"R", "r", "S", "s", "Sh", "sh", "Ch", "ch", "T", "t", "U", "u", "Ú",
-		//		"ú", "V", "v", "Y", "y", "Ý", "ý", "Z", "z", "Ia", "ıa", "S", "s",
-		//		"Iý", "ıý", "Sh", "sh", "", "", "", "", "Io", "ıo","E", "e"
-		//	};
-
-
-		//	//for (int i = 0; i < cyryllic.Length; i++)
-		//	//{
-		//	//	Debug.WriteLine("INSERT INTO `v464un7p80gkr068`.`symbol` (`cyrl`, `latn`) VALUES('" + cyryllic[i] + "', '" + latin[i] + "');");
-		//	//}
-
-		//	File.Delete(@".\Database\localdb.db");
-
-		//	using (LiteDatabase db = new LiteDatabase(@".\Database\localdb.db"))
-		//	{
-		//		var symbols = db.GetCollection<Symbol>("Symbols");
-
-		//		for (int i = 0; i < cyryllic.Length; i++)
-		//		{
-		//			symbols.Insert(new Symbol
-		//			{
-		//				Cyryllic = cyryllic[i],
-		//				Latin = latin[i]
-		//			});
-		//		}
-		//	}
-		//}
+		private string GetRes(string key)
+		{
+			return Application.Current.Resources[key].ToString();
+		}
 	}
 }

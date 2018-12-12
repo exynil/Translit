@@ -23,10 +23,8 @@
 		</Style>
 	</Page.Resources>
 	<Grid>
-		<StackPanel VerticalAlignment="Center" Margin="10 0" Width="350">
-			<Grid HorizontalAlignment="Center" >
-				<TextBlock x:Name="TextBlockProgramName" HorizontalAlignment="Left" FontSize="60" Foreground="#333" MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown">Translit</TextBlock>
-			</Grid>
+		<StackPanel VerticalAlignment="Center" Margin="10 0" Width="400">
+			<TextBlock x:Name="TextBlockProgramName" HorizontalAlignment="Center" FontSize="60" Foreground="#333" MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown">Translit</TextBlock>
 			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" Foreground="#333" TextWrapping="Wrap" TextAlignment="Center" Margin="0 10" Text="{DynamicResource TextBlockDescription}"></TextBlock>
 			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" Foreground="#333" TextWrapping="Wrap" Margin="0 10">
 				<Hyperlink NavigateUri="http://www.osmium.kz" RequestNavigate="Hyperlink_RequestNavigate">

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace Translit.Pages
@@ -15,7 +16,7 @@ namespace Translit.Pages
 	{
 		private readonly Frame _frameMain;
 		private readonly Page _licensePage;
-		
+
 		public AboutPage(Frame frame)
 		{
 			InitializeComponent();
@@ -39,98 +40,110 @@ namespace Translit.Pages
 			TextBlockCopyright.Text = "© " + DateTime.Now.Year + " Osmium";
 		}
 
-		private void UIElement_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		private async void UIElement_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
-			int degrees = 20;
-			DoubleAnimation aRotateAnimation = new DoubleAnimation
+			TextBlockProgramName.MouseLeftButtonDown -= UIElement_OnMouseLeftButtonDown;
+			await Task.Factory.StartNew(() =>
 			{
-				From = 0,
-				To = degrees,
-				Duration = TimeSpan.FromSeconds(1),
-				EasingFunction = new ElasticEase { EasingMode = EasingMode.EaseOut, Oscillations = 5 }
-			};
-
-			DoubleAnimation bRotateAnimation = new DoubleAnimation
-			{
-				From = degrees,
-				To = 0,
-				Duration = TimeSpan.FromSeconds(1),
-				EasingFunction = new ElasticEase { EasingMode = EasingMode.EaseOut, Oscillations = 5 }
-			};
-
-			DoubleAnimation cRotateAnimation = new DoubleAnimation
-			{
-				From = 0,
-				To = -degrees,
-				Duration = TimeSpan.FromSeconds(1),
-				EasingFunction = new ElasticEase { EasingMode = EasingMode.EaseOut, Oscillations = 5 }
-			};
-			DoubleAnimation dRotateAnimation = new DoubleAnimation
-			{
-				From = -degrees,
-				To = -0,
-				Duration = TimeSpan.FromSeconds(1),
-				EasingFunction = new ElasticEase { EasingMode = EasingMode.EaseOut, Oscillations = 5 }
-			};
-
-			((TextBlock)sender).RenderTransform = new RotateTransform();
-			((TextBlock)sender).RenderTransformOrigin = new Point(0.5, 0.5);
-
-			((TextBlock)sender).Dispatcher.Invoke(
-				() => ((TextBlock)sender).RenderTransform.BeginAnimation(RotateTransform.AngleProperty, aRotateAnimation),
-				DispatcherPriority.Background);
-			((TextBlock)sender).Dispatcher.Invoke(
-				() => ((TextBlock)sender).RenderTransform.BeginAnimation(RotateTransform.AngleProperty, bRotateAnimation, HandoffBehavior.Compose),
-				DispatcherPriority.Background);
-			((TextBlock)sender).Dispatcher.Invoke(
-				() => ((TextBlock)sender).RenderTransform.BeginAnimation(RotateTransform.AngleProperty, cRotateAnimation, HandoffBehavior.Compose),
-				DispatcherPriority.Background);
-			((TextBlock)sender).Dispatcher.Invoke(
-				() => ((TextBlock)sender).RenderTransform.BeginAnimation(RotateTransform.AngleProperty, dRotateAnimation, HandoffBehavior.Compose),
-				DispatcherPriority.Background);
-
-			Random random = new Random();
-			var symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
-			string[] team =
-			{
-				"Osmium",
-				"Maxim",
-				"Vladislav",
-				"Eric",
-				"Dmitriy",
-				"Rayimbek",
-				"Artyom",
-				"Dalila",
-				"Alexandr"
-			};
-
-			string randomMember = team[random.Next(0, team.Length)];
-
-			int part = 15;
-			int cycles = part * randomMember.Length;
-
-			int count = 0;
-			int index = 0;
-
-			for (int i = 0; i <= cycles; i++)
-			{
-				StringBuilder text = new StringBuilder(randomMember);
-
-				for (int j = index; j < randomMember.Length; j++)
+				TextBlockProgramName.Dispatcher.Invoke(() =>
+					{
+						TextBlockProgramName.HorizontalAlignment = HorizontalAlignment.Left;
+					}, DispatcherPriority.Background);
+				var random = new Random();
+				const string symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+				string[] team =
 				{
-					text[j] = symbols[random.Next(0, symbols.Length)];
-				}
-				TextBlockProgramName.Dispatcher.Invoke(() => TextBlockProgramName.Text = text.ToString(), DispatcherPriority.Background);
+					"Osmium",
+					"Maxim",
+					"Vladislav",
+					"Eric",
+					"Dmitriy",
+					"Rayimbek",
+					"Artyom",
+					"Dalila",
+					"Alexandr"
+				};
+				var randomMember = team[random.Next(0, team.Length)];
 
-				count++;
-				if (count == part)
+				var fontFamily =
+					TextBlockProgramName.Dispatcher.Invoke(
+						() => (FontFamily)TextBlockProgramName.GetValue(TextBlock.FontFamilyProperty),
+						DispatcherPriority.Background);
+
+				var fontStyle =
+					TextBlockProgramName.Dispatcher.Invoke(
+						() => (FontStyle)TextBlockProgramName.GetValue(TextBlock.FontStyleProperty),
+						DispatcherPriority.Background);
+
+				var fontWeight =
+					TextBlockProgramName.Dispatcher.Invoke(
+						() => (FontWeight)TextBlockProgramName.GetValue(TextBlock.FontWeightProperty),
+						DispatcherPriority.Background);
+
+				var fontStretch =
+					TextBlockProgramName.Dispatcher.Invoke(
+						() => (FontStretch)TextBlockProgramName.GetValue(TextBlock.FontStretchProperty),
+						DispatcherPriority.Background);
+
+				var fontSize =
+					TextBlockProgramName.Dispatcher.Invoke(() => (double)TextBlockProgramName.GetValue(TextBlock.FontSizeProperty),
+						DispatcherPriority.Background);
+
+				var formattedText = new FormattedText(randomMember,
+					CultureInfo.CurrentCulture,
+					FlowDirection.LeftToRight,
+					new Typeface(fontFamily,
+						fontStyle,
+						fontWeight,
+						fontStretch),
+					fontSize,
+					null,
+					new NumberSubstitution());
+
+				var size = new Size(formattedText.Width,
+					formattedText.Height);
+
+				TextBlockProgramName.Dispatcher.Invoke(() =>
 				{
-					text[index] = randomMember[index];
-					count = 0;
-					index++;
+					TextBlockProgramName.Margin = new Thickness((400 - size.Width) / 2, 0, 0, 0);
+				}, DispatcherPriority.Background);
+
+				const int part = 10;
+				var cycles = part * randomMember.Length;
+
+				var count = 0;
+				var index = 0;
+
+				for (var i = 0; i <= cycles; i++)
+				{
+					var text = new StringBuilder(randomMember);
+
+					for (var j = index; j < randomMember.Length; j++)
+					{
+						if (j == 0)
+						{
+							text[j] = symbols[random.Next(0, symbols.Length / 2)];
+							continue;
+						}
+						text[j] = symbols[random.Next(symbols.Length / 2, symbols.Length)];
+					}
+
+					TextBlockProgramName.Dispatcher.Invoke(() =>
+					{
+						TextBlockProgramName.Text = text.ToString();
+					}, DispatcherPriority.Background);
+
+					count++;
+					if (count == part)
+					{
+						text[index] = randomMember[index];
+						count = 0;
+						index++;
+					}
+					Thread.Sleep(30);
 				}
-				Thread.Sleep(25);
-			}
+			});
+			TextBlockProgramName.MouseLeftButtonDown += UIElement_OnMouseLeftButtonDown;
 		}
 	}
 }

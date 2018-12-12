@@ -19,16 +19,21 @@ namespace Translit.Pages
 	public partial class FileConverterPage
 	{
 		public Snackbar SnackbarInfo { get; set; }
+		public string ConnectionString { get; set; }
+
 		public FileConverterPage(Snackbar snackbar)
 		{
 			InitializeComponent();
 			SnackbarInfo = snackbar;
+			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
 		}
 
 		// Асинхронный показ уведомления
 		private async Task ShowAsyncNotification(string resourceName)
 		{
-			await Task.Factory.StartNew(() => { }).ContinueWith(t => { SnackbarInfo.MessageQueue.Enqueue(Application.Current.Resources[resourceName]); }, TaskScheduler.FromCurrentSynchronizationContext());
+			await Task.Factory.StartNew(() => { })
+				.ContinueWith(t => { SnackbarInfo.MessageQueue.Enqueue(GetRes(resourceName)); },
+					TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		// Нажатие кнопки выбора файла Word
@@ -52,19 +57,18 @@ namespace Translit.Pages
 			StackPanelProgress.Visibility = Visibility.Visible;
 			ProgressBarDocuments.Value = 1;
 			ProgressBarDocuments.Maximum = 1;
-			TextBlockDocumetns.Text = Application.Current.Resources["TextBlockDocuments"] + ": 1/1";
+			TextBlockDocumetns.Text = GetRes("TextBlockDocuments") + ": 1/1";
 			ProgressBarExceptions.Value = 0;
 			ProgressBarDocument.Value = 0;
 
 			// Транслитерация выбранного файла
 			await Task.Factory.StartNew(() => TranslitFile(dlg.FileName));
-			
+
 			// Скрываем прогресс
 			StackPanelProgress.Visibility = Visibility.Hidden;
 
 			// Выводим уведомление
 			await ShowAsyncNotification("TransliterationCompleted");
-
 			ButtonSelectFile.IsEnabled = true;
 			ButtonSelectFolder.IsEnabled = true;
 		}
@@ -83,8 +87,7 @@ namespace Translit.Pages
 				// Получаем пути всех нескрытых файлов с расширением .doc и .docx
 				var files = new DirectoryInfo(fbd.SelectedPath).EnumerateFiles()
 					.Where(f => (f.Attributes & FileAttributes.Hidden) == 0 && (f.Extension == ".doc" || f.Extension == ".docx"))
-					.Select(f => f.FullName)
-					.ToArray();
+					.Select(f => f.FullName).ToArray();
 
 				// Раскрываем прогресс
 				StackPanelProgress.Visibility = Visibility.Visible;
@@ -96,23 +99,17 @@ namespace Translit.Pages
 				{
 					TextBlockDocumetns.Dispatcher.Invoke(() =>
 					{
-						var text = Application.Current.Resources["TextBlockDocuments"] + ": " + (i[0] + 1) + "/" + files.Length;
+						var text = GetRes("TextBlockDocuments") + ": " + (i[0] + 1) + "/" + files.Length;
 						TextBlockDocumetns.Text = text;
 					}, DispatcherPriority.Background);
-
 					ProgressBarDocuments.Value = i[0];
-
 					ProgressBarExceptions.Value = 0;
-
 					ProgressBarDocument.Value = 0;
-
 					await Task.Factory.StartNew(() => TranslitFile(files[i[0]]));
 				}
 
 				StackPanelProgress.Visibility = Visibility.Hidden;
-
 				await ShowAsyncNotification("TransliterationCompleted");
-
 				ButtonSelectFile.IsEnabled = true;
 				ButtonSelectFolder.IsEnabled = true;
 			}
@@ -138,13 +135,9 @@ namespace Translit.Pages
 
 			// Открваем документ xml
 			var doc = XDocument.Load(xmlPath);
-
-			var connectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
-
-			using (var db = new LiteDatabase(connectionString))
+			using (var db = new LiteDatabase(ConnectionString))
 			{
 				var words = db.GetCollection<Word>("Words").FindAll().ToArray();
-				
 				for (var i = 0; i < words.Length; i++)
 				{
 					// Трансформируем слово в три различных состояния [ЗАГЛАВНЫЕ, прописные и Первыя заглавная] и заменяем
@@ -155,23 +148,23 @@ namespace Translit.Pages
 						switch (j)
 						{
 							case 0:
-							{
-								cyryllic = cyryllic.ToUpper();
-								latin = latin.ToUpper();
-								break;
-							}
+								{
+									cyryllic = cyryllic.ToUpper();
+									latin = latin.ToUpper();
+									break;
+								}
 							case 1:
-							{
-								cyryllic = cyryllic.ToLower();
-								latin = latin.ToLower();
-								break;
+								{
+									cyryllic = cyryllic.ToLower();
+									latin = latin.ToLower();
+									break;
 								}
 							case 2:
-							{
-								cyryllic = cyryllic.First().ToString().ToUpper() + cyryllic.Substring(1);
-								latin = latin.First().ToString().ToUpper() + latin.Substring(1);
-								break;
-							}
+								{
+									cyryllic = cyryllic.First().ToString().ToUpper() + cyryllic.Substring(1);
+									latin = latin.First().ToString().ToUpper() + latin.Substring(1);
+									break;
+								}
 						}
 
 						// Получение всех узлов <w:t>
@@ -189,17 +182,14 @@ namespace Translit.Pages
 
 					// Выводим результат
 					TextBlockExceptions.Dispatcher.Invoke(
-						() =>
-						{
-							var text = Application.Current.Resources["TextBlockTransliterationOfExceptionWords"] + ": " + percent + "%";
-							TextBlockExceptions.Text = text;
-						}, DispatcherPriority.Background);
+						() => { TextBlockExceptions.Text = GetRes("TextBlockTransliterationOfExceptionWords") + ": " + percent + "%"; },
+						DispatcherPriority.Background);
 					// Изменяем прогресс
-					ProgressBarExceptions.Dispatcher.Invoke(() => ProgressBarExceptions.Value = percent, DispatcherPriority.Background);
+					ProgressBarExceptions.Dispatcher.Invoke(() => ProgressBarExceptions.Value = percent,
+						DispatcherPriority.Background);
 				}
 
 				var symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
-
 				for (var i = 0; i < symbols.Length; i++)
 				{
 					var elements = doc.Descendants().Where(x => x.Name.LocalName == "t");
@@ -211,18 +201,14 @@ namespace Translit.Pages
 					}
 
 					long percent = i * 100 / (symbols.Length - 1);
-
-					TextBlockDocument.Dispatcher.Invoke(() =>
-					{
-						var text = Application.Current.Resources["TextBlockCharacterTransliteration"] + ": " + percent + "%";
-						TextBlockDocument.Text = text;
-					}, DispatcherPriority.Background);
+					TextBlockDocument.Dispatcher.Invoke(
+						() => TextBlockDocument.Text = GetRes("TextBlockCharacterTransliteration") + ": " + percent + "%",
+						DispatcherPriority.Background);
 					ProgressBarDocument.Dispatcher.Invoke(() => ProgressBarDocument.Value = percent, DispatcherPriority.Background);
 				}
 			}
 
 			doc.Save(xmlPath);
-
 			int number = 1;
 
 			// Создание документа
@@ -232,21 +218,19 @@ namespace Translit.Pages
 				var directoryName = fileInfo.DirectoryName;
 				var fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
 				string label;
-
 				if (number == 1)
 				{
-					label = " (" + Application.Current.Resources["FileNameLatin"] + ")";
+					label = " (" + GetRes("FileNameLatin") + ")";
 				}
 				else
 				{
-					label = " (" + Application.Current.Resources["FileNameLatin"] + " " + number + ")";
+					label = " (" + GetRes("FileNameLatin") + " " + number + ")";
 				}
-				
+
 				var extension = fileInfo.Extension;
 
 				// Комбинирование данных
 				var newDocument = directoryName + @"\" + fileName + label + extension;
-
 				if (File.Exists(newDocument))
 				{
 					number++;
@@ -254,12 +238,10 @@ namespace Translit.Pages
 				}
 
 				ZipFile.CreateFromDirectory(temporaryFolder, newDocument);
-				
+
 				// Удаление временной папки
 				Directory.Delete(temporaryFolder, true);
-
 				if (Settings.Default.AutoSave) break;
-
 				try
 				{
 					// Замена файла
@@ -272,6 +254,11 @@ namespace Translit.Pages
 
 				break;
 			}
+		}
+
+		private string GetRes(string key)
+		{
+			return Application.Current.Resources[key].ToString();
 		}
 	}
 }

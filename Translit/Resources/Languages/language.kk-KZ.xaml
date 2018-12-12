@@ -43,6 +43,8 @@
 	<v:String x:Key="TextBlockAmountOfWords">Сөздер саны</v:String>
 	<v:String x:Key="TextBlockLastUpdate">Соңғы жаңарту</v:String>
 	<v:String x:Key="ButtonUpdate">Жаңарту</v:String>
+	<v:String x:Key="ButtonLoading">Жүктеу</v:String>
+	<v:String x:Key="TextBlockDatabaseNotFound">Деректер базасы табылмады</v:String>
 	<v:String x:Key="FileMb">МБ</v:String>
 	<v:String x:Key="FileKb">КБ</v:String>
 
@@ -67,7 +69,6 @@
 	<v:String x:Key="SnackBarUpdateCompleted">Жаңарту аяқталды</v:String>
 	<v:String x:Key="SnackBarWelcome">Хош келдіңіз</v:String>
 	<v:String x:Key="SnackBarWrongLoginOrPassword">Логин немесе құпиясөз теріс</v:String>
-	<v:String x:Key="SnackBarLocalDatabaseNotFound">Жергілікті деректер базасы табылмады</v:String>
 	<v:String x:Key="SnackBarNotAllowedLength">Жол берілмеуі тиіс өлшем</v:String>
 
 	<!--DataGridTextColumn Header-->

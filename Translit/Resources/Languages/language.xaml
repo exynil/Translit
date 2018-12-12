@@ -43,6 +43,8 @@
 	<v:String x:Key="TextBlockAmountOfWords">Amount of words</v:String>
 	<v:String x:Key="TextBlockLastUpdate">Last update</v:String>
 	<v:String x:Key="ButtonUpdate">Update</v:String>
+	<v:String x:Key="ButtonLoading">Loading</v:String>
+	<v:String x:Key="TextBlockDatabaseNotFound">Database not found</v:String>
 	<v:String x:Key="FileMb">MB</v:String>
 	<v:String x:Key="FileKb">KB</v:String>
 
@@ -67,7 +69,6 @@
 	<v:String x:Key="SnackBarUpdateCompleted">Update completed</v:String>
 	<v:String x:Key="SnackBarWelcome">Welcome</v:String>
 	<v:String x:Key="SnackBarWrongLoginOrPassword">Wrong login or password</v:String>
-	<v:String x:Key="SnackBarLocalDatabaseNotFound">Local database not found</v:String>
 	<v:String x:Key="SnackBarNotAllowedLength">Not allowed length</v:String>
 
 	<!--DataGridTextColumn Header-->

@@ -1,7 +1,6 @@
 ﻿using LiteDB;
 using System;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;

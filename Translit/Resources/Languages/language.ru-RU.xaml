@@ -43,6 +43,8 @@
 	<v:String x:Key="TextBlockAmountOfWords">Количество слов</v:String>
 	<v:String x:Key="TextBlockLastUpdate">Последнее обновление</v:String>
 	<v:String x:Key="ButtonUpdate">Обновить</v:String>
+	<v:String x:Key="ButtonLoading">Загрузка</v:String>
+	<v:String x:Key="TextBlockDatabaseNotFound">База данных не найдена</v:String>
 	<v:String x:Key="FileMb">МБ</v:String>
 	<v:String x:Key="FileKb">КБ</v:String>
 
@@ -67,7 +69,6 @@
 	<v:String x:Key="SnackBarUpdateCompleted">Обновление завершено</v:String>
 	<v:String x:Key="SnackBarWelcome">Добро пожаловать</v:String>
 	<v:String x:Key="SnackBarWrongLoginOrPassword">Не верный логин или пароль</v:String>
-	<v:String x:Key="SnackBarLocalDatabaseNotFound">Локальная база данных не найдена</v:String>
 	<v:String x:Key="SnackBarNotAllowedLength">Не допустимая длина</v:String>
 
 	<!--DataGridTextColumn Header-->

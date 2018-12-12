@@ -42,17 +42,17 @@ namespace Translit.Pages
 			{
 				int wordsCount;
 				int symbolsCount;
-				string[] links = {@"http://translit.osmium.kz/api/symbol", @"http://translit.osmium.kz/api/word"};
-				HttpWebRequest[] request = new HttpWebRequest[2];
-				request[0] = (HttpWebRequest) WebRequest.Create(links[0]);
-				request[1] = (HttpWebRequest) WebRequest.Create(links[1]);
-				HttpWebResponse[] response = new HttpWebResponse[2];
+				string[] links = { @"http://translit.osmium.kz/api/symbol", @"http://translit.osmium.kz/api/word" };
+				var request = new HttpWebRequest[2];
+				request[0] = (HttpWebRequest)WebRequest.Create(links[0]);
+				request[1] = (HttpWebRequest)WebRequest.Create(links[1]);
+				var response = new HttpWebResponse[2];
 
 				// Пытаем получить ответ от сервера
 				try
 				{
-					response[0] = (HttpWebResponse) request[0].GetResponse();
-					response[1] = (HttpWebResponse) request[1].GetResponse();
+					response[0] = (HttpWebResponse)request[0].GetResponse();
+					response[1] = (HttpWebResponse)request[1].GetResponse();
 				}
 				catch (Exception)
 				{
@@ -85,15 +85,16 @@ namespace Translit.Pages
 				StackPanelProgress.Dispatcher.Invoke(() => { StackPanelProgress.Visibility = Visibility.Visible; },
 					DispatcherPriority.Background);
 
+				// Удаляем локальную базу
+				File.Delete(ConnectionString);
+
 				// Подлключаемся к локальной базе
 				using (var db = new LiteDatabase(ConnectionString))
 				{
-					// Удаляем существующую коллекцию
-					db.DropCollection("Symbols");
 					// Создаем коллекцию
 					var symbols = db.GetCollection<Symbol>("Symbols");
 					// Перебираем полученный ответ от сервера и дабавляем каждое исключение в базу
-					for (int[] i = {0}; i[0] < listSymbols.Count; i[0]++)
+					for (int[] i = { 0 }; i[0] < listSymbols.Count; i[0]++)
 					{
 						// Высчитываем процент выполнения
 						long percent = i[0] * 100 / (listSymbols.Count - 1);
@@ -113,12 +114,10 @@ namespace Translit.Pages
 					// Запоминаем кол-во символов
 					symbolsCount = listSymbols.Count;
 
-					// Удаляем существующую коллекцию
-					db.DropCollection("Words");
 					// Создаем коллекцию
 					var words = db.GetCollection<Word>("Words");
 					// Перебираем полученный ответ сервера и добавляем каждое исключение в базу
-					for (int[] i = {0}; i[0] < listWords.Count; i[0]++)
+					for (int[] i = { 0 }; i[0] < listWords.Count; i[0]++)
 					{
 						//Высчитываем процент выполенения
 						long percent = i[0] * 100 / (listWords.Count - 1);

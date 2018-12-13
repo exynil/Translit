@@ -86,7 +86,15 @@ namespace Translit.Pages
 					DispatcherPriority.Background);
 
 				// Удаляем локальную базу
-				File.Delete(ConnectionString);
+				if (File.Exists(ConnectionString))
+				{
+					File.Delete(ConnectionString);
+				}
+
+				if (!Directory.Exists("Database"))
+				{
+					Directory.CreateDirectory("Database");
+				}
 
 				// Подлключаемся к локальной базе
 				using (var db = new LiteDatabase(ConnectionString))

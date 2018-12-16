@@ -1,0 +1,53 @@
+﻿<Page x:Class="Translit.Views.Pages.TextConverterView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      xmlns:p="clr-namespace:Translit.Properties"
+      mc:Ignorable="d"
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="TextConverter" Loaded="TextConverterPage_OnLoaded">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="60"></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="7"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<RichTextBox x:Name="RichTextBoxCyryllic" Grid.Row="0" FontSize="15" VerticalScrollBarVisibility="Visible"
+			             AcceptsReturn="True">
+			</RichTextBox>
+			<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="7"></GridSplitter>
+			<RichTextBox x:Name="RichTextBoxLatin" Grid.Row="2" FontSize="15" VerticalScrollBarVisibility="Visible"
+			             AcceptsReturn="True">
+			</RichTextBox>
+		</Grid>
+		<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+			<ToggleButton x:Name="ToggleButtonRealTimeTransliteration"
+			              IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=RealTimeTransliteration, Mode=TwoWay}"
+			              VerticalAlignment="Center" Margin="5" ToolTip="{DynamicResource ToggleButtonRealTimeTransliteration}"
+			              Click="ToggleButtonRealTimeTransliteration_OnClick">
+			</ToggleButton>
+			<Button x:Name="ButtonClear" VerticalAlignment="Center" Margin="5" Background="#FFFB7272" BorderBrush="#FFFB7272"
+			        Click="ButtonClear_OnClick" Content="{DynamicResource ButtonClear}">
+			</Button>
+			<Button x:Name="ButtonTranslit" VerticalAlignment="Center" Margin="5" Click="ButtonTranslit_OnClick"
+			        Content="{DynamicResource ButtonConvert}">
+			</Button>
+			<Button x:Name="ButtonCopy" VerticalAlignment="Center" Margin="5" Click="ButtonCopy_OnClick"
+			        Content="{DynamicResource ButtonToCopy}">
+			</Button>
+		</StackPanel>
+	</Grid>
+</Page>

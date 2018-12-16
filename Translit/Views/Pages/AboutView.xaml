@@ -1,0 +1,51 @@
+﻿<Page x:Class="Translit.Views.Pages.AboutView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="500"
+      Title="AboutPage" Loaded="Page_Loaded">
+	<Page.Resources>
+		<Style TargetType="Hyperlink">
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="Foreground" Value="#673AB7"></Setter>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+	</Page.Resources>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition x:Name="ColumnDefinitionAbout" Width="1*"></ColumnDefinition>
+			<ColumnDefinition x:Name="ColumnDefinitionLicense" Width="0*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="10 0" Width="400">
+			<TextBlock x:Name="TextBlockProgramName" HorizontalAlignment="Center" FontSize="60" Foreground="#333" MouseLeftButtonDown="TextBlockProgramName_OnMouseLeftButtonDown">Translit</TextBlock>
+			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" Foreground="#333" TextWrapping="Wrap" TextAlignment="Center" Margin="0 10" Text="{DynamicResource TextBlockDescription}"></TextBlock>
+			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" Foreground="#333" TextWrapping="Wrap" Margin="0 10">
+				<Hyperlink NavigateUri="http://www.osmium.kz" RequestNavigate="Hyperlink_RequestNavigate">
+					<TextBlock Text="{DynamicResource TextBlockUrlName}"></TextBlock>
+				</Hyperlink>
+			</TextBlock>
+			<Button x:Name="ButtonLicense" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonLicense_OnClick" FontWeight="Regular" Foreground="#0066CC" Content="{DynamicResource ButtonLicense}"></Button>
+			<TextBlock x:Name="TextBlockVersion" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" Foreground="#333" TextWrapping="Wrap" TextAlignment="Center" Margin="0 10"></TextBlock>
+			<TextBlock x:Name="TextBlockCopyright" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" Foreground="#333" TextWrapping="Wrap" TextAlignment="Center" Margin="0 10"></TextBlock>
+		</StackPanel>
+		<Grid Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<RichTextBox x:Name="RichTextBoxLicense" Grid.Row="0" Background="WhiteSmoke" IsReadOnly="True" VerticalScrollBarVisibility="Visible" Margin="4"></RichTextBox>
+			<Button x:Name="ButtonBack" Grid.Row="1" HorizontalAlignment="Center" Content="{DynamicResource ButtonBack}" Margin="5" Click="ButtonBack_OnClick"></Button>
+		</Grid>
+	</Grid>
+</Page>

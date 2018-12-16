@@ -50,9 +50,10 @@
 
 	<!--Page About-->
 	<v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации документов Word с кириллицы на латиницу</v:String>
-	<v:String x:Key="TextBlockVersion">Версия: 0.1</v:String>
+	<v:String x:Key="TextBlockVersion">Версия</v:String>
 	<v:String x:Key="ButtonLicense">Лицензия</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт временно не работает]</v:String>
+	<v:String x:Key="ButtonBack">Назад</v:String>
 
 	<!--Snackbar-->
 	<v:String x:Key="SnackBarAuthorization">Авторизация</v:String>

@@ -50,9 +50,10 @@
 
 	<!--Page About-->
 	<v:String x:Key="TextBlockDescription">Program for automatic transliteration of Word documents from cyrillic to latin</v:String>
-	<v:String x:Key="TextBlockVersion">Version: 0.1</v:String>
+	<v:String x:Key="TextBlockVersion">Version</v:String>
 	<v:String x:Key="ButtonLicense">License</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [the site is temporarily down]</v:String>
+	<v:String x:Key="ButtonBack">Back</v:String>
 
 	<!--Snackbar-->
 	<v:String x:Key="SnackBarAuthorization">Authorization</v:String>

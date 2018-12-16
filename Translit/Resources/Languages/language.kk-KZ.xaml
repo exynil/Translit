@@ -48,11 +48,12 @@
 	<v:String x:Key="FileMb">МБ</v:String>
 	<v:String x:Key="FileKb">КБ</v:String>
 
-	<!--Window About-->
+	<!--Page About-->
 	<v:String x:Key="TextBlockDescription">Word құжаттарын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама</v:String>
-	<v:String x:Key="TextBlockVersion">Нұсқа: 0.1</v:String>
+	<v:String x:Key="TextBlockVersion">Нұсқа</v:String>
 	<v:String x:Key="ButtonLicense">Лицензия</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт уақытша жұмыс істемейді]</v:String>
+	<v:String x:Key="ButtonBack">Артқа</v:String>
 
 	<!--Snackbar-->
 	<v:String x:Key="SnackBarAuthorization">Авторизациялау</v:String>

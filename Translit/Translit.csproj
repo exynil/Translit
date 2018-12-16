@@ -78,11 +78,62 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Entity\DatabaseInfo.cs" />
     <Compile Include="Entity\GeneralSettings.cs" />
     <Compile Include="Entity\Rc4.cs" />
     <Compile Include="Entity\Symbol.cs" />
     <Compile Include="Entity\User.cs" />
     <Compile Include="Entity\Word.cs" />
+    <Compile Include="Models\Pages\AboutModel.cs" />
+    <Compile Include="Models\Pages\DatabaseModel.cs" />
+    <Compile Include="Models\Pages\FileConverterModel.cs" />
+    <Compile Include="Models\Pages\SettingsModel.cs" />
+    <Compile Include="Models\Pages\SymbolsEditorModel.cs" />
+    <Compile Include="Models\Pages\SymbolsModel.cs" />
+    <Compile Include="Models\Pages\TextConverterModel.cs" />
+    <Compile Include="Models\Pages\WordsEditorModel.cs" />
+    <Compile Include="Models\Pages\WordsModel.cs" />
+    <Compile Include="Models\Windows\MainWindowModel.cs" />
+    <Compile Include="Presenters\Pages\AboutPresenter.cs" />
+    <Compile Include="Presenters\Pages\DatabasePresenter.cs" />
+    <Compile Include="Presenters\Pages\FileConverterPresenter.cs" />
+    <Compile Include="Presenters\Pages\SettingsPresenter.cs" />
+    <Compile Include="Presenters\Pages\SymbolsEditorPresenter.cs" />
+    <Compile Include="Presenters\Pages\SymbolsPresenter.cs" />
+    <Compile Include="Presenters\Pages\TextConverterPresenter.cs" />
+    <Compile Include="Presenters\Pages\WordsEditorPresenter.cs" />
+    <Compile Include="Presenters\Pages\WordsPresenter.cs" />
+    <Compile Include="Presenters\Windows\MainWindowPresenter.cs" />
+    <Compile Include="Views\Pages\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\DatabaseView.xaml.cs">
+      <DependentUpon>DatabaseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\FileConverterView.xaml.cs">
+      <DependentUpon>FileConverterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\SymbolsEditorView.xaml.cs">
+      <DependentUpon>SymbolsEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\SymbolsView.xaml.cs">
+      <DependentUpon>SymbolsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\TextConverterView.xaml.cs">
+      <DependentUpon>TextConverterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\WordsEditorView.xaml.cs">
+      <DependentUpon>WordsEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\WordsView.xaml.cs">
+      <DependentUpon>WordsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AddDialogWindow.xaml.cs">
       <DependentUpon>AddDialogWindow.xaml</DependentUpon>
     </Compile>
@@ -92,58 +143,10 @@
     <Compile Include="Windows\EditDialogWindow.xaml.cs">
       <DependentUpon>EditDialogWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Pages\AboutPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\DatabaseUpdatePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\FileConverterPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\LicensePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\SettingsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\SymbolsEditorPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\SymbolsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\TextConverterPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\WordsEditorPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\WordsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Resources\Languages\language.kk-KZ.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -155,6 +158,46 @@
     <Page Include="Resources\Languages\language.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Pages\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\DatabaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\FileConverterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\SymbolsEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\SymbolsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\TextConverterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\WordsEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\WordsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\MainWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AddDialogWindow.xaml">
       <SubType>Designer</SubType>
@@ -170,36 +213,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pages\AboutPage.xaml.cs">
-      <DependentUpon>AboutPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\DatabaseUpdatePage.xaml.cs">
-      <DependentUpon>DatabaseUpdatePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\FileConverterPage.xaml.cs">
-      <DependentUpon>FileConverterPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LicensePage.xaml.cs">
-      <DependentUpon>LicensePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SymbolsEditorPage.xaml.cs">
-      <DependentUpon>SymbolsEditorPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SymbolsPage.xaml.cs">
-      <DependentUpon>SymbolsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\TextConverterPage.xaml.cs">
-      <DependentUpon>TextConverterPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\WordsEditorPage.xaml.cs">
-      <DependentUpon>WordsEditorPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\WordsPage.xaml.cs">
-      <DependentUpon>WordsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -217,9 +230,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -234,5 +245,6 @@
   <ItemGroup>
     <Resource Include="Resources\Images\logo.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

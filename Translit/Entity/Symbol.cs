@@ -2,7 +2,7 @@
 
 namespace Translit.Entity
 {
-	class Symbol
+	public class Symbol
 	{
 		[JsonProperty("id")]
 		public int Id { get; set; }

@@ -18,24 +18,24 @@ namespace Translit.Presenters.Pages
 
         public async void DownloadDatabase()
         {
-			await Task.Factory.StartNew(() =>
-	        {
-		        View.ToggleUpdateButtonState(false);
-				if (!Model.DownloadDatabaseFromServer())
-		        {
-			        View.ToggleUpdateButtonState(true);
-					View.ShowNotification("SnackBarBadInternetConnection");
-			        return;
-		        }
-		        View.ToggleProgressBarVisibility();
-				Model.DeleteOldDatabase();
-		        Model.PropertyChanged += TrackProperties;
-		        Model.InsertData();
-		        View.ShowNotification("SnackBarUpdateCompleted");
-		        View.SetInfoAboutDatabase(Model.GetInfoAboutDatabase());
-		        View.ToggleUpdateButtonState(true);
-		        View.ToggleProgressBarVisibility();
-			});
+						await Task.Factory.StartNew(() =>
+								{
+									View.ToggleUpdateButtonState(false);
+							if (!Model.DownloadDatabaseFromServer())
+									{
+										View.ToggleUpdateButtonState(true);
+								View.ShowNotification("SnackBarBadInternetConnection");
+										return;
+									}
+									View.ToggleProgressBarVisibility();
+							Model.DeleteOldDatabase();
+									Model.PropertyChanged += TrackProperties;
+									Model.InsertData();
+									View.ShowNotification("SnackBarUpdateCompleted");
+									View.SetInfoAboutDatabase(Model.GetInfoAboutDatabase());
+									View.ToggleUpdateButtonState(true);
+									View.ToggleProgressBarVisibility();
+						});
         }
 
 		public void TrackProperties(object sender, PropertyChangedEventArgs e)

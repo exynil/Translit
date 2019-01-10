@@ -6,7 +6,7 @@ using Translit.Entity;
 
 namespace Translit.Models.Pages
 {
-	public class WordsModel
+	public class WordsModel : IWordsModel
 	{
 		public string ConnectionString { get; }
 

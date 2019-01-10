@@ -5,14 +5,14 @@ using Translit.Views.Pages;
 
 namespace Translit.Presenters.Pages
 {
-	public class FileConverterPresenter
+	public class FileConverterPresenter : IFileConverterPresenter
 	{
-		public FileConverterModel Model { get;}
-		public FileConverterView View { get;}
+		private IFileConverterModel Model { get;}
+		private IFileConverterView View { get;}
 
-		public FileConverterPresenter(FileConverterModel model, FileConverterView view)
+		public FileConverterPresenter(FileConverterView view)
 		{
-			Model = model;
+			Model = new FileConverterModel();
 			View = view;
 		}
 		public async void OnButtonSelectFileClicked()

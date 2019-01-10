@@ -2,18 +2,17 @@
 using System.Windows;
 using System.Windows.Threading;
 using Translit.Entity;
-using Translit.Models.Pages;
 using Translit.Presenters.Pages;
 
 namespace Translit.Views.Pages
 {
-	public partial class WordsView
+	public partial class WordsView : IWordsView
 	{
-		public WordsPresenter Presenter { get; }
+		private IWordsPresenter Presenter { get; }
 		public WordsView()
 		{
 			InitializeComponent();
-			Presenter = new WordsPresenter(new WordsModel(), this);
+			Presenter = new WordsPresenter(this);
 		}
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{

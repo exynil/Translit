@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Translit.Models.Pages
 {
-	public class AboutModel : INotifyPropertyChanged
+	public class AboutModel : IAboutModel, INotifyPropertyChanged
 	{
 		private string RandomMember { get; set; }
 		private string _modifiedMember;

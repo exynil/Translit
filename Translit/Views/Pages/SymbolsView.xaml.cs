@@ -2,18 +2,17 @@
 using System.Windows;
 using System.Windows.Threading;
 using Translit.Entity;
-using Translit.Models.Pages;
 using Translit.Presenters.Pages;
 
 namespace Translit.Views.Pages
 {
-	public partial class SymbolsView
+	public partial class SymbolsView : ISymbolsView
 	{
-		public SymbolsPresenter Presenter { get; set; }
+		private ISymbolsPresenter Presenter { get; set; }
 		public SymbolsView()
 		{
 			InitializeComponent();
-			Presenter = new SymbolsPresenter(new SymbolsModel(), this);
+			Presenter = new SymbolsPresenter(this);
 		}
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)

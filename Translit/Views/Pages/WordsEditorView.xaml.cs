@@ -4,20 +4,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using Translit.Entity;
-using Translit.Models.Pages;
 using Translit.Presenters.Pages;
 using Translit.Windows;
 
 namespace Translit.Views.Pages
 {
-	public partial class WordsEditorView
+	public partial class WordsEditorView : IWordsEditorView
 	{
-		public WordsEditorPresenter Presenter { get; set; }
+		private IWordsEditorPresenter Presenter { get; set; }
 
 		public WordsEditorView()
 		{
 			InitializeComponent();
-			Presenter = new WordsEditorPresenter(new WordsEditorModel(), this);
+			Presenter = new WordsEditorPresenter(this);
 		}
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)

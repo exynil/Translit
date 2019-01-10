@@ -4,20 +4,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using Translit.Entity;
-using Translit.Models.Pages;
 using Translit.Presenters.Pages;
 using Translit.Windows;
 
 namespace Translit.Views.Pages
 {
-	public partial class SymbolsEditorView
+	public partial class SymbolsEditorView : ISymbolsEditorView
 	{
-		public SymbolsEditorPresenter Presenter { get; set; }
+		private ISymbolsEditorPresenter Presenter { get; }
 
 		public SymbolsEditorView()
 		{
 			InitializeComponent();
-			Presenter = new SymbolsEditorPresenter(new SymbolsEditorModel(), this);
+			Presenter = new SymbolsEditorPresenter(this);
 		}
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -28,18 +27,18 @@ namespace Translit.Views.Pages
 		// Обновление списка символов
 		public void UpdateSymbols(IEnumerable<Symbol> symbols)
 		{
-		    Dispatcher.Invoke(() => { DataGridSymbols.ItemsSource = symbols; }, DispatcherPriority.Background);
+			Dispatcher.Invoke(() => { DataGridSymbols.ItemsSource = symbols; }, DispatcherPriority.Background);
 		}
 
 		// Показ уведомления по ключу из ресурсов
-        public void ShowNotification(string key)
-	    {
-	        Task.Factory.StartNew(() => { })
-	            .ContinueWith(t => { SnackbarMain.MessageQueue.Enqueue(GetRes(key)); }, TaskScheduler.FromCurrentSynchronizationContext());
-	    }
+		public void ShowNotification(string key)
+		{
+			Task.Factory.StartNew(() => { })
+					.ContinueWith(t => { SnackbarMain.MessageQueue.Enqueue(GetRes(key)); }, TaskScheduler.FromCurrentSynchronizationContext());
+		}
 
-        // Нажатие кнопки добавления нового слова
-        private void ButtonAddSymbol_OnClick(object sender, RoutedEventArgs e)
+		// Нажатие кнопки добавления нового слова
+		private void ButtonAddSymbol_OnClick(object sender, RoutedEventArgs e)
 		{
 			// Создаем диалоговое окно
 			var addDialogWindow = new AddDialogWindow();
@@ -119,9 +118,9 @@ namespace Translit.Views.Pages
 		}
 
 		// Получение ресурса по ключу
-	    public string GetRes(string key)
-	    {
-	        return Application.Current.Resources[key].ToString();
-	    }
-    }
+		public string GetRes(string key)
+		{
+			return Application.Current.Resources[key].ToString();
+		}
+	}
 }

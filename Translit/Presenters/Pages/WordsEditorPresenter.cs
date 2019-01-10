@@ -4,13 +4,13 @@ using Translit.Views.Pages;
 
 namespace Translit.Presenters.Pages
 {
-	public class WordsEditorPresenter
+	public class WordsEditorPresenter : IWordsEditorPresenter
 	{
-		public WordsEditorModel Model { get; }
-		public WordsEditorView View { get; }
-		public WordsEditorPresenter(WordsEditorModel model, WordsEditorView view)
+		private IWordsEditorModel Model { get; }
+		private IWordsEditorView View { get; }
+		public WordsEditorPresenter(WordsEditorView view)
 		{
-			Model = model;
+			Model = new WordsEditorModel();
 			View = view;
 		}
 

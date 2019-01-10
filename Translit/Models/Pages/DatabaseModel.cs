@@ -12,7 +12,7 @@ using Translit.Entity;
 
 namespace Translit.Models.Pages
 {
-	public class DatabaseModel : INotifyPropertyChanged
+	public class DatabaseModel : IDatabaseModel, INotifyPropertyChanged
 	{
 		private int _percentOfExceptions;
 		private int _percentOfSymbols;

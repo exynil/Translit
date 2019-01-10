@@ -9,13 +9,14 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using Microsoft.Office.Interop.Word;
 using Translit.Entity;
 using Translit.Properties;
 using Application = System.Windows.Application;
 
 namespace Translit.Models.Pages
 {
-	public class FileConverterModel
+	public class FileConverterModel : IFileConverterModel
 	{
 		public string ConnectionString { get; }
 
@@ -127,6 +128,13 @@ namespace Translit.Models.Pages
 		// Транслитерация файла
 		public void TranslitFile(string filename)
 		{
+			var overwrite = false;
+			if (filename.ToLower().EndsWith(".doc"))
+			{
+				filename = ConvertDocToDocx(filename);
+				overwrite = true;
+			}
+
 			// Получение информации о файле
 			var fileInfo = new FileInfo(filename);
 
@@ -144,8 +152,6 @@ namespace Translit.Models.Pages
 
 			// Открваем документ xml
 			var doc = XDocument.Load(xmlPath);
-
-			Debug.WriteLine(ConnectionString);
 
 			using (var db = new LiteDatabase(ConnectionString))
 			{
@@ -206,10 +212,10 @@ namespace Translit.Models.Pages
 
 			doc.Save(xmlPath);
 
-			BuildDocumentFromFolder(temporaryFolder, filename);
+			BuildDocumentFromFolder(temporaryFolder, filename, overwrite);
 		}
 
-		public void BuildDocumentFromFolder(string folder, string filename)
+		public void BuildDocumentFromFolder(string folder, string filename, bool overwrite)
 		{
 			var fileInfo = new FileInfo(filename);
 			int n = 1;
@@ -245,7 +251,7 @@ namespace Translit.Models.Pages
 				// Удаление временной папки
 				Directory.Delete(folder, true);
 
-				if (Settings.Default.AutoSave) break;
+				if (Settings.Default.AutoSave && overwrite == false) break;
 
 				try
 				{
@@ -259,6 +265,32 @@ namespace Translit.Models.Pages
 
 				break;
 			}
+		}
+
+		public string ConvertDocToDocx(string path)
+		{
+			var word = new Microsoft.Office.Interop.Word.Application();
+			var sourceFile = new FileInfo(path);
+			var document = word.Documents.Open(sourceFile.FullName);
+
+			// Получение данных о новом файле
+			var directoryName = sourceFile.DirectoryName;
+			var fileName = sourceFile.Name.Substring(0, sourceFile.Name.Length - sourceFile.Extension.Length);
+			var label = " (" + GetRes("FileNameLatin") + ")";
+
+			var extension = ".docx";
+
+			// Комбинирование данных
+			var newDocument = directoryName + @"\" + fileName + label + extension;
+
+			document.SaveAs2(newDocument, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2010);
+			word.ActiveDocument.Close();
+			word.Quit();
+			if (!Settings.Default.AutoSave)
+			{
+				File.Delete(path);
+			}
+			return newDocument;
 		}
 
 		public string GetRes(string key)

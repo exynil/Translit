@@ -4,10 +4,10 @@ using Translit.Views.Pages;
 
 namespace Translit.Presenters.Pages
 {
-	public class AboutPresenter
+	public class AboutPresenter : IAboutPresenter
 	{
-		public AboutModel Model { get; }
-		public AboutView View { get; }
+		private IAboutModel Model { get; }
+		private IAboutView View { get; }
 
 		public AboutPresenter(AboutModel model, AboutView view)
 		{

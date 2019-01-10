@@ -3,15 +3,15 @@ using Translit.Views.Windows;
 
 namespace Translit.Presenters.Windows
 {
-	public class MainWindowPresenter
+	public class MainWindowPresenter : IMainWindowPresenter
 	{
-		public MainWindowModel Model { get; }
+		private IMainWindowModel Model { get; }
 
-		public MainWindowView View { get; }
+		private IMainWindowView View { get; }
 
-		public MainWindowPresenter(MainWindowModel model, MainWindowView view)
+		public MainWindowPresenter(MainWindowView view)
 		{
-			Model = model;
+			Model = new MainWindowModel();
 			View = view;
 		}
 

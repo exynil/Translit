@@ -4,14 +4,14 @@ using Translit.Views.Pages;
 
 namespace Translit.Presenters.Pages
 {
-	public class TextConverterPresenter
+	public class TextConverterPresenter : ITextConverterPresenter
 	{
-		public TextConverterModel Model { get;}
-		public TextConverterView View { get;}
+		private ITextConverterModel Model { get;}
+		private ITextConverterView View { get;}
 
-		public TextConverterPresenter(TextConverterModel model, TextConverterView view)
+		public TextConverterPresenter(TextConverterView view)
 		{
-			Model = model;
+			Model = new TextConverterModel();
 			View = view;
 		}
 

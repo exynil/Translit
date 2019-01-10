@@ -3,14 +3,14 @@ using Translit.Views.Pages;
 
 namespace Translit.Presenters.Pages
 {
-	public class SymbolsPresenter
+	public class SymbolsPresenter : ISymbolsPresenter
 	{
-		public SymbolsModel Model { get; }
-		public SymbolsView View { get; }
+		private ISymbolsModel Model { get; }
+		private ISymbolsView View { get; }
 
-		public SymbolsPresenter(SymbolsModel model, SymbolsView view)
+		public SymbolsPresenter(SymbolsView view)
 		{
-			Model = model;
+			Model = new SymbolsModel();
 			View = view;
 		}
 

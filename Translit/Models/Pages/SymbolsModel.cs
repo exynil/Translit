@@ -6,7 +6,7 @@ using Translit.Entity;
 
 namespace Translit.Models.Pages
 {
-	public class SymbolsModel
+	public class SymbolsModel : ISymbolsModel
 	{
 		public string ConnectionString { get; }
 

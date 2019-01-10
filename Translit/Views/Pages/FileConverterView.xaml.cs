@@ -1,21 +1,19 @@
-﻿using System.Configuration;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using Translit.Models.Pages;
 using Translit.Presenters.Pages;
 using Application = System.Windows.Application;
 
 namespace Translit.Views.Pages
 {
-	public partial class FileConverterView
+	public partial class FileConverterView : IFileConverterView
 	{
-		public FileConverterPresenter Presenter { get;}
+		private IFileConverterPresenter Presenter { get;}
 
 		public FileConverterView()
 		{
 			InitializeComponent();
-			Presenter = new FileConverterPresenter(new FileConverterModel(), this);
+			Presenter = new FileConverterPresenter(this);
 		}
 
 		// Нажатие кнопки выбора файла Word

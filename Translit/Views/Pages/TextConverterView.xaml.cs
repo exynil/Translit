@@ -2,18 +2,17 @@
 using System.Text;
 using System.Windows;
 using System.Windows.Documents;
-using Translit.Models.Pages;
 using Translit.Presenters.Pages;
 
 namespace Translit.Views.Pages
 {
-	public partial class TextConverterView
+	public partial class TextConverterView : ITextConverterView
 	{
-		private TextConverterPresenter Presenter { get; }
+		private ITextConverterPresenter Presenter { get; }
 		public TextConverterView()
 		{
 			InitializeComponent();
-			Presenter = new TextConverterPresenter(new TextConverterModel(), this);
+			Presenter = new TextConverterPresenter(this);
 		}
 
 		private void ButtonTranslit_OnClick(object sender, RoutedEventArgs e)

@@ -11,16 +11,14 @@ using Translit.Properties;
 
 namespace Translit.Models.Pages
 {
-	public class SymbolsEditorModel
+	public class SymbolsEditorModel : ISymbolsEditorModel
 	{
-	    public string ReasonPhrase { get; set; }
+		public string ReasonPhrase { get; set; }
 
-		public User User { get; }
 		public string ConnectionString { get; }
 
 		public SymbolsEditorModel()
 		{
-			User = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
 			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
 		}
 
@@ -42,6 +40,8 @@ namespace Translit.Models.Pages
 		// Добавление символа в глобальную базу
 		public async Task AddSymbol(string cyryllic, string latin)
 		{
+			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
+
 			const string link = "http://translit.osmium.kz/api/symbol?";
 
 			var client = new HttpClient();
@@ -49,7 +49,7 @@ namespace Translit.Models.Pages
 			// Создаем параметры
 			var content = new FormUrlEncodedContent(new Dictionary<string, string>
 			{
-				{"token", User.Token},
+				{"token", user.Token},
 				{"cyrl", cyryllic},
 				{"latn", latin}
 			});
@@ -71,11 +71,13 @@ namespace Translit.Models.Pages
 				}
 			}
 
-		    ReasonPhrase = response.ReasonPhrase;
+			ReasonPhrase = response.ReasonPhrase;
 		}
 
 		public async Task EditSymbol(int id, string cyryllic, string latin)
 		{
+			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
+
 			const string link = "http://translit.osmium.kz/api/symbol?";
 
 			var client = new HttpClient();
@@ -83,7 +85,7 @@ namespace Translit.Models.Pages
 			// Создаем параметры
 			var values = new Dictionary<string, string>
 			{
-				{"token", User.Token},
+				{"token", user.Token},
 				{"id", id.ToString() }
 			};
 
@@ -113,8 +115,10 @@ namespace Translit.Models.Pages
 
 		public void DeleteSymbol(int id)
 		{
+			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
+
 			// Строим адрес
-			var link = "http://translit.osmium.kz/api/symbol?token=" + User.Token + "&id=" + id;
+			var link = "http://translit.osmium.kz/api/symbol?token=" + user.Token + "&id=" + id;
 
 			var client = new HttpClient();
 

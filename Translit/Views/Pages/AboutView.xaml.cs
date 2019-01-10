@@ -12,9 +12,9 @@ using Translit.Presenters.Pages;
 
 namespace Translit.Views.Pages
 {
-	public partial class AboutView
+	public partial class AboutView : IAboutView
 	{
-		public AboutPresenter Presenter { get; }
+		private IAboutPresenter Presenter { get; }
 
 		public AboutView()
 		{

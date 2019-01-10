@@ -13,9 +13,9 @@ using Translit.Views.Pages;
 
 namespace Translit.Views.Windows
 {
-	public partial class MainWindowView
+	public partial class MainWindowView : IMainWindowView
 	{
-		public MainWindowPresenter Presenter { get; }
+		private IMainWindowPresenter Presenter { get; }
 		public Page FileConverterView { get; }
 		public Page TextConverterView { get; }
 		public Page SymbolsEditorView { get; }
@@ -29,7 +29,7 @@ namespace Translit.Views.Windows
 		public MainWindowView()
 		{
 			InitializeComponent();
-			Presenter = new MainWindowPresenter(new MainWindowModel(), this);
+			Presenter = new MainWindowPresenter(this);
 
 			FileConverterView = new FileConverterView();
 			TextConverterView = new TextConverterView();
@@ -66,6 +66,9 @@ namespace Translit.Views.Windows
 				comboBoxItem.Selected += ChangeLanguageClick;
 				ComboBoxLanguages.Items.Add(comboBoxItem);
 			}
+
+			TextBoxLogin.Text = "exynil";
+			PasswordBoxPassword.Password = "ssd3141593";
 		}
 
 		public void LanguageChanged(object sender, EventArgs e)

@@ -9,7 +9,7 @@ using Translit.Entity;
 
 namespace Translit.Models.Pages
 {
-	public class TextConverterModel
+	public class TextConverterModel : ITextConverterModel
 	{
 		public TextRange LatinTextRange { get; set; }
 

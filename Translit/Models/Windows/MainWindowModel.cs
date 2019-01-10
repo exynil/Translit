@@ -11,7 +11,7 @@ using Translit.Properties;
 
 namespace Translit.Models.Windows
 {
-	public class MainWindowModel
+	public class MainWindowModel : IMainWindowModel
 	{
 		// Свойства
 		public string Login { get; set; }

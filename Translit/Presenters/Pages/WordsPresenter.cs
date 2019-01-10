@@ -3,14 +3,14 @@ using Translit.Views.Pages;
 
 namespace Translit.Presenters.Pages
 {
-	public class WordsPresenter
+	public class WordsPresenter : IWordsPresenter
 	{
-		public WordsModel Model { get; }
-		public WordsView View { get; }
+		private IWordsModel Model { get; }
+		private IWordsView View { get; }
 
-		public WordsPresenter(WordsModel model, WordsView view)
+		public WordsPresenter(WordsView view)
 		{
-			Model = model;
+			Model = new WordsModel();
 			View = view;
 		}
 

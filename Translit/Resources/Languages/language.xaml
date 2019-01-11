@@ -1,7 +1,8 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:v="clr-namespace:System;assembly=mscorlib">
-	<!--Main Window Left Menu-->
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:v="clr-namespace:System;assembly=mscorlib">
+	<!--  Main Window Left Menu  -->
 	<v:String x:Key="ListViewItemFileConverter">File Converter</v:String>
 	<v:String x:Key="ListViewItemTextConverter">Text Converter</v:String>
 	<v:String x:Key="ListViewItemWords">Words</v:String>
@@ -10,13 +11,13 @@
 	<v:String x:Key="ListViewItemDatabase">Database</v:String>
 	<v:String x:Key="ListViewItemAbout">About</v:String>
 
-	<!--Main Window Right Menu-->
+	<!--  Main Window Right Menu  -->
 	<v:String x:Key="TextBlockUser">User</v:String>
 	<v:String x:Key="ButtonSignIn">Sign in</v:String>
 	<v:String x:Key="ButtonSignOut">Sign out</v:String>
 	<v:String x:Key="LabelAuthorization">Authorization</v:String>
 
-	<!--Page File Converter-->
+	<!--  Page File Converter  -->
 	<v:String x:Key="ButtonSelectFile">Select file</v:String>
 	<v:String x:Key="ButtonSelectFolder">Select folder</v:String>
 	<v:String x:Key="TextBlockDocuments">Documents</v:String>
@@ -25,16 +26,16 @@
 	<v:String x:Key="FileNameLatin">latin</v:String>
 	<v:String x:Key="TransliterationCompleted">Transliteration completed</v:String>
 
-	<!--Page Text Text-->
+	<!--  Page Text Text  -->
 	<v:String x:Key="ButtonClear">Clear</v:String>
 	<v:String x:Key="ButtonConvert">Convert</v:String>
 	<v:String x:Key="ButtonToCopy">To copy</v:String>
 	<v:String x:Key="ToggleButtonRealTimeTransliteration">Real-time transliteration</v:String>
 
-	<!--Page Settings-->
+	<!--  Page Settings  -->
 	<v:String x:Key="TextBlockDocumentAutoSave">Document Autosave</v:String>
 
-	<!--Page DatabaseUpdate-->
+	<!--  Page DatabaseUpdate  -->
 	<v:String x:Key="TextBlockDatabase">Database</v:String>
 	<v:String x:Key="TextBlockCharacterLoading">Character loading</v:String>
 	<v:String x:Key="TextBlockLoadingExceptions">Loading exceptions</v:String>
@@ -48,14 +49,14 @@
 	<v:String x:Key="FileMb">MB</v:String>
 	<v:String x:Key="FileKb">KB</v:String>
 
-	<!--Page About-->
+	<!--  Page About  -->
 	<v:String x:Key="TextBlockDescription">Program for automatic transliteration of Word documents from cyrillic to latin</v:String>
 	<v:String x:Key="TextBlockVersion">Version</v:String>
 	<v:String x:Key="ButtonLicense">License</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [the site is temporarily down]</v:String>
 	<v:String x:Key="ButtonBack">Back</v:String>
 
-	<!--Snackbar-->
+	<!--  Snackbar  -->
 	<v:String x:Key="SnackBarAuthorization">Authorization</v:String>
 	<v:String x:Key="SnackBarRecordSuccessfullyAdded">Record successfully added</v:String>
 	<v:String x:Key="SnackBarServerSideError">Server side error</v:String>
@@ -72,8 +73,27 @@
 	<v:String x:Key="SnackBarWrongLoginOrPassword">Wrong login or password</v:String>
 	<v:String x:Key="SnackBarNotAllowedLength">Not allowed length</v:String>
 
-	<!--DataGridTextColumn Header-->
+	<!--  DataGridTextColumn Header  -->
 	<v:String x:Key="DataGridTextColumnId">Id</v:String>
 	<v:String x:Key="DataGridTextColumnCyryllic">Cyryllic</v:String>
 	<v:String x:Key="DataGridTextColumnLatin">Latin</v:String>
+
+	<!--  Hints  -->
+	<v:String x:Key="HintLoginOrEmail">Login or email</v:String>
+	<v:String x:Key="HintPassword">Password</v:String>
+	<v:String x:Key="HintCyryllic">Cyryllic</v:String>
+	<v:String x:Key="HintLatin">Latin</v:String>
+
+	<!--  Titles  -->
+	<v:String x:Key="TitleDelete">Delete</v:String>
+	<v:String x:Key="TitleAdding">Adding</v:String>
+	<v:String x:Key="TitleEditing">Editing</v:String>
+
+	<!--  DialogWindows  -->
+	<v:String x:Key="TextBlockDoYouReallyWantToDelete">Do you really want to delete?</v:String>
+	<v:String x:Key="ButtonYes">Yes</v:String>
+	<v:String x:Key="ButtonNo">No</v:String>
+	<v:String x:Key="ButtonSave">Save</v:String>
+	<v:String x:Key="ButtonCancel">Cancel</v:String>
+	<v:String x:Key="ButtonAdd">Add</v:String>
 </ResourceDictionary>

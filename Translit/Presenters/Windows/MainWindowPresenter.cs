@@ -1,4 +1,5 @@
-﻿using Translit.Models.Windows;
+﻿using System.Threading.Tasks;
+using Translit.Models.Windows;
 using Translit.Views.Windows;
 
 namespace Translit.Presenters.Windows
@@ -25,7 +26,7 @@ namespace Translit.Presenters.Windows
 			Model.Password = password;
 		}
 
-		public void OnButtonSignInClicked()
+		public async void OnButtonSignInClicked()
 		{
 			// Проверяем логин или пароль на заполненность
 			if (Model.IsLoginOrPasswordEmpty()) return;
@@ -36,20 +37,21 @@ namespace Translit.Presenters.Windows
 			// Делаем кнопку не активной
 			View.BlockUnlockButtons();
 
-			if (Model.SignIn() != null)
+			await Task.Factory.StartNew(() =>
 			{
-				View.ShowNotification("SnackBarWelcome");
-				View.UpdateRightMenu(Model.GetUser());
-				// -----------------------------------
-				// Тут требуется перезагрузка страницы
-				// -----------------------------------
-				View.ClearAuthorizationForm();
-				View.UpdateRightMenu(Model.GetUser());
-			}
-			else
-			{
-				View.ShowNotification("SnackBarWrongLoginOrPassword");
-			}
+				if (Model.SignIn() != null)
+				{
+					View.ShowNotification("SnackBarWelcome");
+					View.UpdateRightMenu(Model.GetUser());
+					View.RefreshFrame();
+					View.ClearAuthorizationForm();
+					View.UpdateRightMenu(Model.GetUser());
+				}
+				else
+				{
+					View.ShowNotification("SnackBarWrongLoginOrPassword");
+				}
+			});
 
 			// Делаем кнопку активной
 			View.BlockUnlockButtons();

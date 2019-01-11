@@ -89,12 +89,8 @@ namespace Translit.Models.Pages
 
 			// Открываем диалоговое окно
 			var result = dlg.ShowDialog();
-			if (result == true)
-			{
-				return dlg.FileName;
-			}
 
-			return "";
+			return result == true ? dlg.FileName : "";
 		}
 
 		public string[] SelectFolder()
@@ -118,7 +114,7 @@ namespace Translit.Models.Pages
 			NumberOfDocuments = files.Length;
 			
 			// Перебор и транслитерация всех полученных файлов
-			for (int i = 0; i < NumberOfDocuments; i++)
+			for (var i = 0; i < NumberOfDocuments; i++)
 			{
 				NumberOfDocumentsTranslated = i;
 				TranslitFile(files[i]);
@@ -129,23 +125,15 @@ namespace Translit.Models.Pages
 		public void TranslitFile(string filename)
 		{
 			var overwrite = false;
+
 			if (filename.ToLower().EndsWith(".doc"))
 			{
 				filename = ConvertDocToDocx(filename);
 				overwrite = true;
 			}
 
-			// Получение информации о файле
-			var fileInfo = new FileInfo(filename);
-
-			// Путь временной папки
-			var temporaryFolder = fileInfo.DirectoryName + @"\" + DateTime.Now.ToFileTime();
-
-			// Распаковка документа во временную папку
-			using (var archive = ZipFile.OpenRead(filename))
-			{
-				archive.ExtractToDirectory(temporaryFolder);
-			}
+			// Распаковка документа и получение расположения распакованной папки
+			var temporaryFolder = UnZipFileToTemporaryFolder(filename);
 
 			// Определяем путь к xml файлу распакованного документа
 			var xmlPath = temporaryFolder + @"\word\document.xml";
@@ -215,67 +203,68 @@ namespace Translit.Models.Pages
 			BuildDocumentFromFolder(temporaryFolder, filename, overwrite);
 		}
 
-		public void BuildDocumentFromFolder(string folder, string filename, bool overwrite)
+		private static string UnZipFileToTemporaryFolder(string filename)
+		{
+			// Получение информации о файле
+			var fileInfo = new FileInfo(filename);
+
+			// Путь временной папки
+			var temporaryFolder = fileInfo.DirectoryName + @"\" + DateTime.Now.ToFileTime();
+
+			// Распаковка документа во временную папку
+			using (var archive = ZipFile.OpenRead(filename))
+			{
+				archive.ExtractToDirectory(temporaryFolder);
+			}
+
+			return temporaryFolder;
+		}
+
+		private void BuildDocumentFromFolder(string folder, string filename, bool overwrite)
 		{
 			var fileInfo = new FileInfo(filename);
-			int n = 1;
 
-			// Создание документа
-			while (true)
+			// Получение данных о новом файле
+			var directoryName = fileInfo.DirectoryName;
+			var fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
+			var label = " (" + GetRes("FileNameLatin") + ")";
+			var extension = fileInfo.Extension;
+
+			// Комбинирование данных
+			var newDocument = directoryName + @"\" + fileName + label + extension;
+
+			if (File.Exists(newDocument))
 			{
-				// Получение данных о новом файле
-				var directoryName = fileInfo.DirectoryName;
-				var fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
-				string label;
-				if (n == 1)
-				{
-					label = " (" + GetRes("FileNameLatin") + ")";
-				}
-				else
-				{
-					label = " (" + GetRes("FileNameLatin") + " " + n + ")";
-				}
+				File.Delete(newDocument);
+			}
 
-				var extension = fileInfo.Extension;
+			ZipFile.CreateFromDirectory(folder, newDocument);
 
-				// Комбинирование данных
-				var newDocument = directoryName + @"\" + fileName + label + extension;
-				if (File.Exists(newDocument))
-				{
-					n++;
-					continue;
-				}
+			// Удаление временной папки
+			Directory.Delete(folder, true);
 
-				ZipFile.CreateFromDirectory(folder, newDocument);
+			if (Settings.Default.AutoSave && overwrite == false) return;
 
-				// Удаление временной папки
-				Directory.Delete(folder, true);
-
-				if (Settings.Default.AutoSave && overwrite == false) break;
-
-				try
-				{
-					// Замена файла
-					File.Replace(newDocument, filename, null);
-				}
-				catch (Exception)
-				{
-					// ignored
-				}
-
-				break;
+			try
+			{
+				// Замена файла
+				File.Replace(newDocument, filename, null);
+			}
+			catch (Exception)
+			{
+				// ignored
 			}
 		}
 
 		public string ConvertDocToDocx(string path)
 		{
 			var word = new Microsoft.Office.Interop.Word.Application();
-			var sourceFile = new FileInfo(path);
-			var document = word.Documents.Open(sourceFile.FullName);
+			var fileInfo = new FileInfo(path);
+			var document = word.Documents.Open(fileInfo.FullName);
 
 			// Получение данных о новом файле
-			var directoryName = sourceFile.DirectoryName;
-			var fileName = sourceFile.Name.Substring(0, sourceFile.Name.Length - sourceFile.Extension.Length);
+			var directoryName = fileInfo.DirectoryName;
+			var fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
 			var label = " (" + GetRes("FileNameLatin") + ")";
 
 			var extension = ".docx";
@@ -286,6 +275,7 @@ namespace Translit.Models.Pages
 			document.SaveAs2(newDocument, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2010);
 			word.ActiveDocument.Close();
 			word.Quit();
+
 			if (!Settings.Default.AutoSave)
 			{
 				File.Delete(path);

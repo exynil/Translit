@@ -1,8 +1,11 @@
-﻿<Application x:Class="Translit.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="Views/Windows/MainWindowView.xaml" Exit="App_OnExit" Startup="App_OnStartup">
-    <Application.Resources>
+﻿<Application
+	x:Class="Translit.App"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Exit="App_OnExit"
+	Startup="App_OnStartup"
+	StartupUri="Views/Windows/MainWindowView.xaml">
+	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />

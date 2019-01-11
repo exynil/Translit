@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Globalization;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Translit.Entity;
-using Translit.Models.Windows;
 using Translit.Presenters.Windows;
 using Translit.Properties;
 using Translit.Views.Pages;
@@ -151,14 +149,17 @@ namespace Translit.Views.Windows
 
 		public void ShowNotification(string resource)
 		{
-			Task.Factory.StartNew(() => { })
-				.ContinueWith(t => { SnackbarMain.MessageQueue.Enqueue(GetRes(resource)); },
-					TaskScheduler.FromCurrentSynchronizationContext());
+			SnackbarMain.Dispatcher.Invoke(() =>
+			{
+				SnackbarMain.MessageQueue.Enqueue(GetRes(resource));
+			}, DispatcherPriority.Background);
 		}
 
 		public void ClearAuthorizationForm()
 		{
-			TextBoxLogin.Text = PasswordBoxPassword.Password = "";
+			TextBoxLogin.Dispatcher.Invoke(() => { TextBoxLogin.Text = ""; },
+				DispatcherPriority.Background);
+			PasswordBoxPassword.Dispatcher.Invoke(() => { PasswordBoxPassword.Password = ""; }, DispatcherPriority.Background);
 		}
 
 		public void SetTitle(int number)
@@ -233,7 +234,7 @@ namespace Translit.Views.Windows
 
 		public void RefreshFrame()
 		{
-			FrameMain.NavigationService.Refresh();
+			FrameMain.Dispatcher.Invoke(() => { FrameMain.NavigationService.Refresh(); }, DispatcherPriority.Background);
 		}
 	}
 }

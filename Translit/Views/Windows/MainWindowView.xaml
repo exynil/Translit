@@ -311,10 +311,12 @@
 					<TextBox
 						x:Name="TextBoxLogin"
 						Margin="10"
+						materialDesign:HintAssist.Hint="{DynamicResource HintLoginOrEmail}"
 						TextChanged="TextBoxLogin_OnTextChanged" />
 					<PasswordBox
 						x:Name="PasswordBoxPassword"
 						Margin="10"
+						materialDesign:HintAssist.Hint="{DynamicResource HintPassword}"
 						PasswordChanged="PasswordBoxPassword_OnPasswordChanged" />
 					<WrapPanel HorizontalAlignment="Center">
 						<Button

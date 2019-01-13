@@ -25,7 +25,7 @@ namespace TranslitLauncher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("v0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("v0.2")]
         public string Version {
             get {
                 return ((string)(this["Version"]));
@@ -38,9 +38,9 @@ namespace TranslitLauncher.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("ru-RU")]
-        public string DefaultLanguage {
+        public global::System.Globalization.CultureInfo DefaultLanguage {
             get {
-                return ((string)(this["DefaultLanguage"]));
+                return ((global::System.Globalization.CultureInfo)(this["DefaultLanguage"]));
             }
             set {
                 this["DefaultLanguage"] = value;

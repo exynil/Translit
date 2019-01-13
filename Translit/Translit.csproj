@@ -80,7 +80,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Entity\DatabaseInfo.cs" />
-    <Compile Include="Entity\GeneralSettings.cs" />
     <Compile Include="Entity\Rc4.cs" />
     <Compile Include="Entity\Symbol.cs" />
     <Compile Include="Entity\User.cs" />
@@ -91,11 +90,13 @@
     <Compile Include="Models\Pages\IAboutModel.cs" />
     <Compile Include="Models\Pages\IDatabaseModel.cs" />
     <Compile Include="Models\Pages\IFileConverterModel.cs" />
+    <Compile Include="Models\Pages\ILicenseModel.cs" />
     <Compile Include="Models\Pages\ISymbolsEditorModel.cs" />
     <Compile Include="Models\Pages\ISymbolsModel.cs" />
     <Compile Include="Models\Pages\ITextConverterModel.cs" />
     <Compile Include="Models\Pages\IWordsEditorModel.cs" />
     <Compile Include="Models\Pages\IWordsModel.cs" />
+    <Compile Include="Models\Pages\LicenseModel.cs" />
     <Compile Include="Models\Pages\SettingsModel.cs" />
     <Compile Include="Models\Pages\SymbolsEditorModel.cs" />
     <Compile Include="Models\Pages\SymbolsModel.cs" />
@@ -110,11 +111,13 @@
     <Compile Include="Presenters\Pages\IAboutPresenter.cs" />
     <Compile Include="Presenters\Pages\IDatabasePresenter.cs" />
     <Compile Include="Presenters\Pages\IFileConverterPresenter.cs" />
+    <Compile Include="Presenters\Pages\ILicensePresenter.cs" />
     <Compile Include="Presenters\Pages\ISymbolsEditorPresenter.cs" />
     <Compile Include="Presenters\Pages\ISymbolsPresenter.cs" />
     <Compile Include="Presenters\Pages\ITextConverterPresenter.cs" />
     <Compile Include="Presenters\Pages\IWordsEditorPresenter.cs" />
     <Compile Include="Presenters\Pages\IWordsPresenter.cs" />
+    <Compile Include="Presenters\Pages\LicensePresenter.cs" />
     <Compile Include="Presenters\Pages\SettingsPresenter.cs" />
     <Compile Include="Presenters\Pages\SymbolsEditorPresenter.cs" />
     <Compile Include="Presenters\Pages\SymbolsPresenter.cs" />
@@ -135,11 +138,15 @@
     <Compile Include="Views\Pages\IAboutView.cs" />
     <Compile Include="Views\Pages\IDatabaseView.cs" />
     <Compile Include="Views\Pages\IFileConverterView.cs" />
+    <Compile Include="Views\Pages\ILicenseView.cs" />
     <Compile Include="Views\Pages\ISymbolsEditorView.cs" />
     <Compile Include="Views\Pages\ISymbolsView.cs" />
     <Compile Include="Views\Pages\ITextConverterView.cs" />
     <Compile Include="Views\Pages\IWordsEditorView.cs" />
     <Compile Include="Views\Pages\IWordsView.cs" />
+    <Compile Include="Views\Pages\LicenseView.xaml.cs">
+      <DependentUpon>LicenseView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -183,7 +190,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Languages\language.xaml">
+    <Page Include="Resources\Languages\language.en-US.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -196,6 +203,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\FileConverterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\LicenseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -271,8 +282,7 @@
     <Resource Include="Translit.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\logo.jpg" />
+    <Resource Include="Resources\LICENSE.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

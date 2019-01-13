@@ -2,7 +2,6 @@
 {
 	interface IFileConverterPresenter
 	{
-		void OnButtonSelectFileClicked();
-		void OnButtonSelectFolderClicked();
+		void TranslitFiles(string[] files);
 	}
 }

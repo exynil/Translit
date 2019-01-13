@@ -100,7 +100,7 @@ namespace Translit.Models.Pages
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
 				// Изменяем слово в локальной базе
-				using (var db = new LiteDatabase(ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString))
+				using (var db = new LiteDatabase(ConnectionString))
 				{
 					var symbols = db.GetCollection<Symbol>("Symbols");
 					var symbol = symbols.FindById(id);
@@ -118,7 +118,7 @@ namespace Translit.Models.Pages
 			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
 
 			// Строим адрес
-			var link = "http://translit.osmium.kz/api/symbol?token=" + user.Token + "&id=" + id;
+			var link = $"http://translit.osmium.kz/api/symbol?token={user.Token}&id={id}";
 
 			var client = new HttpClient();
 

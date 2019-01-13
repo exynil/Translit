@@ -18,6 +18,7 @@ namespace Translit.Views.Pages
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			Presenter.OnPageLoaded();
+			Loaded -= Page_Loaded;
 		}
 
 		// Обновление списка символов

@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Threading;
 using Translit.Entity;
 using Translit.Presenters.Windows;
@@ -14,92 +14,44 @@ namespace Translit.Views.Windows
 	public partial class MainWindowView : IMainWindowView
 	{
 		private IMainWindowPresenter Presenter { get; }
-		public Page FileConverterView { get; }
-		public Page TextConverterView { get; }
-		public Page SymbolsEditorView { get; }
-		public Page SymbolsView { get; }
-		public Page WordsEditorView { get; }
-		public Page WordsView { get; }
-		public Page SettingsView { get; }
-		public Page DatabaseView { get; }
-		public Page AboutView { get; }
+		public Page FileConverterView { get; set; }
+		public Page TextConverterView { get; set; }
+		public Page SymbolsEditorView { get; set; }
+		public Page SymbolsView { get; set; }
+		public Page WordsEditorView { get; set; }
+		public Page WordsView { get; set; }
+		public Page SettingsView { get; set; }
+		public Page DatabaseView { get; set; }
+		public Page AboutView { get; set; }
+		public Page LicenseView { get; set; }
 
 		public MainWindowView()
 		{
 			InitializeComponent();
 			Presenter = new MainWindowPresenter(this);
-
-			FileConverterView = new FileConverterView();
-			TextConverterView = new TextConverterView();
-			SymbolsEditorView = new SymbolsEditorView();
-			SymbolsView = new SymbolsView();
-			WordsEditorView = new WordsEditorView();
-			WordsView = new WordsView();
-			SettingsView = new SettingsView();
-			DatabaseView = new DatabaseView();
-			AboutView = new AboutView();
-
-			App.LanguageChanged += LanguageChanged;
 		}
 
-		public void ButtonSignIn_OnClick(object sender, RoutedEventArgs e)
-		{
-			Presenter.OnButtonSignInClicked();
-		}
 		public void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			Presenter.OnWindowLoaded();
 
-			//Заполняем ComboBox списком языков
-			foreach (var l in App.Languages)
+			if (FileConverterView == null)
 			{
-				var language = l.NativeName.Remove(l.NativeName.IndexOf("(", StringComparison.Ordinal),
-					l.NativeName.Length - l.NativeName.IndexOf("(", StringComparison.Ordinal));
-				var comboBoxItem = new ComboBoxItem
-				{
-					Content = language.Substring(0, 1).ToUpper() + language.Remove(0, 1),
-					Tag = l,
-					IsSelected = l.Equals(App.Language)
-				};
-				comboBoxItem.Selected += ChangeLanguageClick;
-				ComboBoxLanguages.Items.Add(comboBoxItem);
+				FileConverterView = new FileConverterView();
 			}
 
-			TextBoxLogin.Text = "exynil";
-			PasswordBoxPassword.Password = "ssd3141593";
+			FrameTranslit.Content = FileConverterView;
+			TextBlockCurrentPageName.SetResourceReference(TextBlock.TextProperty, "MenuItemFileConverter");
+
+			Loaded -= Window_Loaded;
 		}
 
-		public void LanguageChanged(object sender, EventArgs e)
+		// Нажатие кнопки авторизации
+		public void ButtonSignIn_OnClick(object sender, RoutedEventArgs e)
 		{
-			Presenter.OnLanguageChanged();
-		}
-
-		public void ChangeLanguageClick(object sender, EventArgs e)
-		{
-			var ci = sender as ComboBoxItem;
-			if (ci?.Tag is CultureInfo lang)
+			if (TextBoxLogin.Text != "" && PasswordBoxPassword.Password != "")
 			{
-				App.Language = lang;
-			}
-		}
-
-		public void ListViewMenu_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			Presenter.OnListViewMenuSelectionChanged(((ListView)sender).SelectedIndex);
-		}
-
-		public void ChangeListViewItemColor()
-		{
-			var items = ListViewMenu.Items;
-			for (var i = 0; i < items.Count; i++)
-			{
-				if (i == ListViewMenu.SelectedIndex)
-				{
-					((ListViewItem)items[i]).Foreground = new SolidColorBrush(Color.FromRgb(3, 169, 244));
-					continue;
-				}
-
-				((ListViewItem)items[i]).Foreground = new SolidColorBrush(Color.FromRgb(64, 64, 64));
+				Presenter.OnButtonSignInClicked(TextBoxLogin.Text, PasswordBoxPassword.Password);
 			}
 		}
 
@@ -110,24 +62,21 @@ namespace Translit.Views.Windows
 		}
 
 		// Обновление бокового меню
-		public void UpdateRightMenu(User user)
+		public void UpdatePopupBox()
 		{
-			// Если MAC адрес пустой раскрываем окно авторизации, иначе раскрываем окно профиля
-			if (user == null)
+			// Если пользователь авторизован
+			if (Settings.Default.IsUserAuthorized)
 			{
-				RowDefinitionSignIn.Dispatcher.Invoke(() => RowDefinitionSignIn.Height = new GridLength(1, GridUnitType.Star),
+				RowDefinitionSignIn.Dispatcher.Invoke(() => RowDefinitionSignIn.Height = new GridLength(0, GridUnitType.Pixel),
 					DispatcherPriority.Background);
-				RowDefinitionLogOut.Dispatcher.Invoke(() => RowDefinitionLogOut.Height = new GridLength(0, GridUnitType.Star),
+				RowDefinitionLogOut.Dispatcher.Invoke(() => RowDefinitionLogOut.Height = new GridLength(1, GridUnitType.Star),
 					DispatcherPriority.Background);
 			}
 			else
 			{
-				RowDefinitionSignIn.Dispatcher.Invoke(() => RowDefinitionSignIn.Height = new GridLength(0, GridUnitType.Star),
+				RowDefinitionSignIn.Dispatcher.Invoke(() => RowDefinitionSignIn.Height = new GridLength(1, GridUnitType.Star),
 					DispatcherPriority.Background);
-				RowDefinitionLogOut.Dispatcher.Invoke(() => RowDefinitionLogOut.Height = new GridLength(1, GridUnitType.Star),
-					DispatcherPriority.Background);
-
-				TextBlockUser.Dispatcher.Invoke(() => TextBlockUser.Text = user.LastName + " " + user.FirstName,
+				RowDefinitionLogOut.Dispatcher.Invoke(() => RowDefinitionLogOut.Height = new GridLength(0, GridUnitType.Pixel),
 					DispatcherPriority.Background);
 			}
 		}
@@ -137,21 +86,11 @@ namespace Translit.Views.Windows
 			return Application.Current.Resources[key].ToString();
 		}
 
-		private void TextBoxLogin_OnTextChanged(object sender, TextChangedEventArgs e)
+		public void ShowNotification(string key)
 		{
-			Presenter.OnTextBlockLoginChanged(TextBoxLogin.Text);
-		}
-
-		private void PasswordBoxPassword_OnPasswordChanged(object sender, RoutedEventArgs e)
-		{
-			Presenter.OnPasswordBoxPasswordChanged(PasswordBoxPassword.Password);
-		}
-
-		public void ShowNotification(string resource)
-		{
-			SnackbarMain.Dispatcher.Invoke(() =>
+			SnackbarNotification.Dispatcher.Invoke(() =>
 			{
-				SnackbarMain.MessageQueue.Enqueue(GetRes(resource));
+				SnackbarNotification.MessageQueue.Enqueue(GetRes(key));
 			}, DispatcherPriority.Background);
 		}
 
@@ -162,79 +101,192 @@ namespace Translit.Views.Windows
 			PasswordBoxPassword.Dispatcher.Invoke(() => { PasswordBoxPassword.Password = ""; }, DispatcherPriority.Background);
 		}
 
-		public void SetTitle(int number)
-		{
-			switch (number)
-			{
-				case 0:
-					TextBlockPageName.SetResourceReference(TextBlock.TextProperty, "ListViewItemFileConverter");
-					break;
-				case 1:
-					TextBlockPageName.SetResourceReference(TextBlock.TextProperty, "ListViewItemTextConverter");
-					break;
-				case 2:
-					TextBlockPageName.SetResourceReference(TextBlock.TextProperty, "ListViewItemSymbols");
-					break;
-				case 3:
-					TextBlockPageName.SetResourceReference(TextBlock.TextProperty, "ListViewItemWords");
-					break;
-				case 4:
-					TextBlockPageName.SetResourceReference(TextBlock.TextProperty, "ListViewItemSettings");
-					break;
-				case 5:
-					TextBlockPageName.SetResourceReference(TextBlock.TextProperty, "ListViewItemDatabase");
-					break;
-				case 6:
-					TextBlockPageName.SetResourceReference(TextBlock.TextProperty, "ListViewItemAbout");
-					break;
-			}
-		}
-
-		public void ChangePage(int number)
-		{
-			switch (number)
-			{
-				case 0:
-					FrameMain.Content = FileConverterView;
-					break;
-				case 1:
-					FrameMain.Content = TextConverterView;
-					break;
-				case 2:
-					FrameMain.Content = Settings.Default.MacAddress == "" ? SymbolsView : SymbolsEditorView;
-					break;
-				case 3:
-					FrameMain.Content = Settings.Default.MacAddress == "" ? WordsView : WordsEditorView;
-					break;
-				case 4:
-					FrameMain.Content = SettingsView;
-					break;
-				case 5:
-					FrameMain.Content = DatabaseView;
-					break;
-				case 6:
-					FrameMain.Content = AboutView;
-					break;
-			}
-		}
-
-		public void SelectLanguage()
-		{
-			foreach (ComboBoxItem i in ComboBoxLanguages.Items)
-			{
-				i.IsSelected = i.Tag is CultureInfo ci && ci.Equals(App.Language);
-			}
-		}
-
 		public void BlockUnlockButtons()
 		{
 			ButtonSignIn.IsEnabled = !ButtonSignIn.IsEnabled;
 			ButtonLogOut.IsEnabled = !ButtonLogOut.IsEnabled;
 		}
 
-		public void RefreshFrame()
+		public void ReloadFrame()
 		{
-			FrameMain.Dispatcher.Invoke(() => { FrameMain.NavigationService.Refresh(); }, DispatcherPriority.Background);
+			FrameTranslit.Dispatcher.Invoke(() => { FrameTranslit.Content = FileConverterView; }, DispatcherPriority.Background);
+		}
+
+		public void SetUserName(User user)
+		{
+			TextBlockUser.Dispatcher.Invoke(() =>
+			{
+				TextBlockUser.Text = user.LastName + " " + user.FirstName;
+			}, DispatcherPriority.Background);
+		}
+
+		public void ClearUserName()
+		{
+			TextBlockUser.Dispatcher.Invoke(() =>
+			{
+				TextBlockUser.Text = "";
+			}, DispatcherPriority.Background);
+		}
+
+		private void FileConverterMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (FileConverterView == null)
+			{
+				FileConverterView = new FileConverterView();
+			}
+
+			FrameTranslit.Content = FileConverterView;
+			TextBlockCurrentPageName.SetResourceReference(TextBlock.TextProperty, "MenuItemFileConverter");
+		}
+
+		private void TextConverterMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (TextConverterView == null)
+			{
+				TextConverterView = new TextConverterView();
+			}
+			
+			FrameTranslit.Content = new TextConverterView();
+			TextBlockCurrentPageName.SetResourceReference(TextBlock.TextProperty, "MenuItemTextConverter");
+		}
+
+		private void ExitMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
+
+		private void SymbolsMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (Settings.Default.MacAddress == "")
+			{
+				if (SymbolsView == null)
+				{
+					SymbolsView = new SymbolsView();
+				}
+
+				FrameTranslit.Content = SymbolsView;
+			}
+			else
+			{
+				if (SymbolsEditorView == null)
+				{
+					SymbolsEditorView = new SymbolsEditorView();
+				}
+
+				FrameTranslit.Content = SymbolsEditorView;
+			}
+
+			TextBlockCurrentPageName.SetResourceReference(TextBlock.TextProperty, "MenuItemSymbols");
+		}
+
+		private void WordsMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (Settings.Default.MacAddress == "")
+			{
+				if (WordsView == null)
+				{
+					WordsView = new WordsView();
+				}
+
+				FrameTranslit.Content = WordsView;
+			}
+			else
+			{
+				if (WordsEditorView == null)
+				{
+					WordsEditorView = new WordsEditorView();
+				}
+
+				FrameTranslit.Content = WordsEditorView;
+			}
+			TextBlockCurrentPageName.SetResourceReference(TextBlock.TextProperty, "MenuItemWords");
+		}
+
+		private void SettingsMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (SettingsView == null)
+			{
+				SettingsView = new SettingsView();
+			}
+
+			FrameTranslit.Content = new SettingsView();
+			TextBlockCurrentPageName.SetResourceReference(TextBlock.TextProperty, "MenuItemSettings");
+		}
+
+		private void DatabaseMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (DatabaseView == null)
+			{
+				DatabaseView = new DatabaseView();
+			}
+
+			FrameTranslit.Content = DatabaseView;
+			TextBlockCurrentPageName.SetResourceReference(TextBlock.TextProperty, "MenuItemDatabase");
+		}
+
+		private void AboutMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (AboutView == null)
+			{
+				AboutView = new AboutView();
+			}
+
+			FrameTranslit.Content = AboutView;
+			TextBlockCurrentPageName.SetResourceReference(TextBlock.TextProperty, "MenuItemAbout");
+		}
+
+		private void LicenseMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (LicenseView == null)
+			{
+				LicenseView = new LicenseView();
+			}
+
+			FrameTranslit.Content = LicenseView;
+			TextBlockCurrentPageName.SetResourceReference(TextBlock.TextProperty, "MenuItemLicense");
+		}
+
+		private void RussianMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			App.Language = Settings.Default.DefaultLanguage = new CultureInfo("ru-RU");
+
+			try
+			{
+				Process.Start(@"..\TranslitLauncher.exe", "ru-RU");
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
+			
+		}
+
+		private void EnglishMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			App.Language = Settings.Default.DefaultLanguage = new CultureInfo("en-US");
+			
+			try
+			{
+				Process.Start(@"..\TranslitLauncher.exe", "en-US");
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
+		}
+
+		private void KazakhMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			App.Language = Settings.Default.DefaultLanguage = new CultureInfo("kk-KZ");
+
+			try
+			{
+				Process.Start(@"..\TranslitLauncher.exe", "kk-KZ");
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
 		}
 	}
 }

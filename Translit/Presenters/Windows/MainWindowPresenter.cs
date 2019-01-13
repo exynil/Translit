@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Translit.Models.Windows;
+using Translit.Properties;
 using Translit.Views.Windows;
 
 namespace Translit.Presenters.Windows
@@ -15,22 +16,8 @@ namespace Translit.Presenters.Windows
 			Model = new MainWindowModel();
 			View = view;
 		}
-
-		public void OnTextBlockLoginChanged(string login)
+		public async void OnButtonSignInClicked(string login, string password)
 		{
-			Model.Login = login;
-		}
-
-		public void OnPasswordBoxPasswordChanged(string password)
-		{
-			Model.Password = password;
-		}
-
-		public async void OnButtonSignInClicked()
-		{
-			// Проверяем логин или пароль на заполненность
-			if (Model.IsLoginOrPasswordEmpty()) return;
-
 			// Выводим уведомление об авторизации
 			View.ShowNotification("SnackBarAuthorization");
 
@@ -39,17 +26,24 @@ namespace Translit.Presenters.Windows
 
 			await Task.Factory.StartNew(() =>
 			{
-				if (Model.SignIn() != null)
+				if (Model.SignIn(login, password))
 				{
-					View.ShowNotification("SnackBarWelcome");
-					View.UpdateRightMenu(Model.GetUser());
-					View.RefreshFrame();
-					View.ClearAuthorizationForm();
-					View.UpdateRightMenu(Model.GetUser());
+					if (Settings.Default.IsUserAuthorized)
+					{
+						View.ShowNotification("SnackBarWelcome");
+						View.ReloadFrame();
+						View.ClearAuthorizationForm();
+						View.SetUserName(Model.GetUser());
+						View.UpdatePopupBox();
+					}
+					else
+					{
+						View.ShowNotification("SnackBarWrongLoginOrPassword");
+					}
 				}
 				else
 				{
-					View.ShowNotification("SnackBarWrongLoginOrPassword");
+					View.ShowNotification("SnackBarBadInternetConnection");
 				}
 			});
 
@@ -62,29 +56,20 @@ namespace Translit.Presenters.Windows
 			View.BlockUnlockButtons();
 			Model.DeleteToken();
 			Model.DeleteUserFromSettings();
-			View.UpdateRightMenu(Model.GetUser());
+			View.ReloadFrame();
+			View.ClearUserName();
+			View.UpdatePopupBox();
 			View.BlockUnlockButtons();
 		}
 
 		public void OnWindowLoaded()
 		{
 			Model.MacAddressComparison();
-			View.UpdateRightMenu(Model.GetUser());
-			View.SetTitle(0);
-			View.ChangePage(0);
-		}
-
-		public void OnLanguageChanged()
-		{
-			View.SelectLanguage();
-			View.RefreshFrame();
-		}
-
-		public void OnListViewMenuSelectionChanged(int number)
-		{
-			View.ChangeListViewItemColor();
-			View.SetTitle(number);
-			View.ChangePage(number);
+			if (Settings.Default.IsUserAuthorized)
+			{
+				View.SetUserName(Model.GetUser());
+			}
+			View.UpdatePopupBox();
 		}
 	}
 }

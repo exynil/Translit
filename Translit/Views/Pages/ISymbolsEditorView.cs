@@ -5,7 +5,7 @@ namespace Translit.Views.Pages
 {
 	interface ISymbolsEditorView
 	{
-		void ShowNotification(string message);
+		void ShowNotification(string key);
 		void UpdateSymbols(IEnumerable<Symbol> symbols);
 	}
 }

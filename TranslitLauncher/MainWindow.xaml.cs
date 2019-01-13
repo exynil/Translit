@@ -19,12 +19,10 @@ namespace TranslitLauncher
 	{
 		// Ссылка на api
 		public string Api { get; set; }
-
 		// Версия программы
 		private string TagName { get; set; }
 		// Ссылка на скачивание программы
 		private Uri BrowserDownloadUrl { get; set; }
-
 		// Название загружаемого файла
 		public string DownloadZipArchiveName { get; set; }
 
@@ -37,7 +35,6 @@ namespace TranslitLauncher
 
 		private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
 		{
-			//Settings.Default.Version = "v0.0";
 			//Получение данных от api
 			if (DownloadData())
 			{
@@ -87,14 +84,14 @@ namespace TranslitLauncher
 		{
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11;
 
-			WebClient client = new WebClient();
+			var client = new WebClient();
 
 			client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
 
 			try
 			{
-				Stream stream = client.OpenRead(Api);
-				StreamReader streamReader = new StreamReader(stream ?? throw new InvalidOperationException());
+				var stream = client.OpenRead(Api);
+				var streamReader = new StreamReader(stream ?? throw new InvalidOperationException());
 
 				var data = JsonConvert.DeserializeObject<GithubApi>(streamReader.ReadToEnd());
 
@@ -114,14 +111,10 @@ namespace TranslitLauncher
 
 		private bool CheckUpdate()
 		{
-			int currentVersion = int.Parse(Settings.Default.Version.Substring(1).Replace(".", ""));
-			int newVersion = int.Parse(TagName.Substring(1).Replace(".", ""));
+			var currentVersion = int.Parse(Settings.Default.Version.Substring(1).Replace(".", ""));
+			var newVersion = int.Parse(TagName.Substring(1).Replace(".", ""));
 
-			if (currentVersion < newVersion)
-			{
-				return true;
-			}
-			return false;
+			return currentVersion < newVersion;
 		}
 
 		private void DownloadUpdate()
@@ -129,7 +122,7 @@ namespace TranslitLauncher
 			try
 			{
 				ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-				WebClient webClient = new WebClient();
+				var webClient = new WebClient();
 				webClient.DownloadFileCompleted += Completed;
 				webClient.DownloadProgressChanged += ProgressChanged;
 				webClient.DownloadFileAsync(BrowserDownloadUrl, DownloadZipArchiveName);
@@ -192,7 +185,8 @@ namespace TranslitLauncher
 		private void UIElement_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			TextBlockProgramName.Text = "Osmium";
-			DoubleAnimation aRotateAnimation = new DoubleAnimation
+
+			var aRotateAnimation = new DoubleAnimation
 			{
 				From = 0,
 				To = 45,
@@ -200,7 +194,7 @@ namespace TranslitLauncher
 				EasingFunction = new ElasticEase { EasingMode = EasingMode.EaseOut, Oscillations = 5 }
 			};
 
-			DoubleAnimation bRotateAnimation = new DoubleAnimation
+			var bRotateAnimation = new DoubleAnimation
 			{
 				From = 45,
 				To = 0,
@@ -208,14 +202,14 @@ namespace TranslitLauncher
 				EasingFunction = new ElasticEase { EasingMode = EasingMode.EaseOut, Oscillations = 5 }
 			};
 
-			DoubleAnimation cRotateAnimation = new DoubleAnimation
+			var cRotateAnimation = new DoubleAnimation
 			{
 				From = 0,
 				To = -45,
 				Duration = TimeSpan.FromSeconds(1.5),
 				EasingFunction = new ElasticEase { EasingMode = EasingMode.EaseOut, Oscillations = 5 }
 			};
-			DoubleAnimation dRotateAnimation = new DoubleAnimation
+			var dRotateAnimation = new DoubleAnimation
 			{
 				From = -45,
 				To = -0,

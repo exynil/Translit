@@ -70,13 +70,13 @@
 				Margin="5"
 				VerticalAlignment="Center"
 				Click="ButtonTranslit_OnClick"
-				Content="{DynamicResource ButtonConvert}" />
+				Content="{DynamicResource ButtonTransliterate}" />
 			<Button
 				x:Name="ButtonCopy"
 				Margin="5"
 				VerticalAlignment="Center"
 				Click="ButtonCopy_OnClick"
-				Content="{DynamicResource ButtonToCopy}" />
+				Content="{DynamicResource ButtonCopy}" />
 		</StackPanel>
 	</Grid>
 </Page>

@@ -82,5 +82,17 @@ namespace Translit.Properties {
                 this["RealTimeTransliteration"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsUserAuthorized {
+            get {
+                return ((bool)(this["IsUserAuthorized"]));
+            }
+            set {
+                this["IsUserAuthorized"] = value;
+            }
+        }
     }
 }

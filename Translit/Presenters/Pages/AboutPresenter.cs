@@ -26,10 +26,5 @@ namespace Translit.Presenters.Pages
 		{
 			View.UpdateTextInTextBlock(((AboutModel)sender).ModifiedMember);
 		}
-
-		public void ShowLicense()
-		{
-			View.SetLicense(Model.ReadLicense());
-		}
 	}
 }

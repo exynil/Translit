@@ -8,7 +8,6 @@ namespace Translit.Presenters.Pages
 {
 	interface IAboutPresenter
 	{
-		void ShowLicense();
 		void OnProgramNameClicked();
 	}
 }

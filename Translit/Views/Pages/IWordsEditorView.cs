@@ -5,7 +5,7 @@ namespace Translit.Views.Pages
 {
 	interface IWordsEditorView
 	{
-		void ShowNotification(string message);
+		void ShowNotification(string key);
 		void UpdateWords(IEnumerable<Word> words);
 	}
 }

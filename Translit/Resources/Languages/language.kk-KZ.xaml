@@ -2,16 +2,22 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:v="clr-namespace:System;assembly=mscorlib">
-	<!--  Main Window Left Menu  -->
-	<v:String x:Key="ListViewItemFileConverter">Файлдық конвертер</v:String>
-	<v:String x:Key="ListViewItemTextConverter">Мәтіндік конвертер</v:String>
-	<v:String x:Key="ListViewItemWords">Сөздер</v:String>
-	<v:String x:Key="ListViewItemSymbols">Таңбалар</v:String>
-	<v:String x:Key="ListViewItemSettings">Қолданбалар</v:String>
-	<v:String x:Key="ListViewItemDatabase">Деректер базасы</v:String>
-	<v:String x:Key="ListViewItemAbout">Бағдарлама туралы</v:String>
+	<!--  Main Window Menu  -->
+	<v:String x:Key="MenuItemMain">Бастысы</v:String>
+	<v:String x:Key="MenuItemAdditionally">Қосымша</v:String>
+	<v:String x:Key="MenuItemLanguage">Тіл</v:String>
+	<v:String x:Key="MenuItemReference">Анықтама</v:String>
+	<v:String x:Key="MenuItemFileConverter">Файлдық конвертер</v:String>
+	<v:String x:Key="MenuItemTextConverter">Мәтіндік конвертер</v:String>
+	<v:String x:Key="MenuItemWords">Сөздер</v:String>
+	<v:String x:Key="MenuItemSymbols">Таңбалар</v:String>
+	<v:String x:Key="MenuItemSettings">Қолданбалар</v:String>
+	<v:String x:Key="MenuItemDatabase">Деректер базасы</v:String>
+	<v:String x:Key="MenuItemAbout">Бағдарлама туралы</v:String>
+	<v:String x:Key="MenuItemLicense">Лицензия</v:String>
+	<v:String x:Key="MenuItemExit">Шығу</v:String>
 
-	<!--  Main Window Right Menu  -->
+	<!--  Main Window PopupBox  -->
 	<v:String x:Key="TextBlockUser">Қолданушы</v:String>
 	<v:String x:Key="ButtonSignIn">Кіру</v:String>
 	<v:String x:Key="ButtonSignOut">Шығу</v:String>
@@ -28,9 +34,13 @@
 
 	<!--  Page Text Text  -->
 	<v:String x:Key="ButtonClear">Тазалау</v:String>
-	<v:String x:Key="ButtonConvert">Конвертациялау</v:String>
-	<v:String x:Key="ButtonToCopy">Көшіру</v:String>
+	<v:String x:Key="ButtonTransliterate">Транслитерациялау</v:String>
+	<v:String x:Key="ButtonCopy">Көшіру</v:String>
 	<v:String x:Key="ToggleButtonRealTimeTransliteration">Нақты уақыт кезінде аудару</v:String>
+
+	<!--  Page SymbolsEditor and WordsEditor  -->
+	<v:String x:Key="ToolTipAdd">Қосу</v:String>
+	<v:String x:Key="ToolTipUpdate">Жаңарту</v:String>
 
 	<!--  Page Settings  -->
 	<v:String x:Key="TextBlockDocumentAutoSave">Құжаттың түпнұсқасын автосақтау</v:String>
@@ -52,7 +62,6 @@
 	<!--  Page About  -->
 	<v:String x:Key="TextBlockDescription">Word құжаттарын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама</v:String>
 	<v:String x:Key="TextBlockVersion">Нұсқа</v:String>
-	<v:String x:Key="ButtonLicense">Лицензия</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт уақытша жұмыс істемейді]</v:String>
 	<v:String x:Key="ButtonBack">Артқа</v:String>
 
@@ -72,6 +81,7 @@
 	<v:String x:Key="SnackBarWelcome">Хош келдіңіз</v:String>
 	<v:String x:Key="SnackBarWrongLoginOrPassword">Логин немесе құпиясөз теріс</v:String>
 	<v:String x:Key="SnackBarNotAllowedLength">Жол берілмеуі тиіс өлшем</v:String>
+	<v:String x:Key="SnackBarDatabaseNotFound">Деректер базасы табылмады</v:String>
 
 	<!--  DataGridTextColumn Header  -->
 	<v:String x:Key="DataGridTextColumnId">Ид</v:String>

@@ -4,6 +4,5 @@
 	{
 		void SetTextBlockMargin(string text);
 		void UpdateTextInTextBlock(string text);
-		void SetLicense(string text);
 	}
 }

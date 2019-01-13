@@ -4,10 +4,7 @@ namespace Translit.Models.Windows
 {
 	interface IMainWindowModel
 	{
-		string Login { get; set; }
-		string Password { get; set; }
-		bool IsLoginOrPasswordEmpty();
-		User SignIn();
+		bool SignIn(string login, string password);
 		User GetUser();
 		void DeleteToken();
 		void DeleteUserFromSettings();

@@ -12,29 +12,31 @@ namespace Translit.Models.Pages
 	public class TextConverterModel : ITextConverterModel
 	{
 		public TextRange LatinTextRange { get; set; }
+		public string ConnectionString { get; set; }
+
+		public TextConverterModel()
+		{
+			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+		}
 
 		public void TranslitTextRange(TextRange textRange)
 		{
 			LatinTextRange = textRange;
-
-			TextPointer textPointer = LatinTextRange.Start.GetInsertionPosition(LogicalDirection.Forward);
-
-			using (LiteDatabase db = new LiteDatabase(ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString))
+			var textPointer = LatinTextRange.Start.GetInsertionPosition(LogicalDirection.Forward);
+			using (var db = new LiteDatabase(ConnectionString))
 			{
 				var words = db.GetCollection<Word>("Words").FindAll().ToList();
 				var symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToList();
-
 				while (textPointer != null)
 				{
-					string textInRun = textPointer.GetTextInRun(LogicalDirection.Forward);
-
+					var textInRun = textPointer.GetTextInRun(LogicalDirection.Forward);
 					if (!string.IsNullOrWhiteSpace(textInRun))
 					{
 						textPointer.DeleteTextInRun(textInRun.Length);
 						foreach (var w in words)
 						{
-							string cyryllic = w.Cyryllic;
-							string latin = w.Latin;
+							var cyryllic = w.Cyryllic;
+							var latin = w.Latin;
 
 							// Замена слова в верхнем регистре
 							cyryllic = cyryllic.ToUpper();
@@ -56,8 +58,10 @@ namespace Translit.Models.Pages
 						{
 							textInRun = textInRun.Replace(s.Cyryllic, s.Latin);
 						}
+
 						textPointer.InsertTextInRun(textInRun);
 					}
+
 					textPointer = textPointer.GetNextContextPosition(LogicalDirection.Forward);
 				}
 			}
@@ -68,8 +72,7 @@ namespace Translit.Models.Pages
 			using (Stream stream = new MemoryStream())
 			{
 				textRange.Save(stream, DataFormats.Rtf);
-
-				Clipboard.SetData(DataFormats.Rtf, Encoding.UTF8.GetString(((MemoryStream)stream).ToArray()));
+				Clipboard.SetData(DataFormats.Rtf, Encoding.UTF8.GetString(((MemoryStream) stream).ToArray()));
 			}
 		}
 	}

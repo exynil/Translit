@@ -40,18 +40,17 @@ namespace Translit.Models.Pages
 		public async Task AddWord(string cyryllic, string latin)
 		{
 			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
-
 			const string link = "http://translit.osmium.kz/api/word?";
-
 			var client = new HttpClient();
 
 			// Создаем параметры
-			var content = new FormUrlEncodedContent(new Dictionary<string, string>
-			{
-				{"token", user.Token},
-				{"cyrl", cyryllic},
-				{"latn", latin}
-			});
+			var content =
+				new FormUrlEncodedContent(new Dictionary<string, string>
+				{
+					{"token", user.Token},
+					{"cyrl", cyryllic},
+					{"latn", latin}
+				});
 
 			//Выполняем запрос
 			var response = await client.PostAsync(link, content);
@@ -76,30 +75,21 @@ namespace Translit.Models.Pages
 		public async Task EditWord(int id, string cyryllic, string latin)
 		{
 			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
-
 			const string link = "http://translit.osmium.kz/api/word?";
-
 			var client = new HttpClient();
 
 			// Создаем параметры
-			var values = new Dictionary<string, string>
-			{
-				{"token", user.Token},
-				{"id", id.ToString() }
-			};
-
+			var values = new Dictionary<string, string> {{"token", user.Token}, {"id", id.ToString()}};
 			if (cyryllic != null) values.Add("cyrl", cyryllic);
 			if (latin != null) values.Add("latn", latin);
-
 			var content = new FormUrlEncodedContent(values);
 
 			// Выполняем запрос
 			var response = await client.PutAsync(link, content);
-
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
 				// Изменяем слово в локальной базе
-				using (var db = new LiteDatabase(ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString))
+				using (var db = new LiteDatabase(ConnectionString))
 				{
 					var words = db.GetCollection<Word>("Words");
 					var word = words.FindById(id);
@@ -117,8 +107,7 @@ namespace Translit.Models.Pages
 			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
 
 			// Строим адрес
-			var link = "http://translit.osmium.kz/api/word?token=" + user.Token + "&id=" + id;
-
+			var link = $"http://translit.osmium.kz/api/word?token={user.Token}&id={id}";
 			var client = new HttpClient();
 
 			// Выполняем запрос

@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using MaterialDesignThemes.Wpf;
 using Translit.Entity;
 using Translit.Presenters.Pages;
+using Translit.Views.Windows;
 using Translit.Windows;
 
 namespace Translit.Views.Pages
 {
 	public partial class WordsEditorView : IWordsEditorView
 	{
-		private IWordsEditorPresenter Presenter { get; set; }
+		private IWordsEditorPresenter Presenter { get; }
+		public Snackbar SnackbarNotification { get; set; }
 
 		public WordsEditorView()
 		{
@@ -22,19 +24,22 @@ namespace Translit.Views.Pages
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			Presenter.OnPageLoaded();
+			// Подключаем внешний уведомитель
+			SnackbarNotification = ((MainWindowView)Window.GetWindow(this))?.SnackbarNotification;
+			Loaded -= Page_Loaded;
 		}
 
 		// Обновление списка символов
 		public void UpdateWords(IEnumerable<Word> words)
 		{
-			Dispatcher.Invoke(() => { DataGridWords.ItemsSource = words; }, DispatcherPriority.Background);
+			DataGridWords.Dispatcher.Invoke(() => { DataGridWords.ItemsSource = words; }, DispatcherPriority.Background);
 		}
 
 		// Показ уведомления по ключу из ресурсов
 		public void ShowNotification(string key)
 		{
-			Task.Factory.StartNew(() => { })
-				.ContinueWith(t => { SnackbarMain.MessageQueue.Enqueue(GetRes(key)); }, TaskScheduler.FromCurrentSynchronizationContext());
+			SnackbarNotification.Dispatcher.Invoke(() => { SnackbarNotification.MessageQueue.Enqueue(GetRes(key)); },
+				DispatcherPriority.Background);
 		}
 
 		// Нажатие кнопки добавления нового слова

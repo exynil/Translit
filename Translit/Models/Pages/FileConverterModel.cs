@@ -1,14 +1,12 @@
-﻿using LiteDB;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Forms;
 using System.Xml.Linq;
+using LiteDB;
 using Microsoft.Office.Interop.Word;
 using Translit.Entity;
 using Translit.Properties;
@@ -75,38 +73,6 @@ namespace Translit.Models.Pages
 		public void OnPropertyChanged([CallerMemberName]string prop = "")
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-		}
-
-		public string SelectFile()
-		{
-			// Создаем экземпляр диалогового окна выбора файла
-			var dlg = new Microsoft.Win32.OpenFileDialog()
-			{
-				FileName = "Document",
-				DefaultExt = ".*",
-				Filter = "Text documents (.doc; .docx)|*.doc;*.docx" // Фильтрация файлов
-			};
-
-			// Открываем диалоговое окно
-			var result = dlg.ShowDialog();
-
-			return result == true ? dlg.FileName : "";
-		}
-
-		public string[] SelectFolder()
-		{
-			using (var fbd = new FolderBrowserDialog())
-			{
-				// Открываем диалоговое окно
-				var result = fbd.ShowDialog();
-				if (result != DialogResult.OK || string.IsNullOrWhiteSpace(fbd.SelectedPath)) return null;
-
-				// Получаем пути всех нескрытых файлов с расширением .doc и .docx
-				var files = new DirectoryInfo(fbd.SelectedPath).EnumerateFiles()
-					.Where(f => (f.Attributes & FileAttributes.Hidden) == 0 && (f.Extension == ".doc" || f.Extension == ".docx"))
-					.Select(f => f.FullName).ToArray();
-				return files;
-			}
 		}
 
 		public void TranslitFiles(string[] files)
@@ -209,7 +175,7 @@ namespace Translit.Models.Pages
 			var fileInfo = new FileInfo(filename);
 
 			// Путь временной папки
-			var temporaryFolder = fileInfo.DirectoryName + @"\" + DateTime.Now.ToFileTime();
+			var temporaryFolder = $@"{fileInfo.DirectoryName}\${DateTime.Now.ToFileTime()}";
 
 			// Распаковка документа во временную папку
 			using (var archive = ZipFile.OpenRead(filename))
@@ -227,11 +193,11 @@ namespace Translit.Models.Pages
 			// Получение данных о новом файле
 			var directoryName = fileInfo.DirectoryName;
 			var fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
-			var label = " (" + GetRes("FileNameLatin") + ")";
+			var label = $" ({GetRes("FileNameLatin")})";
 			var extension = fileInfo.Extension;
 
 			// Комбинирование данных
-			var newDocument = directoryName + @"\" + fileName + label + extension;
+			var newDocument = $@"{directoryName}\{fileName}{label}{extension}";
 
 			if (File.Exists(newDocument))
 			{
@@ -265,12 +231,12 @@ namespace Translit.Models.Pages
 			// Получение данных о новом файле
 			var directoryName = fileInfo.DirectoryName;
 			var fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
-			var label = " (" + GetRes("FileNameLatin") + ")";
+			var label = $" ({GetRes("FileNameLatin")})";
 
 			var extension = ".docx";
 
 			// Комбинирование данных
-			var newDocument = directoryName + @"\" + fileName + label + extension;
+			var newDocument = $@"{directoryName}\{fileName}{label}{extension}";
 
 			document.SaveAs2(newDocument, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2010);
 			word.ActiveDocument.Close();

@@ -22,24 +22,18 @@ namespace Translit.Views.Pages
 			Presenter = new AboutPresenter(new AboutModel(), this);
 		}
 
-		public void ButtonLicense_OnClick(object sender, RoutedEventArgs e)
+		public void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			Presenter.ShowLicense();
+			TextBlockCopyright.Text = "© " + DateTime.Now.Year + " Osmium";
+			TextBlockVersion.Text = GetRes("TextBlockVersion") + ": " + Assembly.GetExecutingAssembly().GetName().Version;
 
-			ColumnDefinitionAbout.Width = new GridLength(0, GridUnitType.Star);
-			ColumnDefinitionLicense.Width = new GridLength(1, GridUnitType.Star);
+			Loaded -= Page_Loaded;
 		}
 
 		public void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
 		{
 			Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
 			e.Handled = true;
-		}
-
-		public void Page_Loaded(object sender, RoutedEventArgs e)
-		{
-			TextBlockCopyright.Text = "© " + DateTime.Now.Year + " Osmium";
-			TextBlockVersion.Text = GetRes("TextBlockVersion") + ": " + Assembly.GetExecutingAssembly().GetName().Version;
 		}
 
 		public void TextBlockProgramName_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -107,20 +101,9 @@ namespace Translit.Views.Pages
 			}, DispatcherPriority.Background);
 		}
 
-		public void SetLicense(string text)
-		{
-			RichTextBoxLicense.AppendText(text);
-		}
-
 		public string GetRes(string key)
 		{
 			return Application.Current.Resources[key].ToString();
-		}
-
-		private void ButtonBack_OnClick(object sender, RoutedEventArgs e)
-		{
-			ColumnDefinitionAbout.Width = new GridLength(1, GridUnitType.Star);
-			ColumnDefinitionLicense.Width = new GridLength(0, GridUnitType.Star);
 		}
 	}
 }

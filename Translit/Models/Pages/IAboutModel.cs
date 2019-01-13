@@ -7,6 +7,5 @@ namespace Translit.Models.Pages
 		string SelectRandomMember();
 		event PropertyChangedEventHandler PropertyChanged;
 		void Animate();
-		string ReadLicense();
 	}
 }

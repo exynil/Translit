@@ -2,16 +2,22 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:v="clr-namespace:System;assembly=mscorlib">
-	<!--  Main Window Left Menu  -->
-	<v:String x:Key="ListViewItemFileConverter">File Converter</v:String>
-	<v:String x:Key="ListViewItemTextConverter">Text Converter</v:String>
-	<v:String x:Key="ListViewItemWords">Words</v:String>
-	<v:String x:Key="ListViewItemSymbols">Symbols</v:String>
-	<v:String x:Key="ListViewItemSettings">Settings</v:String>
-	<v:String x:Key="ListViewItemDatabase">Database</v:String>
-	<v:String x:Key="ListViewItemAbout">About</v:String>
+	<!--  Main Window Menu  -->
+	<v:String x:Key="MenuItemMain">Main</v:String>
+	<v:String x:Key="MenuItemAdditionally">Additionally</v:String>
+	<v:String x:Key="MenuItemLanguage">Language</v:String>
+	<v:String x:Key="MenuItemReference">Reference</v:String>
+	<v:String x:Key="MenuItemFileConverter">File Converter</v:String>
+	<v:String x:Key="MenuItemTextConverter">Text Converter</v:String>
+	<v:String x:Key="MenuItemWords">Words</v:String>
+	<v:String x:Key="MenuItemSymbols">Symbols</v:String>
+	<v:String x:Key="MenuItemSettings">Settings</v:String>
+	<v:String x:Key="MenuItemDatabase">Database</v:String>
+	<v:String x:Key="MenuItemAbout">About</v:String>
+	<v:String x:Key="MenuItemLicense">License</v:String>
+	<v:String x:Key="MenuItemExit">Exit</v:String>
 
-	<!--  Main Window Right Menu  -->
+	<!--  Main Window PopupBox  -->
 	<v:String x:Key="TextBlockUser">User</v:String>
 	<v:String x:Key="ButtonSignIn">Sign in</v:String>
 	<v:String x:Key="ButtonSignOut">Sign out</v:String>
@@ -28,9 +34,13 @@
 
 	<!--  Page Text Text  -->
 	<v:String x:Key="ButtonClear">Clear</v:String>
-	<v:String x:Key="ButtonConvert">Convert</v:String>
-	<v:String x:Key="ButtonToCopy">To copy</v:String>
+	<v:String x:Key="ButtonTransliterate">Transliterate</v:String>
+	<v:String x:Key="ButtonCopy">Copy</v:String>
 	<v:String x:Key="ToggleButtonRealTimeTransliteration">Real-time transliteration</v:String>
+
+	<!--  Page SymbolsEditor and WordsEditor  -->
+	<v:String x:Key="ToolTipAdd">Add</v:String>
+	<v:String x:Key="ToolTipUpdate">Update</v:String>
 
 	<!--  Page Settings  -->
 	<v:String x:Key="TextBlockDocumentAutoSave">Document Autosave</v:String>
@@ -52,7 +62,6 @@
 	<!--  Page About  -->
 	<v:String x:Key="TextBlockDescription">Program for automatic transliteration of Word documents from cyrillic to latin</v:String>
 	<v:String x:Key="TextBlockVersion">Version</v:String>
-	<v:String x:Key="ButtonLicense">License</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [the site is temporarily down]</v:String>
 	<v:String x:Key="ButtonBack">Back</v:String>
 
@@ -72,6 +81,7 @@
 	<v:String x:Key="SnackBarWelcome">Welcome</v:String>
 	<v:String x:Key="SnackBarWrongLoginOrPassword">Wrong login or password</v:String>
 	<v:String x:Key="SnackBarNotAllowedLength">Not allowed length</v:String>
+	<v:String x:Key="SnackBarDatabaseNotFound">Database not found</v:String>
 
 	<!--  DataGridTextColumn Header  -->
 	<v:String x:Key="DataGridTextColumnId">Id</v:String>

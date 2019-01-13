@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Windows;
 using Translit.Properties;
@@ -13,23 +11,9 @@ namespace Translit
 	{
 		public static string[] Arguments { get; set; }
 
-		private static List<CultureInfo> _languages = new List<CultureInfo>();
-
-		public static List<CultureInfo> Languages => _languages;
-
-		// Событие для оповещения всех окон приложения
-		public static event EventHandler LanguageChanged;
-
 		public App()
 		{
 			InitializeComponent();
-			LanguageChanged += App_LanguageChanged;
-
-			_languages.Clear();
-
-			_languages.Add(new CultureInfo("ru-RU"));
-			_languages.Add(new CultureInfo("kk-KZ"));
-			_languages.Add(new CultureInfo("en-US")); //Нейтральная культура для этого проекта
 
 			Language = Settings.Default.DefaultLanguage;
 		}
@@ -42,51 +26,13 @@ namespace Translit
 				// 1. Меняем язык приложения:
 				Thread.CurrentThread.CurrentUICulture = value;
 
-				// 2. Создаём ResourceDictionary для новой культуры
-				ResourceDictionary dict = new ResourceDictionary();
-				switch (value.Name)
+				//2.Создаём ResourceDictionary для новой культуры
+				var dict = new ResourceDictionary
 				{
-					case "ru-RU":
-						dict.Source = new Uri($"Resources/Languages/language.{value.Name}.xaml", UriKind.Relative);
-						break;
-					case "kk-KZ":
-						dict.Source = new Uri($"Resources/Languages/language.{value.Name}.xaml", UriKind.Relative);
-						break;
-					default:
-						dict.Source = new Uri("Resources/Languages/language.xaml", UriKind.Relative);
-						break;
-				}
+					Source = new Uri($"Resources/Languages/language.{value.Name}.xaml", UriKind.Relative)
+				};
 
-				// 3. Находим старую ResourceDictionary и удаляем его и добавляем новую ResourceDictionary
-				ResourceDictionary oldDict = (from d in Current.Resources.MergedDictionaries
-					where d.Source != null && d.Source.OriginalString.StartsWith("Resources/Languages/language.")
-					select d).First();
-				if (oldDict != null)
-				{
-					int ind = Current.Resources.MergedDictionaries.IndexOf(oldDict);
-					Current.Resources.MergedDictionaries.Remove(oldDict);
-					Current.Resources.MergedDictionaries.Insert(ind, dict);
-				}
-				else
-				{
-					Current.Resources.MergedDictionaries.Add(dict);
-				}
-
-				// 4. Вызываем событие для оповещения всех окон.
-				LanguageChanged?.Invoke(Current, new EventArgs());
-			}
-		}
-
-		private void App_LanguageChanged(Object sender, EventArgs e)
-		{
-			Settings.Default.DefaultLanguage = Language;
-			try
-			{
-				Process.Start(@"..\TranslitLauncher.exe", Language.Name);
-			}
-			catch (Exception)
-			{
-				// ignored
+				Current.Resources.MergedDictionaries.Add(dict);
 			}
 		}
 
@@ -98,7 +44,7 @@ namespace Translit
 		private void App_OnStartup(object sender, StartupEventArgs e)
 		{
 			Arguments = new string[e.Args.Length];
-			for (int i = 0; i < e.Args.Length; i++)
+			for (var i = 0; i < e.Args.Length; i++)
 			{
 				Arguments[i] = e.Args[i];
 			}

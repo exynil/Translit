@@ -2,16 +2,22 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:v="clr-namespace:System;assembly=mscorlib">
-	<!--  Main Window Left Menu  -->
-	<v:String x:Key="ListViewItemFileConverter">Файловый конвертер</v:String>
-	<v:String x:Key="ListViewItemTextConverter">Текстовый конвертер</v:String>
-	<v:String x:Key="ListViewItemWords">Слова</v:String>
-	<v:String x:Key="ListViewItemSymbols">Символы</v:String>
-	<v:String x:Key="ListViewItemSettings">Настройки</v:String>
-	<v:String x:Key="ListViewItemDatabase">База данных</v:String>
-	<v:String x:Key="ListViewItemAbout">О программе</v:String>
+	<!--  Main Window Menu  -->
+	<v:String x:Key="MenuItemMain">Главная</v:String>
+	<v:String x:Key="MenuItemAdditionally">Дополнительно</v:String>
+	<v:String x:Key="MenuItemLanguage">Язык</v:String>
+	<v:String x:Key="MenuItemReference">Справка</v:String>
+	<v:String x:Key="MenuItemFileConverter">Файловый конвертер</v:String>
+	<v:String x:Key="MenuItemTextConverter">Текстовый конвертер</v:String>
+	<v:String x:Key="MenuItemWords">Слова</v:String>
+	<v:String x:Key="MenuItemSymbols">Символы</v:String>
+	<v:String x:Key="MenuItemSettings">Настройки</v:String>
+	<v:String x:Key="MenuItemDatabase">База данных</v:String>
+	<v:String x:Key="MenuItemAbout">О программе</v:String>
+	<v:String x:Key="MenuItemLicense">Лицензия</v:String>
+	<v:String x:Key="MenuItemExit">Выход</v:String>
 
-	<!--  Main Window Right Menu  -->
+	<!--  Main Window PopupBox  -->
 	<v:String x:Key="TextBlockUser">Пользователь</v:String>
 	<v:String x:Key="ButtonSignIn">Войти</v:String>
 	<v:String x:Key="ButtonSignOut">Выйти</v:String>
@@ -28,9 +34,13 @@
 
 	<!--  Page Text Text  -->
 	<v:String x:Key="ButtonClear">Очистить</v:String>
-	<v:String x:Key="ButtonConvert">Конвертировать</v:String>
-	<v:String x:Key="ButtonToCopy">Скопировать</v:String>
+	<v:String x:Key="ButtonTransliterate">Транслитерировать</v:String>
+	<v:String x:Key="ButtonCopy">Скопировать</v:String>
 	<v:String x:Key="ToggleButtonRealTimeTransliteration">Транслитерация в режиме реального времени</v:String>
+
+	<!--  Page SymbolsEditor and WordsEditor  -->
+	<v:String x:Key="ToolTipAdd">Добавить</v:String>
+	<v:String x:Key="ToolTipUpdate">Обновить</v:String>
 
 	<!--  Page Settings  -->
 	<v:String x:Key="TextBlockDocumentAutoSave">Автосохранение документа</v:String>
@@ -52,7 +62,6 @@
 	<!--  Page About  -->
 	<v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации документов Word с кириллицы на латиницу</v:String>
 	<v:String x:Key="TextBlockVersion">Версия</v:String>
-	<v:String x:Key="ButtonLicense">Лицензия</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт временно не работает]</v:String>
 	<v:String x:Key="ButtonBack">Назад</v:String>
 
@@ -72,6 +81,7 @@
 	<v:String x:Key="SnackBarWelcome">Добро пожаловать</v:String>
 	<v:String x:Key="SnackBarWrongLoginOrPassword">Не верный логин или пароль</v:String>
 	<v:String x:Key="SnackBarNotAllowedLength">Не допустимая длина</v:String>
+	<v:String x:Key="SnackBarDatabaseNotFound">База данных не найдена</v:String>
 
 	<!--  DataGridTextColumn Header  -->
 	<v:String x:Key="DataGridTextColumnId">Ид</v:String>

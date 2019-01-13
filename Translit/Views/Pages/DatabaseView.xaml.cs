@@ -5,12 +5,14 @@ using System.Windows.Threading;
 using MaterialDesignThemes.Wpf;
 using Translit.Entity;
 using Translit.Presenters.Pages;
+using Translit.Views.Windows;
 
 namespace Translit.Views.Pages
 {
 	public partial class DatabaseView : IDatabaseView
 	{
-		private IDatabasePresenter Presenter { get; set; }
+		private IDatabasePresenter Presenter { get; }
+		public Snackbar SnackbarNotification { get; set; }
 		public string ConnectionString { get; set; }
 
 		public DatabaseView()
@@ -18,6 +20,14 @@ namespace Translit.Views.Pages
 			InitializeComponent();
 			Presenter = new DatabasePresenter(this);
 			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+		}
+
+		private void Page_OnLoaded(object sender, RoutedEventArgs e)
+		{
+			Presenter.OnPageLoaded();
+			// Подключаем внешний уведомитель
+			SnackbarNotification = ((MainWindowView)Window.GetWindow(this))?.SnackbarNotification;
+			Loaded -= Page_OnLoaded;
 		}
 
 		// Нажатие кнопки обновления базы
@@ -70,12 +80,6 @@ namespace Translit.Views.Pages
 					DispatcherPriority.Background);
 		}
 
-		// Первоначальная загрузка страницы
-		private void Database_OnLoaded(object sender, RoutedEventArgs e)
-		{
-			Presenter.OnPageLoaded();
-		}
-
 		public string GetRes(string key)
 		{
 			return Application.Current.Resources[key].ToString();
@@ -92,13 +96,12 @@ namespace Translit.Views.Pages
 					DispatcherPriority.Background);
 		}
 
-		public void ShowNotification(string resource)
+		public void ShowNotification(string key)
 		{
-			Task.Factory.StartNew(() => { })
-					.ContinueWith(t =>
-					{
-						SnackbarMain.Dispatcher.Invoke(() => { SnackbarMain.MessageQueue.Enqueue(GetRes(resource)); }, DispatcherPriority.Background);
-					});
+			SnackbarNotification.Dispatcher.Invoke(() =>
+			{
+				SnackbarNotification.MessageQueue.Enqueue(GetRes(key));
+			}, DispatcherPriority.Background);
 		}
 
 		public void SetInfoAboutDatabase(DatabaseInfo databaseInfo)

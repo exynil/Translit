@@ -21,332 +21,188 @@
 	TextOptions.TextRenderingMode="Auto"
 	WindowStartupLocation="CenterScreen"
 	mc:Ignorable="d">
-	<Window.Resources>
-		<!--  Storyboard Left Menu  -->
-		<Storyboard x:Key="OpenLeftMenu">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridLeftMenu" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0" />
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="260" />
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridBackground" Storyboard.TargetProperty="(UIElement.Opacity)">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0" />
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0.5" />
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="CloseLeftMenu">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridLeftMenu" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
-				<EasingDoubleKeyFrame KeyTime="0" Value="260" />
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridBackground" Storyboard.TargetProperty="(UIElement.Opacity)">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0.5" />
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-		<!--  Storyboard Right Menu  -->
-		<Storyboard x:Key="OpenRightMenu">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridRightMenu" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0" />
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="-260" />
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridBackground" Storyboard.TargetProperty="(UIElement.Opacity)">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0" />
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0.5" />
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="CloseRightMenu">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridRightMenu" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
-				<EasingDoubleKeyFrame KeyTime="0" Value="-260" />
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridBackground" Storyboard.TargetProperty="(UIElement.Opacity)">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0.5" />
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-	</Window.Resources>
-	<Window.Triggers>
-		<EventTrigger RoutedEvent="ListView.SelectionChanged" SourceName="ListViewMenu">
-			<BeginStoryboard Storyboard="{StaticResource CloseLeftMenu}" />
-		</EventTrigger>
-		<EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseLeftMenu">
-			<BeginStoryboard Storyboard="{StaticResource CloseLeftMenu}" />
-		</EventTrigger>
-		<EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenLeftMenu">
-			<BeginStoryboard Storyboard="{StaticResource OpenLeftMenu}" />
-		</EventTrigger>
-		<!--  EventTrigger Authorization  -->
-		<EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonSignIn">
-			<BeginStoryboard Storyboard="{StaticResource CloseRightMenu}" />
-		</EventTrigger>
-		<EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseRightMenu">
-			<BeginStoryboard Storyboard="{StaticResource CloseRightMenu}" />
-		</EventTrigger>
-		<EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenRightMenu">
-			<BeginStoryboard Storyboard="{StaticResource OpenRightMenu}" />
-		</EventTrigger>
-	</Window.Triggers>
 	<Grid>
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="50" />
-				<RowDefinition Height="*" />
-			</Grid.RowDefinitions>
-			<materialDesign:ColorZone Grid.Row="0" Background="#03A9F4">
-				<DockPanel>
-					<Button
-						x:Name="ButtonOpenRightMenu"
-						Width="60"
-						Height="50"
-						Padding="0"
-						Background="{x:Null}"
-						BorderBrush="{x:Null}"
-						DockPanel.Dock="Right"
-						Foreground="White">
-						<materialDesign:PackIcon
-							Width="30"
-							Height="30"
-							Kind="Account" />
-					</Button>
-					<StackPanel Orientation="Horizontal">
-						<Button
-							x:Name="ButtonOpenLeftMenu"
-							Width="60"
-							Height="50"
-							VerticalAlignment="Center"
-							Background="{x:Null}"
-							BorderBrush="{x:Null}">
-							<materialDesign:PackIcon
-								Width="30"
-								Height="30"
-								Foreground="White"
-								Kind="HamburgerMenu" />
-						</Button>
-						<TextBlock
-							x:Name="TextBlockPageName"
-							VerticalAlignment="Center"
-							FontSize="16"
-							Foreground="White" />
-					</StackPanel>
-				</DockPanel>
-			</materialDesign:ColorZone>
-			<Frame
-				x:Name="FrameMain"
-				Grid.Row="1"
-				NavigationUIVisibility="Hidden" />
-			<materialDesign:Snackbar
-				x:Name="SnackbarMain"
-				Grid.Row="1"
-				IsActive="False"
-				MessageQueue="{materialDesign:MessageQueue}" />
-		</Grid>
-		<Grid
-			x:Name="GridBackground"
-			Background="#404040"
-			IsHitTestVisible="False"
-			Opacity="0" />
-		<Grid
-			x:Name="GridLeftMenu"
-			Width="260"
-			Margin="-260,0,0,0"
-			HorizontalAlignment="Left"
-			Background="WhiteSmoke"
-			RenderTransformOrigin="0.5, 0.5">
-			<Grid.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform />
-					<SkewTransform />
-					<RotateTransform />
-					<TranslateTransform />
-				</TransformGroup>
-			</Grid.RenderTransform>
-			<StackPanel>
-				<Image Height="160" Source="/Resources/Images/logo.jpg" />
-				<ListView
-					x:Name="ListViewMenu"
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<materialDesign:ColorZone Grid.Row="0" Mode="Dark">
+			<DockPanel LastChildFill="True">
+				<Menu
+					Background="#303030"
+					DockPanel.Dock="Left"
+					Foreground="WhiteSmoke"
+					IsMainMenu="True">
+					<MenuItem Header="{DynamicResource MenuItemMain}">
+						<MenuItem
+							x:Name="FileConverterMenuItem"
+							Click="FileConverterMenuItem_OnClick"
+							Header="{DynamicResource MenuItemFileConverter}">
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="FileWord" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem
+							x:Name="TextConverterMenuItem"
+							Click="TextConverterMenuItem_OnClick"
+							Header="{DynamicResource MenuItemTextConverter}">
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="FormatText" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem
+							x:Name="SettingsMenuItem"
+							Click="SettingsMenuItem_OnClick"
+							Header="{DynamicResource MenuItemSettings}">
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="Settings" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem
+							x:Name="ExitMenuItem"
+							Click="ExitMenuItem_OnClick"
+							Header="{DynamicResource MenuItemExit}">
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="ExitToApp" />
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="{DynamicResource MenuItemAdditionally}">
+						<MenuItem
+							x:Name="SymbolsMenuItem"
+							Click="SymbolsMenuItem_OnClick"
+							Header="{DynamicResource MenuItemSymbols}">
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="AlphaABox" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem
+							x:Name="WordsMenuItem"
+							Click="WordsMenuItem_OnClick"
+							Header="{DynamicResource MenuItemWords}">
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="Book" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem
+							x:Name="DatabaseMenuItem"
+							Click="DatabaseMenuItem_OnClick"
+							Header="{DynamicResource MenuItemDatabase}">
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="Database" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem x:Name="LanguagesMenuItem" Header="{DynamicResource MenuItemLanguage}">
+							<MenuItem
+								x:Name="RussianMenuItem"
+								Click="RussianMenuItem_OnClick"
+								Header="Русский" />
+							<MenuItem
+								x:Name="EnglishMenuItem"
+								Click="EnglishMenuItem_OnClick"
+								Header="English" />
+							<MenuItem
+								x:Name="KazakhMenuItem"
+								Click="KazakhMenuItem_OnClick"
+								Header="Қазақша" />
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="Earth" />
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<MenuItem Header="{DynamicResource MenuItemReference}">
+						<MenuItem
+							x:Name="AboutMenuItem"
+							Click="AboutMenuItem_OnClick"
+							Header="О программе">
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="About" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem
+							x:Name="LicenseMenuItem"
+							Click="LicenseMenuItem_OnClick"
+							Header="Лицензия">
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="Script" />
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</Menu>
+				<materialDesign:PopupBox
+					Margin="16,0,16,0"
+					DockPanel.Dock="Right"
+					PlacementMode="BottomAndAlignRightEdges"
+					StaysOpen="True">
+					<Grid Width="300" Height="Auto">
+						<Grid.RowDefinitions>
+							<RowDefinition x:Name="RowDefinitionSignIn" />
+							<RowDefinition x:Name="RowDefinitionLogOut" />
+						</Grid.RowDefinitions>
+						<StackPanel Grid.Row="0">
+							<Label
+								Margin="3"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Content="{DynamicResource LabelAuthorization}"
+								FontSize="20"
+								Foreground="#FF494949" />
+							<TextBox
+								x:Name="TextBoxLogin"
+								Margin="10"
+								materialDesign:HintAssist.Hint="{DynamicResource HintLoginOrEmail}" />
+							<PasswordBox
+								x:Name="PasswordBoxPassword"
+								Margin="10"
+								materialDesign:HintAssist.Hint="{DynamicResource HintPassword}" />
+							<Button
+								x:Name="ButtonSignIn"
+								Margin="5"
+								HorizontalAlignment="Stretch"
+								HorizontalContentAlignment="Center"
+								Click="ButtonSignIn_OnClick"
+								Content="{DynamicResource ButtonSignIn}" />
+						</StackPanel>
+						<StackPanel Grid.Row="1">
+							<Label
+								Margin="3"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Content="{DynamicResource TextBlockUser}"
+								FontSize="20"
+								Foreground="#FF494949" />
+							<TextBlock
+								x:Name="TextBlockUser"
+								Margin="10"
+								HorizontalAlignment="Center" />
+							<Button
+								x:Name="ButtonLogOut"
+								Margin="5"
+								HorizontalAlignment="Stretch"
+								HorizontalContentAlignment="Center"
+								Click="ButtonLogOut_OnClick"
+								Content="{DynamicResource ButtonSignOut}" />
+						</StackPanel>
+					</Grid>
+				</materialDesign:PopupBox>
+				<TextBlock
+					x:Name="TextBlockCurrentPageName"
+					Margin="10,0"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Center"
 					FontSize="16"
-					Foreground="#404040"
-					SelectionChanged="ListViewMenu_OnSelectionChanged">
-					<ListViewItem
-						Height="45"
-						Padding="0"
-						Foreground="#03A9F4">
-						<StackPanel Margin="10,0" Orientation="Horizontal">
-							<materialDesign:PackIcon
-								Width="25"
-								Height="25"
-								Margin="10,5"
-								VerticalAlignment="Center"
-								Kind="FileWord" />
-							<TextBlock Margin="10" Text="{DynamicResource ListViewItemFileConverter}" />
-						</StackPanel>
-					</ListViewItem>
-					<ListViewItem Height="45" Padding="0">
-						<StackPanel Margin="10,0" Orientation="Horizontal">
-							<materialDesign:PackIcon
-								x:Name="PackIconss"
-								Width="25"
-								Height="25"
-								Margin="10,5"
-								VerticalAlignment="Center"
-								Kind="FormatText" />
-							<TextBlock Margin="10" Text="{DynamicResource ListViewItemTextConverter}" />
-						</StackPanel>
-					</ListViewItem>
-					<ListViewItem Height="45" Padding="0">
-						<StackPanel Margin="10,0" Orientation="Horizontal">
-							<materialDesign:PackIcon
-								Width="25"
-								Height="25"
-								Margin="10,5"
-								VerticalAlignment="Center"
-								Kind="AlphaABox" />
-							<TextBlock Margin="10" Text="{DynamicResource ListViewItemSymbols}" />
-						</StackPanel>
-					</ListViewItem>
-					<ListViewItem Height="45" Padding="0">
-						<StackPanel Margin="10,0" Orientation="Horizontal">
-							<materialDesign:PackIcon
-								Width="25"
-								Height="25"
-								Margin="10,5"
-								VerticalAlignment="Center"
-								Kind="Book" />
-							<TextBlock Margin="10" Text="{DynamicResource ListViewItemWords}" />
-						</StackPanel>
-					</ListViewItem>
-					<ListViewItem Height="45" Padding="0">
-						<StackPanel Margin="10,0" Orientation="Horizontal">
-							<materialDesign:PackIcon
-								Width="25"
-								Height="25"
-								Margin="10,5"
-								VerticalAlignment="Center"
-								Kind="Settings" />
-							<TextBlock Margin="10" Text="{DynamicResource ListViewItemSettings}" />
-						</StackPanel>
-					</ListViewItem>
-					<ListViewItem Height="45" Padding="0">
-						<StackPanel Margin="10,0" Orientation="Horizontal">
-							<materialDesign:PackIcon
-								Width="25"
-								Height="25"
-								Margin="10,5"
-								VerticalAlignment="Center"
-								Kind="Database" />
-							<TextBlock Margin="10" Text="{DynamicResource ListViewItemDatabase}" />
-						</StackPanel>
-					</ListViewItem>
-					<ListViewItem Height="45" Padding="0">
-						<StackPanel Margin="10,0" Orientation="Horizontal">
-							<materialDesign:PackIcon
-								Width="25"
-								Height="25"
-								Margin="10,5"
-								VerticalAlignment="Center"
-								Kind="About" />
-							<TextBlock Margin="10" Text="{DynamicResource ListViewItemAbout}" />
-						</StackPanel>
-					</ListViewItem>
-				</ListView>
-			</StackPanel>
-			<Button
-				x:Name="ButtonCloseLeftMenu"
-				Margin="5"
-				HorizontalAlignment="Right"
-				VerticalAlignment="Top"
-				Background="{x:Null}"
-				BorderBrush="{x:Null}">
-				<materialDesign:PackIcon
-					Width="30"
-					Height="30"
-					Kind="Close" />
-			</Button>
-			<ComboBox
-				x:Name="ComboBoxLanguages"
-				Margin="10"
-				VerticalAlignment="Bottom" />
-		</Grid>
-		<Grid
-			x:Name="GridRightMenu"
-			Width="260"
-			Margin="0,0,-260,0"
-			HorizontalAlignment="Right"
-			Background="WhiteSmoke"
-			RenderTransformOrigin="0.5, 0.5">
-			<Grid.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform />
-					<SkewTransform />
-					<RotateTransform />
-					<TranslateTransform />
-				</TransformGroup>
-			</Grid.RenderTransform>
-			<Button
-				x:Name="ButtonCloseRightMenu"
-				Margin="5"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Top"
-				Background="{x:Null}"
-				BorderBrush="{x:Null}"
-				Foreground="#404040">
-				<materialDesign:PackIcon
-					Width="30"
-					Height="30"
-					Kind="Close" />
-			</Button>
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition x:Name="RowDefinitionSignIn" Height="*" />
-					<RowDefinition x:Name="RowDefinitionLogOut" Height="0" />
-				</Grid.RowDefinitions>
-				<StackPanel Grid.Row="0" VerticalAlignment="Center">
-					<Label
-						Margin="3"
-						HorizontalAlignment="Center"
-						VerticalAlignment="Center"
-						Content="{DynamicResource LabelAuthorization}"
-						FontSize="20"
-						Foreground="#FF494949" />
-					<TextBox
-						x:Name="TextBoxLogin"
-						Margin="10"
-						materialDesign:HintAssist.Hint="{DynamicResource HintLoginOrEmail}"
-						TextChanged="TextBoxLogin_OnTextChanged" />
-					<PasswordBox
-						x:Name="PasswordBoxPassword"
-						Margin="10"
-						materialDesign:HintAssist.Hint="{DynamicResource HintPassword}"
-						PasswordChanged="PasswordBoxPassword_OnPasswordChanged" />
-					<WrapPanel HorizontalAlignment="Center">
-						<Button
-							x:Name="ButtonSignIn"
-							Margin="10,15"
-							Click="ButtonSignIn_OnClick"
-							Content="{DynamicResource ButtonSignIn}" />
-					</WrapPanel>
-				</StackPanel>
-				<StackPanel Grid.Row="1" VerticalAlignment="Center">
-					<Label
-						Margin="3"
-						HorizontalAlignment="Center"
-						VerticalAlignment="Center"
-						Content="{DynamicResource TextBlockUser}"
-						FontSize="20"
-						Foreground="#FF494949" />
-					<TextBlock
-						x:Name="TextBlockUser"
-						Margin="10"
-						HorizontalAlignment="Center" />
-					<WrapPanel HorizontalAlignment="Center">
-						<Button
-							x:Name="ButtonLogOut"
-							Margin="10,15"
-							Click="ButtonLogOut_OnClick"
-							Content="{DynamicResource ButtonSignOut}" />
-					</WrapPanel>
-				</StackPanel>
-			</Grid>
-		</Grid>
+					Foreground="#AEEA00" />
+			</DockPanel>
+		</materialDesign:ColorZone>
+		<Frame
+			x:Name="FrameTranslit"
+			Grid.Row="1"
+			NavigationUIVisibility="Hidden" />
+		<materialDesign:Snackbar
+			x:Name="SnackbarNotification"
+			Grid.Row="1"
+			HorizontalAlignment="Stretch"
+			IsActive="False"
+			MessageQueue="{materialDesign:MessageQueue}" />
 	</Grid>
 </Window>

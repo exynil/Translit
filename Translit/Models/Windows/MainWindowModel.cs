@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Text;
+using Newtonsoft.Json;
 using Translit.Entity;
 using Translit.Properties;
 
@@ -13,26 +13,11 @@ namespace Translit.Models.Windows
 {
 	public class MainWindowModel : IMainWindowModel
 	{
-		// Свойства
-		public string Login { get; set; }
-		public string Password { get; set; }
-
-		// Методы
-		public bool IsLoginOrPasswordEmpty()
+		public bool SignIn(string login, string password)
 		{
-			return Login == "" || Password == "";
-		}
-
-		public User SignIn()
-		{
-			User user;
-
-			var link = "http://account.osmium.kz/api/auth?login=" + Login + "&pass=" + Password;
-
+			var link = $"http://account.osmium.kz/api/auth?login={login}&pass={password}";
 			var request = (HttpWebRequest) WebRequest.Create(link);
-
 			HttpWebResponse response;
-
 			try
 			{
 				// Запрашиваем ответ от сервера
@@ -40,7 +25,7 @@ namespace Translit.Models.Windows
 			}
 			catch (Exception)
 			{
-				return null;
+				return false;
 			}
 
 			var responseStream = response.GetResponseStream();
@@ -49,21 +34,21 @@ namespace Translit.Models.Windows
 			using (var stream = new StreamReader(responseStream ?? throw new InvalidOperationException(), Encoding.UTF8))
 			{
 				// Получаем объект из JSON
-				user = JsonConvert.DeserializeObject<User>(stream.ReadToEnd());
+				var user = JsonConvert.DeserializeObject<User>(stream.ReadToEnd());
+
+				if (user == null) return true;
+
+				SaveMacAddressAndUser(user);
+
+				Settings.Default.IsUserAuthorized = true;
 			}
 
-			SaveMacAddressAndUser(user);
-			return user;
+			return true;
 		}
 
 		public void SaveMacAddressAndUser(User user)
 		{
-			var macAddress = NetworkInterface.GetAllNetworkInterfaces()
-				.Where(nic => nic.OperationalStatus == OperationalStatus.Up &&
-				              nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-				.Select(nic => nic.GetPhysicalAddress()
-					.ToString())
-				.FirstOrDefault();
+			var macAddress = GetMacAddress();
 			// Переводим нашего пользователя в строку JSON
 			var userJson = JsonConvert.SerializeObject(user);
 			// Сохраняем зашифрованного пользователя в настройках приложения
@@ -76,16 +61,13 @@ namespace Translit.Models.Windows
 		public User GetUser()
 		{
 			if (Settings.Default.MacAddress == "") return null;
-			var macAddress = NetworkInterface.GetAllNetworkInterfaces()
-				.Where(nic => nic.OperationalStatus == OperationalStatus.Up &&
-				              nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-				.Select(nic => nic.GetPhysicalAddress().ToString()).FirstOrDefault();
+			var macAddress = GetMacAddress();
 
 			// Возвращяем расшифрованного и дисериализованного пользователя
 			return JsonConvert.DeserializeObject<User>(Rc4.Calc(macAddress, Settings.Default.User));
-
 		}
 
+		// Удаление токена
 		public void DeleteToken()
 		{
 			var user = GetUser();
@@ -94,29 +76,37 @@ namespace Translit.Models.Windows
 			client.DeleteAsync(link);
 		}
 
+		// Удаление информации о пользователе из настроек
 		public void DeleteUserFromSettings()
 		{
 			// Удаляем профиль в настройках приложения
 			Settings.Default.User = "";
 			// Удаляем MAC адресс в настройках приложения
 			Settings.Default.MacAddress = "";
+			// Удаляем метку авторизации
+			Settings.Default.IsUserAuthorized = false;
 		}
 
 		// Сравнение сохраненного MAC адреса с MAC адресом текущей машины
 		public void MacAddressComparison()
 		{
 			// Получаем MAC адрес машины клиента
-			var macAddress = NetworkInterface.GetAllNetworkInterfaces()
-				.Where(nic => nic.OperationalStatus == OperationalStatus.Up &&
-				              nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-				.Select(nic => nic.GetPhysicalAddress()
-					.ToString())
-				.FirstOrDefault();
+			var macAddress = GetMacAddress();
 
 			// Если MAC адрес текущей машины совпадает с MAC адресом последней машины
 			if (macAddress == Settings.Default.MacAddress) return;
-
 			DeleteUserFromSettings();
+		}
+
+		private static string GetMacAddress()
+		{
+			var interfaces = NetworkInterface.GetAllNetworkInterfaces();
+			var macAddress = interfaces
+				.Where(x => x.OperationalStatus == OperationalStatus.Up && x.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+				.Select(x => x.GetPhysicalAddress())
+				.FirstOrDefault()
+				?.ToString();
+			return macAddress;
 		}
 	}
 }

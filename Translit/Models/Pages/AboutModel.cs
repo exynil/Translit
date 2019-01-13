@@ -85,15 +85,5 @@ namespace Translit.Models.Pages
 				Thread.Sleep(30);
 			}
 		}
-
-		public string ReadLicense()
-		{
-			if (!File.Exists(@"license.txt")) return "";
-
-			using (var reader = new StreamReader(@"license.txt"))
-			{
-				return reader.ReadToEnd();
-			}
-		}
 	}
 }

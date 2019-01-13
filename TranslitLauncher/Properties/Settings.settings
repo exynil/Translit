@@ -3,9 +3,9 @@
   <Profiles />
   <Settings>
     <Setting Name="Version" Type="System.String" Scope="User">
-      <Value Profile="(Default)">v0.1</Value>
+      <Value Profile="(Default)">v0.2</Value>
     </Setting>
-    <Setting Name="DefaultLanguage" Type="System.String" Scope="User">
+    <Setting Name="DefaultLanguage" Type="System.Globalization.CultureInfo" Scope="User">
       <Value Profile="(Default)">ru-RU</Value>
     </Setting>
   </Settings>

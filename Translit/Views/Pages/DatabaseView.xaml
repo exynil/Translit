@@ -10,7 +10,7 @@
 	d:DesignWidth="500"
 	Background="{DynamicResource MaterialDesignPaper}"
 	FontFamily="{DynamicResource MaterialDesignFont}"
-	Loaded="Database_OnLoaded"
+	Loaded="Page_OnLoaded"
 	TextElement.FontSize="13"
 	TextElement.FontWeight="Regular"
 	TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -107,10 +107,5 @@
 				Minimum="0"
 				Value="0" />
 		</StackPanel>
-		<materialDesign:Snackbar
-			x:Name="SnackbarMain"
-			Grid.Row="2"
-			IsActive="False"
-			MessageQueue="{materialDesign:MessageQueue}" />
 	</Grid>
 </Page>

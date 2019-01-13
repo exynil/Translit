@@ -2,12 +2,8 @@
 {
 	interface IMainWindowPresenter
 	{
-		void OnButtonSignInClicked();
+		void OnButtonSignInClicked(string login, string password);
 		void OnWindowLoaded();
-		void OnLanguageChanged();
-		void OnListViewMenuSelectionChanged(int number);
 		void LogOut();
-		void OnTextBlockLoginChanged(string login);
-		void OnPasswordBoxPasswordChanged(string password);
 	}
 }

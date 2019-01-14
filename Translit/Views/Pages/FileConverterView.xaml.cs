@@ -50,7 +50,7 @@ namespace Translit.Views.Pages
 
 			if (result != true) return;
 
-			Presenter.TranslitFiles(new[] {dlg.FileName});
+			Presenter.TranslitFiles(new[] {dlg.FileName}, IgnoreSelectedTextCheckBox.IsChecked);
 		}
 
 		// Нажатие кнопки выбора папки с документами
@@ -74,7 +74,7 @@ namespace Translit.Views.Pages
 					.Where(f => (f.Attributes & FileAttributes.Hidden) == 0 && (f.Extension == ".doc" || f.Extension == ".docx"))
 					.Select(f => f.FullName).ToArray();
 
-				Presenter.TranslitFiles(files);
+				Presenter.TranslitFiles(files, IgnoreSelectedTextCheckBox.IsChecked);
 			}
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
@@ -75,7 +76,7 @@ namespace Translit.Models.Pages
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
 
-		public void TranslitFiles(string[] files)
+		public void TranslitFiles(string[] files, bool? ignoreMarkers)
 		{
 			NumberOfDocuments = files.Length;
 			
@@ -83,12 +84,12 @@ namespace Translit.Models.Pages
 			for (var i = 0; i < NumberOfDocuments; i++)
 			{
 				NumberOfDocumentsTranslated = i;
-				TranslitFile(files[i]);
+				TranslitFile(files[i], ignoreMarkers);
 			}
 		}
 
 		// Транслитерация файла
-		public void TranslitFile(string filename)
+		public void TranslitFile(string filename, bool? ignoreMarkers)
 		{
 			var overwrite = false;
 
@@ -134,13 +135,29 @@ namespace Translit.Models.Pages
 								break;
 						}
 
-						// Получение всех узлов <w:t>
-						var elements = doc.Descendants().Where(x => x.Name.LocalName == "t");
+						IEnumerable<XElement> nodes;
+
+						if (ignoreMarkers != null && ignoreMarkers == true)
+						{
+							nodes = doc.Descendants()
+								.Where(n => n.Name.LocalName == "r" &&
+								            n.Descendants()
+									            .Where(r => r.Name.LocalName == "highlight")
+									            .ToList()
+									            .Count ==
+								            0)
+								.Where(n => n.Name.LocalName == "t");
+						}
+						else
+						{
+							nodes = doc.Descendants().Where(n => n.Name.LocalName == "t");
+						}
+						
 
 						// Перебор и замена
-						foreach (var e in elements)
+						foreach (var n in nodes)
 						{
-							e.Value = e.Value.Replace(cyryllic, latin);
+							n.Value = n.Value.Replace(cyryllic, latin);
 						}
 					}
 
@@ -152,12 +169,23 @@ namespace Translit.Models.Pages
 
 				for (var i = 0; i < symbols.Length; i++)
 				{
-					var elements = doc.Descendants().Where(x => x.Name.LocalName == "t");
+					IEnumerable<XElement> nodes;
+
+					if (ignoreMarkers != null && ignoreMarkers == true)
+					{
+						var rNodes = doc.Descendants().Where(n => n.Name.LocalName == "r" && n.Descendants().Where(r => r.Name.LocalName == "highlight").ToList().Count == 0);
+
+						nodes = rNodes.Descendants().Where(n => n.Name.LocalName == "t");
+					}
+					else
+					{
+						nodes = doc.Descendants().Where(n => n.Name.LocalName == "t");
+					}
 
 					// Перебор и замена
-					foreach (var e in elements)
+					foreach (var n in nodes)
 					{
-						e.Value = e.Value.Replace(symbols[i].Cyryllic, symbols[i].Latin);
+						n.Value = n.Value.Replace(symbols[i].Cyryllic, symbols[i].Latin);
 					}
 
 					PercentOfSymbols = i * 100 / (symbols.Length - 1);

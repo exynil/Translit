@@ -30,7 +30,8 @@
 	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Транслитерация слов исключений</v:String>
 	<v:String x:Key="TextBlockCharacterTransliteration">Транслитерация символов</v:String>
 	<v:String x:Key="FileNameLatin">латиница</v:String>
-	<v:String x:Key="TransliterationCompleted">Транслитерация завершена</v:String>
+	<v:String x:Key="CheckBoxIgnoreSelectedText">Игнорировать выделенный текст</v:String>
+	<v:String x:Key="ToolTipIgnoreSelectedText">Программа игнорирует выделенный текст</v:String>
 
 	<!--  Page Text Text  -->
 	<v:String x:Key="ButtonClear">Очистить</v:String>
@@ -82,6 +83,7 @@
 	<v:String x:Key="SnackBarWrongLoginOrPassword">Не верный логин или пароль</v:String>
 	<v:String x:Key="SnackBarNotAllowedLength">Не допустимая длина</v:String>
 	<v:String x:Key="SnackBarDatabaseNotFound">База данных не найдена</v:String>
+	<v:String x:Key="SnackBarTransliterationCompleted">Транслитерация завершена</v:String>
 
 	<!--  DataGridTextColumn Header  -->
 	<v:String x:Key="DataGridTextColumnId">Ид</v:String>

@@ -17,7 +17,7 @@ namespace Translit.Presenters.Pages
 			View = view;
 		}
 
-		public async void TranslitFiles(string[] files)
+		public async void TranslitFiles(string[] files, bool? ignoreMarkers)
 		{
 			if (files.Length == 0) return;
 
@@ -30,14 +30,14 @@ namespace Translit.Presenters.Pages
 			await Task.Factory.StartNew(() =>
 			{
 				Model.PropertyChanged += TrackProperties;
-				Model.TranslitFiles(files);
+				Model.TranslitFiles(files, ignoreMarkers);
 			});
 
 			View.ToggleProgressBarVisibility();
 
 			View.BlockUnlockButtons();
 
-			View.ShowNotification("TransliterationCompleted");
+			View.ShowNotification("SnackBarTransliterationCompleted");
 		}
 
 		public void TrackProperties(object sender, PropertyChangedEventArgs e)

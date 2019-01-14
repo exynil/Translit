@@ -21,25 +21,34 @@
 			<RowDefinition />
 			<RowDefinition />
 		</Grid.RowDefinitions>
-		<WrapPanel
+		<StackPanel
 			Grid.Row="0"
 			HorizontalAlignment="Center"
 			VerticalAlignment="Center">
-			<Button
-				x:Name="ButtonSelectFile"
-				Margin="10"
+			<WrapPanel>
+				<Button
+					x:Name="ButtonSelectFile"
+					Margin="10"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Click="ButtonSelectFile_Click"
+					Content="{DynamicResource ButtonSelectFile}" />
+				<Button
+					x:Name="ButtonSelectFolder"
+					Margin="10"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Click="ButtonSelectFolder_Click"
+					Content="{DynamicResource ButtonSelectFolder}" />
+			</WrapPanel>
+			<CheckBox
+				x:Name="IgnoreSelectedTextCheckBox"
 				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				Click="ButtonSelectFile_Click"
-				Content="{DynamicResource ButtonSelectFile}" />
-			<Button
-				x:Name="ButtonSelectFolder"
-				Margin="10"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				Click="ButtonSelectFolder_Click"
-				Content="{DynamicResource ButtonSelectFolder}" />
-		</WrapPanel>
+				Content="{DynamicResource CheckBoxIgnoreSelectedText}"
+				Style="{StaticResource MaterialDesignCheckBox}"
+				ToolTip="{DynamicResource ToolTipIgnoreSelectedText}" />
+		</StackPanel>
+
 		<StackPanel
 			x:Name="StackPanelProgress"
 			Grid.Row="1"
@@ -53,6 +62,7 @@
 				TextWrapping="Wrap" />
 			<ProgressBar
 				x:Name="ProgressBarDocuments"
+				Height="8"
 				Margin="50,10"
 				Minimum="0" />
 			<TextBlock
@@ -63,6 +73,7 @@
 				TextWrapping="Wrap" />
 			<ProgressBar
 				x:Name="ProgressBarExceptions"
+				Height="8"
 				Margin="50,10"
 				Maximum="100"
 				Minimum="0" />
@@ -74,6 +85,7 @@
 				TextWrapping="Wrap" />
 			<ProgressBar
 				x:Name="ProgressBarSymbols"
+				Height="8"
 				Margin="50,10"
 				Maximum="100"
 				Minimum="0" />

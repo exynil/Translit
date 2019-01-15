@@ -90,6 +90,7 @@
 				TextWrapping="Wrap" />
 			<ProgressBar
 				Name="ProgressBarSymbolInserting"
+				Height="8"
 				Margin="0,20"
 				Maximum="100"
 				Minimum="0"
@@ -102,6 +103,7 @@
 				TextWrapping="Wrap" />
 			<ProgressBar
 				Name="ProgressBarWordInserting"
+				Height="8"
 				Margin="0,20"
 				Maximum="100"
 				Minimum="0"

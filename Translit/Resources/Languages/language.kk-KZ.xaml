@@ -26,12 +26,12 @@
 	<!--  Page File Converter  -->
 	<v:String x:Key="ButtonSelectFile">Файлды таңдау</v:String>
 	<v:String x:Key="ButtonSelectFolder">Қалтаны таңдау</v:String>
-	<v:String x:Key="TextBlockDocuments">Құжаттар</v:String>
+	<v:String x:Key="TextBlockFiles">Файлдар</v:String>
 	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Ерекше сөздер тізбегін аудару</v:String>
 	<v:String x:Key="TextBlockCharacterTransliteration">Таңба бойынша аудару</v:String>
 	<v:String x:Key="FileNameLatin">латиница</v:String>
 	<v:String x:Key="CheckBoxIgnoreSelectedText">Таңдалған мәтінді елемеу</v:String>
-	<v:String x:Key="ToolTipIgnoreSelectedText">Бағдарлама таңдалған мәтінді елемейді</v:String>
+	<v:String x:Key="ToolTipIgnoreSelectedText">Бағдарлама таңдалған мәтінді елемейді (Word құжаттарында ғана)</v:String>
 
 	<!--  Page Text Text  -->
 	<v:String x:Key="ButtonClear">Тазалау</v:String>

@@ -55,7 +55,7 @@
 			VerticalAlignment="Center"
 			Visibility="Hidden">
 			<TextBlock
-				x:Name="TextBlockDocumetns"
+				x:Name="TextBlockFiles"
 				Margin="50,10"
 				HorizontalAlignment="Center"
 				FontSize="15"

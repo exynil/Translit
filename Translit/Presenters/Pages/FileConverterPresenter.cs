@@ -17,7 +17,7 @@ namespace Translit.Presenters.Pages
 			View = view;
 		}
 
-		public async void TranslitFiles(string[] files, bool? ignoreMarkers)
+		public async void TranslitFiles(string[] files, bool? ignoreSelectedText)
 		{
 			if (files.Length == 0) return;
 
@@ -30,7 +30,7 @@ namespace Translit.Presenters.Pages
 			await Task.Factory.StartNew(() =>
 			{
 				Model.PropertyChanged += TrackProperties;
-				Model.TranslitFiles(files, ignoreMarkers);
+				Model.TranslitFiles(files, ignoreSelectedText);
 			});
 
 			View.ToggleProgressBarVisibility();

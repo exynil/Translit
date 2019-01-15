@@ -2,6 +2,6 @@
 {
 	interface IFileConverterPresenter
 	{
-		void TranslitFiles(string[] files, bool? ignoreMarkers);
+		void TranslitFiles(string[] files, bool? ignoreSelectedText);
 	}
 }

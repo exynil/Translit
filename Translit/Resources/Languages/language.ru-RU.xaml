@@ -26,12 +26,12 @@
 	<!--  Page File Converter  -->
 	<v:String x:Key="ButtonSelectFile">Выбрать файл</v:String>
 	<v:String x:Key="ButtonSelectFolder">Выбрать папку</v:String>
-	<v:String x:Key="TextBlockDocuments">Документы</v:String>
+	<v:String x:Key="TextBlockFiles">Файлы</v:String>
 	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Транслитерация слов исключений</v:String>
 	<v:String x:Key="TextBlockCharacterTransliteration">Транслитерация символов</v:String>
 	<v:String x:Key="FileNameLatin">латиница</v:String>
 	<v:String x:Key="CheckBoxIgnoreSelectedText">Игнорировать выделенный текст</v:String>
-	<v:String x:Key="ToolTipIgnoreSelectedText">Программа игнорирует выделенный текст</v:String>
+	<v:String x:Key="ToolTipIgnoreSelectedText">Программа игнорирует выделенный текст (только в документах Word)</v:String>
 
 	<!--  Page Text Text  -->
 	<v:String x:Key="ButtonClear">Очистить</v:String>

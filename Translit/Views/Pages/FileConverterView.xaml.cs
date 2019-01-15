@@ -36,7 +36,7 @@ namespace Translit.Views.Pages
 			{
 				FileName = "Document",
 				DefaultExt = ".*",
-				Filter = "Text documents (.doc; .docx)|*.doc;*.docx" // Фильтрация файлов
+				Filter = "Text documents (.doc; .docx; .xls; .xlsx)|*.doc;*.docx; *.xls;*.xlsx" // Фильтрация файлов
 			};
 
 			// Открываем диалоговое окно
@@ -111,8 +111,8 @@ namespace Translit.Views.Pages
 		public void UpdateProgressValues(int numberOfDocumentsTranslated, int numberOfDocuments, int percentOfExceptions, int percentOfSymbols)
 		{
 			// Обновляем процесс
-			TextBlockDocumetns.Dispatcher.Invoke(
-				() => { TextBlockDocumetns.Text = GetRes("TextBlockDocuments") + ": " + numberOfDocumentsTranslated + "/" + numberOfDocuments; },
+			TextBlockFiles.Dispatcher.Invoke(
+				() => { TextBlockFiles.Text = GetRes("TextBlockFiles") + ": " + numberOfDocumentsTranslated + "/" + numberOfDocuments; },
 				DispatcherPriority.Background);
 			ProgressBarDocuments.Dispatcher.Invoke(() => { ProgressBarDocuments.Value = numberOfDocumentsTranslated; },
 				DispatcherPriority.Background);

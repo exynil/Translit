@@ -26,12 +26,12 @@
 	<!--  Page File Converter  -->
 	<v:String x:Key="ButtonSelectFile">Select file</v:String>
 	<v:String x:Key="ButtonSelectFolder">Select folder</v:String>
-	<v:String x:Key="TextBlockDocuments">Documents</v:String>
+	<v:String x:Key="TextBlockFiles">Files</v:String>
 	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Transliteration of exception words</v:String>
 	<v:String x:Key="TextBlockCharacterTransliteration">Character transliteration</v:String>
 	<v:String x:Key="FileNameLatin">latin</v:String>
 	<v:String x:Key="CheckBoxIgnoreSelectedText">Ignore selected text</v:String>
-	<v:String x:Key="ToolTipIgnoreSelectedText">The program ignores selected text</v:String>
+	<v:String x:Key="ToolTipIgnoreSelectedText">The program ignores selected text (only in Word documents)</v:String>
 
 	<!--  Page Text Text  -->
 	<v:String x:Key="ButtonClear">Clear</v:String>

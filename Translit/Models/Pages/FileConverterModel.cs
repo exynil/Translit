@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using LiteDB;
+using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Word;
 using Translit.Entity;
 using Translit.Properties;
@@ -76,7 +78,7 @@ namespace Translit.Models.Pages
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
 
-		public void TranslitFiles(string[] files, bool? ignoreMarkers)
+		public void TranslitFiles(string[] files, bool? ignoreSelectedText)
 		{
 			NumberOfDocuments = files.Length;
 			
@@ -84,19 +86,26 @@ namespace Translit.Models.Pages
 			for (var i = 0; i < NumberOfDocuments; i++)
 			{
 				NumberOfDocumentsTranslated = i;
-				TranslitFile(files[i], ignoreMarkers);
+				if (files[i].ToLower().EndsWith(".doc") || files[i].ToLower().EndsWith(".docx"))
+				{
+					TranslitWordFile(files[i], ignoreSelectedText);
+				}
+				else if (files[i].ToLower().EndsWith(".xls") || files[i].ToLower().EndsWith(".xlsx"))
+				{
+					TranslitExelFile(files[i]);
+				}
 			}
 		}
 
-		// Транслитерация файла
-		public void TranslitFile(string filename, bool? ignoreMarkers)
+		// Транслитерация файла Word
+		private void TranslitWordFile(string filename, bool? ignoreSelectedText)
 		{
-			var overwrite = false;
+			var isConverted = false;
 
 			if (filename.ToLower().EndsWith(".doc"))
 			{
 				filename = ConvertDocToDocx(filename);
-				overwrite = true;
+				isConverted = true;
 			}
 
 			// Распаковка документа и получение расположения распакованной папки
@@ -137,7 +146,7 @@ namespace Translit.Models.Pages
 
 						IEnumerable<XElement> nodes;
 
-						if (ignoreMarkers != null && ignoreMarkers == true)
+						if (ignoreSelectedText != null && ignoreSelectedText == true)
 						{
 							nodes = doc.Descendants()
 								.Where(n => n.Name.LocalName == "r" &&
@@ -152,7 +161,6 @@ namespace Translit.Models.Pages
 						{
 							nodes = doc.Descendants().Where(n => n.Name.LocalName == "t");
 						}
-						
 
 						// Перебор и замена
 						foreach (var n in nodes)
@@ -171,7 +179,7 @@ namespace Translit.Models.Pages
 				{
 					IEnumerable<XElement> nodes;
 
-					if (ignoreMarkers != null && ignoreMarkers == true)
+					if (ignoreSelectedText != null && ignoreSelectedText == true)
 					{
 						var rNodes = doc.Descendants().Where(n => n.Name.LocalName == "r" && n.Descendants().Where(r => r.Name.LocalName == "highlight").ToList().Count == 0);
 
@@ -194,7 +202,88 @@ namespace Translit.Models.Pages
 
 			doc.Save(xmlPath);
 
-			BuildDocumentFromFolder(temporaryFolder, filename, overwrite);
+			CreateNewFileFromDirectory(temporaryFolder, filename, isConverted);
+		}
+
+		// Транслитерация файла Exel
+		private void TranslitExelFile(string filename)
+		{
+			var isConverted = false;
+
+			if (filename.ToLower().EndsWith(".xls"))
+			{
+				filename = ConvertXlsToXlsx(filename);
+				isConverted = true;
+			}
+
+			// Распаковка документа и получение расположения распакованной папки
+			var temporaryFolder = UnZipFileToTemporaryFolder(filename);
+
+			// Определяем путь к xml файлу распакованного документа
+			var xmlPath = temporaryFolder + @"\xl\sharedStrings.xml";
+
+			// Открваем документ xml
+			var doc = XDocument.Load(xmlPath);
+
+			using (var db = new LiteDatabase(ConnectionString))
+			{
+				var words = db.GetCollection<Word>("Words").FindAll().ToArray();
+
+				for (var i = 0; i < words.Length; i++)
+				{
+					// Трансформируем слово в три различных состояния [ЗАГЛАВНЫЕ, прописные и Первыя заглавная] и заменяем
+					for (var j = 0; j < 3; j++)
+					{
+						var cyryllic = words[i].Cyryllic;
+						var latin = words[i].Latin;
+						switch (j)
+						{
+							case 0:
+								cyryllic = cyryllic.ToUpper();
+								latin = latin.ToUpper();
+								break;
+							case 1:
+								cyryllic = cyryllic.ToLower();
+								latin = latin.ToLower();
+								break;
+							case 2:
+								cyryllic = cyryllic.First().ToString().ToUpper() + cyryllic.Substring(1);
+								latin = latin.First().ToString().ToUpper() + latin.Substring(1);
+								break;
+						}
+
+						var nodes = doc.Descendants().Where(n => n.Name.LocalName == "t");
+
+						// Перебор и замена
+						foreach (var n in nodes)
+						{
+							n.Value = n.Value.Replace(cyryllic, latin);
+						}
+					}
+
+					// Высчитываем процент текущего прогресса
+					PercentOfExceptions = i * 100 / (words.Length - 1);
+				}
+
+				var symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
+
+				for (var i = 0; i < symbols.Length; i++)
+				{
+					var nodes = doc.Descendants().Where(n => n.Name.LocalName == "t");
+
+					// Перебор и замена
+					foreach (var n in nodes)
+					{
+						n.Value = n.Value.Replace(symbols[i].Cyryllic, symbols[i].Latin);
+					}
+
+					PercentOfSymbols = i * 100 / (symbols.Length - 1);
+				}
+			}
+
+			doc.Save(xmlPath);
+
+			CreateNewFileFromDirectory(temporaryFolder, filename, isConverted);
 		}
 
 		private static string UnZipFileToTemporaryFolder(string filename)
@@ -214,7 +303,7 @@ namespace Translit.Models.Pages
 			return temporaryFolder;
 		}
 
-		private void BuildDocumentFromFolder(string folder, string filename, bool overwrite)
+		private void CreateNewFileFromDirectory(string folder, string filename, bool isConverted)
 		{
 			var fileInfo = new FileInfo(filename);
 
@@ -225,56 +314,77 @@ namespace Translit.Models.Pages
 			var extension = fileInfo.Extension;
 
 			// Комбинирование данных
-			var newDocument = $@"{directoryName}\{fileName}{label}{extension}";
+			var newFileName = $@"{directoryName}\{fileName}{label}{extension}";
 
-			if (File.Exists(newDocument))
+			Debug.WriteLine(newFileName);
+
+			if (File.Exists(newFileName))
 			{
-				File.Delete(newDocument);
+				File.Delete(newFileName);
 			}
 
-			ZipFile.CreateFromDirectory(folder, newDocument);
+			ZipFile.CreateFromDirectory(folder, newFileName);
 
 			// Удаление временной папки
 			Directory.Delete(folder, true);
 
-			if (Settings.Default.AutoSave && overwrite == false) return;
-
-			try
+			// Если автосохранение отключено и файл не был конвертирован в новый формат
+			if (Settings.Default.AutoSave == false && isConverted == false)
 			{
-				// Замена файла
-				File.Replace(newDocument, filename, null);
+				try
+				{
+					// Замена файла
+					File.Replace(newFileName, filename, null);
+				}
+				catch (Exception)
+				{
+					// ignored
+				}
 			}
-			catch (Exception)
+
+			// Если файл был конвертирован в новый формат, удаляем не отмеченный файл
+			if (isConverted)
 			{
-				// ignored
+				File.Delete(filename);
 			}
 		}
 
-		public string ConvertDocToDocx(string path)
+		public string ConvertDocToDocx(string filename)
 		{
 			var word = new Microsoft.Office.Interop.Word.Application();
-			var fileInfo = new FileInfo(path);
-			var document = word.Documents.Open(fileInfo.FullName);
+			var document = word.Documents.Open(filename);
 
-			// Получение данных о новом файле
-			var directoryName = fileInfo.DirectoryName;
-			var fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
-			var label = $" ({GetRes("FileNameLatin")})";
+			var newFileName = filename + "x";
 
-			var extension = ".docx";
-
-			// Комбинирование данных
-			var newDocument = $@"{directoryName}\{fileName}{label}{extension}";
-
-			document.SaveAs2(newDocument, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2010);
+			document.SaveAs2(newFileName, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2010);
 			word.ActiveDocument.Close();
 			word.Quit();
 
 			if (!Settings.Default.AutoSave)
 			{
-				File.Delete(path);
+				File.Delete(filename);
 			}
-			return newDocument;
+
+			return newFileName;
+		}
+
+		private string ConvertXlsToXlsx(string filename)
+		{
+			var exel = new Microsoft.Office.Interop.Excel.Application();
+			var workbook = exel.Workbooks.Open(filename);
+
+			var newFileName = filename + "x";
+
+			workbook.SaveAs(newFileName, XlFileFormat.xlOpenXMLWorkbook);
+			workbook.Close();
+			exel.Quit();
+
+			if (!Settings.Default.AutoSave)
+			{
+				File.Delete(filename);
+			}
+
+			return newFileName;
 		}
 
 		public string GetRes(string key)

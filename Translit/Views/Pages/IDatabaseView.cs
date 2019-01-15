@@ -8,6 +8,6 @@ namespace Translit.Views.Pages
 		void ShowNotification(string key);
 		void ToggleProgressBarVisibility();
 		void SetInfoAboutDatabase(DatabaseInfo databaseInfo);
-		void UpdateProgressValues(int percentOfSymbols, int percentOfExceptions);
+		void UpdateProgressValues(int percentOfSymbols, int percentOfWords);
 	}
 }

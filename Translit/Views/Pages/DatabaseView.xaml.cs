@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using MaterialDesignThemes.Wpf;
 using Translit.Entity;
@@ -58,11 +59,11 @@ namespace Translit.Views.Pages
 			}
 		}
 
-		public void UpdateProgressValues(int percentOfSymbols, int percentOfExceptions)
+		public void UpdateProgressValues(int percentOfSymbols, int percentOfWords)
 		{
 			ProgressBarSymbolInserting.Dispatcher.Invoke(() => ProgressBarSymbolInserting.Value = percentOfSymbols,
 					DispatcherPriority.Background);
-			ProgressBarWordInserting.Dispatcher.Invoke(() => ProgressBarWordInserting.Value = percentOfExceptions,
+			ProgressBarWordInserting.Dispatcher.Invoke(() => ProgressBarWordInserting.Value = percentOfWords,
 					DispatcherPriority.Background);
 
 			TextBlockSymbolInserting.Dispatcher.Invoke(
@@ -75,7 +76,7 @@ namespace Translit.Views.Pages
 			TextBlockWordInserting.Dispatcher.Invoke(
 					() =>
 					{
-						TextBlockWordInserting.Text = GetRes("TextBlockLoadingExceptions") + ": " + percentOfExceptions + "%";
+						TextBlockWordInserting.Text = GetRes("TextBlockLoadingWords") + ": " + percentOfWords + "%";
 					},
 					DispatcherPriority.Background);
 		}
@@ -108,42 +109,68 @@ namespace Translit.Views.Pages
 		{
 			if (databaseInfo != null)
 			{
-				TextBlockDatabase.Dispatcher.Invoke(() => { TextBlockDatabase.Text = GetRes("TextBlockDatabase"); },
+				TextBlockDatabase.Dispatcher.Invoke(() =>
+				{
+					TextBlockDatabase.SetResourceReference(TextBlock.TextProperty, "TextBlockDatabase");
+				},
 					DispatcherPriority.Background);
 
 				TextBlockDatabaseSize.Dispatcher.Invoke(() =>
 				{
+					TextBlockDatabaseSize.SetResourceReference(TextBlock.TextProperty, "TextBlockDatabaseSize");
+				}, DispatcherPriority.Background);
+
+				TextBlockDatabaseSizeResult.Dispatcher.Invoke(() =>
+				{
 					// Выводим информацию о размере файла
 					if (databaseInfo.Length < 1048576)
 					{
-						var text = GetRes("TextBlockDatabaseSize") + ": " + databaseInfo.Length / 1024 + GetRes("FileKb");
-						TextBlockDatabaseSize.Text = text;
+						TextBlockDatabaseSizeResult.Text = databaseInfo.Length / 1024 + " KB";
 					}
 					else
 					{
-						var text = GetRes("TextBlockDatabaseSize") + ": " + databaseInfo.Length / 1024 / 1024 + GetRes("FileMb");
-						TextBlockDatabaseSize.Text = text;
+						TextBlockDatabaseSizeResult.Text = databaseInfo.Length / 1024 / 1024 + " MB";
 					}
 				}, DispatcherPriority.Background);
 
 				TextBlockSymbolsCount.Dispatcher.Invoke(
 					() =>
 					{
-						TextBlockSymbolsCount.Text = GetRes("TextBlockAmountOfCharacters") + ": " + databaseInfo.NumberOfSymbols;
+						TextBlockSymbolsCount.SetResourceReference(TextBlock.TextProperty, "TextBlockAmountOfCharacters");
 					}, DispatcherPriority.Background);
-				TextBlockWordsCount.Dispatcher.Invoke(
+
+				TextBlockSymbolsCountResult.Dispatcher.Invoke(
 					() =>
 					{
-						TextBlockWordsCount.Text = GetRes("TextBlockAmountOfWords") + ": " + databaseInfo.NumberOfExceptions;
+						TextBlockSymbolsCountResult.Text = databaseInfo.NumberOfSymbols.ToString();
 					}, DispatcherPriority.Background);
 
 				TextBlockWordsCount.Dispatcher.Invoke(
-					() => { TextBlockLastLastUpdate.Text = GetRes("TextBlockLastUpdate") + ": " + databaseInfo.LastUpdate; },
+					() =>
+					{
+						TextBlockWordsCount.SetResourceReference(TextBlock.TextProperty, "TextBlockAmountOfWords");
+					}, DispatcherPriority.Background);
+
+				TextBlockWordsCountResult.Dispatcher.Invoke(
+					() => { TextBlockWordsCountResult.Text = databaseInfo.NumberOfWords.ToString(); }, DispatcherPriority.Background);
+
+				TextBlockLastLastUpdate.Dispatcher.Invoke(
+					() =>
+					{
+						TextBlockLastLastUpdate.SetResourceReference(TextBlock.TextProperty, "TextBlockLastUpdate");
+					},
+					DispatcherPriority.Background);
+
+				TextBlockLastLastUpdateResult.Dispatcher.Invoke(
+					() => { TextBlockLastLastUpdateResult.Text = databaseInfo.LastUpdate.ToString(CultureInfo.CurrentCulture); },
 					DispatcherPriority.Background);
 			}
 			else
 			{
-				TextBlockDatabase.Dispatcher.Invoke(() => { TextBlockDatabase.Text = GetRes("TextBlockDatabaseNotFound"); },
+				TextBlockDatabase.Dispatcher.Invoke(() =>
+				{
+					TextBlockDatabase.SetResourceReference(TextBlock.TextProperty, "TextBlockDatabaseNotFound");
+				},
 					DispatcherPriority.Background);
 			}
 		}

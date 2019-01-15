@@ -49,7 +49,7 @@
 	<!--  Page DatabaseUpdate  -->
 	<v:String x:Key="TextBlockDatabase">Database</v:String>
 	<v:String x:Key="TextBlockCharacterLoading">Character loading</v:String>
-	<v:String x:Key="TextBlockLoadingExceptions">Loading exceptions</v:String>
+	<v:String x:Key="TextBlockLoadingWords">Loading Words</v:String>
 	<v:String x:Key="TextBlockDatabaseSize">Database Size</v:String>
 	<v:String x:Key="TextBlockAmountOfCharacters">Amount of characters</v:String>
 	<v:String x:Key="TextBlockAmountOfWords">Amount of words</v:String>
@@ -57,14 +57,28 @@
 	<v:String x:Key="ButtonUpdate">Update</v:String>
 	<v:String x:Key="ButtonLoading">Loading</v:String>
 	<v:String x:Key="TextBlockDatabaseNotFound">Database not found</v:String>
-	<v:String x:Key="FileMb">MB</v:String>
-	<v:String x:Key="FileKb">KB</v:String>
 
 	<!--  Page About  -->
-	<v:String x:Key="TextBlockDescription">Program for automatic transliteration of Word documents from cyrillic to latin</v:String>
+	<v:String x:Key="TextBlockDescription">Program for automatic transliteration of Word documents from cyrillic to latin.</v:String>
 	<v:String x:Key="TextBlockVersion">Version</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [the site is temporarily down]</v:String>
 	<v:String x:Key="ButtonBack">Back</v:String>
+
+	<!--  Page FAQ  -->
+	<v:String x:Key="ExpanderWhatFilesAreSupported">What files are supported?</v:String>
+	<v:String x:Key="TextBlockTheProgramSupportsTheFollowingFileTypes">The program supports the following file types:</v:String>
+	<v:String x:Key="TextBlockWordDocuments">Word documents: doc, docx</v:String>
+	<v:String x:Key="TextBlockExcelSpreadsheets">Excel spreadsheets: xls, xlsx</v:String>
+	<v:String x:Key="TextBlockPowerPointPresentations">Power Point presentations: ppt, pptx</v:String>
+	<v:String x:Key="TextBlockTextDocuments">Text documents: txt</v:String>
+
+	<v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">How to use the function 'Ignore selected text'?</v:String>
+	<v:String x:Key="TextBlockFollowTheseFourSimpleSteps">Follow these four simple steps.</v:String>
+	<v:String x:Key="TextBlockHighlightTheWrongTextInTheDocumentInAnyColor">1) Highlight the wrong text in the document in any color</v:String>
+	<v:String x:Key="TextBlockSaveTheDocument">2) Save the document.</v:String>
+	<v:String x:Key="TextBlockCheckTheBoxIgnoreSelectedText">3) Check the box 'Ignore selected text'.</v:String>
+	<v:String x:Key="TextBlockSelectFileOrFileFolder">4) Select file or file folder.</v:String>
+	<v:String x:Key="TextBlockTheFunctionIsIntendedOnlyForWordDocuments">The function is intended only for Word documents.</v:String>
 
 	<!--  Snackbar  -->
 	<v:String x:Key="SnackBarAuthorization">Authorization</v:String>

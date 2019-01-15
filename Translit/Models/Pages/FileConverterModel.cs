@@ -23,7 +23,7 @@ namespace Translit.Models.Pages
 
 		private int _numberOfDocumentsTranslated;
 		private int _numberOfDocuments;
-		private int _percentOfExceptions;
+		private int _percentOfWords;
 		private int _percentOfSymbols;
 
 		public int NumberOfDocumentsTranslated
@@ -45,13 +45,13 @@ namespace Translit.Models.Pages
 			}
 		}
 
-		public int PercentOfExceptions
+		public int PercentOfWords
 		{
-			get => _percentOfExceptions;
+			get => _percentOfWords;
 			set
 			{
 				if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-				_percentOfExceptions = value;
+				_percentOfWords = value;
 				OnPropertyChanged();
 			}
 		}
@@ -170,7 +170,7 @@ namespace Translit.Models.Pages
 					}
 
 					// Высчитываем процент текущего прогресса
-					PercentOfExceptions = i * 100 / (words.Length - 1);
+					PercentOfWords = i * 100 / (words.Length - 1);
 				}
 
 				var symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
@@ -262,7 +262,7 @@ namespace Translit.Models.Pages
 					}
 
 					// Высчитываем процент текущего прогресса
-					PercentOfExceptions = i * 100 / (words.Length - 1);
+					PercentOfWords = i * 100 / (words.Length - 1);
 				}
 
 				var symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();

@@ -14,7 +14,7 @@ namespace Translit.Models.Pages
 {
 	public class DatabaseModel : IDatabaseModel, INotifyPropertyChanged
 	{
-		private int _percentOfExceptions;
+		private int _percentOfWords;
 		private int _percentOfSymbols;
 		public List<Symbol> Symbols { get; set; }
 		public List<Word> Words { get; set; }
@@ -25,13 +25,13 @@ namespace Translit.Models.Pages
 			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
 		}
 
-		public int PercentOfExceptions
+		public int PercentOfWords
 		{
-			get => _percentOfExceptions;
+			get => _percentOfWords;
 			set
 			{
 				if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-				_percentOfExceptions = value;
+				_percentOfWords = value;
 				OnPropertyChanged();
 			}
 		}
@@ -131,7 +131,7 @@ namespace Translit.Models.Pages
 				for (var i = 0; i < Words.Count; i++)
 				{
 					// Высчитываем процент выполенения
-					PercentOfExceptions = i * 100 / (Words.Count - 1);
+					PercentOfWords = i * 100 / (Words.Count - 1);
 
 					// Добавляем слово в базу
 					words.Upsert(Words[i]);
@@ -153,7 +153,7 @@ namespace Translit.Models.Pages
 					Name = fileInfo.Name,
 					Length = fileInfo.Length,
 					NumberOfSymbols = db.GetCollection<Symbol>("Symbols").Count(),
-					NumberOfExceptions = db.GetCollection<Word>("Words").Count(),
+					NumberOfWords = db.GetCollection<Word>("Words").Count(),
 					LastUpdate = fileInfo.LastWriteTime
 				};
 				return databaseInfo;

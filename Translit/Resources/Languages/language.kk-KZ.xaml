@@ -49,7 +49,7 @@
 	<!--  Page DatabaseUpdate  -->
 	<v:String x:Key="TextBlockDatabase">Дерекқор</v:String>
 	<v:String x:Key="TextBlockCharacterLoading">Таңбаларды жүктеу</v:String>
-	<v:String x:Key="TextBlockLoadingExceptions">Ерекше сөздерді жүктеу</v:String>
+	<v:String x:Key="TextBlockLoadingWords">Ерекше сөздерді жүктеу</v:String>
 	<v:String x:Key="TextBlockDatabaseSize">Деректер базасының көлемі</v:String>
 	<v:String x:Key="TextBlockAmountOfCharacters">Таңбалар саны</v:String>
 	<v:String x:Key="TextBlockAmountOfWords">Сөздер саны</v:String>
@@ -57,14 +57,28 @@
 	<v:String x:Key="ButtonUpdate">Жаңарту</v:String>
 	<v:String x:Key="ButtonLoading">Жүктеу</v:String>
 	<v:String x:Key="TextBlockDatabaseNotFound">Деректер базасы табылмады</v:String>
-	<v:String x:Key="FileMb">МБ</v:String>
-	<v:String x:Key="FileKb">КБ</v:String>
 
 	<!--  Page About  -->
-	<v:String x:Key="TextBlockDescription">Word құжаттарын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама</v:String>
+	<v:String x:Key="TextBlockDescription">Word құжаттарын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама.</v:String>
 	<v:String x:Key="TextBlockVersion">Нұсқа</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт уақытша жұмыс істемейді]</v:String>
 	<v:String x:Key="ButtonBack">Артқа</v:String>
+
+	<!--  Page FAQ  -->
+	<v:String x:Key="ExpanderWhatFilesAreSupported">Қандай файлдар қолданылады?</v:String>
+	<v:String x:Key="TextBlockTheProgramSupportsTheFollowingFileTypes">Бағдарлама келесі файл түрлерін қолдайды:</v:String>
+	<v:String x:Key="TextBlockWordDocuments">Word құжаттары: doc, docx</v:String>
+	<v:String x:Key="TextBlockExcelSpreadsheets">Excel электрондық кестелері: xls, xlsx</v:String>
+	<v:String x:Key="TextBlockPowerPointPresentations">Power Point ұсыныстары: ppt, pptx</v:String>
+	<v:String x:Key="TextBlockTextDocuments">Мәтіндік құжаттар: txt</v:String>
+
+	<v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">'Таңдалған мәтінді елемеу' функциясын қалай пайдалануға болады?</v:String>
+	<v:String x:Key="TextBlockFollowTheseFourSimpleSteps">Мына төрт қарапайым қадамды орындаңыз.</v:String>
+	<v:String x:Key="TextBlockHighlightTheWrongTextInTheDocumentInAnyColor">1) Кез келген түспен құжатта қате мәтінді бөлектеңіз.</v:String>
+	<v:String x:Key="TextBlockSaveTheDocument">2) Құжатты сақтаңыз.</v:String>
+	<v:String x:Key="TextBlockCheckTheBoxIgnoreSelectedText">3) 'Таңдалған мәтінді елемеу' жолын белгілеңіз.</v:String>
+	<v:String x:Key="TextBlockSelectFileOrFileFolder">4) Файлды немесе файл қалтасын таңдаңыз.</v:String>
+	<v:String x:Key="TextBlockTheFunctionIsIntendedOnlyForWordDocuments">Функция тек Word құжаттарына арналған.</v:String>
 
 	<!--  Snackbar  -->
 	<v:String x:Key="SnackBarAuthorization">Авторизациялау</v:String>

@@ -44,7 +44,7 @@ namespace Translit.Presenters.Pages
 		{
 			var a = ((FileConverterModel)sender).NumberOfDocumentsTranslated;
 			var b = ((FileConverterModel)sender).NumberOfDocuments;
-			var c = ((FileConverterModel)sender).PercentOfExceptions;
+			var c = ((FileConverterModel)sender).PercentOfWords;
 			var d = ((FileConverterModel)sender).PercentOfSymbols;
 			View.UpdateProgressValues(a, b, c, d);
 		}

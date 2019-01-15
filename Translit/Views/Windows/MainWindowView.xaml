@@ -58,6 +58,23 @@
 								<materialDesign:PackIcon Kind="Settings" />
 							</MenuItem.Icon>
 						</MenuItem>
+						<MenuItem x:Name="LanguagesMenuItem" Header="{DynamicResource MenuItemLanguage}">
+							<MenuItem
+								x:Name="RussianMenuItem"
+								Click="RussianMenuItem_OnClick"
+								Header="Русский" />
+							<MenuItem
+								x:Name="EnglishMenuItem"
+								Click="EnglishMenuItem_OnClick"
+								Header="English" />
+							<MenuItem
+								x:Name="KazakhMenuItem"
+								Click="KazakhMenuItem_OnClick"
+								Header="Қазақша" />
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="Earth" />
+							</MenuItem.Icon>
+						</MenuItem>
 						<MenuItem
 							x:Name="ExitMenuItem"
 							Click="ExitMenuItem_OnClick"
@@ -92,29 +109,12 @@
 								<materialDesign:PackIcon Kind="Database" />
 							</MenuItem.Icon>
 						</MenuItem>
-						<MenuItem x:Name="LanguagesMenuItem" Header="{DynamicResource MenuItemLanguage}">
-							<MenuItem
-								x:Name="RussianMenuItem"
-								Click="RussianMenuItem_OnClick"
-								Header="Русский" />
-							<MenuItem
-								x:Name="EnglishMenuItem"
-								Click="EnglishMenuItem_OnClick"
-								Header="English" />
-							<MenuItem
-								x:Name="KazakhMenuItem"
-								Click="KazakhMenuItem_OnClick"
-								Header="Қазақша" />
-							<MenuItem.Icon>
-								<materialDesign:PackIcon Kind="Earth" />
-							</MenuItem.Icon>
-						</MenuItem>
 					</MenuItem>
 					<MenuItem Header="{DynamicResource MenuItemReference}">
 						<MenuItem
 							x:Name="AboutMenuItem"
 							Click="AboutMenuItem_OnClick"
-							Header="О программе">
+							Header="{DynamicResource MenuItemAbout}">
 							<MenuItem.Icon>
 								<materialDesign:PackIcon Kind="About" />
 							</MenuItem.Icon>
@@ -122,9 +122,17 @@
 						<MenuItem
 							x:Name="LicenseMenuItem"
 							Click="LicenseMenuItem_OnClick"
-							Header="Лицензия">
+							Header="{DynamicResource MenuItemLicense}">
 							<MenuItem.Icon>
 								<materialDesign:PackIcon Kind="Script" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem
+							x:Name="FaqMenuItem"
+							Click="FaqMenuItem_OnClick"
+							Header="FAQ">
+							<MenuItem.Icon>
+								<materialDesign:PackIcon Kind="QuestionMarkBox" />
 							</MenuItem.Icon>
 						</MenuItem>
 					</MenuItem>

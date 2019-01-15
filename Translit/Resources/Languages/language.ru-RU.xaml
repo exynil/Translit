@@ -49,7 +49,7 @@
 	<!--  Page DatabaseUpdate  -->
 	<v:String x:Key="TextBlockDatabase">База данных</v:String>
 	<v:String x:Key="TextBlockCharacterLoading">Загрузка символов</v:String>
-	<v:String x:Key="TextBlockLoadingExceptions">Загрузка исключений</v:String>
+	<v:String x:Key="TextBlockLoadingWords">Загрузка исключений</v:String>
 	<v:String x:Key="TextBlockDatabaseSize">Объем базы данных</v:String>
 	<v:String x:Key="TextBlockAmountOfCharacters">Количество символов</v:String>
 	<v:String x:Key="TextBlockAmountOfWords">Количество слов</v:String>
@@ -57,14 +57,28 @@
 	<v:String x:Key="ButtonUpdate">Обновить</v:String>
 	<v:String x:Key="ButtonLoading">Загрузка</v:String>
 	<v:String x:Key="TextBlockDatabaseNotFound">База данных не найдена</v:String>
-	<v:String x:Key="FileMb">МБ</v:String>
-	<v:String x:Key="FileKb">КБ</v:String>
 
 	<!--  Page About  -->
-	<v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации документов Word с кириллицы на латиницу</v:String>
+	<v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации документов Word с кириллицы на латиницу.</v:String>
 	<v:String x:Key="TextBlockVersion">Версия</v:String>
 	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт временно не работает]</v:String>
 	<v:String x:Key="ButtonBack">Назад</v:String>
+
+	<!--  Page FAQ  -->
+	<v:String x:Key="ExpanderWhatFilesAreSupported">Какие файлы поддерживаются?</v:String>
+	<v:String x:Key="TextBlockTheProgramSupportsTheFollowingFileTypes">Программа поддержвает следующие типы файлов:</v:String>
+	<v:String x:Key="TextBlockWordDocuments">Документы Word: doc, docx</v:String>
+	<v:String x:Key="TextBlockExcelSpreadsheets">Таблицы Excel: xls, xlsx</v:String>
+	<v:String x:Key="TextBlockPowerPointPresentations">Презентации Power Point: ppt, pptx</v:String>
+	<v:String x:Key="TextBlockTextDocuments">Текстовые документы: txt</v:String>
+
+	<v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">Как использовать функцию 'Игнорировать выделенный текст'?</v:String>
+	<v:String x:Key="TextBlockFollowTheseFourSimpleSteps">Выполните следующие четыре простых действия.</v:String>
+	<v:String x:Key="TextBlockHighlightTheWrongTextInTheDocumentInAnyColor">1) Выделите в документе не нужный текст любым цветом.</v:String>
+	<v:String x:Key="TextBlockSaveTheDocument">2) Сохраните документ.</v:String>
+	<v:String x:Key="TextBlockCheckTheBoxIgnoreSelectedText">3) Поставьте галочку 'Игнорировать выделенный текст'.</v:String>
+	<v:String x:Key="TextBlockSelectFileOrFileFolder">4) Выберите файл или папку с файлами.</v:String>
+	<v:String x:Key="TextBlockTheFunctionIsIntendedOnlyForWordDocuments">Функция предназначена только для документов Word.</v:String>
 
 	<!--  Snackbar  -->
 	<v:String x:Key="SnackBarAuthorization">Авторизация</v:String>

@@ -12,7 +12,7 @@ namespace Translit.Entity
         public string Name { get; set; }
         public long Length { get; set; }
         public int NumberOfSymbols { get; set; }
-        public int NumberOfExceptions { get; set; }
+        public int NumberOfWords { get; set; }
         public DateTime LastUpdate { get; set; }
     }
 }

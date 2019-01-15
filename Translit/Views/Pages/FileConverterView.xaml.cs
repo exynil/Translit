@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
@@ -7,6 +8,7 @@ using MaterialDesignThemes.Wpf;
 using Translit.Presenters.Pages;
 using Translit.Views.Windows;
 using Application = System.Windows.Application;
+using Window = System.Windows.Window;
 
 namespace Translit.Views.Pages
 {
@@ -36,7 +38,7 @@ namespace Translit.Views.Pages
 			{
 				FileName = "Document",
 				DefaultExt = ".*",
-				Filter = "Text documents (.doc; .docx; .xls; .xlsx)|*.doc;*.docx; *.xls;*.xlsx" // Фильтрация файлов
+				Filter = "Файлы (.doc; .docx; .xls; .xlsx)|*.doc;*.docx; *.xls;*.xlsx" // Фильтрация файлов
 			};
 
 			// Открываем диалоговое окно
@@ -69,9 +71,17 @@ namespace Translit.Views.Pages
 
 				if (result != DialogResult.OK || string.IsNullOrWhiteSpace(fbd.SelectedPath)) return;
 
-				// Получаем пути всех нескрытых файлов с расширением .doc и .docx
+				string[] extensions =
+				{
+					".doc",
+					".docx",
+					".xls",
+					".xlsx"
+				};
+
+				// Получаем пути всех нескрытых файлов с расширением из массива extensions
 				var files = new DirectoryInfo(fbd.SelectedPath).EnumerateFiles()
-					.Where(f => (f.Attributes & FileAttributes.Hidden) == 0 && (f.Extension == ".doc" || f.Extension == ".docx"))
+					.Where(f => (f.Attributes & FileAttributes.Hidden) == 0 && extensions.Contains(f.Extension))
 					.Select(f => f.FullName).ToArray();
 
 				Presenter.TranslitFiles(files, IgnoreSelectedTextCheckBox.IsChecked);
@@ -104,11 +114,11 @@ namespace Translit.Views.Pages
 		{
 			ProgressBarDocuments.Maximum = numberOfDocuments;
 			ProgressBarDocuments.Value = 0;
-			ProgressBarExceptions.Value = 0;
+			ProgressBarWords.Value = 0;
 			ProgressBarSymbols.Value = 0;
 		}
 
-		public void UpdateProgressValues(int numberOfDocumentsTranslated, int numberOfDocuments, int percentOfExceptions, int percentOfSymbols)
+		public void UpdateProgressValues(int numberOfDocumentsTranslated, int numberOfDocuments, int percentOfWords, int percentOfSymbols)
 		{
 			// Обновляем процесс
 			TextBlockFiles.Dispatcher.Invoke(
@@ -117,10 +127,10 @@ namespace Translit.Views.Pages
 			ProgressBarDocuments.Dispatcher.Invoke(() => { ProgressBarDocuments.Value = numberOfDocumentsTranslated; },
 				DispatcherPriority.Background);
 
-			TextBlockExceptions.Dispatcher.Invoke(
-				() => { TextBlockExceptions.Text = GetRes("TextBlockTransliterationOfExceptionWords") + ": " + percentOfExceptions + "%"; },
+			TextBlockWords.Dispatcher.Invoke(
+				() => { TextBlockWords.Text = GetRes("TextBlockTransliterationOfExceptionWords") + ": " + percentOfWords + "%"; },
 				DispatcherPriority.Background);
-			ProgressBarExceptions.Dispatcher.Invoke(() => { ProgressBarExceptions.Value = percentOfExceptions; },
+			ProgressBarWords.Dispatcher.Invoke(() => { ProgressBarWords.Value = percentOfWords; },
 				DispatcherPriority.Background);
 
 			TextBlockSymbols.Dispatcher.Invoke(

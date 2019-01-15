@@ -24,47 +24,91 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<StackPanel
-			Grid.Row="0"
-			Margin="50,0"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center">
+		<Grid Grid.Row="0">
+			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition />
+				<RowDefinition />
+				<RowDefinition />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
 			<TextBlock
 				x:Name="TextBlockDatabase"
+				Grid.Row="0"
+				Grid.ColumnSpan="2"
 				Margin="0,5"
 				HorizontalAlignment="Center"
 				FontSize="20"
-				Foreground="#303030"
 				TextWrapping="Wrap" />
 			<TextBlock
 				x:Name="TextBlockDatabaseSize"
-				Margin="0,5"
-				HorizontalAlignment="Center"
+				Grid.Row="1"
+				Grid.Column="0"
+				Margin="5,5"
+				HorizontalAlignment="Right"
 				FontSize="15"
-				Foreground="#303030"
+				TextWrapping="Wrap" />
+			<TextBlock
+				x:Name="TextBlockDatabaseSizeResult"
+				Grid.Row="1"
+				Grid.Column="1"
+				Margin="5,5"
+				HorizontalAlignment="Left"
+				FontSize="15"
 				TextWrapping="Wrap" />
 			<TextBlock
 				x:Name="TextBlockSymbolsCount"
-				Margin="0,5"
-				HorizontalAlignment="Center"
+				Grid.Row="2"
+				Grid.Column="0"
+				Margin="5,5"
+				HorizontalAlignment="Right"
 				FontSize="15"
-				Foreground="#303030"
+				TextWrapping="Wrap" />
+			<TextBlock
+				x:Name="TextBlockSymbolsCountResult"
+				Grid.Row="2"
+				Grid.Column="1"
+				Margin="5,5"
+				HorizontalAlignment="Left"
+				FontSize="15"
 				TextWrapping="Wrap" />
 			<TextBlock
 				x:Name="TextBlockWordsCount"
-				Margin="0,5"
-				HorizontalAlignment="Center"
+				Grid.Row="3"
+				Grid.Column="0"
+				Margin="5,5"
+				HorizontalAlignment="Right"
 				FontSize="15"
-				Foreground="#303030"
+				TextWrapping="Wrap" />
+			<TextBlock
+				x:Name="TextBlockWordsCountResult"
+				Grid.Row="3"
+				Grid.Column="1"
+				Margin="5,5"
+				HorizontalAlignment="Left"
+				FontSize="15"
 				TextWrapping="Wrap" />
 			<TextBlock
 				x:Name="TextBlockLastLastUpdate"
-				Margin="0,5"
-				HorizontalAlignment="Center"
+				Grid.Row="4"
+				Grid.Column="0"
+				Margin="5,5"
+				HorizontalAlignment="Right"
 				FontSize="15"
-				Foreground="#303030"
 				TextWrapping="Wrap" />
-		</StackPanel>
+			<TextBlock
+				x:Name="TextBlockLastLastUpdateResult"
+				Grid.Row="4"
+				Grid.Column="1"
+				Margin="5,5"
+				HorizontalAlignment="Left"
+				FontSize="15"
+				TextWrapping="Wrap" />
+		</Grid>
 		<Button
 			x:Name="ButtonDatabaseUpdate"
 			Grid.Row="1"

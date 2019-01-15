@@ -24,6 +24,7 @@ namespace Translit.Views.Windows
 		public Page DatabaseView { get; set; }
 		public Page AboutView { get; set; }
 		public Page LicenseView { get; set; }
+		public Page FaqView { get; set; }
 
 		public MainWindowView()
 		{
@@ -244,6 +245,17 @@ namespace Translit.Views.Windows
 
 			FrameTranslit.Content = LicenseView;
 			TextBlockCurrentPageName.SetResourceReference(TextBlock.TextProperty, "MenuItemLicense");
+		}
+
+		private void FaqMenuItem_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (FaqView == null)
+			{
+				FaqView = new FaqView();
+			}
+
+			FrameTranslit.Content = FaqView;
+			TextBlockCurrentPageName.Text = "FAQ";
 		}
 
 		private void RussianMenuItem_OnClick(object sender, RoutedEventArgs e)

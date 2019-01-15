@@ -41,7 +41,7 @@ namespace Translit.Presenters.Pages
 		public void TrackProperties(object sender, PropertyChangedEventArgs e)
 		{
 			var a = ((DatabaseModel)sender).PercentOfSymbols;
-			var b = ((DatabaseModel)sender).PercentOfExceptions;
+			var b = ((DatabaseModel)sender).PercentOfWords;
 
 			View.UpdateProgressValues(a, b);
 		}

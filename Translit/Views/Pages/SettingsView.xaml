@@ -23,7 +23,6 @@
 				Margin="10"
 				VerticalAlignment="Center"
 				FontSize="16"
-				Foreground="#404040"
 				Text="{DynamicResource TextBlockDocumentAutoSave}" />
 		</StackPanel>
 	</StackPanel>

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Translit.Models.Pages;
 using Translit.Presenters.Pages;
+using Application = System.Windows.Application;
 
 namespace Translit.Views.Pages
 {
@@ -24,8 +26,13 @@ namespace Translit.Views.Pages
 
 		public void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			TextBlockCopyright.Text = "© " + DateTime.Now.Year + " Osmium";
-			TextBlockVersion.Text = GetRes("TextBlockVersion") + ": " + Assembly.GetExecutingAssembly().GetName().Version;
+			var version = Assembly.GetExecutingAssembly().GetName().Version;
+
+			TextBlockCopyright.Text = "© Osmium 2018-" + DateTime.Now.Year;
+
+			TextBlockVersion.SetResourceReference(TextBlock.TextProperty, "TextBlockVersion");
+
+			TextBlockVersionResult.Text = " " + version.Major + "." + version.Minor + " (" + version.Build + ")";
 
 			Loaded -= Page_Loaded;
 		}
@@ -36,13 +43,16 @@ namespace Translit.Views.Pages
 			e.Handled = true;
 		}
 
-		public void TextBlockProgramName_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		public async void TextBlockProgramName_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			TextBlockProgramName.MouseLeftButtonDown -= TextBlockProgramName_OnMouseLeftButtonDown;
 
 			TextBlockProgramName.HorizontalAlignment = HorizontalAlignment.Left;
 
-			Presenter.OnProgramNameClicked();
+			await Task.Factory.StartNew(() =>
+			{
+				Presenter.OnProgramNameClicked();
+			});
 
 			TextBlockProgramName.MouseLeftButtonDown += TextBlockProgramName_OnMouseLeftButtonDown;
 		}

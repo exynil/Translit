@@ -34,7 +34,6 @@
 				x:Name="TextBlockProgramName"
 				HorizontalAlignment="Center"
 				FontSize="60"
-				Foreground="#333"
 				MouseLeftButtonDown="TextBlockProgramName_OnMouseLeftButtonDown">
 				Translit
 			</TextBlock>
@@ -42,7 +41,6 @@
 				Margin="0,10"
 				HorizontalAlignment="Center"
 				FontSize="15"
-				Foreground="#333"
 				Text="{DynamicResource TextBlockDescription}"
 				TextAlignment="Center"
 				TextWrapping="Wrap" />
@@ -50,26 +48,31 @@
 				Margin="0,10"
 				HorizontalAlignment="Center"
 				FontSize="13"
-				Foreground="#333"
 				TextWrapping="Wrap">
 				<Hyperlink NavigateUri="http://www.osmium.kz" RequestNavigate="Hyperlink_RequestNavigate">
 					<TextBlock Text="{DynamicResource TextBlockUrlName}" />
 				</Hyperlink>
 			</TextBlock>
-			<TextBlock
-				x:Name="TextBlockVersion"
+			<StackPanel
 				Margin="0,10"
 				HorizontalAlignment="Center"
-				FontSize="13"
-				Foreground="#333"
-				TextAlignment="Center"
-				TextWrapping="Wrap" />
+				Orientation="Horizontal">
+				<TextBlock
+					x:Name="TextBlockVersion"
+					FontSize="13"
+					TextAlignment="Center"
+					TextWrapping="Wrap" />
+				<TextBlock
+					x:Name="TextBlockVersionResult"
+					FontSize="13"
+					TextAlignment="Center"
+					TextWrapping="Wrap" />
+			</StackPanel>
 			<TextBlock
 				x:Name="TextBlockCopyright"
 				Margin="0,10"
 				HorizontalAlignment="Center"
 				FontSize="13"
-				Foreground="#333"
 				TextAlignment="Center"
 				TextWrapping="Wrap" />
 		</StackPanel>

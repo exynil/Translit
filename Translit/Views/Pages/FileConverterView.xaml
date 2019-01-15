@@ -25,7 +25,7 @@
 			Grid.Row="0"
 			HorizontalAlignment="Center"
 			VerticalAlignment="Center">
-			<WrapPanel>
+			<WrapPanel Margin="0,40,0,0" HorizontalAlignment="Center">
 				<Button
 					x:Name="ButtonSelectFile"
 					Margin="10"
@@ -43,6 +43,7 @@
 			</WrapPanel>
 			<CheckBox
 				x:Name="IgnoreSelectedTextCheckBox"
+				Margin="10"
 				HorizontalAlignment="Center"
 				Content="{DynamicResource CheckBoxIgnoreSelectedText}"
 				Style="{StaticResource MaterialDesignCheckBox}"
@@ -66,13 +67,13 @@
 				Margin="50,10"
 				Minimum="0" />
 			<TextBlock
-				x:Name="TextBlockExceptions"
+				x:Name="TextBlockWords"
 				Margin="50,10"
 				HorizontalAlignment="Center"
 				FontSize="15"
 				TextWrapping="Wrap" />
 			<ProgressBar
-				x:Name="ProgressBarExceptions"
+				x:Name="ProgressBarWords"
 				Height="8"
 				Margin="50,10"
 				Maximum="100"

@@ -28,7 +28,7 @@ namespace Translit.Views.Pages
 		{
 			var version = Assembly.GetExecutingAssembly().GetName().Version;
 
-			TextBlockCopyright.Text = "© Osmium 2018-" + DateTime.Now.Year;
+			TextBlockCopyright.Text = "© Kim Maxim, Osmium 2018-" + DateTime.Now.Year;
 
 			TextBlockVersion.SetResourceReference(TextBlock.TextProperty, "TextBlockVersion");
 

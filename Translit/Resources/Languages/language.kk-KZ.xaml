@@ -46,22 +46,21 @@
 	<!--  Page Settings  -->
 	<v:String x:Key="TextBlockDocumentAutoSave">Құжаттың түпнұсқасын автосақтау</v:String>
 
-	<!--  Page DatabaseUpdate  -->
+	<!--  Page Database  -->
 	<v:String x:Key="TextBlockDatabase">Дерекқор</v:String>
 	<v:String x:Key="TextBlockCharacterLoading">Таңбаларды жүктеу</v:String>
 	<v:String x:Key="TextBlockLoadingWords">Ерекше сөздерді жүктеу</v:String>
-	<v:String x:Key="TextBlockDatabaseSize">Деректер базасының көлемі</v:String>
-	<v:String x:Key="TextBlockAmountOfCharacters">Таңбалар саны</v:String>
-	<v:String x:Key="TextBlockAmountOfWords">Сөздер саны</v:String>
-	<v:String x:Key="TextBlockLastUpdate">Соңғы жаңарту</v:String>
+	<v:String x:Key="TextBlockDatabaseSize">Деректер базасының көлемі:</v:String>
+	<v:String x:Key="TextBlockAmountOfCharacters">Таңбалар саны:</v:String>
+	<v:String x:Key="TextBlockAmountOfWords">Сөздер саны:</v:String>
+	<v:String x:Key="TextBlockLastUpdate">Соңғы жаңарту:</v:String>
 	<v:String x:Key="ButtonUpdate">Жаңарту</v:String>
 	<v:String x:Key="ButtonLoading">Жүктеу</v:String>
 	<v:String x:Key="TextBlockDatabaseNotFound">Деректер базасы табылмады</v:String>
 
 	<!--  Page About  -->
-	<v:String x:Key="TextBlockDescription">Word құжаттарын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама.</v:String>
+	<v:String x:Key="TextBlockDescription">Word құжаттарын, Excel кестелерін және Power Point презентацияларын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама.</v:String>
 	<v:String x:Key="TextBlockVersion">Нұсқа</v:String>
-	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [сайт уақытша жұмыс істемейді]</v:String>
 	<v:String x:Key="ButtonBack">Артқа</v:String>
 
 	<!--  Page FAQ  -->

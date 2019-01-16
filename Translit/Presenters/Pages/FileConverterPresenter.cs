@@ -42,8 +42,8 @@ namespace Translit.Presenters.Pages
 
 		public void TrackProperties(object sender, PropertyChangedEventArgs e)
 		{
-			var a = ((FileConverterModel)sender).NumberOfDocumentsTranslated;
-			var b = ((FileConverterModel)sender).NumberOfDocuments;
+			var a = ((FileConverterModel)sender).AmountOfTranslatedDocuments;
+			var b = ((FileConverterModel)sender).AmountOfDocuments;
 			var c = ((FileConverterModel)sender).PercentOfWords;
 			var d = ((FileConverterModel)sender).PercentOfSymbols;
 			View.UpdateProgressValues(a, b, c, d);

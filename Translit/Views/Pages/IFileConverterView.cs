@@ -4,8 +4,8 @@
 	{
 		void BlockUnlockButtons();
 		void ToggleProgressBarVisibility();
-		void SetProgressBarStartValues(int numberOfDocuments);
+		void SetProgressBarStartValues(int amountOfDocuments);
 		void ShowNotification(string key);
-		void UpdateProgressValues(int numberOfDocumentsTranslated, int numberOfDocuments, int percentOfWords, int percentOfSymbols);
+		void UpdateProgressValues(int amountOfTranslatedDocuments, int amountOfDocuments, int percentOfWords, int percentOfSymbols);
 	}
 }

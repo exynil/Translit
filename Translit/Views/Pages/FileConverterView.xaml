@@ -42,7 +42,7 @@
 					Content="{DynamicResource ButtonSelectFolder}" />
 			</WrapPanel>
 			<CheckBox
-				x:Name="IgnoreSelectedTextCheckBox"
+				x:Name="CheckBoxIgnoreSelectedText"
 				Margin="10"
 				HorizontalAlignment="Center"
 				Content="{DynamicResource CheckBoxIgnoreSelectedText}"

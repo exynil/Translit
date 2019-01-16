@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
@@ -14,7 +13,7 @@ namespace Translit.Views.Pages
 {
 	public partial class FileConverterView : IFileConverterView
 	{
-		private IFileConverterPresenter Presenter { get;}
+		private IFileConverterPresenter Presenter { get; }
 		public Snackbar SnackbarNotification { get; set; }
 		public FileConverterView()
 		{
@@ -36,9 +35,8 @@ namespace Translit.Views.Pages
 			// Создаем экземпляр диалогового окна выбора файла
 			var dlg = new Microsoft.Win32.OpenFileDialog()
 			{
-				FileName = "Document",
 				DefaultExt = ".*",
-				Filter = "Файлы (.doc; .docx; .xls; .xlsx)|*.doc;*.docx; *.xls;*.xlsx" // Фильтрация файлов
+				Filter = "Файлы (.doc; .docx; .xls; .xlsx; .ppt; .pptx; .txt)|*.doc;*.docx; *.xls;*.xlsx; *.ppt; *.pptx; *.txt" // Фильтрация файлов
 			};
 
 			// Открываем диалоговое окно
@@ -52,7 +50,7 @@ namespace Translit.Views.Pages
 
 			if (result != true) return;
 
-			Presenter.TranslitFiles(new[] {dlg.FileName}, IgnoreSelectedTextCheckBox.IsChecked);
+			Presenter.TranslitFiles(new[] { dlg.FileName }, CheckBoxIgnoreSelectedText.IsChecked);
 		}
 
 		// Нажатие кнопки выбора папки с документами
@@ -76,7 +74,10 @@ namespace Translit.Views.Pages
 					".doc",
 					".docx",
 					".xls",
-					".xlsx"
+					".xlsx",
+					".ppt",
+					".pptx",
+					".txt"
 				};
 
 				// Получаем пути всех нескрытых файлов с расширением из массива extensions
@@ -84,7 +85,7 @@ namespace Translit.Views.Pages
 					.Where(f => (f.Attributes & FileAttributes.Hidden) == 0 && extensions.Contains(f.Extension))
 					.Select(f => f.FullName).ToArray();
 
-				Presenter.TranslitFiles(files, IgnoreSelectedTextCheckBox.IsChecked);
+				Presenter.TranslitFiles(files, CheckBoxIgnoreSelectedText.IsChecked);
 			}
 		}
 
@@ -97,6 +98,7 @@ namespace Translit.Views.Pages
 		{
 			ButtonSelectFile.IsEnabled = !ButtonSelectFile.IsEnabled;
 			ButtonSelectFolder.IsEnabled = !ButtonSelectFolder.IsEnabled;
+			CheckBoxIgnoreSelectedText.IsEnabled = !CheckBoxIgnoreSelectedText.IsEnabled;
 		}
 
 		public void ToggleProgressBarVisibility()
@@ -110,21 +112,21 @@ namespace Translit.Views.Pages
 				DispatcherPriority.Background);
 		}
 
-		public void SetProgressBarStartValues(int numberOfDocuments)
+		public void SetProgressBarStartValues(int amountOfDocuments)
 		{
-			ProgressBarDocuments.Maximum = numberOfDocuments;
+			ProgressBarDocuments.Maximum = amountOfDocuments;
 			ProgressBarDocuments.Value = 0;
 			ProgressBarWords.Value = 0;
 			ProgressBarSymbols.Value = 0;
 		}
 
-		public void UpdateProgressValues(int numberOfDocumentsTranslated, int numberOfDocuments, int percentOfWords, int percentOfSymbols)
+		public void UpdateProgressValues(int amountOfTranslatedDocuments, int amountOfDocuments, int percentOfWords, int percentOfSymbols)
 		{
 			// Обновляем процесс
 			TextBlockFiles.Dispatcher.Invoke(
-				() => { TextBlockFiles.Text = GetRes("TextBlockFiles") + ": " + numberOfDocumentsTranslated + "/" + numberOfDocuments; },
+				() => { TextBlockFiles.Text = GetRes("TextBlockFiles") + ": " + amountOfTranslatedDocuments + "/" + amountOfDocuments; },
 				DispatcherPriority.Background);
-			ProgressBarDocuments.Dispatcher.Invoke(() => { ProgressBarDocuments.Value = numberOfDocumentsTranslated; },
+			ProgressBarDocuments.Dispatcher.Invoke(() => { ProgressBarDocuments.Value = amountOfTranslatedDocuments; },
 				DispatcherPriority.Background);
 
 			TextBlockWords.Dispatcher.Invoke(
@@ -147,3 +149,4 @@ namespace Translit.Views.Pages
 		}
 	}
 }
+

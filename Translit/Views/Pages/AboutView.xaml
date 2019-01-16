@@ -44,15 +44,6 @@
 				Text="{DynamicResource TextBlockDescription}"
 				TextAlignment="Center"
 				TextWrapping="Wrap" />
-			<TextBlock
-				Margin="0,10"
-				HorizontalAlignment="Center"
-				FontSize="13"
-				TextWrapping="Wrap">
-				<Hyperlink NavigateUri="http://www.osmium.kz" RequestNavigate="Hyperlink_RequestNavigate">
-					<TextBlock Text="{DynamicResource TextBlockUrlName}" />
-				</Hyperlink>
-			</TextBlock>
 			<StackPanel
 				Margin="0,10"
 				HorizontalAlignment="Center"

@@ -46,22 +46,21 @@
 	<!--  Page Settings  -->
 	<v:String x:Key="TextBlockDocumentAutoSave">Document Autosave</v:String>
 
-	<!--  Page DatabaseUpdate  -->
+	<!--  Page Database  -->
 	<v:String x:Key="TextBlockDatabase">Database</v:String>
 	<v:String x:Key="TextBlockCharacterLoading">Character loading</v:String>
 	<v:String x:Key="TextBlockLoadingWords">Loading Words</v:String>
-	<v:String x:Key="TextBlockDatabaseSize">Database Size</v:String>
-	<v:String x:Key="TextBlockAmountOfCharacters">Amount of characters</v:String>
-	<v:String x:Key="TextBlockAmountOfWords">Amount of words</v:String>
-	<v:String x:Key="TextBlockLastUpdate">Last update</v:String>
+	<v:String x:Key="TextBlockDatabaseSize">Database Size:</v:String>
+	<v:String x:Key="TextBlockAmountOfCharacters">Amount of characters:</v:String>
+	<v:String x:Key="TextBlockAmountOfWords">Amount of words:</v:String>
+	<v:String x:Key="TextBlockLastUpdate">Last update:</v:String>
 	<v:String x:Key="ButtonUpdate">Update</v:String>
 	<v:String x:Key="ButtonLoading">Loading</v:String>
 	<v:String x:Key="TextBlockDatabaseNotFound">Database not found</v:String>
 
 	<!--  Page About  -->
-	<v:String x:Key="TextBlockDescription">Program for automatic transliteration of Word documents from cyrillic to latin.</v:String>
+	<v:String x:Key="TextBlockDescription">Program for automatic transliteration of Word documents, Excel spreadsheets and Power Point presentations from cyrillic to latin.</v:String>
 	<v:String x:Key="TextBlockVersion">Version</v:String>
-	<v:String x:Key="TextBlockUrlName">http://www.osmium.kz [the site is temporarily down]</v:String>
 	<v:String x:Key="ButtonBack">Back</v:String>
 
 	<!--  Page FAQ  -->

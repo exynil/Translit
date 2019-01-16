@@ -39,7 +39,7 @@
 							Click="FileConverterMenuItem_OnClick"
 							Header="{DynamicResource MenuItemFileConverter}">
 							<MenuItem.Icon>
-								<materialDesign:PackIcon Kind="FileWord" />
+								<materialDesign:PackIcon Kind="File" />
 							</MenuItem.Icon>
 						</MenuItem>
 						<MenuItem

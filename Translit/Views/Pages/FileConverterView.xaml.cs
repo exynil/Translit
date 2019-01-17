@@ -36,7 +36,7 @@ namespace Translit.Views.Pages
 			var dlg = new Microsoft.Win32.OpenFileDialog()
 			{
 				DefaultExt = ".*",
-				Filter = "Файлы (.doc; .docx; .xls; .xlsx; .ppt; .pptx; .txt)|*.doc;*.docx; *.xls;*.xlsx; *.ppt; *.pptx; *.txt" // Фильтрация файлов
+				Filter = "Файлы (.doc; .docx; .xls; .xlsx; .ppt; .pptx; .txt; .pdf)|*.doc;*.docx; *.xls;*.xlsx; *.ppt; *.pptx; *.txt; *.pdf" // Фильтрация файлов
 			};
 
 			// Открываем диалоговое окно
@@ -77,7 +77,8 @@ namespace Translit.Views.Pages
 					".xlsx",
 					".ppt",
 					".pptx",
-					".txt"
+					".txt",
+					".pdf"
 				};
 
 				// Получаем пути всех нескрытых файлов с расширением из массива extensions

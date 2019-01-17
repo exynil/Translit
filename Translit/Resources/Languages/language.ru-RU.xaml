@@ -69,6 +69,7 @@
 	<v:String x:Key="TextBlockWordDocuments">Документы Word: doc, docx</v:String>
 	<v:String x:Key="TextBlockExcelSpreadsheets">Таблицы Excel: xls, xlsx</v:String>
 	<v:String x:Key="TextBlockPowerPointPresentations">Презентации Power Point: ppt, pptx</v:String>
+	<v:String x:Key="TextBlockPdfDocuments">Докумнты PDF: pdf</v:String>
 	<v:String x:Key="TextBlockTextDocuments">Текстовые документы: txt</v:String>
 
 	<v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">Как использовать функцию 'Игнорировать выделенный текст'?</v:String>

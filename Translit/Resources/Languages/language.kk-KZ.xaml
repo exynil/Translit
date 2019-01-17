@@ -69,6 +69,7 @@
 	<v:String x:Key="TextBlockWordDocuments">Word құжаттары: doc, docx</v:String>
 	<v:String x:Key="TextBlockExcelSpreadsheets">Excel электрондық кестелері: xls, xlsx</v:String>
 	<v:String x:Key="TextBlockPowerPointPresentations">Power Point ұсыныстары: ppt, pptx</v:String>
+	<v:String x:Key="TextBlockPdfDocuments">PDF құжаттары: pdf</v:String>
 	<v:String x:Key="TextBlockTextDocuments">Мәтіндік құжаттар: txt</v:String>
 
 	<v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">'Таңдалған мәтінді елемеу' функциясын қалай пайдалануға болады?</v:String>

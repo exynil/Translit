@@ -41,6 +41,11 @@
 					<TextBlock
 						Margin="0,2"
 						Opacity=".68"
+						Text="{DynamicResource TextBlockPdfDocuments}"
+						TextWrapping="Wrap" />
+					<TextBlock
+						Margin="0,2"
+						Opacity=".68"
 						Text="{DynamicResource TextBlockTextDocuments}"
 						TextWrapping="Wrap" />
 				</StackPanel>

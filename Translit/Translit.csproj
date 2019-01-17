@@ -71,6 +71,9 @@
     <Reference Include="office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="SautinSoft.Document, Version=3.6.12.4, Culture=neutral, PublicKeyToken=e759c76c7515592a, processorArchitecture=MSIL">
+      <HintPath>..\packages\sautinsoft.document.3.6.12.4\lib\net45\SautinSoft.Document.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.IO.Compression" />

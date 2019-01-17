@@ -6,15 +6,18 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using LiteDB;
 using Microsoft.Office.Core;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.PowerPoint;
 using Microsoft.Office.Interop.Word;
+using SautinSoft.Document;
 using Translit.Entity;
 using Translit.Properties;
 using Application = System.Windows.Application;
+using LoadOptions = System.Xml.Linq.LoadOptions;
 
 namespace Translit.Models.Pages
 {
@@ -109,6 +112,10 @@ namespace Translit.Models.Pages
 				{
 					TranslitTxtFile(files[i]);
 				}
+				else if (files[i].ToLower().EndsWith(".pdf"))
+				{
+					TranslitPdfFile(files[i]);
+				}
 			}
 		}
 
@@ -145,6 +152,7 @@ namespace Translit.Models.Pages
 					{
 						var cyryllic = words[i].Cyryllic;
 						var latin = words[i].Latin;
+
 						switch (j)
 						{
 							case 0:
@@ -260,6 +268,7 @@ namespace Translit.Models.Pages
 					{
 						var cyryllic = words[i].Cyryllic;
 						var latin = words[i].Latin;
+
 						switch (j)
 						{
 							case 0:
@@ -361,6 +370,7 @@ namespace Translit.Models.Pages
 						{
 							var cyryllic = words[i].Cyryllic;
 							var latin = words[i].Latin;
+
 							switch (j)
 							{
 								case 0:
@@ -433,6 +443,7 @@ namespace Translit.Models.Pages
 					{
 						var cyryllic = words[i].Cyryllic;
 						var latin = words[i].Latin;
+
 						switch (j)
 						{
 							case 0:
@@ -486,6 +497,80 @@ namespace Translit.Models.Pages
 				File.WriteAllText(filename, text);
 			}
 			
+		}
+
+		// Транслитерация файла PDF
+		private void TranslitPdfFile(string filename)
+		{
+			var dc = DocumentCore.Load(filename);
+
+			using (var db = new LiteDatabase(ConnectionString))
+			{
+				var words = db.GetCollection<Word>("Words").FindAll().ToArray();
+
+				for (var i = 0; i < words.Length; i++)
+				{
+					// Трансформируем слово в три различных состояния [ЗАГЛАВНЫЕ, прописные и Первыя заглавная] и заменяем
+					for (var j = 0; j < 3; j++)
+					{
+						var cyryllic = words[i].Cyryllic;
+						var latin = words[i].Latin;
+
+						switch (j)
+						{
+							case 0:
+								cyryllic = cyryllic.ToUpper();
+								latin = latin.ToUpper();
+								break;
+							case 1:
+								cyryllic = cyryllic.ToLower();
+								latin = latin.ToLower();
+								break;
+							case 2:
+								cyryllic = cyryllic.First().ToString().ToUpper() + cyryllic.Substring(1);
+								latin = latin.First().ToString().ToUpper() + latin.Substring(1);
+								break;
+						}
+
+						var regex = new Regex(cyryllic, RegexOptions.None);
+
+						foreach (var item in dc.Content.Find(regex).Reverse())
+						{
+							item.Replace(latin);
+						}
+					}
+
+					// Высчитываем процент текущего прогресса
+					PercentOfWords = i * 100 / (words.Length - 1);
+				}
+
+				var symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
+
+				for (var i = 0; i < symbols.Length; i++)
+				{
+					var regex = new Regex(symbols[i].Cyryllic, RegexOptions.None);
+
+					foreach (var item in dc.Content.Find(regex).Reverse())
+					{
+						item.Replace(symbols[i].Latin);
+					}
+
+					PercentOfSymbols = i * 100 / (symbols.Length - 1);
+				}
+			}
+
+			var fileInfo = new FileInfo(filename);
+
+			// Получение данных о новом файле
+			var directoryName = fileInfo.DirectoryName;
+			var fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
+			var label = $" ({GetRes("FileNameLatin")})";
+			var extension = fileInfo.Extension;
+
+			// Комбинирование данных
+			var newFileName = $@"{directoryName}\{fileName}{label}{extension}";
+
+			dc.Save(newFileName, new PdfSaveOptions());
 		}
 
 		private static string UnZipFileToTemporaryFolder(string filename)

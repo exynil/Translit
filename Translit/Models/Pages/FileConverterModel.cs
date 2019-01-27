@@ -112,9 +112,9 @@ namespace Translit.Models.Pages
 				{
 					TranslitTxtFile(files[i]);
 				}
-				else if (files[i].ToLower().EndsWith(".pdf"))
+				else if (files[i].ToLower().EndsWith(".pdf") || files[i].ToLower().EndsWith(".rtf"))
 				{
-					TranslitPdfFile(files[i]);
+					TranslitPdfOrRtfFile(files[i]);
 				}
 			}
 		}
@@ -499,8 +499,8 @@ namespace Translit.Models.Pages
 			
 		}
 
-		// Транслитерация файла PDF
-		private void TranslitPdfFile(string filename)
+		// Транслитерация файла PDF и RTF
+		private void TranslitPdfOrRtfFile(string filename)
 		{
 			var dc = DocumentCore.Load(filename);
 
@@ -559,18 +559,40 @@ namespace Translit.Models.Pages
 				}
 			}
 
-			var fileInfo = new FileInfo(filename);
+			if (Settings.Default.AutoSave)
+			{
+				var fileInfo = new FileInfo(filename);
 
-			// Получение данных о новом файле
-			var directoryName = fileInfo.DirectoryName;
-			var fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
-			var label = $" ({GetRes("FileNameLatin")})";
-			var extension = fileInfo.Extension;
+				// Получение данных о новом файле
+				var directoryName = fileInfo.DirectoryName;
+				var fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
+				var label = $" ({GetRes("FileNameLatin")})";
+				var extension = fileInfo.Extension;
 
-			// Комбинирование данных
-			var newFileName = $@"{directoryName}\{fileName}{label}{extension}";
+				// Комбинирование данных
+				var newFileName = $@"{directoryName}\{fileName}{label}{extension}";
 
-			dc.Save(newFileName, new PdfSaveOptions());
+				switch (extension)
+				{
+					case ".pdf":
+						dc.Save(newFileName, new PdfSaveOptions());
+						break;
+					case ".rtf":
+						dc.Save(newFileName, new RtfSaveOptions());
+						break;
+				}
+			}
+			else
+			{
+				if (filename.ToLower().EndsWith(".pdf"))
+				{
+					dc.Save(filename, new PdfSaveOptions());
+				}
+				else if (filename.ToLower().EndsWith(".rtf"))
+				{
+					dc.Save(filename, new RtfSaveOptions());
+				}
+			}
 		}
 
 		private static string UnZipFileToTemporaryFolder(string filename)

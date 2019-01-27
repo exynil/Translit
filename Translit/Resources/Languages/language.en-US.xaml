@@ -70,6 +70,7 @@
 	<v:String x:Key="TextBlockExcelSpreadsheets">Excel spreadsheets: xls, xlsx</v:String>
 	<v:String x:Key="TextBlockPowerPointPresentations">Power Point presentations: ppt, pptx</v:String>
 	<v:String x:Key="TextBlockPdfDocuments">PDF documents: pdf</v:String>
+	<v:String x:Key="TextBlockRtfDocuments">RTF documents: rtf</v:String>
 	<v:String x:Key="TextBlockTextDocuments">Text documents: txt</v:String>
 
 	<v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">How to use the function 'Ignore selected text'?</v:String>

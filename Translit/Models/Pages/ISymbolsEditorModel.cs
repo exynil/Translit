@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Translit.Entity;
 
@@ -11,6 +12,6 @@ namespace Translit.Models.Pages
 		string ReasonPhrase { get; set; }
 		Task EditSymbol(int id, string cyryllic, string latin);
 		void DeleteSymbol(int id);
-		IEnumerable<Symbol> GetSymbolsFromDatabase();
+		ObservableCollection<Symbol> GetSymbolsFromDatabase();
 	}
 }

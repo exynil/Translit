@@ -21,55 +21,14 @@ using LoadOptions = System.Xml.Linq.LoadOptions;
 
 namespace Translit.Models.Pages
 {
-	public class FileConverterModel : IFileConverterModel
+	public class FileConverterModel : IFileConverterModel, INotifyPropertyChanged
 	{
 		public string ConnectionString { get; }
-
-		private int _amountOfTranslatedDocuments;
-		private int _amountOfDocuments;
-		private int _percentOfWords;
-		private int _percentOfSymbols;
-
-		public int AmountOfTranslatedDocuments
-		{
-			get => _amountOfTranslatedDocuments;
-			set
-			{
-				_amountOfTranslatedDocuments = value;
-				OnPropertyChanged();
-			}
-		}
-		public int AmountOfDocuments
-		{
-			get => _amountOfDocuments;
-			set
-			{
-				_amountOfDocuments = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public int PercentOfWords
-		{
-			get => _percentOfWords;
-			set
-			{
-				if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-				_percentOfWords = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public int PercentOfSymbols
-		{
-			get => _percentOfSymbols;
-			set
-			{
-				if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-				_percentOfSymbols = value;
-				OnPropertyChanged();
-			}
-		}
+		public string FileName { get; set; }
+		public int NumberOfFiles { get; set; }
+		public int NumberOfTransliteratedFiles { get; set; }
+		public int PercentOfWords { get; set; }
+		public int PercentOfSymbols { get; set; }
 
 		public FileConverterModel()
 		{
@@ -84,12 +43,13 @@ namespace Translit.Models.Pages
 
 		public void TranslitFiles(string[] files, bool? ignoreSelectedText)
 		{
-			AmountOfDocuments = files.Length;
+			NumberOfFiles = files.Length;
 
 			// Перебор и транслитерация всех полученных файлов
-			for (var i = 0; i < AmountOfDocuments; i++)
+			for (var i = 0; i < NumberOfFiles; i++)
 			{
-				AmountOfTranslatedDocuments = i;
+				FileName = files[i];
+				NumberOfTransliteratedFiles = i;
 
 				// Получение информации о файле
 				var fileInfo = new FileInfo(files[i]);

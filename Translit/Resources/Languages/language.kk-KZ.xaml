@@ -15,6 +15,7 @@
 	<v:String x:Key="MenuItemDatabase">Деректер базасы</v:String>
 	<v:String x:Key="MenuItemAbout">Бағдарлама туралы</v:String>
 	<v:String x:Key="MenuItemLicense">Лицензия</v:String>
+	<v:String x:Key="MenuItemFaq">FAQ</v:String>
 	<v:String x:Key="MenuItemExit">Шығу</v:String>
 
 	<!--  Main Window PopupBox  -->
@@ -33,15 +34,16 @@
 	<v:String x:Key="CheckBoxIgnoreSelectedText">Таңдалған мәтінді елемеу</v:String>
 	<v:String x:Key="ToolTipIgnoreSelectedText">Бағдарлама таңдалған мәтінді елемейді (Word құжаттарында ғана)</v:String>
 
-	<!--  Page Text Text  -->
+	<!--  Page Text Converter  -->
 	<v:String x:Key="ButtonClear">Тазалау</v:String>
-	<v:String x:Key="ButtonTransliterate">Транслитерациялау</v:String>
 	<v:String x:Key="ButtonCopy">Көшіру</v:String>
-	<v:String x:Key="ToggleButtonRealTimeTransliteration">Нақты уақыт кезінде аудару</v:String>
+	<v:String x:Key="SliderFontSize">Қаріп өлшемі</v:String>
 
 	<!--  Page SymbolsEditor and WordsEditor  -->
 	<v:String x:Key="ToolTipAdd">Қосу</v:String>
 	<v:String x:Key="ToolTipUpdate">Жаңарту</v:String>
+	<v:String x:Key="ToolTipEdit">Өзгерту</v:String>
+	<v:String x:Key="ToolTipDelete">Өшіру</v:String>
 
 	<!--  Page Settings  -->
 	<v:String x:Key="TextBlockDocumentAutoSave">Құжаттың түпнұсқасын автосақтау</v:String>
@@ -99,6 +101,7 @@
 	<v:String x:Key="SnackBarNotAllowedLength">Жол берілмеуі тиіс өлшем</v:String>
 	<v:String x:Key="SnackBarDatabaseNotFound">Деректер базасы табылмады</v:String>
 	<v:String x:Key="SnackBarTransliterationCompleted">Транслитерация аяқталды</v:String>
+	<v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Өңдеу немесе жою үшін жазбаны таңдаңыз</v:String>
 
 	<!--  DataGridTextColumn Header  -->
 	<v:String x:Key="DataGridTextColumnId">Ид</v:String>
@@ -110,6 +113,7 @@
 	<v:String x:Key="HintPassword">Құпия сөз</v:String>
 	<v:String x:Key="HintCyryllic">Кириллица</v:String>
 	<v:String x:Key="HintLatin">Латиница</v:String>
+	<v:String x:Key="HintStartTyping">Мәтінді енгізуді бастаңыз...</v:String>
 
 	<!--  Titles  -->
 	<v:String x:Key="TitleDelete">Жою</v:String>
@@ -123,4 +127,8 @@
 	<v:String x:Key="ButtonSave">Сақтау</v:String>
 	<v:String x:Key="ButtonCancel">Болдырмау</v:String>
 	<v:String x:Key="ButtonAdd">қосу</v:String>
+	<v:String x:Key="ARebootOfTheProgramIsRequired">Бағдарламаны қайта жүктеу қажет. Қайта жүктелсін бе?</v:String>
+
+	<!--  Add Dialog Window  -->
+	<v:String x:Key="TextBlockPleaseFillInAllFields">Барлық өрістерді толтырыңыз</v:String>
 </ResourceDictionary>

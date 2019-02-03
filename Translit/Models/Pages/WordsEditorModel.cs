@@ -1,7 +1,9 @@
 ﻿using LiteDB;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,11 +24,14 @@ namespace Translit.Models.Pages
 		}
 
 		// Получение коллекции символов из базы
-		public IEnumerable<Word> GetWordsFromDatabase()
+		public ObservableCollection<Word> GetWordsFromDatabase()
 		{
+			if (!File.Exists(ConnectionString)) return null;
+
 			using (var db = new LiteDatabase(ConnectionString))
 			{
-				return db.GetCollection<Word>("Words").FindAll().ToList();
+				var temp = db.GetCollection<Word>("Words").FindAll().ToList();
+				return new ObservableCollection<Word>(temp);
 			}
 		}
 

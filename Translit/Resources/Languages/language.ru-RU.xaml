@@ -15,6 +15,7 @@
 	<v:String x:Key="MenuItemDatabase">База данных</v:String>
 	<v:String x:Key="MenuItemAbout">О программе</v:String>
 	<v:String x:Key="MenuItemLicense">Лицензия</v:String>
+	<v:String x:Key="MenuItemFaq">FAQ</v:String>
 	<v:String x:Key="MenuItemExit">Выход</v:String>
 
 	<!--  Main Window PopupBox  -->
@@ -33,15 +34,16 @@
 	<v:String x:Key="CheckBoxIgnoreSelectedText">Игнорировать выделенный текст</v:String>
 	<v:String x:Key="ToolTipIgnoreSelectedText">Программа игнорирует выделенный текст (только в документах Word)</v:String>
 
-	<!--  Page Text Text  -->
+	<!--  Page Text Converter  -->
 	<v:String x:Key="ButtonClear">Очистить</v:String>
-	<v:String x:Key="ButtonTransliterate">Транслитерировать</v:String>
 	<v:String x:Key="ButtonCopy">Скопировать</v:String>
-	<v:String x:Key="ToggleButtonRealTimeTransliteration">Транслитерация в режиме реального времени</v:String>
+	<v:String x:Key="SliderFontSize">Размер шрифта</v:String>
 
 	<!--  Page SymbolsEditor and WordsEditor  -->
 	<v:String x:Key="ToolTipAdd">Добавить</v:String>
 	<v:String x:Key="ToolTipUpdate">Обновить</v:String>
+	<v:String x:Key="ToolTipEdit">Редактировать</v:String>
+	<v:String x:Key="ToolTipDelete">Удалить</v:String>
 
 	<!--  Page Settings  -->
 	<v:String x:Key="TextBlockDocumentAutoSave">Автосохранение документа</v:String>
@@ -99,6 +101,7 @@
 	<v:String x:Key="SnackBarNotAllowedLength">Не допустимая длина</v:String>
 	<v:String x:Key="SnackBarDatabaseNotFound">База данных не найдена</v:String>
 	<v:String x:Key="SnackBarTransliterationCompleted">Транслитерация завершена</v:String>
+	<v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Выделите запись, чтобы редактировать или удалить</v:String>
 
 	<!--  DataGridTextColumn Header  -->
 	<v:String x:Key="DataGridTextColumnId">Ид</v:String>
@@ -110,6 +113,7 @@
 	<v:String x:Key="HintPassword">Пароль</v:String>
 	<v:String x:Key="HintCyryllic">Кириллица</v:String>
 	<v:String x:Key="HintLatin">Латиница</v:String>
+	<v:String x:Key="HintStartTyping">Начните вводить текст...</v:String>
 
 	<!--  Titles  -->
 	<v:String x:Key="TitleDelete">Удаление</v:String>
@@ -123,4 +127,8 @@
 	<v:String x:Key="ButtonSave">Сохранить</v:String>
 	<v:String x:Key="ButtonCancel">Отменить</v:String>
 	<v:String x:Key="ButtonAdd">Добавить</v:String>
+	<v:String x:Key="ARebootOfTheProgramIsRequired">Требуется перезагрузка программы. Перезагрузить?</v:String>
+
+	<!--  Add Dialog Window  -->
+	<v:String x:Key="TextBlockPleaseFillInAllFields">Пожалуйста, заполните все поля</v:String>
 </ResourceDictionary>

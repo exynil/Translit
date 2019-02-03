@@ -3,24 +3,27 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:p="clr-namespace:Translit.Properties"
+	xmlns:pages="clr-namespace:Translit.ViewModels.Pages"
 	Title="TextConverter"
 	d:DesignHeight="300"
-	d:DesignWidth="300"
+	d:DesignWidth="500"
 	Background="{DynamicResource MaterialDesignPaper}"
 	FontFamily="{DynamicResource MaterialDesignFont}"
-	Loaded="TextConverterPage_OnLoaded"
 	TextElement.FontSize="13"
 	TextElement.FontWeight="Regular"
 	TextElement.Foreground="{DynamicResource MaterialDesignBody}"
 	TextOptions.TextFormattingMode="Ideal"
 	TextOptions.TextRenderingMode="Auto"
 	mc:Ignorable="d">
+	<Page.DataContext>
+		<pages:TextConverterViewModel />
+	</Page.DataContext>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
-			<RowDefinition Height="60" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<Grid Grid.Row="0">
 			<Grid.RowDefinitions>
@@ -28,55 +31,59 @@
 				<RowDefinition Height="7" />
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
-			<RichTextBox
-				x:Name="RichTextBoxCyryllic"
+			<TextBox
 				Grid.Row="0"
+				Height="Auto"
+				Margin="5"
+				VerticalAlignment="Stretch"
+				materialDesign:HintAssist.Hint="{DynamicResource HintStartTyping}"
 				AcceptsReturn="True"
-				FontSize="15"
-				VerticalScrollBarVisibility="Visible" />
+				FontSize="{Binding FontSize}"
+				Text="{Binding Cyryllic, UpdateSourceTrigger=PropertyChanged}"
+				TextWrapping="Wrap"
+				VerticalScrollBarVisibility="Auto" />
 			<GridSplitter
 				Grid.Row="1"
 				Height="7"
 				HorizontalAlignment="Stretch"
 				VerticalAlignment="Center" />
-			<RichTextBox
-				x:Name="RichTextBoxLatin"
+			<TextBox
 				Grid.Row="2"
+				Height="Auto"
+				Margin="5"
+				VerticalAlignment="Stretch"
 				AcceptsReturn="True"
-				FontSize="15"
-				VerticalScrollBarVisibility="Visible" />
+				FontSize="{Binding FontSize}"
+				Text="{Binding Latin}"
+				TextWrapping="Wrap"
+				VerticalScrollBarVisibility="Auto" />
 		</Grid>
-		<StackPanel
+		<WrapPanel
 			Grid.Row="1"
 			HorizontalAlignment="Center"
-			Orientation="Horizontal">
-			<ToggleButton
-				x:Name="ToggleButtonRealTimeTransliteration"
-				Margin="5"
-				VerticalAlignment="Center"
-				Click="ToggleButtonRealTimeTransliteration_OnClick"
-				IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=RealTimeTransliteration, Mode=TwoWay}"
-				ToolTip="{DynamicResource ToggleButtonRealTimeTransliteration}" />
+			VerticalAlignment="Center">
 			<Button
-				x:Name="ButtonClear"
 				Margin="5"
 				VerticalAlignment="Center"
 				Background="#FFFB7272"
 				BorderBrush="#FFFB7272"
-				Click="ButtonClear_OnClick"
+				Command="{Binding Clear}"
 				Content="{DynamicResource ButtonClear}" />
 			<Button
-				x:Name="ButtonTranslit"
 				Margin="5"
 				VerticalAlignment="Center"
-				Click="ButtonTranslit_OnClick"
-				Content="{DynamicResource ButtonTransliterate}" />
-			<Button
-				x:Name="ButtonCopy"
-				Margin="5"
-				VerticalAlignment="Center"
-				Click="ButtonCopy_OnClick"
+				Command="{Binding Copy}"
 				Content="{DynamicResource ButtonCopy}" />
-		</StackPanel>
+			<Slider
+				Width="200"
+				Margin="5"
+				VerticalAlignment="Center"
+				Maximum="70"
+				Minimum="10"
+				Orientation="Horizontal"
+				ToolTip="{DynamicResource SliderFontSize}"
+				Value="{Binding FontSize, UpdateSourceTrigger=PropertyChanged}" />
+		</WrapPanel>
 	</Grid>
 </Page>
+

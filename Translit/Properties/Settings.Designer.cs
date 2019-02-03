@@ -74,24 +74,24 @@ namespace Translit.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool RealTimeTransliteration {
-            get {
-                return ((bool)(this["RealTimeTransliteration"]));
-            }
-            set {
-                this["RealTimeTransliteration"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool IsUserAuthorized {
             get {
                 return ((bool)(this["IsUserAuthorized"]));
             }
             set {
                 this["IsUserAuthorized"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public double TextConverterFontSize {
+            get {
+                return ((double)(this["TextConverterFontSize"]));
+            }
+            set {
+                this["TextConverterFontSize"] = value;
             }
         }
     }

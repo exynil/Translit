@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Translit.Entity;
 
@@ -12,6 +13,6 @@ namespace Translit.Models.Pages
 		Task AddWord(string cyryllic, string latin);
 		Task EditWord(int id, string cyryllic, string latin);
 		void DeleteWord(int id);
-		IEnumerable<Word> GetWordsFromDatabase();
+		ObservableCollection<Word> GetWordsFromDatabase();
 	}
 }

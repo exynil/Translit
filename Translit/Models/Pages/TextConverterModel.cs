@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Documents;
+using MaterialDesignThemes.Wpf;
 using Translit.Entity;
 
 namespace Translit.Models.Pages
 {
 	public class TextConverterModel : ITextConverterModel
 	{
-		public TextRange LatinTextRange { get; set; }
 		public string ConnectionString { get; set; }
 
 		public TextConverterModel()
@@ -19,60 +19,48 @@ namespace Translit.Models.Pages
 			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
 		}
 
-		public void TranslitTextRange(TextRange textRange)
+		public string Transliterate(string text)
 		{
-			LatinTextRange = textRange;
-			var textPointer = LatinTextRange.Start.GetInsertionPosition(LogicalDirection.Forward);
+			if (!File.Exists(ConnectionString))
+			{
+				return null;
+			}
+
 			using (var db = new LiteDatabase(ConnectionString))
 			{
-				var words = db.GetCollection<Word>("Words").FindAll().ToList();
-				var symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToList();
-				while (textPointer != null)
+				var words = db.GetCollection<Word>("Words").FindAll().ToArray();
+
+				foreach (var w in words)
 				{
-					var textInRun = textPointer.GetTextInRun(LogicalDirection.Forward);
-					if (!string.IsNullOrWhiteSpace(textInRun))
+					// Трансформируем слово в три различных состояния [ЗАГЛАВНЫЕ, прописные и Первыя заглавная] и заменяем
+					for (var j = 0; j < 3; j++)
 					{
-						textPointer.DeleteTextInRun(textInRun.Length);
-						foreach (var w in words)
+						var cyryllic = w.Cyryllic;
+						var latin = w.Latin;
+
+						switch (j)
 						{
-							var cyryllic = w.Cyryllic;
-							var latin = w.Latin;
-
-							// Замена слова в верхнем регистре
-							cyryllic = cyryllic.ToUpper();
-							latin = latin.ToUpper();
-							textInRun = textInRun.Replace(cyryllic, latin);
-
-							// Замена слова в нижнем регистре
-							cyryllic = cyryllic.ToLower();
-							latin = latin.ToLower();
-							textInRun = textInRun.Replace(cyryllic, latin);
-
-							// Замена слова с первой заглавной буквой
-							cyryllic = cyryllic.First().ToString().ToUpper() + cyryllic.Substring(1);
-							latin = latin.First().ToString().ToUpper() + latin.Substring(1);
-							textInRun = textInRun.Replace(cyryllic, latin);
+							case 0:
+								cyryllic = cyryllic.ToUpper();
+								latin = latin.ToUpper();
+								break;
+							case 1:
+								cyryllic = cyryllic.ToLower();
+								latin = latin.ToLower();
+								break;
+							case 2:
+								cyryllic = cyryllic.First().ToString().ToUpper() + cyryllic.Substring(1);
+								latin = latin.First().ToString().ToUpper() + latin.Substring(1);
+								break;
 						}
 
-						foreach (var s in symbols)
-						{
-							textInRun = textInRun.Replace(s.Cyryllic, s.Latin);
-						}
-
-						textPointer.InsertTextInRun(textInRun);
+						text = text.Replace(cyryllic, latin);
 					}
-
-					textPointer = textPointer.GetNextContextPosition(LogicalDirection.Forward);
 				}
-			}
-		}
 
-		public void CopyToClipboard(TextRange textRange)
-		{
-			using (Stream stream = new MemoryStream())
-			{
-				textRange.Save(stream, DataFormats.Rtf);
-				Clipboard.SetData(DataFormats.Rtf, Encoding.UTF8.GetString(((MemoryStream) stream).ToArray()));
+				var symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
+
+				return symbols.Aggregate(text, (current, s) => current.Replace(s.Cyryllic, s.Latin));
 			}
 		}
 	}

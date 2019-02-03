@@ -5,26 +5,32 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:pages="clr-namespace:Translit.ViewModels.Pages"
 	Title="WordsEditor"
-	d:DesignHeight="300"
+	d:DesignHeight="500"
 	d:DesignWidth="300"
 	Background="{DynamicResource MaterialDesignPaper}"
 	FontFamily="{DynamicResource MaterialDesignFont}"
-	Loaded="Page_Loaded"
 	TextElement.FontSize="13"
 	TextElement.FontWeight="Regular"
 	TextElement.Foreground="{DynamicResource MaterialDesignBody}"
 	TextOptions.TextFormattingMode="Ideal"
 	TextOptions.TextRenderingMode="Auto"
 	mc:Ignorable="d">
+	<Page.DataContext>
+		<pages:WordsEditorViewModel />
+	</Page.DataContext>
 	<Grid>
 		<DataGrid
-			x:Name="DataGridWords"
 			AutoGenerateColumns="False"
-			IsReadOnly="True">
+			IsReadOnly="True"
+			ItemsSource="{Binding Words}"
+			SelectedItem="{Binding SelectedWord}"
+			SelectionMode="Single">
 			<DataGrid.CellStyle>
 				<Style TargetType="DataGridCell">
 					<Setter Property="TextBlock.TextAlignment" Value="Center" />
+					<Setter Property="Height" Value="35" />
 					<Setter Property="Template">
 						<Setter.Value>
 							<ControlTemplate TargetType="{x:Type DataGridCell}">
@@ -40,39 +46,14 @@
 				<DataGridTextColumn Binding="{Binding Id}" Header="{DynamicResource DataGridTextColumnId}" />
 				<DataGridTextColumn Binding="{Binding Cyryllic}" Header="{DynamicResource DataGridTextColumnCyryllic}" />
 				<DataGridTextColumn Binding="{Binding Latin}" Header="{DynamicResource DataGridTextColumnLatin}" />
-				<DataGridTemplateColumn>
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<StackPanel x:Name="StackPanelButtons" Orientation="Horizontal">
-								<Button
-									x:Name="ButtonEditWord"
-									Height="30"
-									Margin="5"
-									Click="ButtonEditWord_OnClick">
-									<materialDesign:PackIcon Kind="Edit" />
-								</Button>
-								<Button
-									x:Name="ButtonDeleteWord"
-									Height="30"
-									Margin="5"
-									Background="#FFFB7272"
-									BorderBrush="#FFCF6060"
-									Click="ButtonDeleteWord_OnClick">
-									<materialDesign:PackIcon Kind="Delete" />
-								</Button>
-							</StackPanel>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
 			</DataGrid.Columns>
 		</DataGrid>
 		<StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
 			<Button
-				x:Name="ButtonUpdateDataGrid"
 				Width="50"
 				Height="50"
 				Margin="20"
-				Click="ButtonUpdateDataGrid_OnClick"
+				Command="{Binding Update}"
 				Style="{StaticResource MaterialDesignFloatingActionButton}"
 				ToolTip="{DynamicResource ToolTipUpdate}">
 				<materialDesign:PackIcon
@@ -81,18 +62,50 @@
 					Kind="Refresh" />
 			</Button>
 			<Button
-				x:Name="ButtonAddWord"
 				Width="50"
 				Height="50"
 				Margin="20"
-				Click="ButtonAddWord_OnClick"
+				Command="{Binding Add}"
 				Style="{StaticResource MaterialDesignFloatingActionButton}"
-				ToolTip="{DynamicResource ToolTipAdd}">
+				ToolTip="{DynamicResource ToolTipAdd}"
+				Visibility="{Binding ControlsVisibility}">
 				<materialDesign:PackIcon
 					Width="24"
 					Height="24"
 					Kind="Plus" />
 			</Button>
+			<Button
+				Width="50"
+				Height="50"
+				Margin="20"
+				Command="{Binding Edit}"
+				Style="{StaticResource MaterialDesignFloatingActionButton}"
+				ToolTip="{DynamicResource ToolTipEdit}"
+				Visibility="{Binding ControlsVisibility}">
+				<materialDesign:PackIcon
+					Width="24"
+					Height="24"
+					Kind="Edit" />
+			</Button>
+			<Button
+				Width="50"
+				Height="50"
+				Margin="20"
+				Background="#FFFB7272"
+				BorderBrush="#FFCF6060"
+				Command="{Binding Delete}"
+				Style="{StaticResource MaterialDesignFloatingActionButton}"
+				ToolTip="{DynamicResource ToolTipDelete}"
+				Visibility="{Binding ControlsVisibility}">
+				<materialDesign:PackIcon
+					Width="24"
+					Height="24"
+					Kind="Delete" />
+			</Button>
 		</StackPanel>
+		<materialDesign:Snackbar
+			HorizontalAlignment="Stretch"
+			IsActive="False"
+			MessageQueue="{Binding MessageQueue}" />
 	</Grid>
 </Page>

@@ -1,0 +1,49 @@
+﻿<Window
+	x:Class="Translit.Views.DialogWindows.QuestionView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Width="420"
+	Height="210"
+	AllowsTransparency="True"
+	Background="Transparent"
+	FontFamily="{DynamicResource MaterialDesignFont}"
+	TextElement.FontSize="13"
+	TextElement.FontWeight="Regular"
+	TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+	TextOptions.TextFormattingMode="Ideal"
+	TextOptions.TextRenderingMode="Auto"
+	WindowStartupLocation="CenterScreen"
+	WindowStyle="None"
+	mc:Ignorable="d">
+	<GroupBox
+		Margin="20"
+		Style="{DynamicResource MaterialDesignCardGroupBox}">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<TextBlock
+                x:Name="TextBlockQuestion"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				TextWrapping="Wrap" />
+			<WrapPanel
+				Grid.Row="1"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center">
+				<Button
+					Margin="5"
+					Click="Accept_Click"
+					Content="{DynamicResource ButtonYes}"
+					IsDefault="True" />
+				<Button
+					Margin="5"
+					Content="{DynamicResource ButtonNo}"
+					IsCancel="True" />
+			</WrapPanel>
+		</Grid>
+	</GroupBox>
+</Window>

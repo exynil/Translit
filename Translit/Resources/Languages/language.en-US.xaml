@@ -15,6 +15,7 @@
 	<v:String x:Key="MenuItemDatabase">Database</v:String>
 	<v:String x:Key="MenuItemAbout">About</v:String>
 	<v:String x:Key="MenuItemLicense">License</v:String>
+	<v:String x:Key="MenuItemFaq">FAQ</v:String>
 	<v:String x:Key="MenuItemExit">Exit</v:String>
 
 	<!--  Main Window PopupBox  -->
@@ -33,15 +34,16 @@
 	<v:String x:Key="CheckBoxIgnoreSelectedText">Ignore selected text</v:String>
 	<v:String x:Key="ToolTipIgnoreSelectedText">The program ignores selected text (only in Word documents)</v:String>
 
-	<!--  Page Text Text  -->
+	<!--  Page Text Converter  -->
 	<v:String x:Key="ButtonClear">Clear</v:String>
-	<v:String x:Key="ButtonTransliterate">Transliterate</v:String>
 	<v:String x:Key="ButtonCopy">Copy</v:String>
-	<v:String x:Key="ToggleButtonRealTimeTransliteration">Real-time transliteration</v:String>
+	<v:String x:Key="SliderFontSize">Font Size</v:String>
 
 	<!--  Page SymbolsEditor and WordsEditor  -->
 	<v:String x:Key="ToolTipAdd">Add</v:String>
 	<v:String x:Key="ToolTipUpdate">Update</v:String>
+	<v:String x:Key="ToolTipEdit">Edit</v:String>
+	<v:String x:Key="ToolTipDelete">Delete</v:String>
 
 	<!--  Page Settings  -->
 	<v:String x:Key="TextBlockDocumentAutoSave">Document Autosave</v:String>
@@ -99,6 +101,7 @@
 	<v:String x:Key="SnackBarNotAllowedLength">Not allowed length</v:String>
 	<v:String x:Key="SnackBarDatabaseNotFound">Database not found</v:String>
 	<v:String x:Key="SnackBarTransliterationCompleted">Transliteration completed</v:String>
+	<v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Highlight an entry to edit or delete</v:String>
 
 	<!--  DataGridTextColumn Header  -->
 	<v:String x:Key="DataGridTextColumnId">Id</v:String>
@@ -110,6 +113,7 @@
 	<v:String x:Key="HintPassword">Password</v:String>
 	<v:String x:Key="HintCyryllic">Cyryllic</v:String>
 	<v:String x:Key="HintLatin">Latin</v:String>
+	<v:String x:Key="HintStartTyping">Start typing...</v:String>
 
 	<!--  Titles  -->
 	<v:String x:Key="TitleDelete">Delete</v:String>
@@ -123,4 +127,8 @@
 	<v:String x:Key="ButtonSave">Save</v:String>
 	<v:String x:Key="ButtonCancel">Cancel</v:String>
 	<v:String x:Key="ButtonAdd">Add</v:String>
+	<v:String x:Key="ARebootOfTheProgramIsRequired">A reboot of the program is required. Reboot?</v:String>
+
+	<!--  Add Dialog Window  -->
+	<v:String x:Key="TextBlockPleaseFillInAllFields">Please fill in all fields</v:String>
 </ResourceDictionary>

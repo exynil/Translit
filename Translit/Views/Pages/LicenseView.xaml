@@ -4,23 +4,29 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:pages="clr-namespace:Translit.ViewModels.Pages"
 	Title="LicenseView"
 	d:DesignHeight="300"
 	d:DesignWidth="300"
 	Background="{DynamicResource MaterialDesignPaper}"
 	FontFamily="{DynamicResource MaterialDesignFont}"
-	Loaded="LicenseView_OnLoaded"
 	TextElement.FontSize="13"
 	TextElement.FontWeight="Regular"
 	TextElement.Foreground="{DynamicResource MaterialDesignBody}"
 	TextOptions.TextFormattingMode="Ideal"
 	TextOptions.TextRenderingMode="Auto"
 	mc:Ignorable="d">
+	<Page.DataContext>
+		<pages:LicenseViewModel />
+	</Page.DataContext>
 	<Grid>
-		<RichTextBox
-			x:Name="RichTextBoxLicense"
-			Background="WhiteSmoke"
-			IsReadOnly="True"
-			VerticalScrollBarVisibility="Visible" />
+		<ScrollViewer>
+			<TextBlock
+				Height="Auto"
+				Margin="5"
+				VerticalAlignment="Stretch"
+				Text="{Binding License}"
+				TextWrapping="Wrap" />
+		</ScrollViewer>
 	</Grid>
 </Page>

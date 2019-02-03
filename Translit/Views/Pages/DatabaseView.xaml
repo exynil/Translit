@@ -5,153 +5,104 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:pages="clr-namespace:Translit.ViewModels.Pages"
 	Title="Database"
 	d:DesignHeight="500"
 	d:DesignWidth="500"
 	Background="{DynamicResource MaterialDesignPaper}"
 	FontFamily="{DynamicResource MaterialDesignFont}"
-	Loaded="Page_OnLoaded"
 	TextElement.FontSize="13"
 	TextElement.FontWeight="Regular"
 	TextElement.Foreground="{DynamicResource MaterialDesignBody}"
 	TextOptions.TextFormattingMode="Ideal"
 	TextOptions.TextRenderingMode="Auto"
 	mc:Ignorable="d">
+	<Page.DataContext>
+		<pages:DatabaseViewModel />
+	</Page.DataContext>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition />
 			<RowDefinition />
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<Grid Grid.Row="0">
-			<Grid.RowDefinitions>
-				<RowDefinition />
-				<RowDefinition />
-				<RowDefinition />
-				<RowDefinition />
-				<RowDefinition />
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
+		<StackPanel Grid.Row="0" Margin="0,20">
 			<TextBlock
-				x:Name="TextBlockDatabase"
-				Grid.Row="0"
-				Grid.ColumnSpan="2"
 				Margin="0,5"
 				HorizontalAlignment="Center"
 				FontSize="20"
+				Text="{Binding Database}"
 				TextWrapping="Wrap" />
 			<TextBlock
-				x:Name="TextBlockDatabaseSize"
-				Grid.Row="1"
-				Grid.Column="0"
-				Margin="5,5"
-				HorizontalAlignment="Right"
+				Margin="0,5"
+				HorizontalAlignment="Center"
 				FontSize="15"
+				Text="{Binding DatabaseSize}"
 				TextWrapping="Wrap" />
 			<TextBlock
-				x:Name="TextBlockDatabaseSizeResult"
-				Grid.Row="1"
-				Grid.Column="1"
-				Margin="5,5"
-				HorizontalAlignment="Left"
+				Margin="0,5"
+				HorizontalAlignment="Center"
 				FontSize="15"
+				Text="{Binding SymbolsCount}"
 				TextWrapping="Wrap" />
 			<TextBlock
-				x:Name="TextBlockSymbolsCount"
-				Grid.Row="2"
-				Grid.Column="0"
-				Margin="5,5"
-				HorizontalAlignment="Right"
+				Margin="0,5"
+				HorizontalAlignment="Center"
 				FontSize="15"
+				Text="{Binding WordsCount}"
 				TextWrapping="Wrap" />
 			<TextBlock
-				x:Name="TextBlockSymbolsCountResult"
-				Grid.Row="2"
-				Grid.Column="1"
-				Margin="5,5"
-				HorizontalAlignment="Left"
+				Margin="0,5"
+				HorizontalAlignment="Center"
 				FontSize="15"
+				Text="{Binding LastUpdate}"
 				TextWrapping="Wrap" />
-			<TextBlock
-				x:Name="TextBlockWordsCount"
-				Grid.Row="3"
-				Grid.Column="0"
-				Margin="5,5"
-				HorizontalAlignment="Right"
-				FontSize="15"
-				TextWrapping="Wrap" />
-			<TextBlock
-				x:Name="TextBlockWordsCountResult"
-				Grid.Row="3"
-				Grid.Column="1"
-				Margin="5,5"
-				HorizontalAlignment="Left"
-				FontSize="15"
-				TextWrapping="Wrap" />
-			<TextBlock
-				x:Name="TextBlockLastLastUpdate"
-				Grid.Row="4"
-				Grid.Column="0"
-				Margin="5,5"
-				HorizontalAlignment="Right"
-				FontSize="15"
-				TextWrapping="Wrap" />
-			<TextBlock
-				x:Name="TextBlockLastLastUpdateResult"
-				Grid.Row="4"
-				Grid.Column="1"
-				Margin="5,5"
-				HorizontalAlignment="Left"
-				FontSize="15"
-				TextWrapping="Wrap" />
-		</Grid>
+		</StackPanel>
 		<Button
-			x:Name="ButtonDatabaseUpdate"
 			Grid.Row="1"
 			Margin="2,0"
 			HorizontalAlignment="Center"
 			materialDesign:ButtonProgressAssist.IsIndeterminate="False"
 			materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
 			materialDesign:ButtonProgressAssist.Value="-1"
-			Click="ButtonDatabaseUpdate_OnClick"
-			Content="{DynamicResource ButtonUpdate}"
+			Command="{Binding Update}"
+			Content="{Binding UpdateButtonContent}"
+			IsEnabled="{Binding CanUpdate}"
 			Style="{StaticResource MaterialDesignRaisedButton}" />
 		<StackPanel
-			x:Name="StackPanelProgress"
 			Grid.Row="2"
 			Margin="50,0"
 			VerticalAlignment="Center"
-			Visibility="Hidden">
+			Visibility="{Binding ProgressBarVisibility}">
 			<TextBlock
-				x:Name="TextBlockSymbolInserting"
 				Margin="0,5"
 				HorizontalAlignment="Center"
 				FontSize="15"
+				Text="{Binding SymbolsInserting}"
 				TextWrapping="Wrap" />
 			<ProgressBar
-				Name="ProgressBarSymbolInserting"
 				Height="8"
 				Margin="0,20"
 				Maximum="100"
 				Minimum="0"
-				Value="0" />
+				Value="{Binding PercentOfSymbols}" />
 			<TextBlock
-				x:Name="TextBlockWordInserting"
 				Margin="0,5"
 				HorizontalAlignment="Center"
 				FontSize="15"
+				Text="{Binding WordsCount}"
 				TextWrapping="Wrap" />
 			<ProgressBar
-				Name="ProgressBarWordInserting"
 				Height="8"
 				Margin="0,20"
 				Maximum="100"
 				Minimum="0"
-				Value="0" />
+				Value="{Binding PercentOfWords}" />
 		</StackPanel>
+		<materialDesign:Snackbar
+			Grid.Row="2"
+			HorizontalAlignment="Stretch"
+			IsActive="False"
+			MessageQueue="{Binding MessageQueue}" />
 	</Grid>
 </Page>

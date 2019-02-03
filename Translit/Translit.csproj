@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props" Condition="Exists('..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -15,6 +16,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -71,6 +74,9 @@
     <Reference Include="office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="PropertyChanged, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.2.6.0\lib\netstandard1.0\PropertyChanged.dll</HintPath>
+    </Reference>
     <Reference Include="SautinSoft.Document, Version=3.6.12.4, Culture=neutral, PublicKeyToken=e759c76c7515592a, processorArchitecture=MSIL">
       <HintPath>..\packages\sautinsoft.document.3.6.12.4\lib\net45\SautinSoft.Document.dll</HintPath>
     </Reference>
@@ -78,6 +84,9 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -95,53 +104,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Entity\DatabaseInfo.cs" />
+    <Compile Include="Entity\DelegateCommand.cs" />
     <Compile Include="Entity\Rc4.cs" />
     <Compile Include="Entity\Symbol.cs" />
     <Compile Include="Entity\User.cs" />
     <Compile Include="Entity\Word.cs" />
-    <Compile Include="Models\Pages\AboutModel.cs" />
     <Compile Include="Models\Pages\DatabaseModel.cs" />
     <Compile Include="Models\Pages\FileConverterModel.cs" />
-    <Compile Include="Models\Pages\IAboutModel.cs" />
     <Compile Include="Models\Pages\IDatabaseModel.cs" />
     <Compile Include="Models\Pages\IFileConverterModel.cs" />
     <Compile Include="Models\Pages\ILicenseModel.cs" />
     <Compile Include="Models\Pages\ISymbolsEditorModel.cs" />
-    <Compile Include="Models\Pages\ISymbolsModel.cs" />
     <Compile Include="Models\Pages\ITextConverterModel.cs" />
     <Compile Include="Models\Pages\IWordsEditorModel.cs" />
-    <Compile Include="Models\Pages\IWordsModel.cs" />
     <Compile Include="Models\Pages\LicenseModel.cs" />
-    <Compile Include="Models\Pages\SettingsModel.cs" />
     <Compile Include="Models\Pages\SymbolsEditorModel.cs" />
-    <Compile Include="Models\Pages\SymbolsModel.cs" />
     <Compile Include="Models\Pages\TextConverterModel.cs" />
     <Compile Include="Models\Pages\WordsEditorModel.cs" />
-    <Compile Include="Models\Pages\WordsModel.cs" />
-    <Compile Include="Models\Windows\IMainWindowModel.cs" />
-    <Compile Include="Models\Windows\MainWindowModel.cs" />
-    <Compile Include="Presenters\Pages\AboutPresenter.cs" />
-    <Compile Include="Presenters\Pages\DatabasePresenter.cs" />
-    <Compile Include="Presenters\Pages\FileConverterPresenter.cs" />
-    <Compile Include="Presenters\Pages\IAboutPresenter.cs" />
-    <Compile Include="Presenters\Pages\IDatabasePresenter.cs" />
-    <Compile Include="Presenters\Pages\IFileConverterPresenter.cs" />
-    <Compile Include="Presenters\Pages\ILicensePresenter.cs" />
-    <Compile Include="Presenters\Pages\ISymbolsEditorPresenter.cs" />
-    <Compile Include="Presenters\Pages\ISymbolsPresenter.cs" />
-    <Compile Include="Presenters\Pages\ITextConverterPresenter.cs" />
-    <Compile Include="Presenters\Pages\IWordsEditorPresenter.cs" />
-    <Compile Include="Presenters\Pages\IWordsPresenter.cs" />
-    <Compile Include="Presenters\Pages\LicensePresenter.cs" />
-    <Compile Include="Presenters\Pages\SettingsPresenter.cs" />
-    <Compile Include="Presenters\Pages\SymbolsEditorPresenter.cs" />
-    <Compile Include="Presenters\Pages\SymbolsPresenter.cs" />
-    <Compile Include="Presenters\Pages\TextConverterPresenter.cs" />
-    <Compile Include="Presenters\Pages\WordsEditorPresenter.cs" />
-    <Compile Include="Presenters\Pages\WordsPresenter.cs" />
-    <Compile Include="Presenters\Windows\IMainWindowPresenter.cs" />
-    <Compile Include="Presenters\Windows\MainWindowPresenter.cs" />
+    <Compile Include="Models\Windows\IMainModel.cs" />
+    <Compile Include="Models\Windows\MainModel.cs" />
+    <Compile Include="ViewModels\Pages\AboutViewModel.cs" />
+    <Compile Include="ViewModels\Pages\DatabaseViewModel.cs" />
+    <Compile Include="ViewModels\Pages\FileConverterViewModel.cs" />
+    <Compile Include="ViewModels\Pages\LicenseViewModel.cs" />
+    <Compile Include="ViewModels\Pages\SymbolsEditorViewModel.cs" />
+    <Compile Include="ViewModels\Pages\TextConverterViewModel.cs" />
+    <Compile Include="ViewModels\Pages\WordsEditorViewModel.cs" />
+    <Compile Include="ViewModels\Windows\MainViewModel.cs" />
+    <Compile Include="Views\DialogWindows\EditDialogView.xaml.cs">
+      <DependentUpon>EditDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DialogWindows\QuestionView.xaml.cs">
+      <DependentUpon>QuestionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -154,15 +149,6 @@
     <Compile Include="Views\Pages\FileConverterView.xaml.cs">
       <DependentUpon>FileConverterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Pages\IAboutView.cs" />
-    <Compile Include="Views\Pages\IDatabaseView.cs" />
-    <Compile Include="Views\Pages\IFileConverterView.cs" />
-    <Compile Include="Views\Pages\ILicenseView.cs" />
-    <Compile Include="Views\Pages\ISymbolsEditorView.cs" />
-    <Compile Include="Views\Pages\ISymbolsView.cs" />
-    <Compile Include="Views\Pages\ITextConverterView.cs" />
-    <Compile Include="Views\Pages\IWordsEditorView.cs" />
-    <Compile Include="Views\Pages\IWordsView.cs" />
     <Compile Include="Views\Pages\LicenseView.xaml.cs">
       <DependentUpon>LicenseView.xaml</DependentUpon>
     </Compile>
@@ -172,30 +158,17 @@
     <Compile Include="Views\Pages\SymbolsEditorView.xaml.cs">
       <DependentUpon>SymbolsEditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Pages\SymbolsView.xaml.cs">
-      <DependentUpon>SymbolsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Pages\TextConverterView.xaml.cs">
       <DependentUpon>TextConverterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\WordsEditorView.xaml.cs">
       <DependentUpon>WordsEditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Pages\WordsView.xaml.cs">
-      <DependentUpon>WordsView.xaml</DependentUpon>
+    <Compile Include="Views\Windows\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Windows\IMainWindowView.cs" />
-    <Compile Include="Views\Windows\MainWindowView.xaml.cs">
-      <DependentUpon>MainWindowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\AddDialogWindow.xaml.cs">
-      <DependentUpon>AddDialogWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\DeleteDialogWindow.xaml.cs">
-      <DependentUpon>DeleteDialogWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\EditDialogWindow.xaml.cs">
-      <DependentUpon>EditDialogWindow.xaml</DependentUpon>
+    <Compile Include="Views\DialogWindows\AddDialogView.xaml.cs">
+      <DependentUpon>AddDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -212,6 +185,14 @@
     <Page Include="Resources\Languages\language.en-US.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DialogWindows\EditDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Views\DialogWindows\QuestionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\AboutView.xaml">
       <SubType>Designer</SubType>
@@ -241,10 +222,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Pages\SymbolsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Pages\TextConverterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -253,25 +230,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Pages\WordsView.xaml">
+    <Page Include="Views\Windows\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Windows\MainWindowView.xaml">
+    <Page Include="Views\DialogWindows\AddDialogView.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\AddDialogWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\DeleteDialogWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\EditDialogWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -307,5 +272,14 @@
   <ItemGroup>
     <Resource Include="Resources\LICENSE.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.3.3.2\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.2\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.3.3.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.3.2\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props'))" />
+  </Target>
 </Project>

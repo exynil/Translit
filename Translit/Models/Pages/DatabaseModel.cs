@@ -1,6 +1,4 @@
-﻿using LiteDB;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -8,14 +6,16 @@ using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
+using LiteDB;
+using Newtonsoft.Json;
 using Translit.Entity;
 
 namespace Translit.Models.Pages
 {
 	public class DatabaseModel : IDatabaseModel, INotifyPropertyChanged
 	{
-		private int _percentOfWords;
-		private int _percentOfSymbols;
+		public int PercentOfWords { get; set; }
+		public int PercentOfSymbols { get; set; }
 		public List<Symbol> Symbols { get; set; }
 		public List<Word> Words { get; set; }
 		public string ConnectionString { get; set; }
@@ -23,28 +23,6 @@ namespace Translit.Models.Pages
 		public DatabaseModel()
 		{
 			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
-		}
-
-		public int PercentOfWords
-		{
-			get => _percentOfWords;
-			set
-			{
-				if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-				_percentOfWords = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public int PercentOfSymbols
-		{
-			get => _percentOfSymbols;
-			set
-			{
-				if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-				_percentOfSymbols = value;
-				OnPropertyChanged();
-			}
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -139,25 +117,35 @@ namespace Translit.Models.Pages
 			}
 		}
 
-		public DatabaseInfo GetInfoAboutDatabase()
+		public bool DatabaseExists()
 		{
-			if (!File.Exists(ConnectionString)) return null;
+			return File.Exists(ConnectionString);
+		}
 
-			// Получаем информацию о файле
-			var fileInfo = new FileInfo(ConnectionString);
+		public long GetDatabaseSize()
+		{
+			return new FileInfo(ConnectionString).Length;
+		}
 
+		public int GetSymbolCount()
+		{
 			using (var db = new LiteDatabase(ConnectionString))
 			{
-				var databaseInfo = new DatabaseInfo
-				{
-					Name = fileInfo.Name,
-					Length = fileInfo.Length,
-					NumberOfSymbols = db.GetCollection<Symbol>("Symbols").Count(),
-					NumberOfWords = db.GetCollection<Word>("Words").Count(),
-					LastUpdate = fileInfo.LastWriteTime
-				};
-				return databaseInfo;
+				return db.GetCollection<Symbol>("Symbols").Count();
 			}
+		}
+		public int GetWordCount()
+		{
+			using (var db = new LiteDatabase(ConnectionString))
+			{
+				return db.GetCollection<Word>("Words").Count();
+			}
+		}
+
+		public DateTime GetLastWriteTime()
+		{
+
+			return new FileInfo(ConnectionString).LastWriteTime;
 		}
 	}
 }

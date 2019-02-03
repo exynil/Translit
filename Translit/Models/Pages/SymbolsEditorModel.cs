@@ -1,11 +1,13 @@
-﻿using LiteDB;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using LiteDB;
+using Newtonsoft.Json;
 using Translit.Entity;
 using Translit.Properties;
 
@@ -14,7 +16,6 @@ namespace Translit.Models.Pages
 	public class SymbolsEditorModel : ISymbolsEditorModel
 	{
 		public string ReasonPhrase { get; set; }
-
 		public string ConnectionString { get; }
 
 		public SymbolsEditorModel()
@@ -23,11 +24,14 @@ namespace Translit.Models.Pages
 		}
 
 		// Получение коллекции символов из базы
-		public IEnumerable<Symbol> GetSymbolsFromDatabase()
+		public ObservableCollection<Symbol> GetSymbolsFromDatabase()
 		{
+			if (!File.Exists(ConnectionString)) return null;
+
 			using (var db = new LiteDatabase(ConnectionString))
 			{
-				return db.GetCollection<Symbol>("Symbols").FindAll().ToList();
+				var temp = db.GetCollection<Symbol>("Symbols").FindAll().ToList();
+				return new ObservableCollection<Symbol>(temp);
 			}
 		}
 

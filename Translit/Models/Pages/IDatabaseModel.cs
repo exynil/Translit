@@ -9,6 +9,5 @@ namespace Translit.Models.Pages
 		void DeleteOldDatabase();
 		event PropertyChangedEventHandler PropertyChanged;
 		void InsertData();
-		DatabaseInfo GetInfoAboutDatabase();
 	}
 }

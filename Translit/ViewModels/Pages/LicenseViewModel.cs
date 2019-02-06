@@ -6,10 +6,19 @@ namespace Translit.ViewModels.Pages
 {
 	class LicenseViewModel : INotifyPropertyChanged
 	{
+		private string _license;
 		public event PropertyChangedEventHandler PropertyChanged;
 		public LicenseModel Model { get; set; }
 
-		public string License { get; set; }
+		public string License
+		{
+			get => _license;
+			set
+			{
+				_license = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public LicenseViewModel()
 		{

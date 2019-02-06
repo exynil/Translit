@@ -5,22 +5,28 @@ namespace Translit.Entity
 {
 	static class Rc4
 	{
-		private static int[] _c;
-		private static int[] _k;
-		private static int[] _key;
-		private static int[] _content;
-		private static int _swapI;
-		private static int _swapJ;
-		private static int _max;
+		public static int[] C { get; set; }
+
+		public static int[] K { get; set; }
+
+		public static int[] Key { get; set; }
+
+		public static int[] Content { get; set; }
+
+		public static int SwapI { get; set; }
+
+		public static int SwapJ { get; set; }
+
+		public static int Max { get; set; }
 
 		public static string Calc(string key, string content)
 		{
-			_max = Math.Max(content.Length, key.Length);
-			_c = new int[_max];
-			_k = new int[_max];
+			Max = Math.Max(content.Length, key.Length);
+			C = new int[Max];
+			K = new int[Max];
 
-			_key = new int[_max];
-			_content = new int[_max];
+			Key = new int[Max];
+			Content = new int[Max];
 
 			Init(key, content);
 			Generates();
@@ -28,9 +34,9 @@ namespace Translit.Entity
 
 			var stringBuilder = new StringBuilder();
 
-			for (var i = 0; i < _key.Length; i++)
+			for (var i = 0; i < Key.Length; i++)
 			{
-				var symbol = _key[i] ^ _content[i];
+				var symbol = Key[i] ^ Content[i];
 				stringBuilder.Append((char) symbol);
 			}
 
@@ -39,25 +45,25 @@ namespace Translit.Entity
 
 		private static void Init(string key, string content)
 		{
-			for (var i = 0; i < _max; i++)
+			for (var i = 0; i < Max; i++)
 			{
-				_c[i] = i;
-				_k[i] = key[i % key.Length];
+				C[i] = i;
+				K[i] = key[i % key.Length];
 
-				if (content.Length > i) _content[i] = content[i];
+				if (content.Length > i) Content[i] = content[i];
 			}
 		}
 
 		private static void Generates()
 		{
 			var j = 0;
-			for (var i = 0; i < _max; i++)
+			for (var i = 0; i < Max; i++)
 			{
-				j = (j + _c[i] + _k[i]) % _max;
-				_swapI = i;
-				_swapJ = j;
-				_c[_swapJ] = _swapI;
-				_c[_swapI] = _swapJ;
+				j = (j + C[i] + K[i]) % Max;
+				SwapI = i;
+				SwapJ = j;
+				C[SwapJ] = SwapI;
+				C[SwapI] = SwapJ;
 			}
 		}
 
@@ -65,15 +71,15 @@ namespace Translit.Entity
 		{
 			var j = 0;
 			var m = 0;
-			for (var i = 0; i < _max; i++)
+			for (var i = 0; i < Max; i++)
 			{
-				m = (m + 1) % _max;
-				j = (j + _c[m]) % _max;
-				_swapI = m;
-				_swapJ = j;
-				_c[_swapJ] = _swapI;
-				_c[_swapI] = _swapJ;
-				_key[i] = _c[(_c[m] + _c[j]) % _max];
+				m = (m + 1) % Max;
+				j = (j + C[m]) % Max;
+				SwapI = m;
+				SwapJ = j;
+				C[SwapJ] = SwapI;
+				C[SwapI] = SwapJ;
+				Key[i] = C[(C[m] + C[j]) % Max];
 			}
 		}
 	}

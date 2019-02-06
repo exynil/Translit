@@ -12,23 +12,151 @@ namespace Translit.ViewModels.Pages
 {
 	class DatabaseViewModel : INotifyPropertyChanged
 	{
+		private string _database;
+		private string _databaseSize;
+		private string _symbolsCount;
+		private string _wordsCount;
+		private string _lastUpdate;
+		private Visibility _progressBarVisibility;
+		private string _symbolsInserting;
+		private int _percentOfSymbols;
+		private string _wordsInserting;
+		private int _percentOfWords;
+		private bool _canUpdate;
+		private bool _isIndeterminate;
+		private string _updateButtonContent;
 		public event PropertyChangedEventHandler PropertyChanged;
 		public DatabaseModel Model { get; set; }
 		public SnackbarMessageQueue MessageQueue { get; set; }
-		public string Database { get; set; }
-		public string DatabaseSize { get; set; }
-		public string SymbolsCount { get; set; }
-		public string WordsCount { get; set; }
-		public string LastUpdate { get; set; }
-		public Visibility ProgressBarVisibility { get; set; }
-		public string SymbolsInserting { get; set; }
-		public int PercentOfSymbols { get; set; }
-		public string WordsInserting { get; set; }
-		public int PercentOfWords { get; set; }
-		public bool CanUpdate { get; set; }
-		public bool IsIndeterminate { get; set; }
-		public string UpdateButtonContent { get; set; }
-		public int FontSize { get; set; }
+		public string Database
+		{
+			get => _database;
+			set
+			{
+				_database = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string DatabaseSize
+		{
+			get => _databaseSize;
+			set
+			{
+				_databaseSize = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string SymbolsCount
+		{
+			get => _symbolsCount;
+			set
+			{
+				_symbolsCount = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string WordsCount
+		{
+			get => _wordsCount;
+			set
+			{
+				_wordsCount = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string LastUpdate
+		{
+			get => _lastUpdate;
+			set
+			{
+				_lastUpdate = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public Visibility ProgressBarVisibility
+		{
+			get => _progressBarVisibility;
+			set
+			{
+				_progressBarVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string SymbolsInserting
+		{
+			get => _symbolsInserting;
+			set
+			{
+				_symbolsInserting = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int PercentOfSymbols
+		{
+			get => _percentOfSymbols;
+			set
+			{
+				_percentOfSymbols = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string WordsInserting
+		{
+			get => _wordsInserting;
+			set
+			{
+				_wordsInserting = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int PercentOfWords
+		{
+			get => _percentOfWords;
+			set
+			{
+				_percentOfWords = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool CanUpdate
+		{
+			get => _canUpdate;
+			set
+			{
+				_canUpdate = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool IsIndeterminate
+		{
+			get => _isIndeterminate;
+			set
+			{
+				_isIndeterminate = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string UpdateButtonContent
+		{
+			get => _updateButtonContent;
+			set
+			{
+				_updateButtonContent = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public DatabaseViewModel()
 		{

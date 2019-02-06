@@ -21,14 +21,64 @@ using LoadOptions = System.Xml.Linq.LoadOptions;
 
 namespace Translit.Models.Pages
 {
-	public class FileConverterModel : IFileConverterModel, INotifyPropertyChanged
+	public class FileConverterModel : IFileConverterModel
 	{
+		private string _fileName;
+		private int _numberOfFiles;
+		private int _numberOfTransliteratedFiles;
+		private int _percentOfWords;
+		private int _percentOfSymbols;
 		public string ConnectionString { get; }
-		public string FileName { get; set; }
-		public int NumberOfFiles { get; set; }
-		public int NumberOfTransliteratedFiles { get; set; }
-		public int PercentOfWords { get; set; }
-		public int PercentOfSymbols { get; set; }
+
+		public string FileName
+		{
+			get => _fileName;
+			set
+			{
+				_fileName = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int NumberOfFiles
+		{
+			get => _numberOfFiles;
+			set
+			{
+				_numberOfFiles = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int NumberOfTransliteratedFiles
+		{
+			get => _numberOfTransliteratedFiles;
+			set
+			{
+				_numberOfTransliteratedFiles = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int PercentOfWords
+		{
+			get => _percentOfWords;
+			set
+			{
+				_percentOfWords = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int PercentOfSymbols
+		{
+			get => _percentOfSymbols;
+			set
+			{
+				_percentOfSymbols = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public FileConverterModel()
 		{
@@ -656,7 +706,7 @@ namespace Translit.Models.Pages
 			var excel = new Microsoft.Office.Interop.Excel.Application();
 			var workbook = excel.Workbooks.Open(filename);
 			workbook.SaveAs(newFileName, XlFileFormat.xlOpenXMLWorkbook);
-			workbook.Close();
+			excel.ActiveWorkbook.Close();
 			excel.Quit();
 
 			if (!Settings.Default.AutoSave)
@@ -680,10 +730,14 @@ namespace Translit.Models.Pages
 			} while (File.Exists(newFileName));
 
 			var powerPoint = new Microsoft.Office.Interop.PowerPoint.Application();
-			var presentation = powerPoint.Presentations.Open(filename, WithWindow:MsoTriState.msoFalse);
+			var presentation = powerPoint.Presentations.Open(filename, WithWindow: MsoTriState.msoFalse);
 			presentation.SaveAs(newFileName, PpSaveAsFileType.ppSaveAsOpenXMLPresentation);
-			presentation.Close();
+			powerPoint.ActivePresentation.Close();
 			powerPoint.Quit();
+
+			// Закрывает все другие открытые презентации
+			//powerPoint.ActivePresentation.Close();
+			//powerPoint.Quit();
 
 			if (!Settings.Default.AutoSave)
 			{
@@ -699,5 +753,3 @@ namespace Translit.Models.Pages
 		}
 	}
 }
-
-

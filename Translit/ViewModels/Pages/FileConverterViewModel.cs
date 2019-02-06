@@ -15,20 +15,130 @@ namespace Translit.ViewModels.Pages
 {
 	class FileConverterViewModel : INotifyPropertyChanged
 	{
+		private bool _ignoreSelectedText;
+		private bool _canSelectFileAndFolder;
+		private Visibility _progressBarVisibility;
+		private string _fileName;
+		private int _numberOfFiles;
+		private int _numberOfTransliteratedFiles;
+		private int _percentOfWords;
+		private int _percentOfSymbols;
+		private string _fileProgress;
+		private string _wordProgress;
+		private string _symbolProgress;
 		public event PropertyChangedEventHandler PropertyChanged;
 		public FileConverterModel Model { get; set; }
 		public SnackbarMessageQueue MessageQueue { get; set; }
-		public bool IgnoreSelectedText { get; set; }
-		public bool CanSelectFileAndFolder { get; set; }
-		public Visibility ProgressBarVisibility { get; set; }
-		public string FileName { get; set; }
-		public int NumberOfFiles { get; set; }
-		public int NumberOfTransliteratedFiles { get; set; }
-		public int PercentOfWords { get; set; }
-		public int PercentOfSymbols { get; set; }
-		public string FileProgress { get; set; }
-		public string WordProgress { get; set; }
-		public string SymbolProgress { get; set; }
+
+		public bool IgnoreSelectedText
+		{
+			get => _ignoreSelectedText;
+			set
+			{
+				_ignoreSelectedText = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool CanSelectFileAndFolder
+		{
+			get => _canSelectFileAndFolder;
+			set
+			{
+				_canSelectFileAndFolder = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public Visibility ProgressBarVisibility
+		{
+			get => _progressBarVisibility;
+			set
+			{
+				_progressBarVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string FileName
+		{
+			get => _fileName;
+			set
+			{
+				_fileName = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int NumberOfFiles
+		{
+			get => _numberOfFiles;
+			set
+			{
+				_numberOfFiles = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int NumberOfTransliteratedFiles
+		{
+			get => _numberOfTransliteratedFiles;
+			set
+			{
+				_numberOfTransliteratedFiles = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int PercentOfWords
+		{
+			get => _percentOfWords;
+			set
+			{
+				_percentOfWords = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int PercentOfSymbols
+		{
+			get => _percentOfSymbols;
+			set
+			{
+				_percentOfSymbols = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string FileProgress
+		{
+			get => _fileProgress;
+			set
+			{
+				_fileProgress = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string WordProgress
+		{
+			get => _wordProgress;
+			set
+			{
+				_wordProgress = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string SymbolProgress
+		{
+			get => _symbolProgress;
+			set
+			{
+				_symbolProgress = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public FileConverterViewModel()
 		{

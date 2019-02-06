@@ -18,6 +18,14 @@ namespace Translit.ViewModels.Windows
 {
 	class MainViewModel : INotifyPropertyChanged
 	{
+		private Page _currentPage;
+		private string _currentPageName;
+		private string _login;
+		private string _user;
+		private GridLength _signInLength;
+		private GridLength _logOutLength;
+		private bool _canSignIn = true;
+		private bool _canLogOut = true;
 		public event PropertyChangedEventHandler PropertyChanged;
 		public MainModel Model { get; set; }
 		public Page FileConverterView { get; set; }
@@ -29,15 +37,88 @@ namespace Translit.ViewModels.Windows
 		public Page AboutView { get; set; }
 		public Page LicenseView { get; set; }
 		public Page FaqView { get; set; }
-		public Page CurrentPage { get; set; }
-		public string CurrentPageName { get; set; }
-		public string Login { get; set; }
-		public string User { get; set; }
+
+		public Page CurrentPage
+		{
+			get => _currentPage;
+			set
+			{
+				_currentPage = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string CurrentPageName
+		{
+			get => _currentPageName;
+			set
+			{
+				_currentPageName = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string Login
+		{
+			get => _login;
+			set
+			{
+				_login = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string User
+		{
+			get => _user;
+			set
+			{
+				_user = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public SnackbarMessageQueue MessageQueue { get; set; }
-		public GridLength SignInLength { get; set; }
-		public GridLength LogOutLength { get; set; }
-		public bool CanSignIn { get; set; } = true;
-		public bool CanLogOut { get; set; } = true;
+
+		public GridLength SignInLength
+		{
+			get => _signInLength;
+			set
+			{
+				_signInLength = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public GridLength LogOutLength
+		{
+			get => _logOutLength;
+			set
+			{
+				_logOutLength = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool CanSignIn
+		{
+			get => _canSignIn;
+			set
+			{
+				_canSignIn = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool CanLogOut
+		{
+			get => _canLogOut;
+			set
+			{
+				_canLogOut = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public MainViewModel()
 		{

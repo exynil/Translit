@@ -14,8 +14,29 @@ namespace Translit.Models.Pages
 {
 	public class DatabaseModel : IDatabaseModel, INotifyPropertyChanged
 	{
-		public int PercentOfWords { get; set; }
-		public int PercentOfSymbols { get; set; }
+		private int _percentOfWords;
+		private int _percentOfSymbols;
+
+		public int PercentOfWords
+		{
+			get => _percentOfWords;
+			set
+			{
+				_percentOfWords = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int PercentOfSymbols
+		{
+			get => _percentOfSymbols;
+			set
+			{
+				_percentOfSymbols = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public List<Symbol> Symbols { get; set; }
 		public List<Word> Words { get; set; }
 		public string ConnectionString { get; set; }

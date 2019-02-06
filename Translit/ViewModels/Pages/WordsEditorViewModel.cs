@@ -15,12 +15,42 @@ namespace Translit.ViewModels.Pages
 {
 	class WordsEditorViewModel : INotifyPropertyChanged
 	{
+		private ObservableCollection<Word> _words;
+		private Word _selectedWord;
+		private Visibility _controlsVisibility;
 		public event PropertyChangedEventHandler PropertyChanged;
 		public WordsEditorModel Model { get; set; }
 		public SnackbarMessageQueue MessageQueue { get; set; }
-		public ObservableCollection<Word> Words { get; set; }
-		public Word SelectedWord { get; set; }
-		public Visibility ControlsVisibility { get; set; }
+
+		public ObservableCollection<Word> Words
+		{
+			get => _words;
+			set
+			{
+				_words = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public Word SelectedWord
+		{
+			get => _selectedWord;
+			set
+			{
+				_selectedWord = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public Visibility ControlsVisibility
+		{
+			get => _controlsVisibility;
+			set
+			{
+				_controlsVisibility = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public WordsEditorViewModel()
 		{

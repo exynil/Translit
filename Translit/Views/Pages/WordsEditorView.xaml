@@ -28,7 +28,7 @@
 			SelectedItem="{Binding SelectedWord}"
 			SelectionMode="Single">
 			<DataGrid.CellStyle>
-				<Style TargetType="DataGridCell">
+				<Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="DataGridCell">
 					<Setter Property="TextBlock.TextAlignment" Value="Center" />
 					<Setter Property="Height" Value="35" />
 					<Setter Property="Template">
@@ -46,6 +46,7 @@
 				<DataGridTextColumn Binding="{Binding Id}" Header="{DynamicResource DataGridTextColumnId}" />
 				<DataGridTextColumn Binding="{Binding Cyryllic}" Header="{DynamicResource DataGridTextColumnCyryllic}" />
 				<DataGridTextColumn Binding="{Binding Latin}" Header="{DynamicResource DataGridTextColumnLatin}" />
+				<DataGridTextColumn Width="*" />
 			</DataGrid.Columns>
 		</DataGrid>
 		<StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">

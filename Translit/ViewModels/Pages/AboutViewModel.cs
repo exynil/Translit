@@ -9,9 +9,39 @@ namespace Translit.ViewModels.Pages
 	class AboutViewModel : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
-		public string ProgramName { get; set; }
-		public string Copyright { get; set; }
-		public string Version { get; set; }
+		private string _programName;
+		private string _version;
+		private string _copyright;
+
+		public string ProgramName
+		{
+			get => _programName;
+			set
+			{
+				_programName = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string Copyright
+		{
+			get => _copyright;
+			set
+			{
+				_copyright = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string Version
+		{
+			get => _version;
+			set
+			{
+				_version = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public AboutViewModel()
 		{

@@ -1,11 +1,7 @@
-﻿using LiteDB;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Documents;
-using MaterialDesignThemes.Wpf;
+using LiteDB;
 using Translit.Entity;
 
 namespace Translit.Models.Pages

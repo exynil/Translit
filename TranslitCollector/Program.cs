@@ -51,7 +51,7 @@ namespace TranslitCollector
 			var files = dir.GetFiles();
 			foreach (var file in files)
 			{
-				string temppath = Path.Combine(destDirName, file.Name);
+				var temppath = Path.Combine(destDirName, file.Name);
 				file.CopyTo(temppath, false);
 			}
 

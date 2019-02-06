@@ -129,7 +129,7 @@ namespace TranslitLauncher
 			}
 			catch (Exception e)
 			{
-				Error(e.Message + " " + DownloadZipArchiveName);
+				Error($"{e.Message} {DownloadZipArchiveName}");
 			}
 		}
 
@@ -157,7 +157,7 @@ namespace TranslitLauncher
 			Close();
 		}
 
-		// Собитие на изменение процента загрузки
+		// Событие на изменение процента загрузки
 		private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
 		{
 			// Изменяем значение ProgressBar
@@ -209,6 +209,7 @@ namespace TranslitLauncher
 				Duration = TimeSpan.FromSeconds(1.5),
 				EasingFunction = new ElasticEase { EasingMode = EasingMode.EaseOut, Oscillations = 5 }
 			};
+
 			var dRotateAnimation = new DoubleAnimation
 			{
 				From = -45,

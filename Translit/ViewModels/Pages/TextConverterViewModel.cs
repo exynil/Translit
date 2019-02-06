@@ -11,10 +11,11 @@ namespace Translit.ViewModels.Pages
 {
 	class TextConverterViewModel : INotifyPropertyChanged
 	{
+		public TextConverterModel Model { get; set; }
+		public event PropertyChangedEventHandler PropertyChanged;
 		private string _cyryllic;
 		private double _fontSize;
-		public event PropertyChangedEventHandler PropertyChanged;
-		public TextConverterModel Model { get; set; }
+		private string _latin;
 
 		public string Cyryllic
 		{
@@ -22,12 +23,20 @@ namespace Translit.ViewModels.Pages
 			set
 			{
 				_cyryllic = value;
-
 				Transliterate();
+				OnPropertyChanged();
 			}
 		}
 
-		public string Latin { get; set; }
+		public string Latin
+		{
+			get => _latin;
+			set
+			{
+				_latin = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public double FontSize
 		{
@@ -36,6 +45,7 @@ namespace Translit.ViewModels.Pages
 			{
 				_fontSize = value;
 				Settings.Default.TextConverterFontSize = value;
+				OnPropertyChanged();
 			}
 		}
 

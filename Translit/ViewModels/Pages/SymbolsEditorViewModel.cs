@@ -14,12 +14,42 @@ namespace Translit.ViewModels.Pages
 {
 	class SymbolsEditorViewModel : INotifyPropertyChanged
 	{
+		private ObservableCollection<Symbol> _symbols;
+		private Symbol _selectedSymbol;
+		private Visibility _controlsVisibility;
 		public event PropertyChangedEventHandler PropertyChanged;
 		public SymbolsEditorModel Model { get; set; }
 		public SnackbarMessageQueue MessageQueue { get; set; }
-		public ObservableCollection<Symbol> Symbols { get; set; }
-		public Symbol SelectedSymbol { get; set; }
-		public Visibility ControlsVisibility { get; set; }
+
+		public ObservableCollection<Symbol> Symbols
+		{
+			get => _symbols;
+			set
+			{
+				_symbols = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public Symbol SelectedSymbol
+		{
+			get => _selectedSymbol;
+			set
+			{
+				_selectedSymbol = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public Visibility ControlsVisibility
+		{
+			get => _controlsVisibility;
+			set
+			{
+				_controlsVisibility = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public SymbolsEditorViewModel()
 		{

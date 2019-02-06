@@ -19,6 +19,7 @@
 	mc:Ignorable="d">
 	<GroupBox
 		Margin="20"
+		Header="Translit"
 		Style="{DynamicResource MaterialDesignCardGroupBox}">
 		<Grid>
 			<Grid.RowDefinitions>
@@ -26,7 +27,7 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<TextBlock
-                x:Name="TextBlockQuestion"
+				x:Name="TextBlockQuestion"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
 				TextWrapping="Wrap" />

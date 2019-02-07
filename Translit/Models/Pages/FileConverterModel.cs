@@ -732,8 +732,6 @@ namespace Translit.Models.Pages
 			var powerPoint = new Microsoft.Office.Interop.PowerPoint.Application();
 			var presentation = powerPoint.Presentations.Open(filename, WithWindow: MsoTriState.msoFalse);
 			presentation.SaveAs(newFileName, PpSaveAsFileType.ppSaveAsOpenXMLPresentation);
-			powerPoint.ActivePresentation.Close();
-			powerPoint.Quit();
 
 			// Закрывает все другие открытые презентации
 			//powerPoint.ActivePresentation.Close();

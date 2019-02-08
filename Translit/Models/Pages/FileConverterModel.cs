@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -95,9 +94,6 @@ namespace Translit.Models.Pages
 
 		public void TranslitFiles(string[] files, bool? ignoreSelectedText)
 		{
-			Stopwatch stopwatch = new Stopwatch();
-			stopwatch.Start();
-
 			AddFiles(files);
 
 			TransliterationState = true;
@@ -135,14 +131,6 @@ namespace Translit.Models.Pages
 			}
 
 			TransliterationState = false;
-
-			stopwatch.Stop();
-
-			var ts = stopwatch.Elapsed;
-
-			var elapsedTime = $"{ts.Hours:00}:{ts.Minutes:00}:{ts.Seconds:00}.{ts.Milliseconds / 10:00}";
-
-			Debug.WriteLine($"RunTime {elapsedTime}");
 		}
 
 		// Транслитерация файла Word

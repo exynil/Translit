@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -94,6 +95,9 @@ namespace Translit.Models.Pages
 
 		public void TranslitFiles(string[] files, bool? ignoreSelectedText)
 		{
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
+
 			AddFiles(files);
 
 			TransliterationState = true;
@@ -131,6 +135,14 @@ namespace Translit.Models.Pages
 			}
 
 			TransliterationState = false;
+
+			stopwatch.Stop();
+
+			var ts = stopwatch.Elapsed;
+
+			var elapsedTime = $"{ts.Hours:00}:{ts.Minutes:00}:{ts.Seconds:00}.{ts.Milliseconds / 10:00}";
+
+			Debug.WriteLine($"RunTime {elapsedTime}");
 		}
 
 		// Транслитерация файла Word
@@ -147,10 +159,10 @@ namespace Translit.Models.Pages
 			}
 
 			// Распаковка документа и получение расположения распакованной папки
-			var temporaryFolder = UnZipFileToTemporaryFolder(translitFileName);
+			var tempFolder = UnZipFileToTempFolder(translitFileName);
 
 			// Определяем путь к xml файлу распакованного документа
-			var xmlFile = temporaryFolder + @"\word\document.xml";
+			var xmlFile = tempFolder + @"\word\document.xml";
 
 			// Открваем документ xml
 			var doc = XDocument.Load(xmlFile, LoadOptions.PreserveWhitespace);
@@ -242,7 +254,7 @@ namespace Translit.Models.Pages
 				File.Delete(translitFileName);
 			}
 
-			CreateNewFileFromDirectory(temporaryFolder, filename, isConverted);
+			CreateNewFileFromDirectory(tempFolder, filename, isConverted);
 		}
 
 		// Транслитерация файла Excel
@@ -259,10 +271,10 @@ namespace Translit.Models.Pages
 			}
 
 			// Распаковка документа и получение расположения распакованной папки
-			var temporaryFolder = UnZipFileToTemporaryFolder(translitFileName);
+			var tempFolder = UnZipFileToTempFolder(translitFileName);
 
 			// Определяем путь к xml файлу распакованного документа
-			var xmlFile = temporaryFolder + @"\xl\sharedStrings.xml";
+			var xmlFile = tempFolder + @"\xl\sharedStrings.xml";
 
 			// Открваем документ xml
 			var doc = XDocument.Load(xmlFile, LoadOptions.PreserveWhitespace);
@@ -331,7 +343,7 @@ namespace Translit.Models.Pages
 				File.Delete(translitFileName);
 			}
 
-			CreateNewFileFromDirectory(temporaryFolder, filename, isConverted);
+			CreateNewFileFromDirectory(tempFolder, filename, isConverted);
 		}
 
 		// Транслитерация файла Power Point
@@ -348,14 +360,14 @@ namespace Translit.Models.Pages
 			}
 
 			// Распаковка документа и получение расположения распакованной папки
-			var temporaryFolder = UnZipFileToTemporaryFolder(translitFileName);
+			var tempFolder = UnZipFileToTempFolder(translitFileName);
 
-			var folderWithXml = temporaryFolder + @"\ppt\slides";
+			var folderWithXml = tempFolder + @"\ppt\slides";
 
 			// Обработка отсутствия слайдов в презентации
 			if (!Directory.Exists(folderWithXml))
 			{
-				Directory.Delete(temporaryFolder, true);
+				Directory.Delete(tempFolder, true);
 				return;
 			}
 
@@ -434,7 +446,7 @@ namespace Translit.Models.Pages
 				File.Delete(translitFileName);
 			}
 
-			CreateNewFileFromDirectory(temporaryFolder, filename, isConverted);
+			CreateNewFileFromDirectory(tempFolder, filename, isConverted);
 		}
 
 		// Транслитерация текстового документа
@@ -605,21 +617,18 @@ namespace Translit.Models.Pages
 			}
 		}
 
-		private static string UnZipFileToTemporaryFolder(string filename)
+		private static string UnZipFileToTempFolder(string filename)
 		{
-			// Получение информации о файле
-			var fileInfo = new FileInfo(filename);
-
 			// Путь временной папки
-			var temporaryFolder = $@"{fileInfo.DirectoryName}\${DateTime.Now.ToFileTime()}";
+			var tempFolder = $@"{Path.GetTempPath()}Translit\{DateTime.Now.ToFileTime()}";
 
 			// Распаковка документа во временную папку
 			using (var archive = ZipFile.OpenRead(filename))
 			{
-				archive.ExtractToDirectory(temporaryFolder);
+				archive.ExtractToDirectory(tempFolder);
 			}
 
-			return temporaryFolder;
+			return tempFolder;
 		}
 
 		private void CreateNewFileFromDirectory(string folder, string filename, bool isConverted)

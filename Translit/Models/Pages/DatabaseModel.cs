@@ -111,6 +111,8 @@ namespace Translit.Models.Pages
 		{
 			using (var db = new LiteDatabase(ConnectionString))
 			{
+				BsonMapper.Global.EmptyStringToNull = false;
+
 				// Создаем коллекцию
 				var symbols = db.GetCollection<Symbol>("Symbols");
 

@@ -23,12 +23,23 @@ namespace Translit.Models.Pages
 {
 	public class FileConverterModel : IFileConverterModel
 	{
+		public Queue<string> Files { get; set; }
 		private string _fileName;
-		private int _numberOfFiles;
-		private int _numberOfTransliteratedFiles;
 		private int _percentOfWords;
 		private int _percentOfSymbols;
+		private int _left;
 		public string ConnectionString { get; }
+		public bool TransliterationState { get; set; }
+
+		public int Left
+		{
+			get => _left;
+			set
+			{
+				_left = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public string FileName
 		{
@@ -36,26 +47,6 @@ namespace Translit.Models.Pages
 			set
 			{
 				_fileName = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public int NumberOfFiles
-		{
-			get => _numberOfFiles;
-			set
-			{
-				_numberOfFiles = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public int NumberOfTransliteratedFiles
-		{
-			get => _numberOfTransliteratedFiles;
-			set
-			{
-				_numberOfTransliteratedFiles = value;
 				OnPropertyChanged();
 			}
 		}
@@ -83,6 +74,7 @@ namespace Translit.Models.Pages
 		public FileConverterModel()
 		{
 			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+			Files = new Queue<string>();
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -91,42 +83,54 @@ namespace Translit.Models.Pages
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
 
+		public void AddFiles(string[] files)
+		{
+			foreach (var f in files)
+			{
+				Files.Enqueue(f);
+			}
+			Left = Files.Count;
+		}
+
 		public void TranslitFiles(string[] files, bool? ignoreSelectedText)
 		{
-			NumberOfFiles = files.Length;
+			AddFiles(files);
 
-			// Перебор и транслитерация всех полученных файлов
-			for (var i = 0; i < NumberOfFiles; i++)
+			TransliterationState = true;
+
+			while (Files.Count > 0)
 			{
-				FileName = files[i];
-				NumberOfTransliteratedFiles = i;
+				Left = Files.Count;
+				var file = FileName = Files.Dequeue();
 
 				// Получение информации о файле
-				var fileInfo = new FileInfo(files[i]);
+				var fileInfo = new FileInfo(file);
 
 				if (fileInfo.Length == 0) continue;
 
-				if (files[i].ToLower().EndsWith(".doc") || files[i].ToLower().EndsWith(".docx"))
+				if (file.ToLower().EndsWith(".doc") || file.ToLower().EndsWith(".docx"))
 				{
-					TranslitWordFile(files[i], ignoreSelectedText);
+					TranslitWordFile(file, ignoreSelectedText);
 				}
-				else if (files[i].ToLower().EndsWith(".xls") || files[i].ToLower().EndsWith(".xlsx"))
+				else if (file.ToLower().EndsWith(".xls") || file.ToLower().EndsWith(".xlsx"))
 				{
-					TranslitExcelFile(files[i]);
+					TranslitExcelFile(file);
 				}
-				else if (files[i].ToLower().EndsWith(".ppt") || files[i].ToLower().EndsWith(".pptx"))
+				else if (file.ToLower().EndsWith(".ppt") || file.ToLower().EndsWith(".pptx"))
 				{
-					TranslitPowerPointFile(files[i]);
+					TranslitPowerPointFile(file);
 				}
-				else if (files[i].ToLower().EndsWith(".txt"))
+				else if (file.ToLower().EndsWith(".txt"))
 				{
-					TranslitTxtFile(files[i]);
+					TranslitTxtFile(file);
 				}
-				else if (files[i].ToLower().EndsWith(".pdf") || files[i].ToLower().EndsWith(".rtf"))
+				else if (file.ToLower().EndsWith(".pdf") || file.ToLower().EndsWith(".rtf"))
 				{
-					TranslitPdfOrRtfFile(files[i]);
+					TranslitPdfOrRtfFile(file);
 				}
 			}
+
+			TransliterationState = false;
 		}
 
 		// Транслитерация файла Word
@@ -185,11 +189,7 @@ namespace Translit.Models.Pages
 						{
 							nodes = doc.Descendants()
 								.Where(n => n.Name.LocalName == "r" &&
-											n.Descendants()
-												.Where(r => r.Name.LocalName == "highlight")
-												.ToList()
-												.Count ==
-											0)
+								            n.Descendants().Where(r => r.Name.LocalName == "highlight").ToList().Count == 0)
 								.Where(n => n.Name.LocalName == "t");
 						}
 						else
@@ -648,20 +648,26 @@ namespace Translit.Models.Pages
 			ZipFile.CreateFromDirectory(folder, newFileName);
 
 			// Удаление временной папки
-			Directory.Delete(folder, true);
-
-			// Если автосохранение отключено и файл не был конвертирован в новый формат
-			if (Settings.Default.AutoSave == false && isConverted == false)
+			try
 			{
-				try
-				{
-					// Замена файла
-					File.Replace(newFileName, filename, null);
-				}
-				catch (Exception)
-				{
-					// ignored
-				}
+				Directory.Delete(folder, true);
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
+
+			// Если автосохранение включено или файл был конвертирован в новый формат
+			if (Settings.Default.AutoSave || isConverted) return;
+
+			try
+			{
+				// Замена файла
+				File.Replace(newFileName, filename, null);
+			}
+			catch (Exception)
+			{
+				// ignored
 			}
 		}
 

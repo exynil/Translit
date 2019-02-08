@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -130,8 +131,8 @@ namespace Translit.ViewModels.Windows
 			}
 
 			UpdatePopupBox();
-
             MessageQueue = new SnackbarMessageQueue();
+			User = Settings.Default.User;
 		}
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
@@ -400,11 +401,13 @@ namespace Translit.ViewModels.Windows
 			{
 				return new DelegateCommand(o =>
 				{
+					var password = ((PasswordBox)o).Password;
+
+					((PasswordBox) o).Password = "";
+
 					Task.Factory.StartNew(() =>
 					{						
 						CanSignIn = false;
-
-						var password = ((PasswordBox) o).Password;
 
 						if (Login != "" && password != "")
 						{
@@ -434,6 +437,7 @@ namespace Translit.ViewModels.Windows
 									
 
 									User = Model.GetUser().ToShortString();
+									Settings.Default.User = User;
 
 									UpdatePopupBox();
 								}

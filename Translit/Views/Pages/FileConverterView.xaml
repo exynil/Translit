@@ -5,10 +5,13 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:mvvm="clr-namespace:Translit.Behaviors"
 	xmlns:pages="clr-namespace:Translit.ViewModels.Pages"
 	Title="FileConverter"
 	d:DesignHeight="500"
 	d:DesignWidth="600"
+	mvvm:DropBehavior.PreviewDropCommand="{Binding PreviewDropCommand}"
+	AllowDrop="True"
 	Background="{DynamicResource MaterialDesignPaper}"
 	FontFamily="{DynamicResource MaterialDesignFont}"
 	TextElement.FontSize="13"
@@ -29,7 +32,7 @@
 			Grid.Row="0"
 			HorizontalAlignment="Center"
 			VerticalAlignment="Center">
-			<WrapPanel Margin="0,40,0,0" HorizontalAlignment="Center">
+			<WrapPanel HorizontalAlignment="Center">
 				<Button
 					Margin="10"
 					HorizontalAlignment="Center"
@@ -50,53 +53,38 @@
 				IsChecked="{Binding IgnoreSelectedText}"
 				Style="{StaticResource MaterialDesignCheckBox}"
 				ToolTip="{DynamicResource ToolTipIgnoreSelectedText}" />
+			<Label Margin="10" Content="{DynamicResource LabelDragFilesOrFolderHereForAQuickStart}" />
 		</StackPanel>
-		<StackPanel
+		<GroupBox
 			Grid.Row="1"
-			VerticalAlignment="Center"
+			Margin="16"
+			Background="WhiteSmoke"
+			Header="{Binding FileName}"
+			Style="{DynamicResource MaterialDesignCardGroupBox}"
 			Visibility="{Binding ProgressBarVisibility}">
-			<TextBlock
-				Margin="50,10"
-				HorizontalAlignment="Center"
-				FontSize="15"
-				Text="{Binding FileName}"
-				TextWrapping="Wrap" />
-			<TextBlock
-				Margin="50,10"
-				HorizontalAlignment="Center"
-				FontSize="15"
-				Text="{Binding FileProgress}"
-				TextWrapping="Wrap" />
-			<ProgressBar
-				Height="8"
-				Margin="50,10"
-				Minimum="{Binding NumberOfFiles}"
-				Value="{Binding NumberOfTransliteratedFiles}" />
-			<TextBlock
-				Margin="50,10"
-				HorizontalAlignment="Center"
-				FontSize="15"
-				Text="{Binding WordProgress}"
-				TextWrapping="Wrap" />
-			<ProgressBar
-				Height="8"
-				Margin="50,10"
-				Maximum="100"
-				Minimum="0"
-				Value="{Binding PercentOfWords}" />
-			<TextBlock
-				Margin="50,10"
-				HorizontalAlignment="Center"
-				FontSize="15"
-				Text="{Binding SymbolProgress}"
-				TextWrapping="Wrap" />
-			<ProgressBar
-				Height="8"
-				Margin="50,10"
-				Maximum="100"
-				Minimum="0"
-				Value="{Binding PercentOfSymbols}" />
-		</StackPanel>
+			<StackPanel VerticalAlignment="Center">
+				<TextBlock
+					Margin="25,10"
+					Text="{Binding Left}"
+					TextWrapping="Wrap" />
+				<TextBlock
+					Margin="25,10"
+					Text="{Binding WordProgress}"
+					TextWrapping="Wrap" />
+				<ProgressBar
+					Height="12"
+					Margin="25,10"
+					Value="{Binding PercentOfWords}" />
+				<TextBlock
+					Margin="25,10"
+					Text="{Binding SymbolProgress}"
+					TextWrapping="Wrap" />
+				<ProgressBar
+					Height="12"
+					Margin="25,10"
+					Value="{Binding PercentOfSymbols}" />
+			</StackPanel>
+		</GroupBox>
 		<materialDesign:Snackbar
 			x:Name="SnackbarNotification"
 			Grid.Row="1"

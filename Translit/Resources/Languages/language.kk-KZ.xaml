@@ -27,12 +27,14 @@
 	<!--  Page File Converter  -->
 	<v:String x:Key="ButtonSelectFile">Файлды таңдау</v:String>
 	<v:String x:Key="ButtonSelectFolder">Қалтаны таңдау</v:String>
-	<v:String x:Key="TextBlockFiles">Файлдар</v:String>
+	<v:String x:Key="TextBlockLeft">Қалды</v:String>
 	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Ерекше сөздер тізбегін аудару</v:String>
 	<v:String x:Key="TextBlockCharacterTransliteration">Таңба бойынша аудару</v:String>
 	<v:String x:Key="FileNameLatin">латиница</v:String>
 	<v:String x:Key="CheckBoxIgnoreSelectedText">Таңдалған мәтінді елемеу</v:String>
 	<v:String x:Key="ToolTipIgnoreSelectedText">Бағдарлама таңдалған мәтінді елемейді (Word құжаттарында ғана)</v:String>
+	<v:String x:Key="LabelDragFilesOrFolderHereForAQuickStart">Жылдам бастау үшін файлдарды немесе қалтаны сүйреңіз</v:String>
+	<v:String x:Key="SnackBarAdded">Қосылған:</v:String>
 
 	<!--  Page Text Converter  -->
 	<v:String x:Key="ButtonClear">Тазалау</v:String>

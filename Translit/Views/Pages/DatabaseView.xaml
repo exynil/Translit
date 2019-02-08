@@ -30,31 +30,27 @@
 			<TextBlock
 				Margin="0,5"
 				HorizontalAlignment="Center"
-				FontSize="20"
+				FontSize="16"
 				Text="{Binding Database}"
 				TextWrapping="Wrap" />
 			<TextBlock
 				Margin="0,5"
 				HorizontalAlignment="Center"
-				FontSize="15"
 				Text="{Binding DatabaseSize}"
 				TextWrapping="Wrap" />
 			<TextBlock
 				Margin="0,5"
 				HorizontalAlignment="Center"
-				FontSize="15"
 				Text="{Binding SymbolsCount}"
 				TextWrapping="Wrap" />
 			<TextBlock
 				Margin="0,5"
 				HorizontalAlignment="Center"
-				FontSize="15"
 				Text="{Binding WordsCount}"
 				TextWrapping="Wrap" />
 			<TextBlock
 				Margin="0,5"
 				HorizontalAlignment="Center"
-				FontSize="15"
 				Text="{Binding LastUpdate}"
 				TextWrapping="Wrap" />
 		</StackPanel>
@@ -77,11 +73,10 @@
 			<TextBlock
 				Margin="0,5"
 				HorizontalAlignment="Center"
-				FontSize="15"
 				Text="{Binding SymbolsInserting}"
 				TextWrapping="Wrap" />
 			<ProgressBar
-				Height="8"
+				Height="12"
 				Margin="0,20"
 				Maximum="100"
 				Minimum="0"
@@ -89,11 +84,10 @@
 			<TextBlock
 				Margin="0,5"
 				HorizontalAlignment="Center"
-				FontSize="15"
-				Text="{Binding WordsCount}"
+				Text="{Binding WordsInserting}"
 				TextWrapping="Wrap" />
 			<ProgressBar
-				Height="8"
+				Height="12"
 				Margin="0,20"
 				Maximum="100"
 				Minimum="0"

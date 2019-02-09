@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using Translit.Properties;
@@ -42,21 +44,27 @@ namespace Translit
 
 		private void App_OnStartup(object sender, StartupEventArgs e)
 		{
-			Arguments = new string[e.Args.Length];
-			for (var i = 0; i < e.Args.Length; i++)
+			Arguments = e.Args.ToArray();
+
+			if (Arguments.Length > 0)
 			{
-				Arguments[i] = e.Args[i];
+				if (Arguments[0] == "Update installed")
+				{
+					Settings.Default.UpdateReady = false;
+				}
 			}
-#if !DEBUG
-			if (Arguments.Length == 0)
+
+			if (!Settings.Default.UpdateReady) return;
+
+			try
 			{
+				Process.Start(@"Updater.exe");
 				Environment.Exit(0);
 			}
-			else if (Arguments[0] != "Cy9I*@dw0Zh_fj_KOPbI@QBS6Perfk%k#)5kGK0@XaQCY)@sj2Tex(Rh7bJK")
+			catch (Exception)
 			{
-				Environment.Exit(0);
+				// ignored
 			}
-#endif
 		}
 	}
 }

@@ -9,23 +9,19 @@ namespace TranslitCollector
 		static void Main()
 		{
 #if DEBUG
-			const string translitLauncher = @"..\..\..\TranslitLauncher\bin\Debug";
+			const string updater = @"..\..\..\Updater\bin\Debug\Updater.exe";
 			const string translit = @"..\..\..\Translit\bin\Debug";
 #else
-			var translitLauncher = @"..\..\..\TranslitLauncher\bin\Release";
+			var translitLauncher = @"..\..\..\Updater\bin\Release\Updater.exe";
 			var translit = @"..\..\..\Translit\bin\Release";
 #endif
-			try
+			if (Directory.Exists("Translit"))
 			{
 				Directory.Delete(@"Translit", true);
 			}
-			catch (Exception)
-			{
-				// ignored
-			}
-			
-			DirectoryCopy(translitLauncher, @".\Translit", true);
-			DirectoryCopy(translit, @".\Translit\Translit", true);
+
+			DirectoryCopy(translit, @".\Translit", true);
+			File.Copy(updater, @".\Translit\Updater.exe", true);
 			Process.Start("explorer.exe", @".\Translit");
 		}
 		private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)

@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.NetworkInformation;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -15,6 +17,11 @@ namespace Translit.Models.Windows
 {
 	class MainModel : IMainModel
 	{
+		public MainModel()
+		{
+			Task.Factory.StartNew(() => { CheckAndDownloadUpdate(); });
+		}
+
 		public bool SignIn(string login, string password)
 		{
 			var link = $"http://account.osmium.kz/api/auth?login={login}&pass={password}";
@@ -73,7 +80,7 @@ namespace Translit.Models.Windows
 		public void DeleteToken()
 		{
 			var user = GetUser();
-			var link = "http://account.osmium.kz/api/auth?token=" + user.Token + "&id=" + user.Id;
+			var link = $"http://account.osmium.kz/api/auth?token={user.Token}&id={user.Id}";
 			var client = new HttpClient();
 			client.DeleteAsync(link);
 		}
@@ -109,6 +116,63 @@ namespace Translit.Models.Windows
 				.FirstOrDefault()
 				?.ToString();
 			return macAddress;
+		}
+
+		private void CheckAndDownloadUpdate()
+		{
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11;
+			const string api = @"https://api.github.com/repos/OsmiumKZ/Translit/releases/latest";
+			GithubResponse response;
+
+			var client = new WebClient();
+
+			client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+
+			try
+			{
+				var stream = client.OpenRead(api);
+				var streamReader = new StreamReader(stream ?? throw new InvalidOperationException());
+
+				response = JsonConvert.DeserializeObject<GithubResponse>(streamReader.ReadToEnd());
+
+				stream.Close();
+				streamReader.Close();
+			}
+			catch (Exception)
+			{
+				return;
+			}
+
+			var version = Assembly.GetExecutingAssembly().GetName().Version;
+
+			var currentVersion = int.Parse($"{ version.Major}{ version.Minor}");
+			var newVersion = int.Parse(response.TagName.Substring(1).Replace(".", ""));
+
+			if (currentVersion >= newVersion) return;
+
+			Settings.Default.UpdateReady = false;
+
+			if (!Directory.Exists("Update"))
+			{
+				Directory.CreateDirectory("Update");
+			}
+
+			try
+			{
+				ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+				var webClient = new WebClient();
+				webClient.DownloadFileCompleted += Completed;
+				webClient.DownloadFileAsync(response.Assets[0].BrowserDownloadUrl, @"Update\Translit.zip");
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
+		}
+
+		private void Completed(object sender, AsyncCompletedEventArgs e)
+		{
+			Settings.Default.UpdateReady = true;
 		}
 	}
 }

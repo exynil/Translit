@@ -3,9 +3,9 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace TranslitLauncher.Entity
+namespace Translit.Entity
 {
-	public class GithubApi
+	public class GithubResponse
 	{
 		[JsonProperty("url")]
 		public Uri Url { get; set; }

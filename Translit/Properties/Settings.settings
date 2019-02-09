@@ -26,5 +26,8 @@
     <Setting Name="WindowWidth" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">700</Value>
     </Setting>
+    <Setting Name="UpdateReady" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

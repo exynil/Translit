@@ -1,8 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:v="clr-namespace:System;assembly=mscorlib">
-	<v:String x:Key="TextBlockNewVersionIsAvailableUpdateIsDownloading">Жаңа нұсқа анықталды, жаңартулар жүктелуде...</v:String>
-	<v:String x:Key="TextBlockAnErrorHasOccurred">Қате орын алды</v:String>
-	<v:String x:Key="TextBlockRunTheProgram">Бағдарлама іске қосылуда...</v:String>
-	<v:String x:Key="TextBlockProgramInstallation">Бағдарламаны орнату...</v:String>
-</ResourceDictionary>

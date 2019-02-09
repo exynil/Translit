@@ -167,7 +167,6 @@ namespace Translit.Models.Pages
 
 		public DateTime GetLastWriteTime()
 		{
-
 			return new FileInfo(ConnectionString).LastWriteTime;
 		}
 	}

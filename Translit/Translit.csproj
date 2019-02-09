@@ -122,6 +122,7 @@
     <Compile Include="Entity\GithubResponse.cs" />
     <Compile Include="Entity\Rc4.cs" />
     <Compile Include="Entity\Symbol.cs" />
+    <Compile Include="Entity\UpdateInfo.cs" />
     <Compile Include="Entity\User.cs" />
     <Compile Include="Entity\Word.cs" />
     <Compile Include="Models\Pages\DatabaseModel.cs" />
@@ -285,7 +286,7 @@
     <Resource Include="Translit.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\TxtFiles\LICENSE.txt" />
+    <Resource Include="Resources\Texts\LICENSE.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

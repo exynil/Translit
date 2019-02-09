@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -10,13 +11,16 @@ namespace Translit
 {
 	public partial class App
 	{
-		public static string[] Arguments { get; set; }
-
 		public App()
 		{
 			InitializeComponent();
 
-			Language = Settings.Default.DefaultLanguage;
+#if !DEBUG
+			if (!File.Exists("Updater.exe"))
+			{
+				Environment.Exit(0);
+			}
+#endif
 		}
 
 		public static CultureInfo Language
@@ -44,17 +48,19 @@ namespace Translit
 
 		private void App_OnStartup(object sender, StartupEventArgs e)
 		{
-			Arguments = e.Args.ToArray();
+			Language = Settings.Default.DefaultLanguage;
 
-			if (Arguments.Length > 0)
+			var arguments = e.Args.ToArray();
+
+			if (arguments.Length > 0)
 			{
-				if (Arguments[0] == "Update installed")
+				if (arguments[0] == "Update installed")
 				{
 					Settings.Default.UpdateReady = false;
 				}
 			}
 
-			if (!Settings.Default.UpdateReady) return;
+			if (!Settings.Default.UpdateReady || !File.Exists(@"Update\Translit.zip")) return;
 
 			try
 			{

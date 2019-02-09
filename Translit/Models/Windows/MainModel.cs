@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,6 +8,9 @@ using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using FireSharp;
+using FireSharp.Config;
+using FireSharp.Interfaces;
 using Newtonsoft.Json;
 using Translit.Entity;
 using Translit.Properties;
@@ -19,7 +21,7 @@ namespace Translit.Models.Windows
 	{
 		public MainModel()
 		{
-			Task.Factory.StartNew(() => { CheckAndDownloadUpdate(); });
+			Task.Factory.StartNew(CheckAndDownloadUpdate);
 		}
 
 		public bool SignIn(string login, string password)
@@ -120,33 +122,20 @@ namespace Translit.Models.Windows
 
 		private void CheckAndDownloadUpdate()
 		{
-			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11;
-			const string api = @"https://api.github.com/repos/OsmiumKZ/Translit/releases/latest";
-			GithubResponse response;
-
-			var client = new WebClient();
-
-			client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-
-			try
+			IFirebaseConfig config = new FirebaseConfig
 			{
-				var stream = client.OpenRead(api);
-				var streamReader = new StreamReader(stream ?? throw new InvalidOperationException());
+				BasePath = "https://translit-10dad.firebaseio.com/",
+				AuthSecret = "qoWco2KAh72EuwpvQj978rWzFYklH1jhS9ZzvPSn"
+			};
 
-				response = JsonConvert.DeserializeObject<GithubResponse>(streamReader.ReadToEnd());
+			IFirebaseClient client = new FirebaseClient(config);
 
-				stream.Close();
-				streamReader.Close();
-			}
-			catch (Exception)
-			{
-				return;
-			}
+			var updateInfo = client.Get("Update").ResultAs<UpdateInfo>();
 
 			var version = Assembly.GetExecutingAssembly().GetName().Version;
 
 			var currentVersion = int.Parse($"{ version.Major}{ version.Minor}");
-			var newVersion = int.Parse(response.TagName.Substring(1).Replace(".", ""));
+			var newVersion = int.Parse(updateInfo.Version.Replace(".", ""));
 
 			if (currentVersion >= newVersion) return;
 
@@ -162,7 +151,7 @@ namespace Translit.Models.Windows
 				ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 				var webClient = new WebClient();
 				webClient.DownloadFileCompleted += Completed;
-				webClient.DownloadFileAsync(response.Assets[0].BrowserDownloadUrl, @"Update\Translit.zip");
+				webClient.DownloadFileAsync(new Uri(updateInfo.Url), @"Update\Translit.tmp");
 			}
 			catch (Exception)
 			{
@@ -172,6 +161,11 @@ namespace Translit.Models.Windows
 
 		private void Completed(object sender, AsyncCompletedEventArgs e)
 		{
+			if (File.Exists(@"Update\Translit.zip"))
+			{
+				File.Delete(@"Update\Translit.zip");
+			}
+			File.Move(@"Update\Translit.tmp", @"Update\Translit.zip");
 			Settings.Default.UpdateReady = true;
 		}
 	}

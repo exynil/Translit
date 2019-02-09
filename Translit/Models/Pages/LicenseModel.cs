@@ -9,7 +9,7 @@ namespace Translit.Models.Pages
 	{
 		public string ReadLicense()
 		{
-			var licenseStream = Application.GetResourceStream(new Uri("resources/txtfiles/license.txt", UriKind.Relative))?.Stream;
+			var licenseStream = Application.GetResourceStream(new Uri("resources/texts/license.txt", UriKind.Relative))?.Stream;
 			using (var reader = new StreamReader(licenseStream ?? throw new InvalidOperationException()))
 			{
 				return reader.ReadToEnd();

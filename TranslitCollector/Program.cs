@@ -12,7 +12,7 @@ namespace TranslitCollector
 			const string updater = @"..\..\..\Updater\bin\Debug\Updater.exe";
 			const string translit = @"..\..\..\Translit\bin\Debug";
 #else
-			var translitLauncher = @"..\..\..\Updater\bin\Release\Updater.exe";
+			var updater = @"..\..\..\Updater\bin\Release\Updater.exe";
 			var translit = @"..\..\..\Translit\bin\Release";
 #endif
 			if (Directory.Exists("Translit"))

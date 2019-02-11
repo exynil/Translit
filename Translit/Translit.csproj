@@ -119,7 +119,6 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\DropBehavior.cs" />
     <Compile Include="Entity\DelegateCommand.cs" />
-    <Compile Include="Entity\GithubResponse.cs" />
     <Compile Include="Entity\Rc4.cs" />
     <Compile Include="Entity\Symbol.cs" />
     <Compile Include="Entity\UpdateInfo.cs" />

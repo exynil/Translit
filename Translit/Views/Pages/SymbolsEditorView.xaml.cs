@@ -2,7 +2,6 @@
 {
 	public partial class SymbolsEditorView
 	{
-
 		public SymbolsEditorView()
 		{
 			InitializeComponent();

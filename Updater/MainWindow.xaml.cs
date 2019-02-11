@@ -7,42 +7,70 @@ using System.Windows;
 
 namespace Updater
 {
-	public partial class MainWindow
-	{
-		public string ArchiveWithUpdate { get; set; }
-		public MainWindow()
-		{
-			InitializeComponent();
-			ArchiveWithUpdate = @"Update\Translit.zip";
-		}
+    /// <summary>
+    /// Логика Updater
+    /// 1 - Удалить все папки в текущей директории кроме Updater и Database [Папок исключений]
+    /// 2 - Удалить все файлы кроме Updater.exe [Файлов исключений]
+    /// 3 - Распаковать архив с обновлением Update\Translit.zip в текущую директорию
+    /// 4 - Удалить архив с обновлением
+    /// 4 - Запустить программу
+    /// </summary>
+    public partial class MainWindow
+    {
+        public string ArchiveWithUpdate { get; set; }
+        public MainWindow()
+        {
+            InitializeComponent();
+            ArchiveWithUpdate = @"Update\Translit.zip";
+        }
 
-		private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
-		{
-			var files = new DirectoryInfo(Environment.CurrentDirectory).EnumerateFiles()
-				.Where(f => f.Name != "Updater.exe" && f.Name != ArchiveWithUpdate)
-				.Select(f => f.FullName).ToArray();
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            string[] exceptionalFolders = {"database", "update"};
+            string[] exceptionalFiles = {"update.exe"};
 
-			foreach (var f in files)
-			{
-				try
-				{
-					File.Delete(f);
-				}
-				catch (Exception)
-				{
-					// ignored
-				}
-			}
+            // Выбираем все папки не включая исключительные
+            var directories = new DirectoryInfo(Environment.CurrentDirectory).EnumerateDirectories()
+                .Where(d => !exceptionalFolders.Contains(d.Name.ToLower()))
+                .Select(d => d.FullName).ToArray();
 
-			using (var archive = ZipFile.OpenRead(ArchiveWithUpdate))
-			{
-				archive.ExtractToDirectory(Environment.CurrentDirectory);
-			}
+            foreach (var d in directories)
+            {
+                try
+                {
+                    Directory.Delete(d, true);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
 
-			File.Delete(ArchiveWithUpdate);
+            // Выбираем все файлы не включая исключительные
+            var files = new DirectoryInfo(Environment.CurrentDirectory).EnumerateFiles()
+                .Where(f => !exceptionalFiles.Contains(f.Name.ToLower()))
+                .Select(f => f.FullName).ToArray();
 
-			Process.Start(@"Translit.exe", "Update installed");
-			Close();
-		}
-	}
+            foreach (var f in files)
+            {
+                try
+                {
+                    File.Delete(f);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
+
+            using (var archive = ZipFile.OpenRead(ArchiveWithUpdate))
+            {
+                archive.ExtractToDirectory(Environment.CurrentDirectory);
+            }
+
+            File.Delete(ArchiveWithUpdate);
+            Process.Start(@"Translit.exe", "Update installed");
+            Close();
+        }
+    }
 }

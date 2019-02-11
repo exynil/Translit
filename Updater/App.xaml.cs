@@ -1,8 +1,6 @@
-﻿using System.Windows;
-
-namespace Updater
+﻿namespace Updater
 {
-	public partial class App
+    public partial class App
 	{
 	}
 }

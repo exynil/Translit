@@ -166,9 +166,8 @@ namespace Translit.ViewModels.Pages
 			ProgressBarVisibility = Visibility.Hidden;
 			CanUpdate = true;
 			IsIndeterminate = false;
-			UpdateButtonContent = GetRes("ButtonUpdate");
-
-			SetInfoAboutDatabase();
+		    SetInfoAboutDatabase();
+            UpdateButtonContent = GetRes(Model.DatabaseExists() ? "ButtonUpdate" : "ButtonDownload");
 		}
 
 		private void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -203,8 +202,7 @@ namespace Translit.ViewModels.Pages
 							MessageQueue.Enqueue(GetRes("SnackBarBadInternetConnection"));
 							return;
 						}
-						ProgressBarVisibility = Visibility.Visible;
-						Model.DeleteOldDatabase();
+                        ProgressBarVisibility = Visibility.Visible;
 						Model.InsertData();
 						MessageQueue.Enqueue(GetRes("SnackBarUpdateCompleted"));
 						SetInfoAboutDatabase();
@@ -230,7 +228,7 @@ namespace Translit.ViewModels.Pages
 				DatabaseSize = $"{GetRes("TextBlockDatabaseSize")} {Model.GetDatabaseSize() / 1024} KB";
 				SymbolsCount = $"{GetRes("TextBlockAmountOfCharacters")} {Model.GetSymbolCount()}";
 				WordsCount = $"{GetRes("TextBlockAmountOfWords")} {Model.GetWordCount()}";
-				LastUpdate = $"{GetRes("TextBlockLastUpdate")} {Model.GetLastWriteTime().ToString(CultureInfo.CurrentCulture)}";
+				LastUpdate = $"{GetRes("TextBlockLastUpdate")} {Model.GetLastUpdateTime().ToString(CultureInfo.CurrentCulture)}";
 			}
 			else
 			{

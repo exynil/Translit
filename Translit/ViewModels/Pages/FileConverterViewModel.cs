@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using MaterialDesignThemes.Wpf;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -6,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using MaterialDesignThemes.Wpf;
 using Translit.Entity;
 using Translit.Models.Pages;
 using Application = System.Windows.Application;
@@ -15,7 +15,7 @@ using IDataObject = System.Windows.IDataObject;
 
 namespace Translit.ViewModels.Pages
 {
-	class FileConverterViewModel : INotifyPropertyChanged
+    class FileConverterViewModel : INotifyPropertyChanged
 	{
 		private ICommand _previewDropCommand;
 		private bool _ignoreSelectedText;
@@ -194,10 +194,10 @@ namespace Translit.ViewModels.Pages
 
 						ProgressBarVisibility = Visibility.Visible;
 
-						Model.TranslitFiles(new[] { dlg.FileName }, IgnoreSelectedText);
+						var success= Model.TranslitFiles(new[] { dlg.FileName }, IgnoreSelectedText);
 
 						ProgressBarVisibility = Visibility.Hidden;
-						MessageQueue.Enqueue(GetRes("SnackBarTransliterationCompleted"));
+					    MessageQueue.Enqueue(success ? GetRes("SnackBarTransliterationCompleted") : GetRes("SnackBarStoppedByUser"));
 					});
 				});
 			}
@@ -253,11 +253,11 @@ namespace Translit.ViewModels.Pages
 
 							ProgressBarVisibility = Visibility.Visible;
 
-							Model.TranslitFiles(files, IgnoreSelectedText);
+							var success = Model.TranslitFiles(files, IgnoreSelectedText);
 
 							ProgressBarVisibility = Visibility.Hidden;
-							MessageQueue.Enqueue(GetRes("SnackBarTransliterationCompleted"));
-						});
+						    MessageQueue.Enqueue(success ? GetRes("SnackBarTransliterationCompleted") : GetRes("SnackBarStoppedByUser"));
+                        });
 					}
 				});
 			}
@@ -265,7 +265,13 @@ namespace Translit.ViewModels.Pages
 
 		private void HandlePreviewDrop(object inObject)
 		{
-			if (!(inObject is IDataObject ido)) return;
+		    if (!File.Exists(@"Database\localdb.db"))
+		    {
+		        MessageQueue.Enqueue(GetRes("SnackBarDatabaseNotFound"));
+		        return;
+		    }
+
+            if (!(inObject is IDataObject ido)) return;
 
 			if (!(ido.GetData(DataFormats.FileDrop, true) is string[] transferredFiles)) return;
 
@@ -286,7 +292,7 @@ namespace Translit.ViewModels.Pages
 
 			if (filteredFiles.Length > 0)
 			{
-				Task.Factory.StartNew(() =>
+                Task.Factory.StartNew(() =>
 				{
 					if (Model.TransliterationState)
 					{
@@ -297,16 +303,16 @@ namespace Translit.ViewModels.Pages
 
 					ProgressBarVisibility = Visibility.Visible;
 
-					Model.TranslitFiles(filteredFiles, IgnoreSelectedText);
+					var success = Model.TranslitFiles(filteredFiles, IgnoreSelectedText);
 
 					ProgressBarVisibility = Visibility.Hidden;
-					MessageQueue.Enqueue(GetRes("SnackBarTransliterationCompleted"));
-				});
+				    MessageQueue.Enqueue(success ? GetRes("SnackBarTransliterationCompleted") : GetRes("SnackBarStoppedByUser"));
+                });
 			}
 			else if(!transferredFiles[0].Contains('.'))
 			{
-				// Получаем пути всех нескрытых файлов с расширением из массива extensions
-				var files = new DirectoryInfo(transferredFiles[0]).EnumerateFiles()
+                // Получаем пути всех нескрытых файлов с расширением из массива extensions
+                var files = new DirectoryInfo(transferredFiles[0]).EnumerateFiles()
 					.Where(f => (f.Attributes & FileAttributes.Hidden) == 0 && extensions.Contains(f.Extension.ToLower()))
 					.Select(f => f.FullName).ToArray();
 
@@ -318,21 +324,38 @@ namespace Translit.ViewModels.Pages
 					{
 						Model.AddFiles(files);
 						MessageQueue.Enqueue($"{GetRes("SnackBarAdded")} {files.Length}");
-						return;
+                        return;
 					}
 
 					ProgressBarVisibility = Visibility.Visible;
 
-					Model.TranslitFiles(files, IgnoreSelectedText);
+					var success = Model.TranslitFiles(files, IgnoreSelectedText);
 
 					ProgressBarVisibility = Visibility.Hidden;
-					MessageQueue.Enqueue(GetRes("SnackBarTransliterationCompleted"));
-				});
+				    MessageQueue.Enqueue(success ? GetRes("SnackBarTransliterationCompleted") : GetRes("SnackBarStoppedByUser"));
+                });
 			}
-			
 		}
 
-		private void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+	    public ICommand Stop
+	    {
+	        get
+	        {
+	            return new DelegateCommand(o =>
+	            {
+	                if (!Model.Stop)
+	                {
+	                    Model.StopTransliteration();
+                    }
+	                else
+	                {
+	                    MessageQueue.Enqueue(GetRes("SnackBarPleaseWait"));
+                    }
+	            });
+	        }
+	    }
+
+        private void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			FileName = ShortenFileName(Model.FileName, 75);
 			PercentOfWords = Model.PercentOfWords;

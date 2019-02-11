@@ -1,4 +1,8 @@
-﻿using System;
+﻿using FireSharp;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -8,16 +12,12 @@ using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using FireSharp;
-using FireSharp.Config;
-using FireSharp.Interfaces;
-using Newtonsoft.Json;
 using Translit.Entity;
 using Translit.Properties;
 
 namespace Translit.Models.Windows
 {
-	class MainModel : IMainModel
+    class MainModel : IMainModel
 	{
 		public MainModel()
 		{
@@ -126,7 +126,7 @@ namespace Translit.Models.Windows
 			{
 				BasePath = "https://translit-10dad.firebaseio.com/",
 				AuthSecret = "qoWco2KAh72EuwpvQj978rWzFYklH1jhS9ZzvPSn"
-			};
+            };
 
 			IFirebaseClient client = new FirebaseClient(config);
 
@@ -137,36 +137,42 @@ namespace Translit.Models.Windows
 			var currentVersion = int.Parse($"{ version.Major}{ version.Minor}");
 			var newVersion = int.Parse(updateInfo.Version.Replace(".", ""));
 
-			if (currentVersion >= newVersion) return;
+		    if (currentVersion >= newVersion) return;
 
-			Settings.Default.UpdateReady = false;
+		    Settings.Default.UpdateReady = false;
 
-			if (!Directory.Exists("Update"))
-			{
-				Directory.CreateDirectory("Update");
-			}
+		    if (!Directory.Exists("Update"))
+		    {
+		        Directory.CreateDirectory("Update");
+		    }
 
-			try
-			{
-				ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-				var webClient = new WebClient();
-				webClient.DownloadFileCompleted += Completed;
-				webClient.DownloadFileAsync(new Uri(updateInfo.Url), @"Update\Translit.tmp");
-			}
-			catch (Exception)
-			{
-				// ignored
-			}
+		    try
+		    {
+		        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+		        var webClient = new WebClient();
+		        webClient.DownloadFileCompleted += Completed;
+		        webClient.DownloadFileAsync(new Uri(updateInfo.Url), @"Update\Translit.tmp");
+		    }
+		    catch (Exception)
+		    {
+		        // ignored
+		    }
 		}
 
 		private void Completed(object sender, AsyncCompletedEventArgs e)
 		{
-			if (File.Exists(@"Update\Translit.zip"))
-			{
-				File.Delete(@"Update\Translit.zip");
-			}
-			File.Move(@"Update\Translit.tmp", @"Update\Translit.zip");
-			Settings.Default.UpdateReady = true;
+		    if (e.Error != null) return;
+
+            if (File.Exists(@"Update\Translit.zip"))
+            {
+                File.Replace(@"Update\Translit.tmp", @"Update\Translit.zip", null);
+            }
+            else
+            {
+                File.Move(@"Update\Translit.tmp", @"Update\Translit.zip");
+            }
+
+            Settings.Default.UpdateReady = true;
 		}
 	}
 }

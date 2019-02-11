@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Translit.Entity;
 
 namespace Translit.Models.Pages
 {
-	interface IWordsEditorModel
+    interface IWordsEditorModel
 	{
 		string ReasonPhrase { get; set; }
 

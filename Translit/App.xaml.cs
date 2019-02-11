@@ -54,13 +54,25 @@ namespace Translit
 
 			if (arguments.Length > 0)
 			{
+                // Если обновление было установлено
 				if (arguments[0] == "Update installed")
 				{
+                    // Меняем статус готовности обновления на false и выходим
 					Settings.Default.UpdateReady = false;
+                    return;
 				}
 			}
 
-			if (!Settings.Default.UpdateReady || !File.Exists(@"Update\Translit.zip")) return;
+            // Если обновление не готово выходим
+		    if (!Settings.Default.UpdateReady) return;
+
+            // Проверяем наличие обновления
+            if (!File.Exists(@"Update\Translit.zip"))
+		    {
+		        // Меняем статус готовности обновления на false и выходим
+                Settings.Default.UpdateReady = false;
+                return;
+		    }
 
 			try
 			{

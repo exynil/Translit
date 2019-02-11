@@ -1,136 +1,141 @@
 ﻿<ResourceDictionary
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:v="clr-namespace:System;assembly=mscorlib">
-	<!--  Main Window Menu  -->
-	<v:String x:Key="MenuItemMain">Бастысы</v:String>
-	<v:String x:Key="MenuItemAdditionally">Қосымша</v:String>
-	<v:String x:Key="MenuItemLanguage">Тіл</v:String>
-	<v:String x:Key="MenuItemReference">Анықтама</v:String>
-	<v:String x:Key="MenuItemFileConverter">Файлдық конвертер</v:String>
-	<v:String x:Key="MenuItemTextConverter">Мәтіндік конвертер</v:String>
-	<v:String x:Key="MenuItemWords">Сөздер</v:String>
-	<v:String x:Key="MenuItemSymbols">Таңбалар</v:String>
-	<v:String x:Key="MenuItemSettings">Қолданбалар</v:String>
-	<v:String x:Key="MenuItemDatabase">Деректер базасы</v:String>
-	<v:String x:Key="MenuItemAbout">Бағдарлама туралы</v:String>
-	<v:String x:Key="MenuItemLicense">Лицензия</v:String>
-	<v:String x:Key="MenuItemFaq">FAQ</v:String>
-	<v:String x:Key="MenuItemExit">Шығу</v:String>
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:v="clr-namespace:System;assembly=mscorlib">
+    <!--  Main Window Menu  -->
+    <v:String x:Key="MenuItemMain">Бастысы</v:String>
+    <v:String x:Key="MenuItemAdditionally">Қосымша</v:String>
+    <v:String x:Key="MenuItemLanguage">Тіл</v:String>
+    <v:String x:Key="MenuItemReference">Анықтама</v:String>
+    <v:String x:Key="MenuItemFileConverter">Файлдық конвертер</v:String>
+    <v:String x:Key="MenuItemTextConverter">Мәтіндік конвертер</v:String>
+    <v:String x:Key="MenuItemWords">Сөздер</v:String>
+    <v:String x:Key="MenuItemSymbols">Таңбалар</v:String>
+    <v:String x:Key="MenuItemSettings">Қолданбалар</v:String>
+    <v:String x:Key="MenuItemDatabase">Деректер базасы</v:String>
+    <v:String x:Key="MenuItemAbout">Бағдарлама туралы</v:String>
+    <v:String x:Key="MenuItemLicense">Лицензия</v:String>
+    <v:String x:Key="MenuItemFaq">FAQ</v:String>
+    <v:String x:Key="MenuItemExit">Шығу</v:String>
 
-	<!--  Main Window PopupBox  -->
-	<v:String x:Key="TextBlockUser">Қолданушы</v:String>
-	<v:String x:Key="ButtonSignIn">Кіру</v:String>
-	<v:String x:Key="ButtonSignOut">Шығу</v:String>
-	<v:String x:Key="LabelAuthorization">Авторизациялау</v:String>
+    <!--  Main Window PopupBox  -->
+    <v:String x:Key="TextBlockUser">Қолданушы</v:String>
+    <v:String x:Key="ButtonSignIn">Кіру</v:String>
+    <v:String x:Key="ButtonSignOut">Шығу</v:String>
+    <v:String x:Key="LabelAuthorization">Авторизациялау</v:String>
 
-	<!--  Page File Converter  -->
-	<v:String x:Key="ButtonSelectFile">Файлды таңдау</v:String>
-	<v:String x:Key="ButtonSelectFolder">Қалтаны таңдау</v:String>
-	<v:String x:Key="TextBlockLeft">Қалды</v:String>
-	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Ерекше сөздер тізбегін аудару</v:String>
-	<v:String x:Key="TextBlockCharacterTransliteration">Таңба бойынша аудару</v:String>
-	<v:String x:Key="FileNameLatin">латиница</v:String>
-	<v:String x:Key="CheckBoxIgnoreSelectedText">Таңдалған мәтінді елемеу</v:String>
-	<v:String x:Key="ToolTipIgnoreSelectedText">Бағдарлама таңдалған мәтінді елемейді (Word құжаттарында ғана)</v:String>
-	<v:String x:Key="LabelDragFilesOrFolderHereForAQuickStart">Жылдам бастау үшін файлдарды немесе қалтаны сүйреңіз</v:String>
-	<v:String x:Key="SnackBarAdded">Қосылған:</v:String>
+    <!--  Page File Converter  -->
+    <v:String x:Key="ButtonSelectFile">Файлды таңдау</v:String>
+    <v:String x:Key="ButtonSelectFolder">Қалтаны таңдау</v:String>
+    <v:String x:Key="TextBlockLeft">Қалды</v:String>
+    <v:String x:Key="TextBlockTransliterationOfExceptionWords">Ерекше сөздер тізбегін аудару</v:String>
+    <v:String x:Key="TextBlockCharacterTransliteration">Таңба бойынша аудару</v:String>
+    <v:String x:Key="FileNameLatin">латиница</v:String>
+    <v:String x:Key="CheckBoxIgnoreSelectedText">Таңдалған мәтінді елемеу</v:String>
+    <v:String x:Key="ToolTipIgnoreSelectedText">Бағдарлама таңдалған мәтінді елемейді (Word құжаттарында ғана)</v:String>
+    <v:String x:Key="LabelDragFilesOrFolderHereForAQuickStart">Жылдам бастау үшін файлдарды немесе қалтаны сүйреңіз</v:String>
+    <v:String x:Key="SnackBarAdded">Қосылған:</v:String>
+    <v:String x:Key="ButtonStop">Тоқта</v:String>
+    <v:String x:Key="SnackBarPleaseWait">Өтінемін күте тұрыңыз</v:String>
+    <v:String x:Key="SnackBarStoppedByUser">Пайдаланушы тоқтатты</v:String>
 
-	<!--  Page Text Converter  -->
-	<v:String x:Key="ButtonClear">Тазалау</v:String>
-	<v:String x:Key="ButtonCopy">Көшіру</v:String>
-	<v:String x:Key="SliderFontSize">Қаріп өлшемі</v:String>
+    <!--  Page Text Converter  -->
+    <v:String x:Key="ButtonClear">Тазалау</v:String>
+    <v:String x:Key="ButtonCopy">Көшіру</v:String>
+    <v:String x:Key="SliderFontSize">Қаріп өлшемі</v:String>
 
-	<!--  Page SymbolsEditor and WordsEditor  -->
-	<v:String x:Key="ToolTipAdd">Қосу</v:String>
-	<v:String x:Key="ToolTipUpdate">Жаңарту</v:String>
-	<v:String x:Key="ToolTipEdit">Өзгерту</v:String>
-	<v:String x:Key="ToolTipDelete">Өшіру</v:String>
+    <!--  Page SymbolsEditor and WordsEditor  -->
+    <v:String x:Key="ToolTipAdd">Қосу</v:String>
+    <v:String x:Key="ToolTipUpdate">Жаңарту</v:String>
+    <v:String x:Key="ToolTipEdit">Өзгерту</v:String>
+    <v:String x:Key="ToolTipDelete">Өшіру</v:String>
 
-	<!--  Page Settings  -->
-	<v:String x:Key="TextBlockDocumentAutoSave">Құжаттың түпнұсқасын автосақтау</v:String>
+    <!--  Page Settings  -->
+    <v:String x:Key="TextBlockDocumentAutoSave">Құжаттың түпнұсқасын автосақтау</v:String>
 
-	<!--  Page Database  -->
-	<v:String x:Key="TextBlockDatabase">Дерекқор</v:String>
-	<v:String x:Key="TextBlockCharacterLoading">Таңбаларды жүктеу</v:String>
-	<v:String x:Key="TextBlockLoadingWords">Ерекше сөздерді жүктеу</v:String>
-	<v:String x:Key="TextBlockDatabaseSize">Деректер базасының көлемі:</v:String>
-	<v:String x:Key="TextBlockAmountOfCharacters">Таңбалар саны:</v:String>
-	<v:String x:Key="TextBlockAmountOfWords">Сөздер саны:</v:String>
-	<v:String x:Key="TextBlockLastUpdate">Соңғы жаңарту:</v:String>
-	<v:String x:Key="ButtonUpdate">Жаңарту</v:String>
-	<v:String x:Key="ButtonLoading">Жүктеу</v:String>
-	<v:String x:Key="TextBlockDatabaseNotFound">Деректер базасы табылмады</v:String>
+    <!--  Page Database  -->
+    <v:String x:Key="TextBlockDatabase">Дерекқор</v:String>
+    <v:String x:Key="TextBlockCharacterLoading">Таңбаларды жүктеу</v:String>
+    <v:String x:Key="TextBlockLoadingWords">Ерекше сөздерді жүктеу</v:String>
+    <v:String x:Key="TextBlockDatabaseSize">Деректер базасының көлемі:</v:String>
+    <v:String x:Key="TextBlockAmountOfCharacters">Таңбалар саны:</v:String>
+    <v:String x:Key="TextBlockAmountOfWords">Сөздер саны:</v:String>
+    <v:String x:Key="TextBlockLastUpdate">Соңғы жаңарту:</v:String>
+    <v:String x:Key="ButtonUpdate">Жаңарту</v:String>
+    <v:String x:Key="ButtonLoading">Жүктелуде</v:String>
+    <v:String x:Key="ButtonDownload">Жүктеу</v:String>
+    <v:String x:Key="GroupBoxInitialization">Инициализация</v:String>
+    <v:String x:Key="TextBlockDatabaseNotFound">Деректер базасы табылмады</v:String>
 
-	<!--  Page About  -->
-	<v:String x:Key="TextBlockDescription">Word құжаттарын, Excel кестелерін және Power Point презентацияларын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама.</v:String>
-	<v:String x:Key="TextBlockVersion">Нұсқа</v:String>
-	<v:String x:Key="ButtonBack">Артқа</v:String>
+    <!--  Page About  -->
+    <v:String x:Key="TextBlockDescription">Word құжаттарын, Excel кестелерін және Power Point презентацияларын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама.</v:String>
+    <v:String x:Key="TextBlockVersion">Нұсқа</v:String>
+    <v:String x:Key="ButtonBack">Артқа</v:String>
 
-	<!--  Page FAQ  -->
-	<v:String x:Key="ExpanderWhatFilesAreSupported">Қандай файлдар қолданылады?</v:String>
-	<v:String x:Key="TextBlockTheProgramSupportsTheFollowingFileTypes">Бағдарлама келесі файл түрлерін қолдайды:</v:String>
-	<v:String x:Key="TextBlockWordDocuments">Word құжаттары: doc, docx</v:String>
-	<v:String x:Key="TextBlockExcelSpreadsheets">Excel электрондық кестелері: xls, xlsx</v:String>
-	<v:String x:Key="TextBlockPowerPointPresentations">Power Point ұсыныстары: ppt, pptx</v:String>
-	<v:String x:Key="TextBlockPdfDocuments">PDF құжаттары: pdf</v:String>
-	<v:String x:Key="TextBlockRtfDocuments">RTF құжаттары: rtf</v:String>
-	<v:String x:Key="TextBlockTextDocuments">Мәтіндік құжаттар: txt</v:String>
+    <!--  Page FAQ  -->
+    <v:String x:Key="ExpanderWhatFilesAreSupported">Қандай файлдар қолданылады?</v:String>
+    <v:String x:Key="TextBlockTheProgramSupportsTheFollowingFileTypes">Бағдарлама келесі файл түрлерін қолдайды:</v:String>
+    <v:String x:Key="TextBlockWordDocuments">Word құжаттары: doc, docx</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheets">Excel электрондық кестелері: xls, xlsx</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentations">Power Point ұсыныстары: ppt, pptx</v:String>
+    <v:String x:Key="TextBlockPdfDocuments">PDF құжаттары: pdf</v:String>
+    <v:String x:Key="TextBlockRtfDocuments">RTF құжаттары: rtf</v:String>
+    <v:String x:Key="TextBlockTextDocuments">Мәтіндік құжаттар: txt</v:String>
 
-	<v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">'Таңдалған мәтінді елемеу' функциясын қалай пайдалануға болады?</v:String>
-	<v:String x:Key="TextBlockFollowTheseFourSimpleSteps">Мына төрт қарапайым қадамды орындаңыз.</v:String>
-	<v:String x:Key="TextBlockHighlightTheWrongTextInTheDocumentInAnyColor">1) Кез келген түспен құжатта қате мәтінді бөлектеңіз.</v:String>
-	<v:String x:Key="TextBlockSaveTheDocument">2) Құжатты сақтаңыз.</v:String>
-	<v:String x:Key="TextBlockCheckTheBoxIgnoreSelectedText">3) 'Таңдалған мәтінді елемеу' жолын белгілеңіз.</v:String>
-	<v:String x:Key="TextBlockSelectFileOrFileFolder">4) Файлды немесе файл қалтасын таңдаңыз.</v:String>
-	<v:String x:Key="TextBlockTheFunctionIsIntendedOnlyForWordDocuments">Функция тек Word құжаттарына арналған.</v:String>
+    <v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">'Таңдалған мәтінді елемеу' функциясын қалай пайдалануға болады?</v:String>
+    <v:String x:Key="TextBlockFollowTheseFourSimpleSteps">Мына төрт қарапайым қадамды орындаңыз.</v:String>
+    <v:String x:Key="TextBlockHighlightTheWrongTextInTheDocumentInAnyColor">1) Кез келген түспен құжатта қате мәтінді бөлектеңіз.</v:String>
+    <v:String x:Key="TextBlockSaveTheDocument">2) Құжатты сақтаңыз.</v:String>
+    <v:String x:Key="TextBlockCheckTheBoxIgnoreSelectedText">3) 'Таңдалған мәтінді елемеу' жолын белгілеңіз.</v:String>
+    <v:String x:Key="TextBlockSelectFileOrFileFolder">4) Файлды немесе файл қалтасын таңдаңыз.</v:String>
+    <v:String x:Key="TextBlockTheFunctionIsIntendedOnlyForWordDocuments">Функция тек Word құжаттарына арналған.</v:String>
 
-	<!--  Snackbar  -->
-	<v:String x:Key="SnackBarAuthorization">Авторизациялау</v:String>
-	<v:String x:Key="SnackBarRecordSuccessfullyAdded">Жазбаңыз сәтті орындалды</v:String>
-	<v:String x:Key="SnackBarServerSideError">Қате сервер тарапынан</v:String>
-	<v:String x:Key="SnackBarTheWordIsAlreadyInTheDatabase">Бұл сөз деректер базасында бар</v:String>
-	<v:String x:Key="SnackBarError">Қате</v:String>
-	<v:String x:Key="SnackBarAddingEntryCanceled">Жазбаны енгізу тоқтатылды</v:String>
-	<v:String x:Key="SnackBarEditingEntryCanceled">Өңдеу тоқтатылды</v:String>
-	<v:String x:Key="SnackBarWordDeleted">Сөз жойылды</v:String>
-	<v:String x:Key="SnackBarDeleteCanceled">Жойылу тоқтатылды</v:String>
-	<v:String x:Key="SnackBarRecordEdited">Жазба өзгертілді</v:String>
-	<v:String x:Key="SnackBarBadInternetConnection">Желіге қосылу төмен дәрежеде</v:String>
-	<v:String x:Key="SnackBarUpdateCompleted">Жаңарту аяқталды</v:String>
-	<v:String x:Key="SnackBarWelcome">Хош келдіңіз</v:String>
-	<v:String x:Key="SnackBarWrongLoginOrPassword">Логин немесе құпиясөз теріс</v:String>
-	<v:String x:Key="SnackBarNotAllowedLength">Жол берілмеуі тиіс өлшем</v:String>
-	<v:String x:Key="SnackBarDatabaseNotFound">Деректер базасы табылмады</v:String>
-	<v:String x:Key="SnackBarTransliterationCompleted">Транслитерация аяқталды</v:String>
-	<v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Өңдеу немесе жою үшін жазбаны таңдаңыз</v:String>
+    <!--  Snackbar  -->
+    <v:String x:Key="SnackBarAuthorization">Авторизациялау</v:String>
+    <v:String x:Key="SnackBarRecordSuccessfullyAdded">Жазбаңыз сәтті орындалды</v:String>
+    <v:String x:Key="SnackBarServerSideError">Қате сервер тарапынан</v:String>
+    <v:String x:Key="SnackBarTheWordIsAlreadyInTheDatabase">Бұл сөз деректер базасында бар</v:String>
+    <v:String x:Key="SnackBarError">Қате</v:String>
+    <v:String x:Key="SnackBarAddingEntryCanceled">Жазбаны енгізу тоқтатылды</v:String>
+    <v:String x:Key="SnackBarEditingEntryCanceled">Өңдеу тоқтатылды</v:String>
+    <v:String x:Key="SnackBarWordDeleted">Сөз жойылды</v:String>
+    <v:String x:Key="SnackBarDeleteCanceled">Жойылу тоқтатылды</v:String>
+    <v:String x:Key="SnackBarRecordEdited">Жазба өзгертілді</v:String>
+    <v:String x:Key="SnackBarBadInternetConnection">Желіге қосылу төмен дәрежеде</v:String>
+    <v:String x:Key="SnackBarUpdateCompleted">Жаңарту аяқталды</v:String>
+    <v:String x:Key="SnackBarWelcome">Хош келдіңіз</v:String>
+    <v:String x:Key="SnackBarWrongLoginOrPassword">Логин немесе құпиясөз теріс</v:String>
+    <v:String x:Key="SnackBarNotAllowedLength">Жол берілмеуі тиіс өлшем</v:String>
+    <v:String x:Key="SnackBarDatabaseNotFound">Деректер базасы табылмады</v:String>
+    <v:String x:Key="SnackBarTransliterationCompleted">Транслитерация аяқталды</v:String>
+    <v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Өңдеу немесе жою үшін жазбаны таңдаңыз</v:String>
 
-	<!--  DataGridTextColumn Header  -->
-	<v:String x:Key="DataGridTextColumnId">Ид</v:String>
-	<v:String x:Key="DataGridTextColumnCyryllic">Кириллица</v:String>
-	<v:String x:Key="DataGridTextColumnLatin">Латиница</v:String>
+    <!--  DataGridTextColumn Header  -->
+    <v:String x:Key="DataGridTextColumnId">Ид</v:String>
+    <v:String x:Key="DataGridTextColumnCyryllic">Кириллица</v:String>
+    <v:String x:Key="DataGridTextColumnLatin">Латиница</v:String>
 
-	<!--  Hints  -->
-	<v:String x:Key="HintLoginOrEmail">Логин немесе эл.пошта</v:String>
-	<v:String x:Key="HintPassword">Құпия сөз</v:String>
-	<v:String x:Key="HintCyryllic">Кириллица</v:String>
-	<v:String x:Key="HintLatin">Латиница</v:String>
-	<v:String x:Key="HintStartTyping">Мәтінді енгізуді бастаңыз...</v:String>
+    <!--  Hints  -->
+    <v:String x:Key="HintLoginOrEmail">Логин немесе эл.пошта</v:String>
+    <v:String x:Key="HintPassword">Құпия сөз</v:String>
+    <v:String x:Key="HintCyryllic">Кириллица</v:String>
+    <v:String x:Key="HintLatin">Латиница</v:String>
+    <v:String x:Key="HintStartTyping">Мәтінді енгізуді бастаңыз...</v:String>
 
-	<!--  Titles  -->
-	<v:String x:Key="TitleDelete">Жою</v:String>
-	<v:String x:Key="TitleAdding">Қосу</v:String>
-	<v:String x:Key="TitleEditing">Өңдеу</v:String>
+    <!--  Titles  -->
+    <v:String x:Key="TitleDelete">Жою</v:String>
+    <v:String x:Key="TitleAdding">Қосу</v:String>
+    <v:String x:Key="TitleEditing">Өңдеу</v:String>
 
-	<!--  DialogWindows  -->
-	<v:String x:Key="TextBlockDoYouReallyWantToDelete">Вы действительно хотите удалить?</v:String>
-	<v:String x:Key="ButtonYes">Ия</v:String>
-	<v:String x:Key="ButtonNo">Жоқ</v:String>
-	<v:String x:Key="ButtonSave">Сақтау</v:String>
-	<v:String x:Key="ButtonCancel">Болдырмау</v:String>
-	<v:String x:Key="ButtonAdd">қосу</v:String>
-	<v:String x:Key="ARebootOfTheProgramIsRequired">Бағдарламаны қайта жүктеу қажет. Қайта жүктелсін бе?</v:String>
+    <!--  DialogWindows  -->
+    <v:String x:Key="TextBlockDoYouReallyWantToDelete">Вы действительно хотите удалить?</v:String>
+    <v:String x:Key="ButtonYes">Ия</v:String>
+    <v:String x:Key="ButtonNo">Жоқ</v:String>
+    <v:String x:Key="ButtonSave">Сақтау</v:String>
+    <v:String x:Key="ButtonCancel">Болдырмау</v:String>
+    <v:String x:Key="ButtonAdd">қосу</v:String>
+    <v:String x:Key="ARebootOfTheProgramIsRequired">Бағдарламаны қайта жүктеу қажет. Қайта жүктелсін бе?</v:String>
 
-	<!--  Add Dialog Window  -->
-	<v:String x:Key="TextBlockPleaseFillInAllFields">Барлық өрістерді толтырыңыз</v:String>
+    <!--  Add Dialog Window  -->
+    <v:String x:Key="TextBlockPleaseFillInAllFields">Барлық өрістерді толтырыңыз</v:String>
 </ResourceDictionary>

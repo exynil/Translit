@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace TranslitCollector
 {
-	class Program
+    class Program
 	{
 		static void Main()
 		{
@@ -22,9 +23,32 @@ namespace TranslitCollector
 
 			DirectoryCopy(translit, @".\Translit", true);
 			File.Copy(updater, @".\Translit\Updater.exe", true);
+		    Sort();
 			Process.Start("explorer.exe", @".\Translit");
 		}
-		private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+
+	    private static void Sort()
+	    {
+	        var files = new DirectoryInfo(@".\Translit").EnumerateFiles()
+	            .Where(f => f.Extension == ".xml" || f.Extension == ".pdb").ToArray();
+
+	        foreach (var f in files)
+	        {
+	            File.Delete(f.FullName);
+	        }
+
+	       files = new DirectoryInfo(@".\Translit").EnumerateFiles()
+	            .Where(f => f.Extension == ".dll").ToArray();
+
+	        Directory.CreateDirectory(@"Translit\Libraries");
+
+	        foreach (var f in files)
+	        {
+                File.Move(f.FullName, $@"Translit\Libraries\{f.Name}");
+	        }
+        }
+
+	    private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
 		{
 			// Get the subdirectories for the specified directory.
 			var dir = new DirectoryInfo(sourceDirName);

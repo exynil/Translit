@@ -1,11 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Resources;
 using System.Windows;
 
 namespace Translit.Models.Pages
 {
-	class LicenseModel : ILicenseModel
+    class LicenseModel : ILicenseModel
 	{
 		public string ReadLicense()
 		{

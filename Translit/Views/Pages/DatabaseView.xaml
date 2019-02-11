@@ -1,102 +1,103 @@
 ﻿<Page
-	x:Class="Translit.Views.Pages.DatabaseView"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:pages="clr-namespace:Translit.ViewModels.Pages"
-	Title="Database"
-	d:DesignHeight="500"
-	d:DesignWidth="500"
-	Background="{DynamicResource MaterialDesignPaper}"
-	FontFamily="{DynamicResource MaterialDesignFont}"
-	TextElement.FontSize="13"
-	TextElement.FontWeight="Regular"
-	TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-	TextOptions.TextFormattingMode="Ideal"
-	TextOptions.TextRenderingMode="Auto"
-	mc:Ignorable="d">
-	<Page.DataContext>
-		<pages:DatabaseViewModel />
-	</Page.DataContext>
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<StackPanel Grid.Row="0" Margin="0,20">
-			<TextBlock
-				Margin="0,5"
-				HorizontalAlignment="Center"
-				FontSize="16"
-				Text="{Binding Database}"
-				TextWrapping="Wrap" />
-			<TextBlock
-				Margin="0,5"
-				HorizontalAlignment="Center"
-				Text="{Binding DatabaseSize}"
-				TextWrapping="Wrap" />
-			<TextBlock
-				Margin="0,5"
-				HorizontalAlignment="Center"
-				Text="{Binding SymbolsCount}"
-				TextWrapping="Wrap" />
-			<TextBlock
-				Margin="0,5"
-				HorizontalAlignment="Center"
-				Text="{Binding WordsCount}"
-				TextWrapping="Wrap" />
-			<TextBlock
-				Margin="0,5"
-				HorizontalAlignment="Center"
-				Text="{Binding LastUpdate}"
-				TextWrapping="Wrap" />
-		</StackPanel>
-		<Button
-			Grid.Row="1"
-			Margin="2,0"
-			HorizontalAlignment="Center"
-			materialDesign:ButtonProgressAssist.IsIndeterminate="False"
-			materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-			materialDesign:ButtonProgressAssist.Value="-1"
-			Command="{Binding Update}"
-			Content="{Binding UpdateButtonContent}"
-			IsEnabled="{Binding CanUpdate}"
-			Style="{StaticResource MaterialDesignRaisedButton}" />
-		<StackPanel
-			Grid.Row="2"
-			Margin="50,0"
-			VerticalAlignment="Center"
-			Visibility="{Binding ProgressBarVisibility}">
-			<TextBlock
-				Margin="0,5"
-				HorizontalAlignment="Center"
-				Text="{Binding SymbolsInserting}"
-				TextWrapping="Wrap" />
-			<ProgressBar
-				Height="12"
-				Margin="0,20"
-				Maximum="100"
-				Minimum="0"
-				Value="{Binding PercentOfSymbols}" />
-			<TextBlock
-				Margin="0,5"
-				HorizontalAlignment="Center"
-				Text="{Binding WordsInserting}"
-				TextWrapping="Wrap" />
-			<ProgressBar
-				Height="12"
-				Margin="0,20"
-				Maximum="100"
-				Minimum="0"
-				Value="{Binding PercentOfWords}" />
-		</StackPanel>
-		<materialDesign:Snackbar
-			Grid.Row="2"
-			HorizontalAlignment="Stretch"
-			IsActive="False"
-			MessageQueue="{Binding MessageQueue}" />
-	</Grid>
+    x:Class="Translit.Views.Pages.DatabaseView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Translit.ViewModels.Pages"
+    Title="Database"
+    d:DesignHeight="500"
+    d:DesignWidth="500"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <pages:DatabaseViewModel />
+    </Page.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            Margin="0,20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <TextBlock
+                Margin="0,5"
+                FontSize="16"
+                Text="{Binding Database}"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Margin="0,5"
+                Text="{Binding DatabaseSize}"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Margin="0,5"
+                Text="{Binding SymbolsCount}"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Margin="0,5"
+                Text="{Binding WordsCount}"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Margin="0,5"
+                Text="{Binding LastUpdate}"
+                TextWrapping="Wrap" />
+        </StackPanel>
+        <Button
+            Grid.Row="1"
+            Margin="2,0"
+            HorizontalAlignment="Center"
+            materialDesign:ButtonProgressAssist.IsIndeterminate="False"
+            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            materialDesign:ButtonProgressAssist.Value="-1"
+            Command="{Binding Update}"
+            Content="{Binding UpdateButtonContent}"
+            IsEnabled="{Binding CanUpdate}"
+            Style="{StaticResource MaterialDesignRaisedButton}" />
+        <GroupBox
+            Grid.Row="2"
+            Margin="16"
+            Background="WhiteSmoke"
+            Header="{DynamicResource GroupBoxInitialization}"
+            Style="{DynamicResource MaterialDesignCardGroupBox}"
+            Visibility="{Binding ProgressBarVisibility}">
+            <StackPanel>
+                <TextBlock
+                    Margin="25,10"
+                    Text="{Binding SymbolsInserting}"
+                    TextWrapping="Wrap" />
+                <ProgressBar
+                    Height="12"
+                    Margin="25,10"
+                    Maximum="100"
+                    Minimum="0"
+                    Value="{Binding PercentOfSymbols}" />
+                <TextBlock
+                    Margin="25,10"
+                    Text="{Binding WordsInserting}"
+                    TextWrapping="Wrap" />
+                <ProgressBar
+                    Height="12"
+                    Margin="25,10"
+                    Maximum="100"
+                    Minimum="0"
+                    Value="{Binding PercentOfWords}" />
+            </StackPanel>
+        </GroupBox>
+        <materialDesign:Snackbar
+            Grid.Row="2"
+            HorizontalAlignment="Stretch"
+            IsActive="False"
+            MessageQueue="{Binding MessageQueue}" />
+    </Grid>
 </Page>

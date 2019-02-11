@@ -1,136 +1,141 @@
 ﻿<ResourceDictionary
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:v="clr-namespace:System;assembly=mscorlib">
-	<!--  Main Window Menu  -->
-	<v:String x:Key="MenuItemMain">Главная</v:String>
-	<v:String x:Key="MenuItemAdditionally">Дополнительно</v:String>
-	<v:String x:Key="MenuItemLanguage">Язык</v:String>
-	<v:String x:Key="MenuItemReference">Справка</v:String>
-	<v:String x:Key="MenuItemFileConverter">Файловый конвертер</v:String>
-	<v:String x:Key="MenuItemTextConverter">Текстовый конвертер</v:String>
-	<v:String x:Key="MenuItemWords">Слова</v:String>
-	<v:String x:Key="MenuItemSymbols">Символы</v:String>
-	<v:String x:Key="MenuItemSettings">Настройки</v:String>
-	<v:String x:Key="MenuItemDatabase">База данных</v:String>
-	<v:String x:Key="MenuItemAbout">О программе</v:String>
-	<v:String x:Key="MenuItemLicense">Лицензия</v:String>
-	<v:String x:Key="MenuItemFaq">FAQ</v:String>
-	<v:String x:Key="MenuItemExit">Выход</v:String>
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:v="clr-namespace:System;assembly=mscorlib">
+    <!--  Main Window Menu  -->
+    <v:String x:Key="MenuItemMain">Главная</v:String>
+    <v:String x:Key="MenuItemAdditionally">Дополнительно</v:String>
+    <v:String x:Key="MenuItemLanguage">Язык</v:String>
+    <v:String x:Key="MenuItemReference">Справка</v:String>
+    <v:String x:Key="MenuItemFileConverter">Файловый конвертер</v:String>
+    <v:String x:Key="MenuItemTextConverter">Текстовый конвертер</v:String>
+    <v:String x:Key="MenuItemWords">Слова</v:String>
+    <v:String x:Key="MenuItemSymbols">Символы</v:String>
+    <v:String x:Key="MenuItemSettings">Настройки</v:String>
+    <v:String x:Key="MenuItemDatabase">База данных</v:String>
+    <v:String x:Key="MenuItemAbout">О программе</v:String>
+    <v:String x:Key="MenuItemLicense">Лицензия</v:String>
+    <v:String x:Key="MenuItemFaq">FAQ</v:String>
+    <v:String x:Key="MenuItemExit">Выход</v:String>
 
-	<!--  Main Window PopupBox  -->
-	<v:String x:Key="TextBlockUser">Пользователь</v:String>
-	<v:String x:Key="ButtonSignIn">Войти</v:String>
-	<v:String x:Key="ButtonSignOut">Выйти</v:String>
-	<v:String x:Key="LabelAuthorization">Авторизация</v:String>
+    <!--  Main Window PopupBox  -->
+    <v:String x:Key="TextBlockUser">Пользователь</v:String>
+    <v:String x:Key="ButtonSignIn">Войти</v:String>
+    <v:String x:Key="ButtonSignOut">Выйти</v:String>
+    <v:String x:Key="LabelAuthorization">Авторизация</v:String>
 
-	<!--  Page File Converter  -->
-	<v:String x:Key="ButtonSelectFile">Выбрать файл</v:String>
-	<v:String x:Key="ButtonSelectFolder">Выбрать папку</v:String>
-	<v:String x:Key="TextBlockLeft">Осталось</v:String>
-	<v:String x:Key="TextBlockTransliterationOfExceptionWords">Транслитерация слов исключений</v:String>
-	<v:String x:Key="TextBlockCharacterTransliteration">Транслитерация символов</v:String>
-	<v:String x:Key="FileNameLatin">латиница</v:String>
-	<v:String x:Key="CheckBoxIgnoreSelectedText">Игнорировать выделенный текст</v:String>
-	<v:String x:Key="ToolTipIgnoreSelectedText">Программа игнорирует выделенный текст (только в документах Word)</v:String>
-	<v:String x:Key="LabelDragFilesOrFolderHereForAQuickStart">Перетащите сюда файлы или папку для быстрого старта</v:String>
-	<v:String x:Key="SnackBarAdded">Добавлено:</v:String>
+    <!--  Page File Converter  -->
+    <v:String x:Key="ButtonSelectFile">Выбрать файл</v:String>
+    <v:String x:Key="ButtonSelectFolder">Выбрать папку</v:String>
+    <v:String x:Key="TextBlockLeft">Осталось</v:String>
+    <v:String x:Key="TextBlockTransliterationOfExceptionWords">Транслитерация слов исключений</v:String>
+    <v:String x:Key="TextBlockCharacterTransliteration">Транслитерация символов</v:String>
+    <v:String x:Key="FileNameLatin">латиница</v:String>
+    <v:String x:Key="CheckBoxIgnoreSelectedText">Игнорировать выделенный текст</v:String>
+    <v:String x:Key="ToolTipIgnoreSelectedText">Программа игнорирует выделенный текст (только в документах Word)</v:String>
+    <v:String x:Key="LabelDragFilesOrFolderHereForAQuickStart">Перетащите сюда файлы или папку для быстрого старта</v:String>
+    <v:String x:Key="SnackBarAdded">Добавлено:</v:String>
+    <v:String x:Key="ButtonStop">Остановить</v:String>
+    <v:String x:Key="SnackBarPleaseWait">Пожалуйста, подождите</v:String>
+    <v:String x:Key="SnackBarStoppedByUser">Остановлено пользователем</v:String>
 
-	<!--  Page Text Converter  -->
-	<v:String x:Key="ButtonClear">Очистить</v:String>
-	<v:String x:Key="ButtonCopy">Скопировать</v:String>
-	<v:String x:Key="SliderFontSize">Размер шрифта</v:String>
+    <!--  Page Text Converter  -->
+    <v:String x:Key="ButtonClear">Очистить</v:String>
+    <v:String x:Key="ButtonCopy">Скопировать</v:String>
+    <v:String x:Key="SliderFontSize">Размер шрифта</v:String>
 
-	<!--  Page SymbolsEditor and WordsEditor  -->
-	<v:String x:Key="ToolTipAdd">Добавить</v:String>
-	<v:String x:Key="ToolTipUpdate">Обновить</v:String>
-	<v:String x:Key="ToolTipEdit">Редактировать</v:String>
-	<v:String x:Key="ToolTipDelete">Удалить</v:String>
+    <!--  Page SymbolsEditor and WordsEditor  -->
+    <v:String x:Key="ToolTipAdd">Добавить</v:String>
+    <v:String x:Key="ToolTipUpdate">Обновить</v:String>
+    <v:String x:Key="ToolTipEdit">Редактировать</v:String>
+    <v:String x:Key="ToolTipDelete">Удалить</v:String>
 
-	<!--  Page Settings  -->
-	<v:String x:Key="TextBlockDocumentAutoSave">Автосохранение документа</v:String>
+    <!--  Page Settings  -->
+    <v:String x:Key="TextBlockDocumentAutoSave">Автосохранение документа</v:String>
 
-	<!--  Page Database  -->
-	<v:String x:Key="TextBlockDatabase">База данных</v:String>
-	<v:String x:Key="TextBlockCharacterLoading">Загрузка символов</v:String>
-	<v:String x:Key="TextBlockLoadingWords">Загрузка исключений</v:String>
-	<v:String x:Key="TextBlockDatabaseSize">Объем базы данных:</v:String>
-	<v:String x:Key="TextBlockAmountOfCharacters">Количество символов:</v:String>
-	<v:String x:Key="TextBlockAmountOfWords">Количество слов:</v:String>
-	<v:String x:Key="TextBlockLastUpdate">Последнее обновление:</v:String>
-	<v:String x:Key="ButtonUpdate">Обновить</v:String>
-	<v:String x:Key="ButtonLoading">Загрузка</v:String>
-	<v:String x:Key="TextBlockDatabaseNotFound">База данных не найдена</v:String>
+    <!--  Page Database  -->
+    <v:String x:Key="TextBlockDatabase">База данных</v:String>
+    <v:String x:Key="TextBlockCharacterLoading">Загрузка символов</v:String>
+    <v:String x:Key="TextBlockLoadingWords">Загрузка исключений</v:String>
+    <v:String x:Key="TextBlockDatabaseSize">Объем базы данных:</v:String>
+    <v:String x:Key="TextBlockAmountOfCharacters">Количество символов:</v:String>
+    <v:String x:Key="TextBlockAmountOfWords">Количество слов:</v:String>
+    <v:String x:Key="TextBlockLastUpdate">Последнее обновление:</v:String>
+    <v:String x:Key="ButtonUpdate">Обновить</v:String>
+    <v:String x:Key="ButtonLoading">Загрузка</v:String>
+    <v:String x:Key="ButtonDownload">Загрузить</v:String>
+    <v:String x:Key="GroupBoxInitialization">Инициализация</v:String>
+    <v:String x:Key="TextBlockDatabaseNotFound">База данных не найдена</v:String>
 
-	<!--  Page About  -->
-	<v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации документов Word, таблиц Excel и презентаций Power Point с кириллицы на латиницу.</v:String>
-	<v:String x:Key="TextBlockVersion">Версия</v:String>
-	<v:String x:Key="ButtonBack">Назад</v:String>
+    <!--  Page About  -->
+    <v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации документов Word, таблиц Excel и презентаций Power Point с кириллицы на латиницу.</v:String>
+    <v:String x:Key="TextBlockVersion">Версия</v:String>
+    <v:String x:Key="ButtonBack">Назад</v:String>
 
-	<!--  Page FAQ  -->
-	<v:String x:Key="ExpanderWhatFilesAreSupported">Какие файлы поддерживаются?</v:String>
-	<v:String x:Key="TextBlockTheProgramSupportsTheFollowingFileTypes">Программа поддержвает следующие типы файлов:</v:String>
-	<v:String x:Key="TextBlockWordDocuments">Документы Word: doc, docx</v:String>
-	<v:String x:Key="TextBlockExcelSpreadsheets">Таблицы Excel: xls, xlsx</v:String>
-	<v:String x:Key="TextBlockPowerPointPresentations">Презентации Power Point: ppt, pptx</v:String>
-	<v:String x:Key="TextBlockPdfDocuments">Документы PDF: pdf</v:String>
-	<v:String x:Key="TextBlockRtfDocuments">Документы RTF: rtf</v:String>
-	<v:String x:Key="TextBlockTextDocuments">Текстовые документы: txt</v:String>
+    <!--  Page FAQ  -->
+    <v:String x:Key="ExpanderWhatFilesAreSupported">Какие файлы поддерживаются?</v:String>
+    <v:String x:Key="TextBlockTheProgramSupportsTheFollowingFileTypes">Программа поддержвает следующие типы файлов:</v:String>
+    <v:String x:Key="TextBlockWordDocuments">Документы Word: doc, docx</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheets">Таблицы Excel: xls, xlsx</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentations">Презентации Power Point: ppt, pptx</v:String>
+    <v:String x:Key="TextBlockPdfDocuments">Документы PDF: pdf</v:String>
+    <v:String x:Key="TextBlockRtfDocuments">Документы RTF: rtf</v:String>
+    <v:String x:Key="TextBlockTextDocuments">Текстовые документы: txt</v:String>
 
-	<v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">Как использовать функцию 'Игнорировать выделенный текст'?</v:String>
-	<v:String x:Key="TextBlockFollowTheseFourSimpleSteps">Выполните следующие четыре простых действия.</v:String>
-	<v:String x:Key="TextBlockHighlightTheWrongTextInTheDocumentInAnyColor">1) Выделите в документе не нужный текст любым цветом.</v:String>
-	<v:String x:Key="TextBlockSaveTheDocument">2) Сохраните документ.</v:String>
-	<v:String x:Key="TextBlockCheckTheBoxIgnoreSelectedText">3) Поставьте галочку 'Игнорировать выделенный текст'.</v:String>
-	<v:String x:Key="TextBlockSelectFileOrFileFolder">4) Выберите файл или папку с файлами.</v:String>
-	<v:String x:Key="TextBlockTheFunctionIsIntendedOnlyForWordDocuments">Функция предназначена только для документов Word.</v:String>
+    <v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">Как использовать функцию 'Игнорировать выделенный текст'?</v:String>
+    <v:String x:Key="TextBlockFollowTheseFourSimpleSteps">Выполните следующие четыре простых действия.</v:String>
+    <v:String x:Key="TextBlockHighlightTheWrongTextInTheDocumentInAnyColor">1) Выделите в документе не нужный текст любым цветом.</v:String>
+    <v:String x:Key="TextBlockSaveTheDocument">2) Сохраните документ.</v:String>
+    <v:String x:Key="TextBlockCheckTheBoxIgnoreSelectedText">3) Поставьте галочку 'Игнорировать выделенный текст'.</v:String>
+    <v:String x:Key="TextBlockSelectFileOrFileFolder">4) Выберите файл или папку с файлами.</v:String>
+    <v:String x:Key="TextBlockTheFunctionIsIntendedOnlyForWordDocuments">Функция предназначена только для документов Word.</v:String>
 
-	<!--  Snackbar  -->
-	<v:String x:Key="SnackBarAuthorization">Авторизация</v:String>
-	<v:String x:Key="SnackBarRecordSuccessfullyAdded">Запись успешно добавлена</v:String>
-	<v:String x:Key="SnackBarServerSideError">Ошибка на стороне сервера</v:String>
-	<v:String x:Key="SnackBarTheWordIsAlreadyInTheDatabase">Слово уже имеется в базе данных</v:String>
-	<v:String x:Key="SnackBarError">Ошибка</v:String>
-	<v:String x:Key="SnackBarAddingEntryCanceled">Добавление записи отменено</v:String>
-	<v:String x:Key="SnackBarRecordEditingCanceled">Редактирование записи отменено</v:String>
-	<v:String x:Key="SnackBarWordDeleted">Слово удалено</v:String>
-	<v:String x:Key="SnackBarDeleteCanceled">Удаление отменено</v:String>
-	<v:String x:Key="SnackBarRecordEdited">Запись отредактирована</v:String>
-	<v:String x:Key="SnackBarBadInternetConnection">Плохое соединение с интернетом</v:String>
-	<v:String x:Key="SnackBarUpdateCompleted">Обновление завершено</v:String>
-	<v:String x:Key="SnackBarWelcome">Добро пожаловать</v:String>
-	<v:String x:Key="SnackBarWrongLoginOrPassword">Не верный логин или пароль</v:String>
-	<v:String x:Key="SnackBarNotAllowedLength">Не допустимая длина</v:String>
-	<v:String x:Key="SnackBarDatabaseNotFound">База данных не найдена</v:String>
-	<v:String x:Key="SnackBarTransliterationCompleted">Транслитерация завершена</v:String>
-	<v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Выделите запись, чтобы редактировать или удалить</v:String>
+    <!--  Snackbar  -->
+    <v:String x:Key="SnackBarAuthorization">Авторизация</v:String>
+    <v:String x:Key="SnackBarRecordSuccessfullyAdded">Запись успешно добавлена</v:String>
+    <v:String x:Key="SnackBarServerSideError">Ошибка на стороне сервера</v:String>
+    <v:String x:Key="SnackBarTheWordIsAlreadyInTheDatabase">Слово уже имеется в базе данных</v:String>
+    <v:String x:Key="SnackBarError">Ошибка</v:String>
+    <v:String x:Key="SnackBarAddingEntryCanceled">Добавление записи отменено</v:String>
+    <v:String x:Key="SnackBarRecordEditingCanceled">Редактирование записи отменено</v:String>
+    <v:String x:Key="SnackBarWordDeleted">Слово удалено</v:String>
+    <v:String x:Key="SnackBarDeleteCanceled">Удаление отменено</v:String>
+    <v:String x:Key="SnackBarRecordEdited">Запись отредактирована</v:String>
+    <v:String x:Key="SnackBarBadInternetConnection">Плохое соединение с интернетом</v:String>
+    <v:String x:Key="SnackBarUpdateCompleted">Обновление завершено</v:String>
+    <v:String x:Key="SnackBarWelcome">Добро пожаловать</v:String>
+    <v:String x:Key="SnackBarWrongLoginOrPassword">Не верный логин или пароль</v:String>
+    <v:String x:Key="SnackBarNotAllowedLength">Не допустимая длина</v:String>
+    <v:String x:Key="SnackBarDatabaseNotFound">База данных не найдена</v:String>
+    <v:String x:Key="SnackBarTransliterationCompleted">Транслитерация завершена</v:String>
+    <v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Выделите запись, чтобы редактировать или удалить</v:String>
 
-	<!--  DataGridTextColumn Header  -->
-	<v:String x:Key="DataGridTextColumnId">Ид</v:String>
-	<v:String x:Key="DataGridTextColumnCyryllic">Кириллица</v:String>
-	<v:String x:Key="DataGridTextColumnLatin">Латиница</v:String>
+    <!--  DataGridTextColumn Header  -->
+    <v:String x:Key="DataGridTextColumnId">Ид</v:String>
+    <v:String x:Key="DataGridTextColumnCyryllic">Кириллица</v:String>
+    <v:String x:Key="DataGridTextColumnLatin">Латиница</v:String>
 
-	<!--  Hints  -->
-	<v:String x:Key="HintLoginOrEmail">Логин или эл.почта</v:String>
-	<v:String x:Key="HintPassword">Пароль</v:String>
-	<v:String x:Key="HintCyryllic">Кириллица</v:String>
-	<v:String x:Key="HintLatin">Латиница</v:String>
-	<v:String x:Key="HintStartTyping">Начните вводить текст...</v:String>
+    <!--  Hints  -->
+    <v:String x:Key="HintLoginOrEmail">Логин или эл.почта</v:String>
+    <v:String x:Key="HintPassword">Пароль</v:String>
+    <v:String x:Key="HintCyryllic">Кириллица</v:String>
+    <v:String x:Key="HintLatin">Латиница</v:String>
+    <v:String x:Key="HintStartTyping">Начните вводить текст...</v:String>
 
-	<!--  Titles  -->
-	<v:String x:Key="TitleDelete">Удаление</v:String>
-	<v:String x:Key="TitleAdding">Добавление</v:String>
-	<v:String x:Key="TitleEditing">Редактирование</v:String>
+    <!--  Titles  -->
+    <v:String x:Key="TitleDelete">Удаление</v:String>
+    <v:String x:Key="TitleAdding">Добавление</v:String>
+    <v:String x:Key="TitleEditing">Редактирование</v:String>
 
-	<!--  DialogWindows  -->
-	<v:String x:Key="TextBlockDoYouReallyWantToDelete">Вы действительно хотите удалить?</v:String>
-	<v:String x:Key="ButtonYes">Да</v:String>
-	<v:String x:Key="ButtonNo">Нет</v:String>
-	<v:String x:Key="ButtonSave">Сохранить</v:String>
-	<v:String x:Key="ButtonCancel">Отменить</v:String>
-	<v:String x:Key="ButtonAdd">Добавить</v:String>
-	<v:String x:Key="ARebootOfTheProgramIsRequired">Требуется перезагрузка программы. Перезагрузить?</v:String>
+    <!--  DialogWindows  -->
+    <v:String x:Key="TextBlockDoYouReallyWantToDelete">Вы действительно хотите удалить?</v:String>
+    <v:String x:Key="ButtonYes">Да</v:String>
+    <v:String x:Key="ButtonNo">Нет</v:String>
+    <v:String x:Key="ButtonSave">Сохранить</v:String>
+    <v:String x:Key="ButtonCancel">Отменить</v:String>
+    <v:String x:Key="ButtonAdd">Добавить</v:String>
+    <v:String x:Key="ARebootOfTheProgramIsRequired">Требуется перезагрузка программы. Перезагрузить?</v:String>
 
-	<!--  Add Dialog Window  -->
-	<v:String x:Key="TextBlockPleaseFillInAllFields">Пожалуйста, заполните все поля</v:String>
+    <!--  Add Dialog Window  -->
+    <v:String x:Key="TextBlockPleaseFillInAllFields">Пожалуйста, заполните все поля</v:String>
 </ResourceDictionary>

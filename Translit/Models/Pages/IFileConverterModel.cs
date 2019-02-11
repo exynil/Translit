@@ -5,6 +5,6 @@ namespace Translit.Models.Pages
 	interface IFileConverterModel
 	{
 		event PropertyChangedEventHandler PropertyChanged;
-		void TranslitFiles(string[] files, bool? ignoreSelectedText);
+		bool TranslitFiles(string[] files, bool? ignoreSelectedText);
 	}
 }

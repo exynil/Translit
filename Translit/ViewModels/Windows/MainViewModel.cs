@@ -389,6 +389,7 @@ namespace Translit.ViewModels.Windows
 			{
 				return new DelegateCommand(o =>
 				{
+                    Settings.Default.Save();
 					Environment.Exit(0);
 				});
 			}

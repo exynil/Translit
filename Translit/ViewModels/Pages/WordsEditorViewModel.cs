@@ -1,11 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using MaterialDesignThemes.Wpf;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using MaterialDesignThemes.Wpf;
 using Translit.Entity;
 using Translit.Models.Pages;
 using Translit.Properties;
@@ -13,7 +12,7 @@ using Translit.Views.DialogWindows;
 
 namespace Translit.ViewModels.Pages
 {
-	class WordsEditorViewModel : INotifyPropertyChanged
+    class WordsEditorViewModel : INotifyPropertyChanged
 	{
 		private ObservableCollection<Word> _words;
 		private Word _selectedWord;

@@ -1,4 +1,10 @@
-﻿using System;
+﻿using LiteDB;
+using Microsoft.Office.Core;
+using Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.PowerPoint;
+using Microsoft.Office.Interop.Word;
+using SautinSoft.Document;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -8,12 +14,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using LiteDB;
-using Microsoft.Office.Core;
-using Microsoft.Office.Interop.Excel;
-using Microsoft.Office.Interop.PowerPoint;
-using Microsoft.Office.Interop.Word;
-using SautinSoft.Document;
 using Translit.Entity;
 using Translit.Properties;
 using Application = System.Windows.Application;
@@ -21,7 +21,7 @@ using LoadOptions = System.Xml.Linq.LoadOptions;
 
 namespace Translit.Models.Pages
 {
-	public class FileConverterModel : IFileConverterModel
+    public class FileConverterModel : IFileConverterModel
 	{
 		public Queue<string> Files { get; set; }
 		private string _fileName;
@@ -30,6 +30,7 @@ namespace Translit.Models.Pages
 		private int _left;
 		public string ConnectionString { get; }
 		public bool TransliterationState { get; set; }
+        public bool Stop { get; set; }
 
 		public int Left
 		{
@@ -61,17 +62,17 @@ namespace Translit.Models.Pages
 			}
 		}
 
-		public int PercentOfSymbols
-		{
-			get => _percentOfSymbols;
-			set
-			{
-				_percentOfSymbols = value;
-				OnPropertyChanged();
-			}
-		}
+	    public int PercentOfSymbols
+	    {
+	        get => _percentOfSymbols;
+	        set
+	        {
+	            _percentOfSymbols = value;
+	            OnPropertyChanged();
+	        }
+	    }
 
-		public FileConverterModel()
+	    public FileConverterModel()
 		{
 			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
 			Files = new Queue<string>();
@@ -83,7 +84,12 @@ namespace Translit.Models.Pages
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
 
-		public void AddFiles(string[] files)
+	    public void StopTransliteration()
+	    {
+	        Stop = true;
+	    }
+
+        public void AddFiles(string[] files)
 		{
 			foreach (var f in files)
 			{
@@ -92,7 +98,7 @@ namespace Translit.Models.Pages
 			Left = Files.Count;
 		}
 
-		public void TranslitFiles(string[] files, bool? ignoreSelectedText)
+		public bool TranslitFiles(string[] files, bool? ignoreSelectedText)
 		{
 			AddFiles(files);
 
@@ -100,6 +106,14 @@ namespace Translit.Models.Pages
 
 			while (Files.Count > 0)
 			{
+			    if (Stop)
+			    {
+			        Files.Clear();
+			        Stop = false;
+                    TransliterationState = false;
+			        return false;
+			    }
+
 				Left = Files.Count;
 				var file = FileName = Files.Dequeue();
 
@@ -131,6 +145,7 @@ namespace Translit.Models.Pages
 			}
 
 			TransliterationState = false;
+		    return true;
 		}
 
 		// Транслитерация файла Word
@@ -608,7 +623,7 @@ namespace Translit.Models.Pages
 		private static string UnZipFileToTempFolder(string filename)
 		{
 			// Путь временной папки
-			var tempFolder = $@"{Path.GetTempPath()}Translit\{DateTime.Now.ToFileTime()}";
+			var tempFolder = $@"{Path.GetTempPath()}Translit\{Guid.NewGuid()}";
 
 			// Распаковка документа во временную папку
 			using (var archive = ZipFile.OpenRead(filename))
@@ -677,7 +692,7 @@ namespace Translit.Models.Pages
 
 			do
 			{
-				newFileName = $@"{fileInfo.DirectoryName}\{DateTime.Now.ToFileTime()}{fileInfo.Extension}x";
+				newFileName = $@"{fileInfo.DirectoryName}\{Guid.NewGuid()}{fileInfo.Extension}x";
 			} while (File.Exists(newFileName));
 
 			var word = new Microsoft.Office.Interop.Word.Application();
@@ -703,7 +718,7 @@ namespace Translit.Models.Pages
 
 			do
 			{
-				newFileName = $@"{fileInfo.DirectoryName}\{DateTime.Now.ToFileTime()}{fileInfo.Extension}x";
+				newFileName = $@"{fileInfo.DirectoryName}\{Guid.NewGuid()}{fileInfo.Extension}x";
 			} while (File.Exists(newFileName));
 
 			var excel = new Microsoft.Office.Interop.Excel.Application();
@@ -729,7 +744,7 @@ namespace Translit.Models.Pages
 
 			do
 			{
-				newFileName = $@"{fileInfo.DirectoryName}\{DateTime.Now.ToFileTime()}{fileInfo.Extension}x";
+				newFileName = $@"{fileInfo.DirectoryName}\{Guid.NewGuid()}{fileInfo.Extension}x";
 			} while (File.Exists(newFileName));
 
 			var powerPoint = new Microsoft.Office.Interop.PowerPoint.Application();

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LiteDB;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -6,13 +8,11 @@ using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
-using LiteDB;
-using Newtonsoft.Json;
 using Translit.Entity;
 
 namespace Translit.Models.Pages
 {
-	public class DatabaseModel : IDatabaseModel, INotifyPropertyChanged
+    public class DatabaseModel : IDatabaseModel, INotifyPropertyChanged
 	{
 		private int _percentOfWords;
 		private int _percentOfSymbols;
@@ -72,19 +72,23 @@ namespace Translit.Models.Pages
 				return false;
 			}
 
-			// Загружаем первый ответ сервера в базу
+			// Загружаем первый ответ сервера
 			var responseSrteam = response[0].GetResponseStream();
-			using (var stream =
-					new StreamReader(responseSrteam ?? throw new InvalidOperationException(), Encoding.UTF8))
-			{
-				// Десериализуем ответ
-				Symbols = JsonConvert.DeserializeObject<List<Symbol>>(stream.ReadToEnd());
-			}
 
-			// Загружаем второй ответ сервера в базу
+		    if (responseSrteam == null) return false;
+
+		    using (var stream = new StreamReader(responseSrteam, Encoding.UTF8))
+		    {
+		        // Десериализуем ответ
+		        Symbols = JsonConvert.DeserializeObject<List<Symbol>>(stream.ReadToEnd());
+		    }
+
+		    // Загружаем второй ответ сервера
 			responseSrteam = response[1].GetResponseStream();
-			using (var stream =
-					new StreamReader(responseSrteam ?? throw new InvalidOperationException(), Encoding.UTF8))
+
+		    if (responseSrteam == null) return false;
+
+            using (var stream = new StreamReader(responseSrteam, Encoding.UTF8))
 			{
 				// Десериализуем ответ
 				Words = JsonConvert.DeserializeObject<List<Word>>(stream.ReadToEnd());
@@ -93,25 +97,24 @@ namespace Translit.Models.Pages
 			return true;
 		}
 
-		public void DeleteOldDatabase()
-		{
-			// Удаляем локальную базу
-			if (File.Exists(ConnectionString))
-			{
-				File.Delete(ConnectionString);
-			}
-
-			if (!Directory.Exists("Database"))
-			{
-				Directory.CreateDirectory("Database");
-			}
-		}
-
 		public void InsertData()
 		{
-			using (var db = new LiteDatabase(ConnectionString))
+		    // Удаляем локальную базу
+		    if (File.Exists(ConnectionString))
+		    {
+		        File.Delete(ConnectionString);
+		    }
+
+            // НЕ ИЗМЕНЯТЬ НАЗВАНИЕ ПАПКИ Database, c этой папкой работает Updater.exe
+            // на пользовательской машине
+            if (!Directory.Exists("Database"))
+		    {
+		        Directory.CreateDirectory("Database");
+		    }
+
+            using (var db = new LiteDatabase(ConnectionString))
 			{
-				BsonMapper.Global.EmptyStringToNull = false;
+                BsonMapper.Global.EmptyStringToNull = false;
 
 				// Создаем коллекцию
 				var symbols = db.GetCollection<Symbol>("Symbols");
@@ -138,6 +141,9 @@ namespace Translit.Models.Pages
 					words.Upsert(Words[i]);
 				}
 			}
+
+            Symbols.Clear();
+            Words.Clear();
 		}
 
 		public bool DatabaseExists()
@@ -165,7 +171,7 @@ namespace Translit.Models.Pages
 			}
 		}
 
-		public DateTime GetLastWriteTime()
+		public DateTime GetLastUpdateTime()
 		{
 			return new FileInfo(ConnectionString).LastWriteTime;
 		}

@@ -132,7 +132,7 @@ namespace Translit.ViewModels.Windows
 			UpdatePopupBox();
             MessageQueue = new SnackbarMessageQueue();
 			User = Settings.Default.User;
-		}
+        }
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -415,7 +415,7 @@ namespace Translit.ViewModels.Windows
 
 							if (Model.SignIn(Login, password))
 							{
-								if (Settings.Default.IsUserAuthorized)
+								if (Settings.Default.AdminPermissions)
 								{
 									MessageQueue.Enqueue(GetRes("SnackBarWelcome"));
 
@@ -434,11 +434,8 @@ namespace Translit.ViewModels.Windows
 									}
 
 									Login = "";
-									
-
 									User = Model.GetUser().ToShortString();
 									Settings.Default.User = User;
-
 									UpdatePopupBox();
 								}
 								else
@@ -496,7 +493,7 @@ namespace Translit.ViewModels.Windows
 		public void UpdatePopupBox()
 		{
 			// Если пользователь авторизован
-			if (Settings.Default.IsUserAuthorized)
+			if (Settings.Default.AdminPermissions)
 			{
 				SignInLength = new GridLength(0, GridUnitType.Pixel);
 				LogOutLength = new GridLength(1, GridUnitType.Star);

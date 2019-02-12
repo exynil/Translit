@@ -23,7 +23,7 @@
     <Page.DataContext>
         <pages:FileConverterViewModel />
     </Page.DataContext>
-    <Grid Background="Aqua">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

@@ -63,7 +63,7 @@ namespace Translit.ViewModels.Pages
 				MessageQueue.Enqueue(GetRes("SnackBarDatabaseNotFound"));
 			}
 
-			ControlsVisibility = Settings.Default.IsUserAuthorized ? Visibility.Visible : Visibility.Collapsed;
+			ControlsVisibility = Settings.Default.AdminPermissions ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

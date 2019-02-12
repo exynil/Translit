@@ -167,7 +167,7 @@ namespace Translit.ViewModels.Pages
 			CanUpdate = true;
 			IsIndeterminate = false;
 		    SetInfoAboutDatabase();
-            UpdateButtonContent = GetRes(Model.DatabaseExists() ? "ButtonUpdate" : "ButtonDownload");
+            UpdateButtonContent = GetRes(Model.CollectionExists() ? "ButtonUpdate" : "ButtonDownload");
 		}
 
 		private void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -222,7 +222,7 @@ namespace Translit.ViewModels.Pages
 
 		private void SetInfoAboutDatabase()
 		{
-			if (Model.DatabaseExists())
+			if (Model.CollectionExists())
 			{
 				Database = GetRes("TextBlockDatabase");
 				DatabaseSize = $"{GetRes("TextBlockDatabaseSize")} {Model.GetDatabaseSize() / 1024} KB";

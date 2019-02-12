@@ -1,5 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System.ComponentModel;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -177,7 +178,7 @@ namespace Translit.ViewModels.Pages
 
 					if (result != true) return;
 
-					if (!File.Exists(@"Database\localdb.db"))
+					if (!Model.CollectionExists())
 					{
 						MessageQueue.Enqueue(GetRes("SnackBarDatabaseNotFound"));
 						return;
@@ -216,8 +217,8 @@ namespace Translit.ViewModels.Pages
 
 						if (result != DialogResult.OK || string.IsNullOrWhiteSpace(fbd.SelectedPath)) return;
 
-						if (!File.Exists(@"Database\localdb.db"))
-						{
+					    if (!Model.CollectionExists())
+                        {
 							MessageQueue.Enqueue(GetRes("SnackBarDatabaseNotFound"));
 							return;
 						}
@@ -265,8 +266,8 @@ namespace Translit.ViewModels.Pages
 
 		private void HandlePreviewDrop(object inObject)
 		{
-		    if (!File.Exists(@"Database\localdb.db"))
-		    {
+		    if (!Model.CollectionExists())
+            {
 		        MessageQueue.Enqueue(GetRes("SnackBarDatabaseNotFound"));
 		        return;
 		    }

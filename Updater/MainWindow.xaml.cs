@@ -9,10 +9,9 @@ namespace Updater
 {
     /// <summary>
     /// Логика Updater
-    /// 1 - Удалить все папки в текущей директории кроме Updater и Database [Папок исключений]
-    /// 2 - Удалить все файлы кроме Updater.exe [Файлов исключений]
-    /// 3 - Распаковать архив с обновлением Update\Translit.zip в текущую директорию
-    /// 4 - Удалить архив с обновлением
+    /// 1 - Удалить все файлы кроме [Файлов исключений]
+    /// 2 - Распаковать архив с обновлением Translit.zip в текущую директорию
+    /// 3 - Удалить архив с обновлением
     /// 4 - Запустить программу
     /// </summary>
     public partial class MainWindow
@@ -21,30 +20,12 @@ namespace Updater
         public MainWindow()
         {
             InitializeComponent();
-            ArchiveWithUpdate = @"Update\Translit.zip";
+            ArchiveWithUpdate = @".\Translit.zip";
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            string[] exceptionalFolders = {"database", "update"};
-            string[] exceptionalFiles = {"update.exe"};
-
-            // Выбираем все папки не включая исключительные
-            var directories = new DirectoryInfo(Environment.CurrentDirectory).EnumerateDirectories()
-                .Where(d => !exceptionalFolders.Contains(d.Name.ToLower()))
-                .Select(d => d.FullName).ToArray();
-
-            foreach (var d in directories)
-            {
-                try
-                {
-                    Directory.Delete(d, true);
-                }
-                catch (Exception)
-                {
-                    // ignored
-                }
-            }
+            string[] exceptionalFiles = {"updater.exe", "localdb.db", "translit.zip"};
 
             // Выбираем все файлы не включая исключительные
             var files = new DirectoryInfo(Environment.CurrentDirectory).EnumerateFiles()
@@ -56,6 +37,23 @@ namespace Updater
                 try
                 {
                     File.Delete(f);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
+
+            // Выбираем все папки
+            var directories = new DirectoryInfo(Environment.CurrentDirectory)
+                .EnumerateDirectories()
+                .Select(d => d.FullName).ToArray();
+
+            foreach (var d in directories)
+            {
+                try
+                {
+                    Directory.Delete(d, true);
                 }
                 catch (Exception)
                 {

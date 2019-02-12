@@ -14,7 +14,7 @@
     <Setting Name="User" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="IsUserAuthorized" Type="System.Boolean" Scope="User">
+    <Setting Name="AdminPermissions" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="TextConverterFontSize" Type="System.Double" Scope="User">

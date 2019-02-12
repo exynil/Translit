@@ -18,6 +18,7 @@ using Translit.Entity;
 using Translit.Properties;
 using Application = System.Windows.Application;
 using LoadOptions = System.Xml.Linq.LoadOptions;
+using SystemTask = System.Threading.Tasks;
 
 namespace Translit.Models.Pages
 {
@@ -71,11 +72,18 @@ namespace Translit.Models.Pages
 	            OnPropertyChanged();
 	        }
 	    }
+        public Analytics Analytics { get; set; }
 
-	    public FileConverterModel()
+        public FileConverterModel()
 		{
 			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
 			Files = new Queue<string>();
+            Analytics = new Analytics();
+            SystemTask.Task.Factory.StartNew(() =>
+            {
+                Analytics.Start();
+                Analytics.SaveAndSendUserData();
+            });
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -83,6 +91,14 @@ namespace Translit.Models.Pages
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 		}
+
+	    public bool CollectionExists()
+	    {
+	        using (var db = new LiteDatabase(ConnectionString))
+	        {
+	            return db.CollectionExists("Symbols") && db.CollectionExists("Words");
+	        }
+	    }
 
 	    public void StopTransliteration()
 	    {
@@ -111,7 +127,8 @@ namespace Translit.Models.Pages
 			        Files.Clear();
 			        Stop = false;
                     TransliterationState = false;
-			        return false;
+                    Analytics.SaveAndSendUserData();
+                    return false;
 			    }
 
 				Left = Files.Count;
@@ -125,27 +142,39 @@ namespace Translit.Models.Pages
 				if (file.ToLower().EndsWith(".doc") || file.ToLower().EndsWith(".docx"))
 				{
 					TranslitWordFile(file, ignoreSelectedText);
-				}
+                    Analytics.UserData.IncreaseWord();
+                }
 				else if (file.ToLower().EndsWith(".xls") || file.ToLower().EndsWith(".xlsx"))
 				{
 					TranslitExcelFile(file);
-				}
+                    Analytics.UserData.IncreaseExcel();
+                }
 				else if (file.ToLower().EndsWith(".ppt") || file.ToLower().EndsWith(".pptx"))
 				{
 					TranslitPowerPointFile(file);
-				}
+                    Analytics.UserData.IncreasePowerPoint();
+                }
 				else if (file.ToLower().EndsWith(".txt"))
 				{
 					TranslitTxtFile(file);
-				}
-				else if (file.ToLower().EndsWith(".pdf") || file.ToLower().EndsWith(".rtf"))
+                    Analytics.UserData.IncreaseTxt();
+                }
+				else if (file.ToLower().EndsWith(".pdf"))
 				{
 					TranslitPdfOrRtfFile(file);
-				}
-			}
+                    Analytics.UserData.IncreasePdf();
+                }
+				else if (file.ToLower().EndsWith(".rtf"))
+				{
+				    TranslitPdfOrRtfFile(file);
+                    Analytics.UserData.IncreaseRtf();
+                }
+            }
 
 			TransliterationState = false;
-		    return true;
+
+            Analytics.SaveAndSendUserData();
+            return true;
 		}
 
 		// Транслитерация файла Word

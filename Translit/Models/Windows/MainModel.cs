@@ -5,10 +5,9 @@ using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
+using System.Management;
 using System.Net;
 using System.Net.Http;
-using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,7 +50,7 @@ namespace Translit.Models.Windows
 
 				SaveMacAddressAndUser(user);
 
-				Settings.Default.IsUserAuthorized = true;
+				Settings.Default.AdminPermissions = true;
 			}
 
 			return true;
@@ -95,7 +94,7 @@ namespace Translit.Models.Windows
 			// Удаляем MAC адресс в настройках приложения
 			Settings.Default.MacAddress = "";
 			// Удаляем метку авторизации
-			Settings.Default.IsUserAuthorized = false;
+			Settings.Default.AdminPermissions = false;
 		}
 
 		// Сравнение сохраненного MAC адреса с MAC адресом текущей машины
@@ -109,28 +108,45 @@ namespace Translit.Models.Windows
 			DeleteUserFromSettings();
 		}
 
-		private static string GetMacAddress()
-		{
-			var interfaces = NetworkInterface.GetAllNetworkInterfaces();
-			var macAddress = interfaces
-				.Where(x => x.OperationalStatus == OperationalStatus.Up && x.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-				.Select(x => x.GetPhysicalAddress())
-				.FirstOrDefault()
-				?.ToString();
-			return macAddress;
-		}
+	    public string GetMacAddress()
+	    {
+	        var mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
+	        var moc = mc.GetInstances();
+	        var macAddress = string.Empty;
+	        foreach (var mo in moc)
+	        {
+	            if (macAddress == string.Empty)  // only return MAC Address from first card
+	            {
+	                if ((bool)mo["IPEnabled"]) macAddress = mo["MacAddress"].ToString();
+	            }
+	            mo.Dispose();
+	        }
+	        macAddress = macAddress.Replace(":", "");
+	        return macAddress;
+	    }
 
-		private void CheckAndDownloadUpdate()
+        private void CheckAndDownloadUpdate()
 		{
 			IFirebaseConfig config = new FirebaseConfig
 			{
 				BasePath = "https://translit-10dad.firebaseio.com/",
-				AuthSecret = "qoWco2KAh72EuwpvQj978rWzFYklH1jhS9ZzvPSn"
+				AuthSecret = "1V3A4v70wJZeZuvh4VwDmeV562zDSjuF4qDnrqtF"
             };
 
 			IFirebaseClient client = new FirebaseClient(config);
 
-			var updateInfo = client.Get("Update").ResultAs<UpdateInfo>();
+		    UpdateInfo updateInfo;
+
+		    try
+		    {
+		        updateInfo = client.Get("Update").ResultAs<UpdateInfo>();
+		    }
+		    catch (Exception)
+		    {
+                return;
+		    }
+
+            if (updateInfo == null) return;
 
 			var version = Assembly.GetExecutingAssembly().GetName().Version;
 
@@ -141,17 +157,12 @@ namespace Translit.Models.Windows
 
 		    Settings.Default.UpdateReady = false;
 
-		    if (!Directory.Exists("Update"))
-		    {
-		        Directory.CreateDirectory("Update");
-		    }
-
 		    try
 		    {
 		        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 		        var webClient = new WebClient();
 		        webClient.DownloadFileCompleted += Completed;
-		        webClient.DownloadFileAsync(new Uri(updateInfo.Url), @"Update\Translit.tmp");
+		        webClient.DownloadFileAsync(new Uri(updateInfo.Url), @"Translit.tmp");
 		    }
 		    catch (Exception)
 		    {
@@ -163,13 +174,13 @@ namespace Translit.Models.Windows
 		{
 		    if (e.Error != null) return;
 
-            if (File.Exists(@"Update\Translit.zip"))
+            if (File.Exists(@"Translit.zip"))
             {
-                File.Replace(@"Update\Translit.tmp", @"Update\Translit.zip", null);
+                File.Replace(@"Translit.tmp", @"Translit.zip", null);
             }
             else
             {
-                File.Move(@"Update\Translit.tmp", @"Update\Translit.zip");
+                File.Move(@"Translit.tmp", @"Translit.zip");
             }
 
             Settings.Default.UpdateReady = true;

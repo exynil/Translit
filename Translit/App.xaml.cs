@@ -9,7 +9,7 @@ using Translit.Properties;
 
 namespace Translit
 {
-	public partial class App
+    public partial class App
 	{
 		public App()
 		{
@@ -21,7 +21,7 @@ namespace Translit
 				Environment.Exit(0);
 			}
 #endif
-		}
+        }
 
 		public static CultureInfo Language
 		{
@@ -67,7 +67,7 @@ namespace Translit
 		    if (!Settings.Default.UpdateReady) return;
 
             // Проверяем наличие обновления
-            if (!File.Exists(@"Update\Translit.zip"))
+            if (!File.Exists(@"Translit.zip"))
 		    {
 		        // Меняем статус готовности обновления на false и выходим
                 Settings.Default.UpdateReady = false;

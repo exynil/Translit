@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 
-namespace Translit.Behaviors
+namespace Translit.Models.Other
 {
 	public static class DropBehavior
 	{

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LiteDB;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
@@ -6,14 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using LiteDB;
-using Newtonsoft.Json;
-using Translit.Entity;
+using Translit.Models.Other;
 using Translit.Properties;
 
 namespace Translit.Models.Pages
 {
-	public class SymbolsEditorModel : ISymbolsEditorModel
+    public class SymbolsEditorModel : ISymbolsEditorModel
 	{
 		public string ReasonPhrase { get; set; }
 		public string ConnectionString { get; }
@@ -21,7 +21,11 @@ namespace Translit.Models.Pages
 		public SymbolsEditorModel()
 		{
 			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
-		}
+		    if (User.Token != null)
+		    {
+		        JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
+		    }
+        }
 
 		// Получение коллекции символов из базы
 		public ObservableCollection<Symbol> GetSymbolsFromDatabase()
@@ -44,8 +48,6 @@ namespace Translit.Models.Pages
 		// Добавление символа в глобальную базу
 		public async Task AddSymbol(string cyryllic, string latin)
 		{
-			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
-
 			const string link = "http://translit.osmium.kz/api/symbol?";
 
 			var client = new HttpClient();
@@ -53,7 +55,7 @@ namespace Translit.Models.Pages
 			// Создаем параметры
 			var content = new FormUrlEncodedContent(new Dictionary<string, string>
 			{
-				{"token", user.Token},
+				{"token", User.Token},
 				{"cyrl", cyryllic},
 				{"latn", latin}
 			});
@@ -80,8 +82,6 @@ namespace Translit.Models.Pages
 
 		public async Task EditSymbol(int id, string cyryllic, string latin)
 		{
-			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
-
 			const string link = "http://translit.osmium.kz/api/symbol?";
 
 			var client = new HttpClient();
@@ -89,7 +89,7 @@ namespace Translit.Models.Pages
 			// Создаем параметры
 			var values = new Dictionary<string, string>
 			{
-				{"token", user.Token},
+				{"token", User.Token},
 				{"id", id.ToString() }
 			};
 
@@ -119,10 +119,8 @@ namespace Translit.Models.Pages
 
 		public void DeleteSymbol(int id)
 		{
-			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
-
 			// Строим адрес
-			var link = $"http://translit.osmium.kz/api/symbol?token={user.Token}&id={id}";
+			var link = $"http://translit.osmium.kz/api/symbol?token={User.Token}&id={id}";
 
 			var client = new HttpClient();
 

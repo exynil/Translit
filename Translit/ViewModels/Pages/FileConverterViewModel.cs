@@ -1,6 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System.ComponentModel;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using Translit.Entity;
+using Translit.Models.Other;
 using Translit.Models.Pages;
 using Application = System.Windows.Application;
 using DataFormats = System.Windows.DataFormats;

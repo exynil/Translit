@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Translit.Entity;
+using Translit.Models.Other;
 
 namespace Translit.Models.Pages
 {

@@ -4,30 +4,41 @@ using FireSharp.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
+using System.Configuration;
 using System.IO;
-using System.Management;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using Translit.Entity;
+using Translit.Models.Other;
 using Translit.Properties;
 
 namespace Translit.Models.Windows
 {
     class MainModel : IMainModel
 	{
-		public MainModel()
+	    public static string ConnectionString { get; set; }
+
+        public MainModel()
 		{
-			Task.Factory.StartNew(CheckAndDownloadUpdate);
+		    ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+
+            JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
+            CheckAndDownloadUpdate();
+		    DownlaodUpdater();
+            CheckPermission();
 		}
 
-		public bool SignIn(string login, string password)
+        public int SignIn(string login, string password)
 		{
 			var link = $"http://account.osmium.kz/api/auth?login={login}&pass={password}";
+
 			var request = (HttpWebRequest)WebRequest.Create(link);
+
 			HttpWebResponse response;
+
 			try
 			{
 				// Запрашиваем ответ от сервера
@@ -35,142 +46,109 @@ namespace Translit.Models.Windows
 			}
 			catch (Exception)
 			{
-				return false;
+                // ignored
+				return 0;
 			}
 
 			var responseStream = response.GetResponseStream();
 
-			// Считываем данные
-			using (var stream = new StreamReader(responseStream ?? throw new InvalidOperationException(), Encoding.UTF8))
+            if (responseStream == null) return 0;
+
+            // Считываем данные
+            using (var stream = new StreamReader(responseStream, Encoding.UTF8))
 			{
 				// Получаем объект из JSON
-				var user = JsonConvert.DeserializeObject<User>(stream.ReadToEnd());
+				var userJson = Settings.Default.User = stream.ReadToEnd();
 
-				if (user == null) return true;
+                if (userJson == "") return 1;
 
-				SaveMacAddressAndUser(user);
+			    // Сохраняем уникальный ключ
+			    Settings.Default.FingerPrint = FingerPrint.Value();
+                // Сохраняем зашифрованного пользователя в настройках приложения
+                Settings.Default.User = Rc4.Calc(Settings.Default.FingerPrint, userJson);
+                // Даем разрешение на редактирование
+			    Settings.Default.PermissionToChange = true;
 
-				Settings.Default.AdminPermissions = true;
-			}
+                Analytics.SaveAndSendUserData();
 
-			return true;
+			    JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
+			    return 2;
+            }
 		}
 
-		public void SaveMacAddressAndUser(User user)
-		{
-			var macAddress = GetMacAddress();
-			// Переводим нашего пользователя в строку JSON
-			var userJson = JsonConvert.SerializeObject(user);
-			// Сохраняем зашифрованного пользователя в настройках приложения
-			Settings.Default.User = Rc4.Calc(macAddress, userJson);
-			//// Сохраняем MAC адресс
-			Settings.Default.MacAddress = macAddress;
-			//Settings.Default.Save();
-		}
-
-		public User GetUser()
-		{
-			if (Settings.Default.MacAddress == "") return null;
-			var macAddress = GetMacAddress();
-
-			// Возвращяем расшифрованного и дисериализованного пользователя
-			return JsonConvert.DeserializeObject<User>(Rc4.Calc(macAddress, Settings.Default.User));
-		}
-
-		// Удаление токена
-		public void DeleteToken()
-		{
-			var user = GetUser();
-			var link = $"http://account.osmium.kz/api/auth?token={user.Token}&id={user.Id}";
-			var client = new HttpClient();
-			client.DeleteAsync(link);
-		}
-
-		// Удаление информации о пользователе из настроек
-		public void DeleteUserFromSettings()
-		{
-			// Удаляем профиль в настройках приложения
-			Settings.Default.User = "";
-			// Удаляем MAC адресс в настройках приложения
-			Settings.Default.MacAddress = "";
-			// Удаляем метку авторизации
-			Settings.Default.AdminPermissions = false;
-		}
-
-		// Сравнение сохраненного MAC адреса с MAC адресом текущей машины
-		public void MacAddressComparison()
-		{
-			// Получаем MAC адрес машины клиента
-			var macAddress = GetMacAddress();
-
-			// Если MAC адрес текущей машины совпадает с MAC адресом последней машины
-			if (macAddress == Settings.Default.MacAddress) return;
-			DeleteUserFromSettings();
-		}
-
-	    public string GetMacAddress()
+	    public void LogOut()
 	    {
-	        var mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
-	        var moc = mc.GetInstances();
-	        var macAddress = string.Empty;
-	        foreach (var mo in moc)
-	        {
-	            if (macAddress == string.Empty)  // only return MAC Address from first card
-	            {
-	                if ((bool)mo["IPEnabled"]) macAddress = mo["MacAddress"].ToString();
-	            }
-	            mo.Dispose();
-	        }
-	        macAddress = macAddress.Replace(":", "");
-	        return macAddress;
+	        var link = $"http://account.osmium.kz/api/auth?token={User.Token}&id={User.Id}";
+	        var client = new HttpClient();
+	        client.DeleteAsync(link);
+
+	        // Удаляем профиль в настройках приложения
+	        Settings.Default.User = "";
+	        // Удаляем MAC адресс в настройках приложения
+	        Settings.Default.FingerPrint = "";
+	        // Удаляем метку авторизации
+	        Settings.Default.PermissionToChange = false;
+
+	        Analytics.SaveAndSendUserData();
+
+            User.Clear();
 	    }
 
-        private void CheckAndDownloadUpdate()
+        // Сравнение сохраненного MAC адреса с MAC адресом текущей машины
+        public void CompareIds()
 		{
-			IFirebaseConfig config = new FirebaseConfig
-			{
-				BasePath = "https://translit-10dad.firebaseio.com/",
-				AuthSecret = "1V3A4v70wJZeZuvh4VwDmeV562zDSjuF4qDnrqtF"
-            };
-
-			IFirebaseClient client = new FirebaseClient(config);
-
-		    UpdateInfo updateInfo;
-
-		    try
-		    {
-		        updateInfo = client.Get("Update").ResultAs<UpdateInfo>();
-		    }
-		    catch (Exception)
-		    {
-                return;
-		    }
-
-            if (updateInfo == null) return;
-
-			var version = Assembly.GetExecutingAssembly().GetName().Version;
-
-			var currentVersion = int.Parse($"{ version.Major}{ version.Minor}");
-			var newVersion = int.Parse(updateInfo.Version.Replace(".", ""));
-
-		    if (currentVersion >= newVersion) return;
-
-		    Settings.Default.UpdateReady = false;
-
-		    try
-		    {
-		        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-		        var webClient = new WebClient();
-		        webClient.DownloadFileCompleted += Completed;
-		        webClient.DownloadFileAsync(new Uri(updateInfo.Url), @"Translit.tmp");
-		    }
-		    catch (Exception)
-		    {
-		        // ignored
-		    }
+			// Если уникальный ключ текущей машины совпадает с уникальным ключом последней машины
+			if (FingerPrint.Value() == Settings.Default.FingerPrint) return;
+			LogOut();
 		}
 
-		private void Completed(object sender, AsyncCompletedEventArgs e)
+        // Проверка и загрузка обновления
+        private void CheckAndDownloadUpdate()
+		{
+            Task.Factory.StartNew(() =>
+            {
+                IFirebaseClient client = new FirebaseClient(new FirebaseConfig
+                {
+                    BasePath = "https://translit-10dad.firebaseio.com/",
+                    AuthSecret = "1V3A4v70wJZeZuvh4VwDmeV562zDSjuF4qDnrqtF"
+                });
+
+                ProgramUrl pu;
+
+                try
+                {
+                    pu = client.Get("Update").ResultAs<ProgramUrl>();
+                }
+                catch (Exception)
+                {
+                    // ignored
+                    return;
+                }
+
+                if (pu == null) return;
+
+                var version = Assembly.GetExecutingAssembly().GetName().Version;
+
+                var currentVersion = int.Parse($"{ version.Major}{ version.Minor}");
+                var newVersion = int.Parse(pu.Version.Replace(".", ""));
+
+                if (currentVersion >= newVersion) return;
+
+                try
+                {
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    var webClient = new WebClient();
+                    webClient.DownloadFileCompleted += DownloadTranslitCompleted;
+                    webClient.DownloadFileAsync(new Uri(pu.Url), @"Translit.tmp");
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            });
+		}
+
+		private void DownloadTranslitCompleted(object sender, AsyncCompletedEventArgs e)
 		{
 		    if (e.Error != null) return;
 
@@ -182,8 +160,64 @@ namespace Translit.Models.Windows
             {
                 File.Move(@"Translit.tmp", @"Translit.zip");
             }
-
-            Settings.Default.UpdateReady = true;
 		}
-	}
+
+	    private void DownlaodUpdater()
+	    {
+	        Task.Factory.StartNew(() =>
+	        {
+                if (File.Exists("Updater.exe")) return;
+
+                IFirebaseClient client = new FirebaseClient(new FirebaseConfig
+                {
+                    BasePath = "https://translit-10dad.firebaseio.com/",
+                    AuthSecret = "1V3A4v70wJZeZuvh4VwDmeV562zDSjuF4qDnrqtF"
+                });
+
+                ProgramUrl pu;
+
+                try
+                {
+                    pu = client.Get("Updater").ResultAs<ProgramUrl>();
+                }
+                catch (Exception)
+                {
+                    // ignored
+                    return;
+                }
+
+                try
+                {
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    var webClient = new WebClient();
+                    webClient.DownloadFileCompleted += DownloadUpdaterCompleted;
+                    webClient.DownloadFileAsync(new Uri(pu.Url), @"Updater.tmp");
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            });
+	    }
+
+        private void DownloadUpdaterCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null) return;
+
+            File.Move(@"Updater.tmp", @"Updater.exe");
+        }
+
+	    private void CheckPermission()
+	    {
+	        Task.Factory.StartNew(() =>
+	        {
+                // Ждем 10 секунд пока загрузятся данные пользователя из облака или базы
+                Thread.Sleep(10000);
+
+                if (Analytics.UserDataLocal.PermissionToUse) return;
+
+                Environment.Exit(0);
+	        });
+        }
+    }
 }

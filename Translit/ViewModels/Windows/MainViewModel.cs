@@ -1,14 +1,15 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using MaterialDesignThemes.Wpf;
-using Translit.Entity;
+using Translit.Models.Other;
 using Translit.Models.Windows;
 using Translit.Properties;
 using Translit.Views.DialogWindows;
@@ -16,12 +17,12 @@ using Translit.Views.Pages;
 
 namespace Translit.ViewModels.Windows
 {
-	class MainViewModel : INotifyPropertyChanged
+    class MainViewModel : INotifyPropertyChanged
 	{
 		private Page _currentPage;
 		private string _currentPageName;
 		private string _login;
-		private string _user;
+		private string _userName;
 		private GridLength _signInLength;
 		private GridLength _logOutLength;
 		private bool _canSignIn = true;
@@ -68,12 +69,12 @@ namespace Translit.ViewModels.Windows
 			}
 		}
 
-		public string User
+		public string UserName
 		{
-			get => _user;
+			get => _userName;
 			set
 			{
-				_user = value;
+			    _userName = value;
 				OnPropertyChanged();
 			}
 		}
@@ -123,16 +124,17 @@ namespace Translit.ViewModels.Windows
 		public MainViewModel()
 		{
 			Model = new MainModel();
-			
-			if (OpenFileConverter.CanExecute(null))
+		    MessageQueue = new SnackbarMessageQueue();
+
+            if (OpenFileConverter.CanExecute(null))
 			{
 				OpenFileConverter.Execute(null);
 			}
 
 			UpdatePopupBox();
-            MessageQueue = new SnackbarMessageQueue();
-			User = Settings.Default.User;
-        }
+
+		    UserName = $"{User.LastName} {User.FirstName}";
+		}
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -389,8 +391,8 @@ namespace Translit.ViewModels.Windows
 			{
 				return new DelegateCommand(o =>
 				{
+				    ((Window) o).Close();
                     Settings.Default.Save();
-					Environment.Exit(0);
 				});
 			}
 		}
@@ -413,44 +415,43 @@ namespace Translit.ViewModels.Windows
 						{
 							MessageQueue.Enqueue(GetRes("SnackBarAuthorization"));
 
-							if (Model.SignIn(Login, password))
+						    var result = Model.SignIn(Login, password);
+
+                            if (result == 0)
 							{
-								if (Settings.Default.AdminPermissions)
-								{
-									MessageQueue.Enqueue(GetRes("SnackBarWelcome"));
-
-									if (OpenFileConverter.CanExecute(null))
-									{
-										OpenFileConverter.Execute(null);
-										if (SymbolsEditorView != null)
-										{
-											SymbolsEditorView = null;
-										}
-
-										if (WordsEditorView != null)
-										{
-											WordsEditorView = null;
-										}
-									}
-
-									Login = "";
-									User = Model.GetUser().ToShortString();
-									Settings.Default.User = User;
-									UpdatePopupBox();
-								}
-								else
-								{
-									MessageQueue.Enqueue(GetRes("SnackBarWrongLoginOrPassword"));
-								}
+							    MessageQueue.Enqueue(GetRes("SnackBarBadInternetConnection"));
 							}
-							else
+							else if (result == 1)
 							{
-								MessageQueue.Enqueue(GetRes("SnackBarBadInternetConnection"));
-							}
+							    MessageQueue.Enqueue(GetRes("SnackBarWrongLoginOrPassword"));
+                            }
+                            else
+                            {
+                                MessageQueue.Enqueue(GetRes("SnackBarWelcome"));
+
+                                if (OpenFileConverter.CanExecute(null))
+                                {
+                                    OpenFileConverter.Execute(null);
+                                }
+
+                                if (SymbolsEditorView != null)
+                                {
+                                    SymbolsEditorView = null;
+                                }
+
+                                if (WordsEditorView != null)
+                                {
+                                    WordsEditorView = null;
+                                }
+
+                                UserName = $"{User.LastName} {User.FirstName}";
+                                UpdatePopupBox();
+                                Login = "";
+                            }
 						}
 
 						CanSignIn = true;
-					});
+                    });
 				});
 			}
 		}
@@ -465,9 +466,9 @@ namespace Translit.ViewModels.Windows
 					{
 						CanLogOut = false;
 
-						Model.DeleteToken();
-						Model.DeleteUserFromSettings();
-						if (OpenFileConverter.CanExecute(null))
+						Model.LogOut();
+
+                        if (OpenFileConverter.CanExecute(null))
 						{
 							OpenFileConverter.Execute(null);
 							if (SymbolsEditorView != null)
@@ -481,11 +482,10 @@ namespace Translit.ViewModels.Windows
 							}
 						}
 
-						User = "";
+						UserName = "";
 						UpdatePopupBox();
-
 						CanLogOut = true;
-					});
+                    });
 				});
 			}
 		}
@@ -493,7 +493,7 @@ namespace Translit.ViewModels.Windows
 		public void UpdatePopupBox()
 		{
 			// Если пользователь авторизован
-			if (Settings.Default.AdminPermissions)
+			if (Settings.Default.PermissionToChange)
 			{
 				SignInLength = new GridLength(0, GridUnitType.Pixel);
 				LogOutLength = new GridLength(1, GridUnitType.Star);

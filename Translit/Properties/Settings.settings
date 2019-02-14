@@ -8,13 +8,13 @@
     <Setting Name="DefaultLanguage" Type="System.Globalization.CultureInfo" Scope="User">
       <Value Profile="(Default)">ru-RU</Value>
     </Setting>
-    <Setting Name="MacAddress" Type="System.String" Scope="User">
+    <Setting Name="FingerPrint" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="User" Type="System.String" Scope="User">
+    <Setting Name="UserName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="AdminPermissions" Type="System.Boolean" Scope="User">
+    <Setting Name="PermissionToChange" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="TextConverterFontSize" Type="System.Double" Scope="User">
@@ -24,10 +24,10 @@
       <Value Profile="(Default)">600</Value>
     </Setting>
     <Setting Name="WindowWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">700</Value>
+      <Value Profile="(Default)">400</Value>
     </Setting>
-    <Setting Name="UpdateReady" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="User" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Translit.Entity;
+using Translit.Models.Other;
 
 namespace Translit.Models.Pages
 {
-	interface ISymbolsEditorModel
+    interface ISymbolsEditorModel
 	{
 		bool CheckSymbolsLength(string cyryllic, string latin);
 		Task AddSymbol(string cyryllic, string latin);

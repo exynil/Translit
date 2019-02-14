@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using LiteDB;
-using Translit.Entity;
+using Translit.Models.Other;
 
 namespace Translit.Models.Pages
 {

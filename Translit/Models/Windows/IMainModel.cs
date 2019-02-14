@@ -1,13 +1,9 @@
-﻿using Translit.Entity;
-
-namespace Translit.Models.Windows
+﻿namespace Translit.Models.Windows
 {
-	interface IMainModel
+    interface IMainModel
 	{
-		bool SignIn(string login, string password);
-		User GetUser();
-		void DeleteToken();
-		void DeleteUserFromSettings();
-		void MacAddressComparison();
+		int SignIn(string login, string password);
+	    void LogOut();
+		void CompareIds();
 	}
 }

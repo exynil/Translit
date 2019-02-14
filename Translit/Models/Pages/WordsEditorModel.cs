@@ -8,12 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Translit.Entity;
+using Translit.Models.Other;
 using Translit.Properties;
 
 namespace Translit.Models.Pages
 {
-	public class WordsEditorModel : IWordsEditorModel
+    public class WordsEditorModel : IWordsEditorModel
 	{
 		public string ReasonPhrase { get; set; }
 		public string ConnectionString;
@@ -21,6 +21,10 @@ namespace Translit.Models.Pages
 		public WordsEditorModel()
 		{
 			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+		    if (User.Token != null)
+		    {
+		        JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
+		    }
 		}
 
 		// Получение коллекции символов из базы
@@ -44,7 +48,6 @@ namespace Translit.Models.Pages
 		// Добавление символа в глобальную базу
 		public async Task AddWord(string cyryllic, string latin)
 		{
-			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
 			const string link = "http://translit.osmium.kz/api/word?";
 			var client = new HttpClient();
 
@@ -52,7 +55,7 @@ namespace Translit.Models.Pages
 			var content =
 				new FormUrlEncodedContent(new Dictionary<string, string>
 				{
-					{"token", user.Token},
+					{"token", User.Token},
 					{"cyrl", cyryllic},
 					{"latn", latin}
 				});
@@ -79,12 +82,11 @@ namespace Translit.Models.Pages
 
 		public async Task EditWord(int id, string cyryllic, string latin)
 		{
-			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
 			const string link = "http://translit.osmium.kz/api/word?";
 			var client = new HttpClient();
 
 			// Создаем параметры
-			var values = new Dictionary<string, string> {{"token", user.Token}, {"id", id.ToString()}};
+			var values = new Dictionary<string, string> {{"token", User.Token}, {"id", id.ToString()}};
 			if (cyryllic != null) values.Add("cyrl", cyryllic);
 			if (latin != null) values.Add("latn", latin);
 			var content = new FormUrlEncodedContent(values);
@@ -109,10 +111,8 @@ namespace Translit.Models.Pages
 
 		public void DeleteWord(int id)
 		{
-			var user = JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.MacAddress, Settings.Default.User));
-
 			// Строим адрес
-			var link = $"http://translit.osmium.kz/api/word?token={user.Token}&id={id}";
+			var link = $"http://translit.osmium.kz/api/word?token={User.Token}&id={id}";
 			var client = new HttpClient();
 
 			// Выполняем запрос

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Translit.Entity;
+using Translit.Models.Other;
 using Translit.Models.Pages;
 using Translit.Properties;
 using Translit.Views.DialogWindows;
@@ -17,7 +17,7 @@ namespace Translit.ViewModels.Pages
 		private ObservableCollection<Word> _words;
 		private Word _selectedWord;
 		private Visibility _controlsVisibility;
-		public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 		public WordsEditorModel Model { get; set; }
 		public SnackbarMessageQueue MessageQueue { get; set; }
 
@@ -63,7 +63,7 @@ namespace Translit.ViewModels.Pages
 				MessageQueue.Enqueue(GetRes("SnackBarDatabaseNotFound"));
 			}
 
-			ControlsVisibility = Settings.Default.AdminPermissions ? Visibility.Visible : Visibility.Collapsed;
+			ControlsVisibility = Settings.Default.PermissionToChange ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

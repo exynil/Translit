@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Translit.Entity;
+using Translit.Models.Other;
 using Translit.Models.Pages;
 using Translit.Properties;
 
@@ -72,7 +72,10 @@ namespace Translit.ViewModels.Pages
 		{
 			get
 			{
-				return new DelegateCommand(o => { Cyryllic = Latin = ""; });
+				return new DelegateCommand(o =>
+				{
+				    Cyryllic = Latin = "";
+				});
 			}
 		}
 
@@ -82,8 +85,7 @@ namespace Translit.ViewModels.Pages
 			{
 				return new DelegateCommand(o =>
 				{
-
-					Clipboard.SetData(DataFormats.UnicodeText, Latin);
+                    Clipboard.SetData(DataFormats.UnicodeText, Latin);
 				});
 			}
 		}

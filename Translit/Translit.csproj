@@ -55,6 +55,7 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
@@ -118,17 +119,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Behaviors\DropBehavior.cs" />
-    <Compile Include="Entity\Analytics.cs" />
-    <Compile Include="Entity\Files.cs" />
-    <Compile Include="Entity\FingerPrint.cs" />
-    <Compile Include="Entity\UserData.cs" />
-    <Compile Include="Entity\DelegateCommand.cs" />
-    <Compile Include="Entity\Rc4.cs" />
-    <Compile Include="Entity\Symbol.cs" />
-    <Compile Include="Entity\UpdateInfo.cs" />
-    <Compile Include="Entity\User.cs" />
-    <Compile Include="Entity\Word.cs" />
+    <Compile Include="Models\Other\DropBehavior.cs" />
+    <Compile Include="Models\Other\Analytics.cs" />
+    <Compile Include="Models\Other\FileCounter.cs" />
+    <Compile Include="Models\Other\FingerPrint.cs" />
+    <Compile Include="Models\Other\UserData.cs" />
+    <Compile Include="Models\Other\DelegateCommand.cs" />
+    <Compile Include="Models\Other\Rc4.cs" />
+    <Compile Include="Models\Other\Symbol.cs" />
+    <Compile Include="Models\Other\ProgramUrl.cs" />
+    <Compile Include="Models\Other\User.cs" />
+    <Compile Include="Models\Other\Word.cs" />
     <Compile Include="Models\Pages\DatabaseModel.cs" />
     <Compile Include="Models\Pages\FileConverterModel.cs" />
     <Compile Include="Models\Pages\IDatabaseModel.cs" />

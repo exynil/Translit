@@ -1,18 +1,18 @@
-﻿using System.Collections.ObjectModel;
+﻿using MaterialDesignThemes.Wpf;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using MaterialDesignThemes.Wpf;
-using Translit.Entity;
+using Translit.Models.Other;
 using Translit.Models.Pages;
 using Translit.Properties;
 using Translit.Views.DialogWindows;
 
 namespace Translit.ViewModels.Pages
 {
-	class SymbolsEditorViewModel : INotifyPropertyChanged
+    class SymbolsEditorViewModel : INotifyPropertyChanged
 	{
 		private ObservableCollection<Symbol> _symbols;
 		private Symbol _selectedSymbol;
@@ -63,7 +63,7 @@ namespace Translit.ViewModels.Pages
 				MessageQueue.Enqueue(GetRes("SnackBarDatabaseNotFound"));
 			}
 
-			ControlsVisibility = Settings.Default.AdminPermissions ? Visibility.Visible : Visibility.Collapsed;
+			ControlsVisibility = Settings.Default.PermissionToChange ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

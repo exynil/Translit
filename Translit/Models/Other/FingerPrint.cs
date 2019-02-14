@@ -2,12 +2,8 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Translit.Entity
+namespace Translit.Models.Other
 {
-    /// <summary>
-    /// Generates a 16 byte Unique Identification code of a computer
-    /// Example: 4876-8DB5-EE85-69D3-FE52-8CF7-395D-2EA9
-    /// </summary>
     public class FingerPrint
     {
         private static string _fingerPrint = string.Empty;
@@ -43,7 +39,7 @@ namespace Translit.Entity
                 else s += n2.ToString();
                 if (n1 > 9) s += ((char) (n1 - 10 + 'A')).ToString();
                 else s += n1.ToString();
-                if ((i + 1) != bt.Length && (i + 1) % 2 == 0) s += "-";
+                if (i + 1 != bt.Length && (i + 1) % 2 == 0) s += "-";
             }
 
             return s;

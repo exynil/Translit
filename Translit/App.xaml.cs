@@ -2,25 +2,18 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Windows;
+using Translit.Models.Other;
 using Translit.Properties;
 
 namespace Translit
 {
     public partial class App
-	{
+    {
 		public App()
 		{
 			InitializeComponent();
-
-#if !DEBUG
-			if (!File.Exists("Updater.exe"))
-			{
-				Environment.Exit(0);
-			}
-#endif
         }
 
 		public static CultureInfo Language
@@ -28,10 +21,10 @@ namespace Translit
 			get => Thread.CurrentThread.CurrentUICulture;
 			set
 			{
-				// 1. Меняем язык приложения:
+				// Меняем язык приложения:
 				Thread.CurrentThread.CurrentUICulture = value;
 
-				//2.Создаём ResourceDictionary для новой культуры
+				// Создаём ResourceDictionary для новой культуры
 				var dict = new ResourceDictionary
 				{
 					Source = new Uri($"Resources/Languages/language.{value.Name}.xaml", UriKind.Relative)
@@ -43,46 +36,28 @@ namespace Translit
 
 		private void App_OnExit(object sender, ExitEventArgs e)
 		{
-			Settings.Default.Save();
+            Analytics.SaveUserDataToLocalDb();
+            Settings.Default.Save();
 		}
 
-		private void App_OnStartup(object sender, StartupEventArgs e)
-		{
-			Language = Settings.Default.DefaultLanguage;
+	    private void App_OnStartup(object sender, StartupEventArgs e)
+	    {
+            Language = Settings.Default.DefaultLanguage;
 
-			var arguments = e.Args.ToArray();
+	        if (File.Exists(@"Translit.zip"))
+	        {
+	            try
+	            {
+                    Process.Start(@"Updater.exe");
+	                Environment.Exit(0);
+	            }
+	            catch (Exception)
+	            {
+	                // ignored
+	            }
+	        }
 
-			if (arguments.Length > 0)
-			{
-                // Если обновление было установлено
-				if (arguments[0] == "Update installed")
-				{
-                    // Меняем статус готовности обновления на false и выходим
-					Settings.Default.UpdateReady = false;
-                    return;
-				}
-			}
-
-            // Если обновление не готово выходим
-		    if (!Settings.Default.UpdateReady) return;
-
-            // Проверяем наличие обновления
-            if (!File.Exists(@"Translit.zip"))
-		    {
-		        // Меняем статус готовности обновления на false и выходим
-                Settings.Default.UpdateReady = false;
-                return;
-		    }
-
-			try
-			{
-				Process.Start(@"Updater.exe");
-				Environment.Exit(0);
-			}
-			catch (Exception)
-			{
-				// ignored
-			}
-		}
+	        Analytics.Start();
+        }
 	}
 }

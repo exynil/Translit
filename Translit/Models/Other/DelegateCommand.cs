@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Translit.Entity
+namespace Translit.Models.Other
 {
 	public class DelegateCommand : ICommand
 	{

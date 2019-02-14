@@ -1,9 +1,8 @@
-﻿using LiteDB;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Translit.Entity
+namespace Translit.Models.Other
 {
-	public class Symbol
+    public class Symbol
 	{
 		[JsonProperty("id")]
 		public int Id { get; set; }

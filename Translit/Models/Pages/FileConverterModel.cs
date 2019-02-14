@@ -14,11 +14,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using Translit.Entity;
+using Translit.Models.Other;
 using Translit.Properties;
 using Application = System.Windows.Application;
 using LoadOptions = System.Xml.Linq.LoadOptions;
-using SystemTask = System.Threading.Tasks;
 
 namespace Translit.Models.Pages
 {
@@ -72,18 +71,11 @@ namespace Translit.Models.Pages
 	            OnPropertyChanged();
 	        }
 	    }
-        public Analytics Analytics { get; set; }
 
         public FileConverterModel()
 		{
 			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
 			Files = new Queue<string>();
-            Analytics = new Analytics();
-            SystemTask.Task.Factory.StartNew(() =>
-            {
-                Analytics.Start();
-                Analytics.SaveAndSendUserData();
-            });
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -142,37 +134,36 @@ namespace Translit.Models.Pages
 				if (file.ToLower().EndsWith(".doc") || file.ToLower().EndsWith(".docx"))
 				{
 					TranslitWordFile(file, ignoreSelectedText);
-                    Analytics.UserData.IncreaseWord();
+                    Analytics.UserDataLocal.IncreaseWord();
                 }
 				else if (file.ToLower().EndsWith(".xls") || file.ToLower().EndsWith(".xlsx"))
 				{
 					TranslitExcelFile(file);
-                    Analytics.UserData.IncreaseExcel();
+                    Analytics.UserDataLocal.IncreaseExcel();
                 }
 				else if (file.ToLower().EndsWith(".ppt") || file.ToLower().EndsWith(".pptx"))
 				{
 					TranslitPowerPointFile(file);
-                    Analytics.UserData.IncreasePowerPoint();
+                    Analytics.UserDataLocal.IncreasePowerPoint();
                 }
 				else if (file.ToLower().EndsWith(".txt"))
 				{
 					TranslitTxtFile(file);
-                    Analytics.UserData.IncreaseTxt();
+                    Analytics.UserDataLocal.IncreaseTxt();
                 }
 				else if (file.ToLower().EndsWith(".pdf"))
 				{
 					TranslitPdfOrRtfFile(file);
-                    Analytics.UserData.IncreasePdf();
+                    Analytics.UserDataLocal.IncreasePdf();
                 }
 				else if (file.ToLower().EndsWith(".rtf"))
 				{
-				    TranslitPdfOrRtfFile(file);
-                    Analytics.UserData.IncreaseRtf();
+                    TranslitPdfOrRtfFile(file);
+                    Analytics.UserDataLocal.IncreaseRtf();
                 }
             }
 
 			TransliterationState = false;
-
             Analytics.SaveAndSendUserData();
             return true;
 		}
@@ -738,7 +729,7 @@ namespace Translit.Models.Pages
 			return newFileName;
 		}
 
-		private string ConvertXlsToXlsx(string filename)
+        private string ConvertXlsToXlsx(string filename)
 		{
 			// Получение информации о файле
 			var fileInfo = new FileInfo(filename);
@@ -780,9 +771,9 @@ namespace Translit.Models.Pages
 			var presentation = powerPoint.Presentations.Open(filename, WithWindow: MsoTriState.msoFalse);
 			presentation.SaveAs(newFileName, PpSaveAsFileType.ppSaveAsOpenXMLPresentation);
 
-			// Закрывает все другие открытые презентации
-			//powerPoint.ActivePresentation.Close();
-			//powerPoint.Quit();
+			// Код вызывает нежелательное поведение, закрывает во время работы другие документы PowerPoint
+			// powerPoint.ActivePresentation.Close();
+			// powerPoint.Quit();
 
 			if (!Settings.Default.AutoSave)
 			{

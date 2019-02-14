@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using MaterialDesignThemes.Wpf;
-using Translit.Entity;
+using Translit.Models.Other;
 using Translit.Models.Pages;
 
 namespace Translit.ViewModels.Pages
@@ -191,25 +191,29 @@ namespace Translit.ViewModels.Pages
 				{
 					Task.Factory.StartNew(() =>
 					{
+                        
 						CanUpdate = false;
 						IsIndeterminate = true;
 						UpdateButtonContent = GetRes("ButtonLoading");
-						if (!Model.DownloadDatabaseFromServer())
+						if (Model.DownloadOrUpdateDatabase())
 						{
-							IsIndeterminate = false;
-							CanUpdate = true;
-							UpdateButtonContent = GetRes("ButtonUpdate");
-							MessageQueue.Enqueue(GetRes("SnackBarBadInternetConnection"));
-							return;
+                            Analytics.Start();
+						    ProgressBarVisibility = Visibility.Visible;
+						    Model.InsertData();
+						    MessageQueue.Enqueue(GetRes("SnackBarUpdateCompleted"));
+						    SetInfoAboutDatabase();
+						    ProgressBarVisibility = Visibility.Hidden;
+						    UpdateButtonContent = GetRes("ButtonUpdate");
+						    IsIndeterminate = false;
+						    CanUpdate = true;
 						}
-                        ProgressBarVisibility = Visibility.Visible;
-						Model.InsertData();
-						MessageQueue.Enqueue(GetRes("SnackBarUpdateCompleted"));
-						SetInfoAboutDatabase();
-						ProgressBarVisibility = Visibility.Hidden;
-						UpdateButtonContent = GetRes("ButtonUpdate");
-						IsIndeterminate = false;
-						CanUpdate = true;
+						else
+						{
+						    IsIndeterminate = false;
+						    CanUpdate = true;
+						    UpdateButtonContent = GetRes("ButtonUpdate");
+						    MessageQueue.Enqueue(GetRes("SnackBarBadInternetConnection"));
+                        }
 					});
 				});
 			}

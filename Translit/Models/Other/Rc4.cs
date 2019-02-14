@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Translit.Entity
+namespace Translit.Models.Other
 {
 	static class Rc4
 	{

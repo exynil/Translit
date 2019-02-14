@@ -50,36 +50,36 @@ namespace Translit.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string MacAddress {
+        public string FingerPrint {
             get {
-                return ((string)(this["MacAddress"]));
+                return ((string)(this["FingerPrint"]));
             }
             set {
-                this["MacAddress"] = value;
+                this["FingerPrint"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string User {
+        public string UserName {
             get {
-                return ((string)(this["User"]));
+                return ((string)(this["UserName"]));
             }
             set {
-                this["User"] = value;
+                this["UserName"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AdminPermissions {
+        public bool PermissionToChange {
             get {
-                return ((bool)(this["AdminPermissions"]));
+                return ((bool)(this["PermissionToChange"]));
             }
             set {
-                this["AdminPermissions"] = value;
+                this["PermissionToChange"] = value;
             }
         }
         
@@ -109,7 +109,7 @@ namespace Translit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("700")]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
         public int WindowWidth {
             get {
                 return ((int)(this["WindowWidth"]));
@@ -121,13 +121,13 @@ namespace Translit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UpdateReady {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string User {
             get {
-                return ((bool)(this["UpdateReady"]));
+                return ((string)(this["User"]));
             }
             set {
-                this["UpdateReady"] = value;
+                this["User"] = value;
             }
         }
     }

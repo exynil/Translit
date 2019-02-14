@@ -8,7 +8,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Translit.Entity;
+using Translit.Models.Other;
 
 namespace Translit.Models.Pages
 {
@@ -53,7 +53,7 @@ namespace Translit.Models.Pages
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-        public bool DownloadDatabaseFromServer()
+        public bool DownloadOrUpdateDatabase()
         {
             string[] links = { @"http://translit.osmium.kz/api/symbol", @"http://translit.osmium.kz/api/word" };
             var request = new HttpWebRequest[2];

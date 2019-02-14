@@ -4,7 +4,7 @@ namespace Translit.Models.Pages
 {
     interface IDatabaseModel
 	{
-		bool DownloadDatabaseFromServer();
+		bool DownloadOrUpdateDatabase();
 		event PropertyChangedEventHandler PropertyChanged;
 		void InsertData();
 	}

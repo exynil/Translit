@@ -5,42 +5,45 @@ using System.Reflection;
 using System.Windows.Forms;
 using Translit.Properties;
 
-namespace Translit.Entity
+namespace Translit.Models.Other
 {
-    public class UserData
+    public class UserData : ICloneable
     {
         public string Id { get; set; }
         public string UserName { get; set; }
         public string ComputerName { get; set; }
-        public bool AdminPermissions { get; set; }
+        public bool PermissionToChange { get; set; }
+        public bool PermissionToUse { get; set; }
         public Size PrimaryMonitorSize { get; set; }
         public string MacAddress { get; set; }
-        public Files TransliteratedFiles { get; set; }
+        public FileCounter Counter { get; set; }
         public DateTime FirstUsedDate { get; set; }
         public DateTime LastUsedDate { get; set; }
-        public string TranslitVersion { get; set; }
+        public string ProgramVersion { get; set; }
 
         public UserData()
         {
             Id = FingerPrint.Value();
-            AdminPermissions = Settings.Default.AdminPermissions;
             UserName = SystemInformation.UserName;
             ComputerName = SystemInformation.ComputerName;
+            MacAddress = GetMacAddress();
+            PermissionToChange = Settings.Default.PermissionToChange;
+            PermissionToUse = true;
             PrimaryMonitorSize = SystemInformation.PrimaryMonitorSize;
-            TransliteratedFiles = new Files();
-            FirstUsedDate = DateTime.Now;
-            LastUsedDate = DateTime.Now;
-            TranslitVersion = GetTranslitVersion();
+            Counter = new FileCounter();
+            FirstUsedDate = LastUsedDate = DateTime.Now;
+            ProgramVersion = GetProgramVersion();
         }
 
         public void UpdateAllData()
         {
-            AdminPermissions = Settings.Default.AdminPermissions;
             UserName = SystemInformation.UserName;
             ComputerName = SystemInformation.ComputerName;
+            MacAddress = GetMacAddress();
+            PermissionToChange = Settings.Default.PermissionToChange;
             PrimaryMonitorSize = SystemInformation.PrimaryMonitorSize;
             LastUsedDate = DateTime.Now;
-            TranslitVersion = GetTranslitVersion();
+            ProgramVersion = GetProgramVersion();
         }
 
         public string GetMacAddress()
@@ -59,46 +62,59 @@ namespace Translit.Entity
             return macAddress;
         }
 
-        string GetTranslitVersion()
+        string GetProgramVersion()
         {
             var version = Assembly.GetExecutingAssembly().GetName().Version;
 
             return $"{version.Major}.{version.Minor} ({version.Build})";
         }
 
-        public void SetFirstUsedDate()
-        {
-            FirstUsedDate = DateTime.Now;
-        }
-
         public void IncreaseWord()
         {
-            TransliteratedFiles.Word++;
+            Counter.Word++;
         }
 
         public void IncreaseExcel()
         {
-            TransliteratedFiles.Excel++;
+            Counter.Excel++;
         }
 
         public void IncreasePowerPoint()
         {
-            TransliteratedFiles.PowerPoint++;
+            Counter.PowerPoint++;
         }
 
         public void IncreasePdf()
         {
-            TransliteratedFiles.Pdf++;
+            Counter.Pdf++;
         }
 
         public void IncreaseRtf()
         {
-            TransliteratedFiles.Rtf++;
+            Counter.Rtf++;
         }
 
         public void IncreaseTxt()
         {
-            TransliteratedFiles.Txt++;
+            Counter.Txt++;
+        }
+
+        public object Clone()
+        {
+            return new UserData
+            {
+                Id = Id,
+                UserName = UserName,
+                ComputerName = ComputerName,
+                PermissionToChange = PermissionToChange,
+                PermissionToUse = PermissionToUse,
+                PrimaryMonitorSize = PrimaryMonitorSize,
+                MacAddress = MacAddress,
+                Counter = (FileCounter)Counter.Clone(),
+                FirstUsedDate = FirstUsedDate,
+                LastUsedDate = LastUsedDate,
+                ProgramVersion = ProgramVersion
+            };
         }
     }
 }

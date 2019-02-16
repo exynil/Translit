@@ -148,6 +148,7 @@
     <Compile Include="ViewModels\Pages\DatabaseViewModel.cs" />
     <Compile Include="ViewModels\Pages\FileConverterViewModel.cs" />
     <Compile Include="ViewModels\Pages\LicenseViewModel.cs" />
+    <Compile Include="ViewModels\Pages\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\Pages\SymbolsEditorViewModel.cs" />
     <Compile Include="ViewModels\Pages\TextConverterViewModel.cs" />
     <Compile Include="ViewModels\Pages\WordsEditorViewModel.cs" />
@@ -175,6 +176,9 @@
     </Compile>
     <Compile Include="Views\Pages\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\StatisticsView.xaml.cs">
+      <DependentUpon>StatisticsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\SymbolsEditorView.xaml.cs">
       <DependentUpon>SymbolsEditorView.xaml</DependentUpon>
@@ -236,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\StatisticsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

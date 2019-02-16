@@ -86,6 +86,11 @@
                                 <materialDesign:PackIcon Kind="Database" />
                             </MenuItem.Icon>
                         </MenuItem>
+                        <MenuItem Command="{Binding OpenStatistics}" Header="{DynamicResource MenuItemStatistics}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Kind="AssignmentTurnedIn" />
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Header="{DynamicResource MenuItemReference}">
                         <MenuItem Command="{Binding OpenAbout}" Header="{DynamicResource MenuItemAbout}">

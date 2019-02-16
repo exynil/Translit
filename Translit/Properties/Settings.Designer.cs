@@ -109,7 +109,7 @@ namespace Translit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        [global::System.Configuration.DefaultSettingValueAttribute("700")]
         public int WindowWidth {
             get {
                 return ((int)(this["WindowWidth"]));

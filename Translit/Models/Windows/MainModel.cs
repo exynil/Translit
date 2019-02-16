@@ -209,12 +209,12 @@ namespace Translit.Models.Windows
 
 	    private void CheckPermission()
 	    {
-	        Task.Factory.StartNew(() =>
+            Task.Factory.StartNew(() =>
 	        {
                 // Ждем 10 секунд пока загрузятся данные пользователя из облака или базы
                 Thread.Sleep(10000);
 
-                if (Analytics.UserDataLocal.PermissionToUse) return;
+                if (Analytics.LocalUserData.PermissionToUse) return;
 
                 Environment.Exit(0);
 	        });

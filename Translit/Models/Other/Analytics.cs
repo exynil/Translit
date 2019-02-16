@@ -12,8 +12,9 @@ namespace Translit.Models.Other
     public static class Analytics
     {
         public static bool Online { get; set; }
-        public static UserData UserDataLocal { get; set; }
-        public static UserData UserDataCloud { get; set; }
+        public static UserData UnsentUserData { get; set; }
+        public static UserData LocalUserData { get; set; }
+        public static UserData CloudUserData { get; set; }
         public static string ConnectionString { get; set; }
 
         public static void Start()
@@ -27,35 +28,35 @@ namespace Translit.Models.Other
                 using (var db = new LiteDatabase(ConnectionString))
                 {
                     var analytics = db.GetCollection<UserData>("Analytics");
+                    LocalUserData = analytics.FindAll().FirstOrDefault(u => u.Id == FingerPrint.Value());
 
-                    UserDataLocal = analytics.FindAll().FirstOrDefault(u => u.Id == FingerPrint.Value());
+                    var unsentAnalytics = db.GetCollection<UserData>("UnsentAnalytics");
+                    UnsentUserData = unsentAnalytics.FindAll().FirstOrDefault(u => u.Id == FingerPrint.Value());
 
                     // Пробуем загрузить аналитику из облака
                     if (LoadUserDataCloud())
                     {
-                        // Если в базе нет аналитики, а в облаке есть
-                        if (UserDataLocal == null && UserDataCloud != null)
+                        // Если в облакое есть аналитика
+                        if (CloudUserData != null)
                         {
                             // Копируем аналитику из облака
-                            UserDataLocal = (UserData)UserDataCloud.Clone();
-                            // Сбрасываем данные локального счетчика
-                            UserDataLocal.Counter.Reset();
-                        }
-                        // Если и в базе и в облаке есть аналитика
-                        else if (UserDataLocal != null && UserDataCloud != null)
-                        {
-                            UserDataLocal.PermissionToUse = UserDataCloud.PermissionToUse;
+                            LocalUserData = (UserData)CloudUserData.Clone();
                         }
                     }
 
-                    if (UserDataLocal == null)
+                    if (UnsentUserData == null)
                     {
-                        UserDataLocal = new UserData();
+                        UnsentUserData = new UserData();
                     }
 
-                    if (UserDataCloud == null)
+                    if (LocalUserData == null)
                     {
-                        UserDataCloud = new UserData();
+                        LocalUserData = new UserData();
+                    }
+
+                    if (CloudUserData == null)
+                    {
+                        CloudUserData = new UserData();
                     }
                 }
                 SaveAndSendUserData();
@@ -75,36 +76,31 @@ namespace Translit.Models.Other
                 // Если мы в сети
                 if (Online)
                 {
-                    // Обновляем локальные данные пользователя
-                    UserDataLocal.UpdateAllData();
-
                     // Обновляем облачные данные пользователя
-                    UserDataCloud.UpdateAllData();
+                    CloudUserData.UpdateAllData();
 
-                    // Прибавляем к облачному счетчику данные локального счетчика
-                    UserDataCloud.Counter.Add(UserDataLocal.Counter);
+                    // Прибавляем к облачному счетчику данные неотправленного счетчика
+                    CloudUserData.Counter.Add(UnsentUserData.Counter);
 
                     // Пытаемся отправить данные
                     try
                     {
-                        client.Set($"Analytics/{UserDataLocal.Id}", UserDataCloud);
+                        client.Set($"Analytics/{LocalUserData.Id}", CloudUserData);
                     }
                     catch (Exception)
                     {
                         Online = false;
-                        // Если данные не удалось отправить, сохраняем их локально
-                        SaveUserDataToLocalDb();
+                        SaveLocalAndUnsentUserData();
+                        CloudUserData.Counter.Subtract(UnsentUserData.Counter);
                         return;
                     }
 
-                    // Если данные отправились сбрасываем данные локального счетчика
-                    UserDataLocal.Counter.Reset();
-
-                    using (var db = new LiteDatabase(ConnectionString))
-                    {
-                        var analytics = db.GetCollection<UserData>("Analytics");
-                        analytics.Upsert(UserDataLocal);
-                    }
+                    // Если данные отправились сбрасываем данные неотправленного счетчика
+                    UnsentUserData.Counter.Reset();
+                    // Копируем облачные данные кользователя в локальные
+                    LocalUserData = (UserData) CloudUserData.Clone();
+                    // Сохраняем локальные данные
+                    SaveLocalAndUnsentUserData();
                 }
                 // Если не в сети, пытаемся подключиться и отправить данные
                 else if (LoadUserDataCloud())
@@ -114,18 +110,23 @@ namespace Translit.Models.Other
                 // Если оффлайн сохраняем данные локально
                 else
                 {
-                    SaveUserDataToLocalDb();
+                    SaveLocalAndUnsentUserData();
                 }
             });
         }
 
-        // Сохраняем аналитику локально
-        public static void SaveUserDataToLocalDb()
+        // Сохраняем локальную аналитику и неотправленную аналитику
+        public static void SaveLocalAndUnsentUserData()
         {
+            if (LocalUserData == null || UnsentUserData == null) return;
+
             using (var db = new LiteDatabase(ConnectionString))
             {
                 var analytics = db.GetCollection<UserData>("Analytics");
-                analytics.Upsert(UserDataLocal);
+                analytics.Upsert(LocalUserData);
+
+                var unsentAnalytics = db.GetCollection<UserData>("UnsentAnalytics");
+                unsentAnalytics.Upsert(UnsentUserData);
             }
         }
 
@@ -140,7 +141,7 @@ namespace Translit.Models.Other
 
             try
             {
-                UserDataCloud = client.Get($"Analytics/{FingerPrint.Value()}").ResultAs<UserData>();
+                CloudUserData = client.Get($"Analytics/{FingerPrint.Value()}").ResultAs<UserData>();
                 return Online = true;
             }
             catch (Exception)

@@ -53,7 +53,7 @@ namespace Translit.Models.Other
             var macAddress = string.Empty;
             foreach (var mo in moc)
             {
-                if (macAddress == string.Empty)  // only return MAC Address from first card
+                if (macAddress == string.Empty)
                 {
                     if ((bool)mo["IPEnabled"]) macAddress = mo["MacAddress"].ToString();
                 }
@@ -67,36 +67,6 @@ namespace Translit.Models.Other
             var version = Assembly.GetExecutingAssembly().GetName().Version;
 
             return $"{version.Major}.{version.Minor} ({version.Build})";
-        }
-
-        public void IncreaseWord()
-        {
-            Counter.Word++;
-        }
-
-        public void IncreaseExcel()
-        {
-            Counter.Excel++;
-        }
-
-        public void IncreasePowerPoint()
-        {
-            Counter.PowerPoint++;
-        }
-
-        public void IncreasePdf()
-        {
-            Counter.Pdf++;
-        }
-
-        public void IncreaseRtf()
-        {
-            Counter.Rtf++;
-        }
-
-        public void IncreaseTxt()
-        {
-            Counter.Txt++;
         }
 
         public object Clone()

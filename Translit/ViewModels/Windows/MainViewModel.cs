@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,6 +34,7 @@ namespace Translit.ViewModels.Windows
 		public Page WordsEditorView { get; set; }
 		public Page SettingsView { get; set; }
 		public Page DatabaseView { get; set; }
+		public Page StatisticsView { get; set; }
 		public Page AboutView { get; set; }
 		public Page LicenseView { get; set; }
 		public Page FaqView { get; set; }
@@ -247,7 +247,24 @@ namespace Translit.ViewModels.Windows
 			}
 		}
 
-		public ICommand OpenAbout
+	    public ICommand OpenStatistics
+        {
+	        get
+	        {
+	            return new DelegateCommand(o =>
+	            {
+	                if (StatisticsView == null)
+	                {
+	                    StatisticsView = new StatisticsView();
+	                }
+
+	                CurrentPage = StatisticsView;
+	                CurrentPageName = GetRes("MenuItemStatistics");
+	            });
+	        }
+	    }
+
+        public ICommand OpenAbout
 		{
 			get
 			{

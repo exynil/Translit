@@ -36,7 +36,7 @@ namespace Translit
 
 		private void App_OnExit(object sender, ExitEventArgs e)
 		{
-            Analytics.SaveUserDataToLocalDb();
+            Analytics.SaveLocalAndUnsentUserData();
             Settings.Default.Save();
 		}
 
@@ -57,7 +57,7 @@ namespace Translit
 	            }
 	        }
 
-	        Analytics.Start();
+            Analytics.Start();
         }
 	}
 }

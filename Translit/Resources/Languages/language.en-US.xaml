@@ -13,6 +13,7 @@
     <v:String x:Key="MenuItemSymbols">Symbols</v:String>
     <v:String x:Key="MenuItemSettings">Settings</v:String>
     <v:String x:Key="MenuItemDatabase">Database</v:String>
+    <v:String x:Key="MenuItemStatistics">Statistics</v:String>
     <v:String x:Key="MenuItemAbout">About</v:String>
     <v:String x:Key="MenuItemLicense">License</v:String>
     <v:String x:Key="MenuItemFaq">FAQ</v:String>
@@ -52,6 +53,7 @@
 
     <!--  Page Settings  -->
     <v:String x:Key="TextBlockDocumentAutoSave">Document Autosave</v:String>
+    <v:String x:Key="TextBlockTotal">Total:</v:String>
 
     <!--  Page Database  -->
     <v:String x:Key="TextBlockDatabase">Database</v:String>
@@ -66,6 +68,19 @@
     <v:String x:Key="ButtonDownload">Download</v:String>
     <v:String x:Key="GroupBoxInitialization">Initialization</v:String>
     <v:String x:Key="TextBlockDatabaseNotFound">Database not found</v:String>
+
+    <!--  Page Statistics  -->
+    <v:String x:Key="TextBlockTotalWasTransliterated">Total was transliterated:</v:String>
+    <v:String x:Key="ListViewTotal">Total</v:String>
+    <v:String x:Key="ListViewFileType">File type</v:String>
+    <v:String x:Key="ListViewQuantity">Quantity</v:String>
+    <v:String x:Key="SnackBarStatisticsUpdated">Statistics updated</v:String>
+    <v:String x:Key="TextBlockWordDocumentsWithoutExtensions">Word documents:</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheetsWithoutExtensions">Excel spreadsheets:</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentationsWithoutExtensions">Power Point presentations:</v:String>
+    <v:String x:Key="TextBlockPdfDocumentsWithoutExtensions">PDF documents:</v:String>
+    <v:String x:Key="TextBlockRtfDocumentsWithoutExtensions">RTF documents:</v:String>
+    <v:String x:Key="TextBlockTextDocumentsWithoutExtensions">Text documents:</v:String>
 
     <!--  Page About  -->
     <v:String x:Key="TextBlockDescription">Program for automatic transliteration of Word documents, Excel spreadsheets and Power Point presentations from cyrillic to latin.</v:String>

@@ -13,6 +13,7 @@
     <v:String x:Key="MenuItemSymbols">Таңбалар</v:String>
     <v:String x:Key="MenuItemSettings">Қолданбалар</v:String>
     <v:String x:Key="MenuItemDatabase">Деректер базасы</v:String>
+    <v:String x:Key="MenuItemStatistics">Статистика</v:String>
     <v:String x:Key="MenuItemAbout">Бағдарлама туралы</v:String>
     <v:String x:Key="MenuItemLicense">Лицензия</v:String>
     <v:String x:Key="MenuItemFaq">FAQ</v:String>
@@ -66,6 +67,19 @@
     <v:String x:Key="ButtonDownload">Жүктеу</v:String>
     <v:String x:Key="GroupBoxInitialization">Инициализация</v:String>
     <v:String x:Key="TextBlockDatabaseNotFound">Деректер базасы табылмады</v:String>
+
+    <!--  Page Statistics  -->
+    <v:String x:Key="TextBlockTotalWasTransliterated">Барлығы аударылған:</v:String>
+    <v:String x:Key="TextBlockTotal">Барлығы:</v:String>
+    <v:String x:Key="ListViewFileType">Файл түрі</v:String>
+    <v:String x:Key="ListViewQuantity">Саны</v:String>
+    <v:String x:Key="SnackBarStatisticsUpdated">Статистика жаңартылды</v:String>
+    <v:String x:Key="TextBlockWordDocumentsWithoutExtensions">Word құжаттары:</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheetsWithoutExtensions">Excel электрондық кестелері:</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentationsWithoutExtensions">Power Point ұсыныстары:</v:String>
+    <v:String x:Key="TextBlockPdfDocumentsWithoutExtensions">PDF құжаттары:</v:String>
+    <v:String x:Key="TextBlockRtfDocumentsWithoutExtensions">RTF құжаттары:</v:String>
+    <v:String x:Key="TextBlockTextDocumentsWithoutExtensions">Мәтіндік құжаттар:</v:String>
 
     <!--  Page About  -->
     <v:String x:Key="TextBlockDescription">Word құжаттарын, Excel кестелерін және Power Point презентацияларын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама.</v:String>

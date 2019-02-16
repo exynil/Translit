@@ -13,6 +13,7 @@
     <v:String x:Key="MenuItemSymbols">Символы</v:String>
     <v:String x:Key="MenuItemSettings">Настройки</v:String>
     <v:String x:Key="MenuItemDatabase">База данных</v:String>
+    <v:String x:Key="MenuItemStatistics">Статистика</v:String>
     <v:String x:Key="MenuItemAbout">О программе</v:String>
     <v:String x:Key="MenuItemLicense">Лицензия</v:String>
     <v:String x:Key="MenuItemFaq">FAQ</v:String>
@@ -66,6 +67,19 @@
     <v:String x:Key="ButtonDownload">Загрузить</v:String>
     <v:String x:Key="GroupBoxInitialization">Инициализация</v:String>
     <v:String x:Key="TextBlockDatabaseNotFound">База данных не найдена</v:String>
+
+    <!--  Page Statistics  -->
+    <v:String x:Key="TextBlockTotalWasTransliterated">Всего было транслитерировано:</v:String>
+    <v:String x:Key="TextBlockTotal">Всего:</v:String>
+    <v:String x:Key="ListViewFileType">Тип файла</v:String>
+    <v:String x:Key="ListViewQuantity">Количество</v:String>
+    <v:String x:Key="SnackBarStatisticsUpdated">Статистика обновлена</v:String>
+    <v:String x:Key="TextBlockWordDocumentsWithoutExtensions">Документы Word:</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheetsWithoutExtensions">Таблицы Excel:</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentationsWithoutExtensions">Презентации Power Point:</v:String>
+    <v:String x:Key="TextBlockPdfDocumentsWithoutExtensions">Документы PDF:</v:String>
+    <v:String x:Key="TextBlockRtfDocumentsWithoutExtensions">Документы RTF:</v:String>
+    <v:String x:Key="TextBlockTextDocumentsWithoutExtensions">Текстовые документы:</v:String>
 
     <!--  Page About  -->
     <v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации документов Word, таблиц Excel и презентаций Power Point с кириллицы на латиницу.</v:String>

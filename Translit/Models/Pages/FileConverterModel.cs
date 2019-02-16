@@ -134,32 +134,32 @@ namespace Translit.Models.Pages
 				if (file.ToLower().EndsWith(".doc") || file.ToLower().EndsWith(".docx"))
 				{
 					TranslitWordFile(file, ignoreSelectedText);
-                    Analytics.UserDataLocal.IncreaseWord();
+                    Analytics.UnsentUserData.Counter.IncreaseWord();
                 }
 				else if (file.ToLower().EndsWith(".xls") || file.ToLower().EndsWith(".xlsx"))
 				{
 					TranslitExcelFile(file);
-                    Analytics.UserDataLocal.IncreaseExcel();
+                    Analytics.UnsentUserData.Counter.IncreaseExcel();
                 }
 				else if (file.ToLower().EndsWith(".ppt") || file.ToLower().EndsWith(".pptx"))
 				{
 					TranslitPowerPointFile(file);
-                    Analytics.UserDataLocal.IncreasePowerPoint();
+                    Analytics.UnsentUserData.Counter.IncreasePowerPoint();
                 }
 				else if (file.ToLower().EndsWith(".txt"))
 				{
 					TranslitTxtFile(file);
-                    Analytics.UserDataLocal.IncreaseTxt();
+                    Analytics.UnsentUserData.Counter.IncreaseTxt();
                 }
 				else if (file.ToLower().EndsWith(".pdf"))
 				{
 					TranslitPdfOrRtfFile(file);
-                    Analytics.UserDataLocal.IncreasePdf();
+                    Analytics.UnsentUserData.Counter.IncreasePdf();
                 }
 				else if (file.ToLower().EndsWith(".rtf"))
 				{
                     TranslitPdfOrRtfFile(file);
-                    Analytics.UserDataLocal.IncreaseRtf();
+                    Analytics.UnsentUserData.Counter.IncreaseRtf();
                 }
             }
 

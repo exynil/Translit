@@ -191,7 +191,6 @@ namespace Translit.ViewModels.Pages
 				{
 					Task.Factory.StartNew(() =>
 					{
-                        
 						CanUpdate = false;
 						IsIndeterminate = true;
 						UpdateButtonContent = GetRes("ButtonLoading");

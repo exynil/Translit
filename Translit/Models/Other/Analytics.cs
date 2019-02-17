@@ -1,11 +1,12 @@
-﻿using FireSharp;
+﻿using System;
+using System.Configuration;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using FireSharp;
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using LiteDB;
-using System;
-using System.Configuration;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Translit.Models.Other
 {
@@ -34,36 +35,22 @@ namespace Translit.Models.Other
                     UnsentUserData = unsentAnalytics.FindAll().FirstOrDefault(u => u.Id == FingerPrint.Value());
 
                     // Пробуем загрузить аналитику из облака
-                    if (LoadUserDataCloud())
-                    {
-                        // Если в облакое есть аналитика
-                        if (CloudUserData != null)
-                        {
-                            // Копируем аналитику из облака
-                            LocalUserData = (UserData)CloudUserData.Clone();
-                        }
-                    }
+                    LoadCloudUserData();
 
-                    if (UnsentUserData == null)
-                    {
-                        UnsentUserData = new UserData();
-                    }
+                    if (CloudUserData != null && Online) LocalUserData = (UserData) CloudUserData.Clone();
 
-                    if (LocalUserData == null)
-                    {
-                        LocalUserData = new UserData();
-                    }
+                    if (UnsentUserData == null) UnsentUserData = new UserData();
 
-                    if (CloudUserData == null)
-                    {
-                        CloudUserData = new UserData();
-                    }
+                    if (LocalUserData == null) LocalUserData = new UserData();
+
+                    if (CloudUserData == null) CloudUserData = new UserData();
                 }
-                SaveAndSendUserData();
+
+                SendUserData();
             });
         }
 
-        public static void SaveAndSendUserData()
+        public static void SendUserData()
         {
             Task.Factory.StartNew(() =>
             {
@@ -89,6 +76,7 @@ namespace Translit.Models.Other
                     }
                     catch (Exception)
                     {
+                        Debug.WriteLine("Отправить данные не удалось!");
                         Online = false;
                         SaveLocalAndUnsentUserData();
                         CloudUserData.Counter.Subtract(UnsentUserData.Counter);
@@ -97,17 +85,16 @@ namespace Translit.Models.Other
 
                     // Если данные отправились сбрасываем данные неотправленного счетчика
                     UnsentUserData.Counter.Reset();
-                    // Копируем облачные данные кользователя в локальные
+                    // Копируем облачные данные в локальные локальные
                     LocalUserData = (UserData) CloudUserData.Clone();
-                    // Сохраняем локальные данные
+                    // Сохраняем локальную и не отправленную аналитику
                     SaveLocalAndUnsentUserData();
                 }
-                // Если не в сети, пытаемся подключиться и отправить данные
-                else if (LoadUserDataCloud())
+                else if(LoadCloudUserData())
                 {
-                    SaveAndSendUserData();
+                    
+                   SendUserData();
                 }
-                // Если оффлайн сохраняем данные локально
                 else
                 {
                     SaveLocalAndUnsentUserData();
@@ -131,7 +118,7 @@ namespace Translit.Models.Other
         }
 
         // Загружаем облачную аналитику пользователя
-        public static bool LoadUserDataCloud()
+        public static bool LoadCloudUserData()
         {
             IFirebaseClient client = new FirebaseClient(new FirebaseConfig
             {

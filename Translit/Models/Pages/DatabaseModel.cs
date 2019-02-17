@@ -1,6 +1,4 @@
-﻿using LiteDB;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -8,14 +6,21 @@ using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
+using LiteDB;
+using Newtonsoft.Json;
 using Translit.Models.Other;
 
 namespace Translit.Models.Pages
 {
     public class DatabaseModel : IDatabaseModel, INotifyPropertyChanged
     {
-        private int _percentOfWords;
         private int _percentOfSymbols;
+        private int _percentOfWords;
+
+        public DatabaseModel()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+        }
 
         public int PercentOfWords
         {
@@ -41,31 +46,21 @@ namespace Translit.Models.Pages
         public List<Word> Words { get; set; }
         public string ConnectionString { get; set; }
 
-        public DatabaseModel()
-        {
-            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
 
         public bool DownloadOrUpdateDatabase()
         {
-            string[] links = { @"http://translit.osmium.kz/api/symbol", @"http://translit.osmium.kz/api/word" };
+            string[] links = {@"http://translit.osmium.kz/api/symbol", @"http://translit.osmium.kz/api/word"};
             var request = new HttpWebRequest[2];
-            request[0] = (HttpWebRequest)WebRequest.Create(links[0]);
-            request[1] = (HttpWebRequest)WebRequest.Create(links[1]);
+            request[0] = (HttpWebRequest) WebRequest.Create(links[0]);
+            request[1] = (HttpWebRequest) WebRequest.Create(links[1]);
             var response = new HttpWebResponse[2];
 
             // Пытаем получить ответ от сервера
             try
             {
-                response[0] = (HttpWebResponse)request[0].GetResponse();
-                response[1] = (HttpWebResponse)request[1].GetResponse();
+                response[0] = (HttpWebResponse) request[0].GetResponse();
+                response[1] = (HttpWebResponse) request[1].GetResponse();
             }
             catch (Exception)
             {
@@ -101,15 +96,9 @@ namespace Translit.Models.Pages
         {
             using (var db = new LiteDatabase(ConnectionString))
             {
-                if (db.CollectionExists("Symbols"))
-                {
-                    db.DropCollection("Symbols");
-                }
+                if (db.CollectionExists("Symbols")) db.DropCollection("Symbols");
 
-                if (db.CollectionExists("Words"))
-                {
-                    db.DropCollection("Words");
-                }
+                if (db.CollectionExists("Words")) db.DropCollection("Words");
 
                 BsonMapper.Global.EmptyStringToNull = false;
 
@@ -143,6 +132,11 @@ namespace Translit.Models.Pages
             Words.Clear();
         }
 
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
         public bool CollectionExists()
         {
             using (var db = new LiteDatabase(ConnectionString))
@@ -163,6 +157,7 @@ namespace Translit.Models.Pages
                 return db.GetCollection<Symbol>("Symbols").Count();
             }
         }
+
         public int GetWordCount()
         {
             using (var db = new LiteDatabase(ConnectionString))

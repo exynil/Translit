@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace Translit.Views.Pages
+﻿namespace Translit.Views.Pages
 {
-    public partial class StatisticsView : Page
+    public partial class StatisticsView
     {
         public StatisticsView()
         {

@@ -4,15 +4,19 @@ using System.Windows;
 
 namespace Translit.Models.Pages
 {
-    class LicenseModel : ILicenseModel
-	{
-		public string ReadLicense()
-		{
-			var licenseStream = Application.GetResourceStream(new Uri("resources/texts/license.txt", UriKind.Relative))?.Stream;
-			using (var reader = new StreamReader(licenseStream ?? throw new InvalidOperationException()))
-			{
-				return reader.ReadToEnd();
-			}
-		}
-	}
+    internal class LicenseModel : ILicenseModel
+    {
+        public string ReadLicense()
+        {
+            var license = new Uri("resources/txtdocuments/license.txt", UriKind.Relative);
+            var licenseStream = Application.GetResourceStream(license)?.Stream;
+
+            if (licenseStream == null) return "";
+
+            using (var reader = new StreamReader(licenseStream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+    }
 }

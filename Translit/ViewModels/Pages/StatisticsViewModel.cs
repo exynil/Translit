@@ -8,8 +8,21 @@ using Translit.Models.Other;
 
 namespace Translit.ViewModels.Pages
 {
-    class StatisticsViewModel : INotifyPropertyChanged
+    internal class StatisticsViewModel : INotifyPropertyChanged
     {
+        public StatisticsModel Model { get; set; }
+        private Dictionary<string, string> _statistics;
+
+        public StatisticsViewModel()
+        {
+            Model = new StatisticsModel();
+            MessageQueue = new SnackbarMessageQueue();
+
+            Statistics = new Dictionary<string, string>();
+
+            UpdateStatistics();
+        }
+
         public SnackbarMessageQueue MessageQueue { get; set; }
 
         public Dictionary<string, string> Statistics
@@ -21,27 +34,6 @@ namespace Translit.ViewModels.Pages
                 OnPropertyChanged();
             }
         }
-        private Dictionary<string, string> _statistics;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public StatisticsViewModel()
-        {
-            MessageQueue = new SnackbarMessageQueue();
-
-            Statistics = new Dictionary<string, string>();
-
-            if (Update.CanExecute(null))
-            {
-                Update.Execute(null);
-            }   
-         
-        }
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public ICommand Update
         {
@@ -49,24 +41,39 @@ namespace Translit.ViewModels.Pages
             {
                 return new DelegateCommand(o =>
                 {
-                    var counter = new FileCounter();
-
-                    counter.Add(Analytics.LocalUserData.Counter);
-                    counter.Add(Analytics.UnsentUserData.Counter);
-
-                    Statistics.Clear();
-
-                    Statistics.Add(GetRes("TextBlockWordDocumentsWithoutExtensions"), counter.Word.ToString());
-                    Statistics.Add(GetRes("TextBlockExcelSpreadsheetsWithoutExtensions"), counter.Excel.ToString());
-                    Statistics.Add(GetRes("TextBlockPowerPointPresentationsWithoutExtensions"), counter.PowerPoint.ToString());
-                    Statistics.Add(GetRes("TextBlockPdfDocumentsWithoutExtensions"), counter.Pdf.ToString());
-                    Statistics.Add(GetRes("TextBlockRtfDocumentsWithoutExtensions"), counter.Rtf.ToString());
-                    Statistics.Add(GetRes("TextBlockTextDocumentsWithoutExtensions"), counter.Txt.ToString());
-                    Statistics.Add(GetRes("TextBlockTotal"), counter.GetSum().ToString());
+                    UpdateStatistics();
 
                     MessageQueue.Enqueue(GetRes("SnackBarStatisticsUpdated"));
                 });
             }
+        }
+
+        public void UpdateStatistics()
+        {
+            var counter = new FileCounter();
+            
+            counter.Add(Model.GetLocalUserData().Counter);
+
+            counter.Add(Model.GetUnsentUserData().Counter);
+
+            Statistics = new Dictionary<string, string>
+            {
+                [GetRes("TextBlockWordDocuments")] = counter.Word.ToString(),
+                [GetRes("TextBlockExcelSpreadsheets")] = counter.Excel.ToString(),
+                [GetRes("TextBlockPowerPointPresentations")] = counter.PowerPoint.ToString(),
+                [GetRes("TextBlockPdfDocuments")] = counter.Pdf.ToString(),
+                [GetRes("TextBlockRtfDocuments")] = counter.Rtf.ToString(),
+                [GetRes("TextBlockTextDocuments")] = counter.Txt.ToString(),
+                [GetRes("TextBlockTotal")] = counter.GetSum().ToString()
+            };
+
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private string GetRes(string key)

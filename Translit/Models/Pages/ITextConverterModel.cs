@@ -1,7 +1,7 @@
 ﻿namespace Translit.Models.Pages
 {
-	interface ITextConverterModel
-	{
-		string Transliterate(string text);
-	}
+    internal interface ITextConverterModel
+    {
+        string Transliterate(string text);
+    }
 }

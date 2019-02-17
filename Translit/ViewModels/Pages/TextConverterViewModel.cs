@@ -9,91 +9,79 @@ using Translit.Properties;
 
 namespace Translit.ViewModels.Pages
 {
-	class TextConverterViewModel : INotifyPropertyChanged
-	{
-		public TextConverterModel Model { get; set; }
-		public event PropertyChangedEventHandler PropertyChanged;
-		private string _cyryllic;
-		private double _fontSize;
-		private string _latin;
+    internal class TextConverterViewModel : INotifyPropertyChanged
+    {
+        private string _cyryllic;
+        private double _fontSize;
+        private string _latin;
 
-		public string Cyryllic
-		{
-			get => _cyryllic;
-			set
-			{
-				_cyryllic = value;
-				Transliterate();
-				OnPropertyChanged();
-			}
-		}
+        public TextConverterViewModel()
+        {
+            Model = new TextConverterModel();
+            FontSize = Settings.Default.TextConverterFontSize;
+        }
 
-		public string Latin
-		{
-			get => _latin;
-			set
-			{
-				_latin = value;
-				OnPropertyChanged();
-			}
-		}
+        public TextConverterModel Model { get; set; }
 
-		public double FontSize
-		{
-			get => _fontSize;
-			set
-			{
-				_fontSize = value;
-				Settings.Default.TextConverterFontSize = value;
-				OnPropertyChanged();
-			}
-		}
+        public string Cyryllic
+        {
+            get => _cyryllic;
+            set
+            {
+                _cyryllic = value;
+                Transliterate();
+                OnPropertyChanged();
+            }
+        }
 
-		public TextConverterViewModel()
-		{
-			Model = new TextConverterModel();
-			FontSize = Settings.Default.TextConverterFontSize;
-		}
+        public string Latin
+        {
+            get => _latin;
+            set
+            {
+                _latin = value;
+                OnPropertyChanged();
+            }
+        }
 
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+        public double FontSize
+        {
+            get => _fontSize;
+            set
+            {
+                _fontSize = value;
+                Settings.Default.TextConverterFontSize = value;
+                OnPropertyChanged();
+            }
+        }
 
-		private void Transliterate()
-		{
-			Task.Factory.StartNew(() =>
-			{
-				Latin = Model.Transliterate(Cyryllic) ?? GetRes("SnackBarDatabaseNotFound");
-			});
-		}
+        public ICommand Clear
+        {
+            get { return new DelegateCommand(o => { Cyryllic = Latin = ""; }); }
+        }
 
-		public ICommand Clear
-		{
-			get
-			{
-				return new DelegateCommand(o =>
-				{
-				    Cyryllic = Latin = "";
-				});
-			}
-		}
+        public ICommand Copy
+        {
+            get { return new DelegateCommand(o => { Clipboard.SetData(DataFormats.UnicodeText, Latin); }); }
+        }
 
-		public ICommand Copy
-		{
-			get
-			{
-				return new DelegateCommand(o =>
-				{
-                    Clipboard.SetData(DataFormats.UnicodeText, Latin);
-				});
-			}
-		}
+        public event PropertyChangedEventHandler PropertyChanged;
 
-		// Получение ресурса по ключу
-		public string GetRes(string key)
-		{
-			return Application.Current.Resources[key].ToString();
-		}
-	}
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void Transliterate()
+        {
+            Task.Factory.StartNew(
+                () => { Latin = Model.Transliterate(Cyryllic) ?? GetRes("SnackBarDatabaseNotFound"); });
+        }
+
+        // Получение ресурса по ключу
+        public string GetRes(string key)
+        {
+            return Application.Current.Resources[key].ToString();
+        }
+    }
 }

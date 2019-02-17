@@ -6,62 +6,63 @@ using System.Windows;
 
 namespace Translit.ViewModels.Pages
 {
-	class AboutViewModel : INotifyPropertyChanged
-	{
-		public event PropertyChangedEventHandler PropertyChanged;
-		private string _programName;
-		private string _version;
-		private string _copyright;
+    internal class AboutViewModel : INotifyPropertyChanged
+    {
+        private string _copyright;
+        private string _programName;
+        private string _version;
 
-		public string ProgramName
-		{
-			get => _programName;
-			set
-			{
-				_programName = value;
-				OnPropertyChanged();
-			}
-		}
+        public AboutViewModel()
+        {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
 
-		public string Copyright
-		{
-			get => _copyright;
-			set
-			{
-				_copyright = value;
-				OnPropertyChanged();
-			}
-		}
+            ProgramName = "Translit";
 
-		public string Version
-		{
-			get => _version;
-			set
-			{
-				_version = value;
-				OnPropertyChanged();
-			}
-		}
+            Copyright = $"© Kim Maxim, Osmium 2018-{DateTime.Now.Year}";
 
-		public AboutViewModel()
-		{
-			var version = Assembly.GetExecutingAssembly().GetName().Version;
+            Version = $"{GetRes("TextBlockVersion")} {version.Major}.{version.Minor} ({version.Build})";
+        }
 
-			ProgramName = "Translit";
+        public string ProgramName
+        {
+            get => _programName;
+            set
+            {
+                _programName = value;
+                OnPropertyChanged();
+            }
+        }
 
-			Copyright = "© Kim Maxim, Osmium 2018-" + DateTime.Now.Year;
+        public string Copyright
+        {
+            get => _copyright;
+            set
+            {
+                _copyright = value;
+                OnPropertyChanged();
+            }
+        }
 
-			Version = $"{GetRes("TextBlockVersion")} {version.Major}.{version.Minor} ({version.Build})";
-		}
+        public string Version
+        {
+            get => _version;
+            set
+            {
+                _version = value;
+                OnPropertyChanged();
+            }
+        }
 
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+        public event PropertyChangedEventHandler PropertyChanged;
 
-		public string GetRes(string key)
-		{
-			return Application.Current.Resources[key].ToString();
-		}
-	}
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public string GetRes(string key)
+        {
+            return Application.Current.Resources[key].ToString();
+        }
+    }
 }

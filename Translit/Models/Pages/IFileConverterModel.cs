@@ -2,9 +2,9 @@
 
 namespace Translit.Models.Pages
 {
-	interface IFileConverterModel
-	{
-		event PropertyChangedEventHandler PropertyChanged;
-		bool TranslitFiles(string[] files, bool? ignoreSelectedText);
-	}
+    internal interface IFileConverterModel
+    {
+        event PropertyChangedEventHandler PropertyChanged;
+        bool TranslitFiles(string[] files, bool? ignoreSelectedText);
+    }
 }

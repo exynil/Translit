@@ -77,7 +77,7 @@
                     Text="{Binding SymbolsInserting}"
                     TextWrapping="Wrap" />
                 <ProgressBar
-                    Height="12"
+                    Height="10"
                     Margin="25,10"
                     Maximum="100"
                     Minimum="0"
@@ -87,7 +87,7 @@
                     Text="{Binding WordsInserting}"
                     TextWrapping="Wrap" />
                 <ProgressBar
-                    Height="12"
+                    Height="10"
                     Margin="25,10"
                     Maximum="100"
                     Minimum="0"

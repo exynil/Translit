@@ -1,6 +1,4 @@
-﻿using LiteDB;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
@@ -8,129 +6,122 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using LiteDB;
+using Newtonsoft.Json;
 using Translit.Models.Other;
 using Translit.Properties;
 
 namespace Translit.Models.Pages
 {
     public class WordsEditorModel : IWordsEditorModel
-	{
-		public string ReasonPhrase { get; set; }
-		public string ConnectionString;
+    {
+        public string ConnectionString;
 
-		public WordsEditorModel()
-		{
-			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
-		    if (User.Token != null)
-		    {
-		        JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
-		    }
-		}
+        public WordsEditorModel()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+            if (User.Token != null)
+                JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
+        }
 
-		// Получение коллекции символов из базы
-		public ObservableCollection<Word> GetWordsFromDatabase()
-		{
-			if (!File.Exists(ConnectionString)) return null;
+        public string ReasonPhrase { get; set; }
 
-			using (var db = new LiteDatabase(ConnectionString))
-			{
-				var temp = db.GetCollection<Word>("Words").FindAll().ToList();
-				return new ObservableCollection<Word>(temp);
-			}
-		}
+        // Получение коллекции символов из базы
+        public ObservableCollection<Word> GetWordsFromDatabase()
+        {
+            if (!File.Exists(ConnectionString)) return null;
 
-		// Проверка длины допустимого значения
-		public bool CheckWordsLength(string cyryllic, string latin)
-		{
-			return !(cyryllic?.Length > 30) && !(latin?.Length > 40);
-		}
+            using (var db = new LiteDatabase(ConnectionString))
+            {
+                var temp = db.GetCollection<Word>("Words").FindAll().ToList();
+                return new ObservableCollection<Word>(temp);
+            }
+        }
 
-		// Добавление символа в глобальную базу
-		public async Task AddWord(string cyryllic, string latin)
-		{
-			const string link = "http://translit.osmium.kz/api/word?";
-			var client = new HttpClient();
+        // Проверка длины допустимого значения
+        public bool CheckWordsLength(string cyryllic, string latin)
+        {
+            return !(cyryllic?.Length > 30) && !(latin?.Length > 40);
+        }
 
-			// Создаем параметры
-			var content =
-				new FormUrlEncodedContent(new Dictionary<string, string>
-				{
-					{"token", User.Token},
-					{"cyrl", cyryllic},
-					{"latn", latin}
-				});
+        // Добавление символа в глобальную базу
+        public async Task AddWord(string cyryllic, string latin)
+        {
+            const string link = "http://translit.osmium.kz/api/word?";
+            var client = new HttpClient();
 
-			//Выполняем запрос
-			var response = await client.PostAsync(link, content);
+            // Создаем параметры
+            var content =
+                new FormUrlEncodedContent(new Dictionary<string, string>
+                {
+                    {"token", User.Token},
+                    {"cyrl", cyryllic},
+                    {"latn", latin}
+                });
 
-			// Полученный ответ десериализуем в объект Word
-			var addedWord = JsonConvert.DeserializeObject<Word>(await response.Content.ReadAsStringAsync());
+            //Выполняем запрос
+            var response = await client.PostAsync(link, content);
 
-			// Выполняем следующие действия взамисимости от ответа сервера
-			if (response.StatusCode == HttpStatusCode.Created)
-			{
-				// Добавляем слово в локальную базу
-				using (var db = new LiteDatabase(ConnectionString))
-				{
-					var words = db.GetCollection<Word>("Words");
-					words.Insert(addedWord);
-				}
-			}
+            // Полученный ответ десериализуем в объект Word
+            var addedWord = JsonConvert.DeserializeObject<Word>(await response.Content.ReadAsStringAsync());
 
-			ReasonPhrase = response.ReasonPhrase;
-		}
+            // Выполняем следующие действия взамисимости от ответа сервера
+            if (response.StatusCode == HttpStatusCode.Created)
+                using (var db = new LiteDatabase(ConnectionString))
+                {
+                    var words = db.GetCollection<Word>("Words");
+                    words.Insert(addedWord);
+                }
 
-		public async Task EditWord(int id, string cyryllic, string latin)
-		{
-			const string link = "http://translit.osmium.kz/api/word?";
-			var client = new HttpClient();
+            ReasonPhrase = response.ReasonPhrase;
+        }
 
-			// Создаем параметры
-			var values = new Dictionary<string, string> {{"token", User.Token}, {"id", id.ToString()}};
-			if (cyryllic != null) values.Add("cyrl", cyryllic);
-			if (latin != null) values.Add("latn", latin);
-			var content = new FormUrlEncodedContent(values);
+        public async Task EditWord(int id, string cyryllic, string latin)
+        {
+            const string link = "http://translit.osmium.kz/api/word?";
+            var client = new HttpClient();
 
-			// Выполняем запрос
-			var response = await client.PutAsync(link, content);
-			if (response.StatusCode == HttpStatusCode.OK)
-			{
-				// Изменяем слово в локальной базе
-				using (var db = new LiteDatabase(ConnectionString))
-				{
-					var words = db.GetCollection<Word>("Words");
-					var word = words.FindById(id);
-					if (cyryllic != null) word.Cyryllic = cyryllic;
-					if (latin != null) word.Latin = latin;
-					words.Update(word);
-				}
-			}
+            // Создаем параметры
+            var values = new Dictionary<string, string> {{"token", User.Token}, {"id", id.ToString()}};
+            if (cyryllic != null) values.Add("cyrl", cyryllic);
+            if (latin != null) values.Add("latn", latin);
+            var content = new FormUrlEncodedContent(values);
 
-			ReasonPhrase = response.ReasonPhrase;
-		}
+            // Выполняем запрос
+            var response = await client.PutAsync(link, content);
+            if (response.StatusCode == HttpStatusCode.OK)
+                using (var db = new LiteDatabase(ConnectionString))
+                {
+                    var words = db.GetCollection<Word>("Words");
+                    var word = words.FindById(id);
+                    if (cyryllic != null) word.Cyryllic = cyryllic;
+                    if (latin != null) word.Latin = latin;
+                    words.Update(word);
+                }
 
-		public void DeleteWord(int id)
-		{
-			// Строим адрес
-			var link = $"http://translit.osmium.kz/api/word?token={User.Token}&id={id}";
-			var client = new HttpClient();
+            ReasonPhrase = response.ReasonPhrase;
+        }
 
-			// Выполняем запрос
-			var response = client.DeleteAsync(link).Result;
+        public void DeleteWord(int id)
+        {
+            // Строим адрес
+            var link = $"http://translit.osmium.kz/api/word?token={User.Token}&id={id}";
+            var client = new HttpClient();
 
-			// Выполняем следующие действия взамисимости от ответа сервера
-			if (response.StatusCode == HttpStatusCode.OK)
-			{
-				using (var db = new LiteDatabase(ConnectionString))
-				{
-					// Получаем коллекцию Words
-					var words = db.GetCollection<Word>("Words");
-					// Удаляем выбранный Id
-					words.Delete(id);
-				}
-			}
+            // Выполняем запрос
+            var response = client.DeleteAsync(link).Result;
 
-			ReasonPhrase = response.ReasonPhrase;
-		}
-	}
+            // Выполняем следующие действия взамисимости от ответа сервера
+            if (response.StatusCode == HttpStatusCode.OK)
+                using (var db = new LiteDatabase(ConnectionString))
+                {
+                    // Получаем коллекцию Words
+                    var words = db.GetCollection<Word>("Words");
+                    // Удаляем выбранный Id
+                    words.Delete(id);
+                }
+
+            ReasonPhrase = response.ReasonPhrase;
+        }
+    }
 }

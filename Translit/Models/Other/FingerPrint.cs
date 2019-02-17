@@ -11,9 +11,7 @@ namespace Translit.Models.Other
         public static string Value()
         {
             if (string.IsNullOrEmpty(_fingerPrint))
-            {
                 _fingerPrint = GetHash($"CPU >> {CpuId()}\nBIOS >> {BiosId()}\nBASE >> {BaseId()}");
-            }
 
             return _fingerPrint;
         }
@@ -52,10 +50,8 @@ namespace Translit.Models.Other
             var mc = new ManagementClass(wmiClass);
             var moc = mc.GetInstances();
             foreach (var mo in moc)
-            {
                 // Only get the first one
                 if (result == "")
-                {
                     try
                     {
                         result = mo[wmiProperty].ToString();
@@ -65,8 +61,6 @@ namespace Translit.Models.Other
                     {
                         // ignored
                     }
-                }
-            }
 
             return result;
         }
@@ -83,9 +77,7 @@ namespace Translit.Models.Other
                 {
                     retVal = Identifier("Win32_Processor", "Name");
                     if (retVal == "") // If no Name, use Manufacturer
-                    {
                         retVal = Identifier("Win32_Processor", "Manufacturer");
-                    }
 
                     // Add clock speed for extra security
                     retVal += Identifier("Win32_Processor", "MaxClockSpeed");

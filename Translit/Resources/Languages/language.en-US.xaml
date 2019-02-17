@@ -39,6 +39,7 @@
     <v:String x:Key="ButtonStop">Stop</v:String>
     <v:String x:Key="SnackBarPleaseWait">Please wait</v:String>
     <v:String x:Key="SnackBarStoppedByUser">Stopped by user</v:String>
+    <v:String x:Key="TextBlockTimeSpent">Time spent:</v:String>
 
     <!--  Page Text Converter  -->
     <v:String x:Key="ButtonClear">Clear</v:String>
@@ -52,8 +53,8 @@
     <v:String x:Key="ToolTipDelete">Delete</v:String>
 
     <!--  Page Settings  -->
-    <v:String x:Key="TextBlockDocumentAutoSave">Document Autosave</v:String>
-    <v:String x:Key="TextBlockTotal">Total:</v:String>
+    <v:String x:Key="TextBlockTransliterateToAnotherFile">Transliterate to another file</v:String>
+    <v:String x:Key="TextBlockSoundNotification">Sound notification</v:String>
 
     <!--  Page Database  -->
     <v:String x:Key="TextBlockDatabase">Database</v:String>
@@ -75,12 +76,12 @@
     <v:String x:Key="ListViewFileType">File type</v:String>
     <v:String x:Key="ListViewQuantity">Quantity</v:String>
     <v:String x:Key="SnackBarStatisticsUpdated">Statistics updated</v:String>
-    <v:String x:Key="TextBlockWordDocumentsWithoutExtensions">Word documents:</v:String>
-    <v:String x:Key="TextBlockExcelSpreadsheetsWithoutExtensions">Excel spreadsheets:</v:String>
-    <v:String x:Key="TextBlockPowerPointPresentationsWithoutExtensions">Power Point presentations:</v:String>
-    <v:String x:Key="TextBlockPdfDocumentsWithoutExtensions">PDF documents:</v:String>
-    <v:String x:Key="TextBlockRtfDocumentsWithoutExtensions">RTF documents:</v:String>
-    <v:String x:Key="TextBlockTextDocumentsWithoutExtensions">Text documents:</v:String>
+    <v:String x:Key="TextBlockWordDocuments">Word documents:</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheets">Excel spreadsheets:</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentations">Power Point presentations:</v:String>
+    <v:String x:Key="TextBlockPdfDocuments">PDF documents:</v:String>
+    <v:String x:Key="TextBlockRtfDocuments">RTF documents:</v:String>
+    <v:String x:Key="TextBlockTextDocuments">Text documents:</v:String>
 
     <!--  Page About  -->
     <v:String x:Key="TextBlockDescription">Program for automatic transliteration of Word documents, Excel spreadsheets and Power Point presentations from cyrillic to latin.</v:String>
@@ -90,12 +91,12 @@
     <!--  Page FAQ  -->
     <v:String x:Key="ExpanderWhatFilesAreSupported">What files are supported?</v:String>
     <v:String x:Key="TextBlockTheProgramSupportsTheFollowingFileTypes">The program supports the following file types:</v:String>
-    <v:String x:Key="TextBlockWordDocuments">Word documents: doc, docx</v:String>
-    <v:String x:Key="TextBlockExcelSpreadsheets">Excel spreadsheets: xls, xlsx</v:String>
-    <v:String x:Key="TextBlockPowerPointPresentations">Power Point presentations: ppt, pptx</v:String>
-    <v:String x:Key="TextBlockPdfDocuments">PDF documents: pdf</v:String>
-    <v:String x:Key="TextBlockRtfDocuments">RTF documents: rtf</v:String>
-    <v:String x:Key="TextBlockTextDocuments">Text documents: txt</v:String>
+    <v:String x:Key="TextBlockWordDocumentsWithExtensions">Word documents: doc, docx</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheetsWithExtensions">Excel spreadsheets: xls, xlsx</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentationsWithExtensions">Power Point presentations: ppt, pptx</v:String>
+    <v:String x:Key="TextBlockPdfDocumentsWithExtensions">PDF documents: pdf</v:String>
+    <v:String x:Key="TextBlockRtfDocumentsWithExtensions">RTF documents: rtf</v:String>
+    <v:String x:Key="TextBlockTextDocumentsWithExtensions">Text documents: txt</v:String>
 
     <v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">How to use the function 'Ignore selected text'?</v:String>
     <v:String x:Key="TextBlockFollowTheseFourSimpleSteps">Follow these four simple steps.</v:String>

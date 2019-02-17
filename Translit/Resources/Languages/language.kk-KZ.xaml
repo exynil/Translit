@@ -39,6 +39,7 @@
     <v:String x:Key="ButtonStop">Тоқта</v:String>
     <v:String x:Key="SnackBarPleaseWait">Өтінемін күте тұрыңыз</v:String>
     <v:String x:Key="SnackBarStoppedByUser">Пайдаланушы тоқтатты</v:String>
+    <v:String x:Key="TextBlockTimeSpent">Уақыт жұмсалды:</v:String>
 
     <!--  Page Text Converter  -->
     <v:String x:Key="ButtonClear">Тазалау</v:String>
@@ -52,7 +53,8 @@
     <v:String x:Key="ToolTipDelete">Өшіру</v:String>
 
     <!--  Page Settings  -->
-    <v:String x:Key="TextBlockDocumentAutoSave">Құжаттың түпнұсқасын автосақтау</v:String>
+    <v:String x:Key="TextBlockTransliterateToAnotherFile">Басқа файлға көшіру</v:String>
+    <v:String x:Key="TextBlockSoundNotification">Дыбыстық ескерту</v:String>
 
     <!--  Page Database  -->
     <v:String x:Key="TextBlockDatabase">Дерекқор</v:String>
@@ -74,12 +76,12 @@
     <v:String x:Key="ListViewFileType">Файл түрі</v:String>
     <v:String x:Key="ListViewQuantity">Саны</v:String>
     <v:String x:Key="SnackBarStatisticsUpdated">Статистика жаңартылды</v:String>
-    <v:String x:Key="TextBlockWordDocumentsWithoutExtensions">Word құжаттары:</v:String>
-    <v:String x:Key="TextBlockExcelSpreadsheetsWithoutExtensions">Excel электрондық кестелері:</v:String>
-    <v:String x:Key="TextBlockPowerPointPresentationsWithoutExtensions">Power Point ұсыныстары:</v:String>
-    <v:String x:Key="TextBlockPdfDocumentsWithoutExtensions">PDF құжаттары:</v:String>
-    <v:String x:Key="TextBlockRtfDocumentsWithoutExtensions">RTF құжаттары:</v:String>
-    <v:String x:Key="TextBlockTextDocumentsWithoutExtensions">Мәтіндік құжаттар:</v:String>
+    <v:String x:Key="TextBlockWordDocuments">Word құжаттары:</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheets">Excel электрондық кестелері:</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentations">Power Point ұсыныстары:</v:String>
+    <v:String x:Key="TextBlockPdfDocuments">PDF құжаттары:</v:String>
+    <v:String x:Key="TextBlockRtfDocuments">RTF құжаттары:</v:String>
+    <v:String x:Key="TextBlockTextDocuments">Мәтіндік құжаттар:</v:String>
 
     <!--  Page About  -->
     <v:String x:Key="TextBlockDescription">Word құжаттарын, Excel кестелерін және Power Point презентацияларын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама.</v:String>
@@ -89,12 +91,12 @@
     <!--  Page FAQ  -->
     <v:String x:Key="ExpanderWhatFilesAreSupported">Қандай файлдар қолданылады?</v:String>
     <v:String x:Key="TextBlockTheProgramSupportsTheFollowingFileTypes">Бағдарлама келесі файл түрлерін қолдайды:</v:String>
-    <v:String x:Key="TextBlockWordDocuments">Word құжаттары: doc, docx</v:String>
-    <v:String x:Key="TextBlockExcelSpreadsheets">Excel электрондық кестелері: xls, xlsx</v:String>
-    <v:String x:Key="TextBlockPowerPointPresentations">Power Point ұсыныстары: ppt, pptx</v:String>
-    <v:String x:Key="TextBlockPdfDocuments">PDF құжаттары: pdf</v:String>
-    <v:String x:Key="TextBlockRtfDocuments">RTF құжаттары: rtf</v:String>
-    <v:String x:Key="TextBlockTextDocuments">Мәтіндік құжаттар: txt</v:String>
+    <v:String x:Key="TextBlockWordDocumentsWithExtensions">Word құжаттары: doc, docx</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheetsWithExtensions">Excel электрондық кестелері: xls, xlsx</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentationsWithExtensions">Power Point ұсыныстары: ppt, pptx</v:String>
+    <v:String x:Key="TextBlockPdfDocumentsWithExtensions">PDF құжаттары: pdf</v:String>
+    <v:String x:Key="TextBlockRtfDocumentsWithExtensions">RTF құжаттары: rtf</v:String>
+    <v:String x:Key="TextBlockTextDocumentsWithExtensions">Мәтіндік құжаттар: txt</v:String>
 
     <v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">'Таңдалған мәтінді елемеу' функциясын қалай пайдалануға болады?</v:String>
     <v:String x:Key="TextBlockFollowTheseFourSimpleSteps">Мына төрт қарапайым қадамды орындаңыз.</v:String>

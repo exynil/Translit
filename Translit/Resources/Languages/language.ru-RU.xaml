@@ -39,6 +39,7 @@
     <v:String x:Key="ButtonStop">Остановить</v:String>
     <v:String x:Key="SnackBarPleaseWait">Пожалуйста, подождите</v:String>
     <v:String x:Key="SnackBarStoppedByUser">Остановлено пользователем</v:String>
+    <v:String x:Key="TextBlockTimeSpent">Затраченное время:</v:String>
 
     <!--  Page Text Converter  -->
     <v:String x:Key="ButtonClear">Очистить</v:String>
@@ -52,7 +53,8 @@
     <v:String x:Key="ToolTipDelete">Удалить</v:String>
 
     <!--  Page Settings  -->
-    <v:String x:Key="TextBlockDocumentAutoSave">Автосохранение документа</v:String>
+    <v:String x:Key="TextBlockTransliterateToAnotherFile">Транслитерировать в другой файл</v:String>
+    <v:String x:Key="TextBlockSoundNotification">Звуковое уведомление</v:String>
 
     <!--  Page Database  -->
     <v:String x:Key="TextBlockDatabase">База данных</v:String>
@@ -74,12 +76,12 @@
     <v:String x:Key="ListViewFileType">Тип файла</v:String>
     <v:String x:Key="ListViewQuantity">Количество</v:String>
     <v:String x:Key="SnackBarStatisticsUpdated">Статистика обновлена</v:String>
-    <v:String x:Key="TextBlockWordDocumentsWithoutExtensions">Документы Word:</v:String>
-    <v:String x:Key="TextBlockExcelSpreadsheetsWithoutExtensions">Таблицы Excel:</v:String>
-    <v:String x:Key="TextBlockPowerPointPresentationsWithoutExtensions">Презентации Power Point:</v:String>
-    <v:String x:Key="TextBlockPdfDocumentsWithoutExtensions">Документы PDF:</v:String>
-    <v:String x:Key="TextBlockRtfDocumentsWithoutExtensions">Документы RTF:</v:String>
-    <v:String x:Key="TextBlockTextDocumentsWithoutExtensions">Текстовые документы:</v:String>
+    <v:String x:Key="TextBlockWordDocuments">Документы Word:</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheets">Таблицы Excel:</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentations">Презентации Power Point:</v:String>
+    <v:String x:Key="TextBlockPdfDocuments">Документы PDF:</v:String>
+    <v:String x:Key="TextBlockRtfDocuments">Документы RTF:</v:String>
+    <v:String x:Key="TextBlockTextDocuments">Текстовые документы:</v:String>
 
     <!--  Page About  -->
     <v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации документов Word, таблиц Excel и презентаций Power Point с кириллицы на латиницу.</v:String>
@@ -89,12 +91,12 @@
     <!--  Page FAQ  -->
     <v:String x:Key="ExpanderWhatFilesAreSupported">Какие файлы поддерживаются?</v:String>
     <v:String x:Key="TextBlockTheProgramSupportsTheFollowingFileTypes">Программа поддержвает следующие типы файлов:</v:String>
-    <v:String x:Key="TextBlockWordDocuments">Документы Word: doc, docx</v:String>
-    <v:String x:Key="TextBlockExcelSpreadsheets">Таблицы Excel: xls, xlsx</v:String>
-    <v:String x:Key="TextBlockPowerPointPresentations">Презентации Power Point: ppt, pptx</v:String>
-    <v:String x:Key="TextBlockPdfDocuments">Документы PDF: pdf</v:String>
-    <v:String x:Key="TextBlockRtfDocuments">Документы RTF: rtf</v:String>
-    <v:String x:Key="TextBlockTextDocuments">Текстовые документы: txt</v:String>
+    <v:String x:Key="TextBlockWordDocumentsWithExtensions">Документы Word: doc, docx</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheetsWithExtensions">Таблицы Excel: xls, xlsx</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentationsWithExtensions">Презентации Power Point: ppt, pptx</v:String>
+    <v:String x:Key="TextBlockPdfDocumentsWithExtensions">Документы PDF: pdf</v:String>
+    <v:String x:Key="TextBlockRtfDocumentsWithExtensions">Документы RTF: rtf</v:String>
+    <v:String x:Key="TextBlockTextDocumentsWithExtensions">Текстовые документы: txt</v:String>
 
     <v:String x:Key="ExpanderHowToUseTheFunctionIgnoreSelectedText">Как использовать функцию 'Игнорировать выделенный текст'?</v:String>
     <v:String x:Key="TextBlockFollowTheseFourSimpleSteps">Выполните следующие четыре простых действия.</v:String>

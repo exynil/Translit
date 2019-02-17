@@ -26,32 +26,32 @@
 					<TextBlock
 						Margin="0,2"
 						Opacity=".68"
-						Text="{DynamicResource TextBlockWordDocuments}"
+						Text="{DynamicResource TextBlockWordDocumentsWithExtensions}"
 						TextWrapping="Wrap" />
 					<TextBlock
 						Margin="0,2"
 						Opacity=".68"
-						Text="{DynamicResource TextBlockExcelSpreadsheets}"
+						Text="{DynamicResource TextBlockExcelSpreadsheetsWithExtensions}"
 						TextWrapping="Wrap" />
 					<TextBlock
 						Margin="0,2"
 						Opacity=".68"
-						Text="{DynamicResource TextBlockPowerPointPresentations}"
+						Text="{DynamicResource TextBlockPowerPointPresentationsWithExtensions}"
 						TextWrapping="Wrap" />
 					<TextBlock
 						Margin="0,2"
 						Opacity=".68"
-						Text="{DynamicResource TextBlockPdfDocuments}"
+						Text="{DynamicResource TextBlockPdfDocumentsWithExtensions}"
 						TextWrapping="Wrap" />
 					<TextBlock
 						Margin="0,2"
 						Opacity=".68"
-						Text="{DynamicResource TextBlockRtfDocuments}"
+						Text="{DynamicResource TextBlockRtfDocumentsWithExtensions}"
 						TextWrapping="Wrap" />
 					<TextBlock
 						Margin="0,2"
 						Opacity=".68"
-						Text="{DynamicResource TextBlockTextDocuments}"
+						Text="{DynamicResource TextBlockTextDocumentsWithExtensions}"
 						TextWrapping="Wrap" />
 				</StackPanel>
 			</Expander>

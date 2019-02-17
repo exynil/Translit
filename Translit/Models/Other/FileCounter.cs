@@ -11,6 +11,11 @@ namespace Translit.Models.Other
         public long Rtf { get; set; }
         public long Txt { get; set; }
 
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
         public void IncreaseWord()
         {
             Word++;
@@ -48,6 +53,8 @@ namespace Translit.Models.Other
 
         public FileCounter Add(FileCounter counter)
         {
+            if (counter == null) return (FileCounter) Clone();
+
             Word += counter.Word;
             Excel += counter.Excel;
             PowerPoint += counter.PowerPoint;
@@ -55,28 +62,26 @@ namespace Translit.Models.Other
             Rtf += counter.Rtf;
             Txt += counter.Txt;
 
-            return (FileCounter)Clone();
+            return (FileCounter) Clone();
         }
 
         public FileCounter Subtract(FileCounter counter)
         {
+            if (counter == null) return (FileCounter)Clone();
+
             Word -= counter.Word;
             Excel -= counter.Excel;
             PowerPoint -= counter.PowerPoint;
             Pdf -= counter.Pdf;
             Rtf -= counter.Rtf;
             Txt -= counter.Txt;
-            return (FileCounter)Clone();
+
+            return (FileCounter) Clone();
         }
 
         public void Reset()
         {
             Word = Excel = PowerPoint = Pdf = Rtf = Txt = 0;
-        }
-
-        public object Clone()
-        {
-            return MemberwiseClone();
         }
     }
 }

@@ -8,7 +8,7 @@
     xmlns:other="clr-namespace:Translit.Models.Other"
     xmlns:pages="clr-namespace:Translit.ViewModels.Pages"
     Title="FileConverter"
-    d:DesignHeight="500"
+    d:DesignHeight="600"
     d:DesignWidth="600"
     other:DropBehavior.PreviewDropCommand="{Binding PreviewDropCommand}"
     AllowDrop="True"
@@ -24,79 +24,80 @@
         <pages:FileConverterViewModel />
     </Page.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <StackPanel
-            Grid.Row="0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-            <Label Margin="10" Content="{DynamicResource LabelDragFilesOrFolderHereForAQuickStart}" />
-            <WrapPanel HorizontalAlignment="Center">
-                <Button
-                    Margin="10"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Command="{Binding SelectFile}"
-                    Content="{DynamicResource ButtonSelectFile}" />
-                <Button
-                    Margin="10"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Command="{Binding SelectFolder}"
-                    Content="{DynamicResource ButtonSelectFolder}" />
-            </WrapPanel>
-            <CheckBox
-                Margin="10"
+        <DockPanel LastChildFill="True">
+            <GroupBox
+                Margin="16"
+                Background="WhiteSmoke"
+                DockPanel.Dock="Bottom"
+                Header="{Binding FileName}"
+                Style="{DynamicResource MaterialDesignCardGroupBox}"
+                Visibility="{Binding ProgressBarVisibility}">
+                <StackPanel>
+                    <TextBlock
+                        Margin="25,10"
+                        Text="{Binding Left}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Margin="25,10"
+                        Text="{Binding WordProgress}"
+                        TextWrapping="Wrap" />
+                    <ProgressBar
+                        Height="10"
+                        Margin="25,10"
+                        Value="{Binding PercentOfWords}" />
+                    <TextBlock
+                        Margin="25,10"
+                        Text="{Binding SymbolProgress}"
+                        TextWrapping="Wrap" />
+                    <ProgressBar
+                        Height="10"
+                        Margin="25,10"
+                        Value="{Binding PercentOfSymbols}" />
+                    <Button
+                        Margin="25,10"
+                        HorizontalAlignment="Center"
+                        Background="#FFFB7272"
+                        BorderBrush="#FFCF6060"
+                        Command="{Binding Stop}"
+                        Content="{DynamicResource ButtonStop}" />
+                </StackPanel>
+            </GroupBox>
+            <StackPanel
                 HorizontalAlignment="Center"
-                Content="{DynamicResource CheckBoxIgnoreSelectedText}"
-                IsChecked="{Binding IgnoreSelectedText}"
-                Style="{StaticResource MaterialDesignCheckBox}"
-                ToolTip="{DynamicResource ToolTipIgnoreSelectedText}" />
-
-        </StackPanel>
-        <GroupBox
-            Grid.Row="1"
-            Margin="16"
-            VerticalAlignment="Bottom"
-            Background="WhiteSmoke"
-            Header="{Binding FileName}"
-            Style="{DynamicResource MaterialDesignCardGroupBox}"
-            Visibility="{Binding ProgressBarVisibility}">
-            <StackPanel>
-                <TextBlock
-                    Margin="25,10"
-                    Text="{Binding Left}"
-                    TextWrapping="Wrap" />
-                <TextBlock
-                    Margin="25,10"
-                    Text="{Binding WordProgress}"
-                    TextWrapping="Wrap" />
-                <ProgressBar
-                    Height="12"
-                    Margin="25,10"
-                    Value="{Binding PercentOfWords}" />
-                <TextBlock
-                    Margin="25,10"
-                    Text="{Binding SymbolProgress}"
-                    TextWrapping="Wrap" />
-                <ProgressBar
-                    Height="12"
-                    Margin="25,10"
-                    Value="{Binding PercentOfSymbols}" />
-                <Button
-                    Margin="25,10"
+                VerticalAlignment="Center"
+                DockPanel.Dock="Top">
+                <Label Margin="10" Content="{DynamicResource LabelDragFilesOrFolderHereForAQuickStart}" />
+                <WrapPanel HorizontalAlignment="Center">
+                    <Button
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding SelectFile}"
+                        Content="{DynamicResource ButtonSelectFile}" />
+                    <Button
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding SelectFolder}"
+                        Content="{DynamicResource ButtonSelectFolder}" />
+                </WrapPanel>
+                <CheckBox
+                    Margin="10"
                     HorizontalAlignment="Center"
-                    Background="#FFFB7272"
-                    BorderBrush="#FFCF6060"
-                    Command="{Binding Stop}"
-                    Content="{DynamicResource ButtonStop}" />
+                    Content="{DynamicResource CheckBoxIgnoreSelectedText}"
+                    IsChecked="{Binding IgnoreSelectedText}"
+                    Style="{StaticResource MaterialDesignCheckBox}"
+                    ToolTip="{DynamicResource ToolTipIgnoreSelectedText}" />
+                <TextBlock
+                    Margin="95,0"
+                    FontSize="30"
+                    FontWeight="Bold"
+                    Text="{Binding TimeSpent}"
+                    TextWrapping="Wrap" />
             </StackPanel>
-        </GroupBox>
+        </DockPanel>
         <materialDesign:Snackbar
             x:Name="SnackbarNotification"
-            Grid.Row="1"
             HorizontalAlignment="Stretch"
             IsActive="False"
             MessageQueue="{Binding MessageQueue}" />

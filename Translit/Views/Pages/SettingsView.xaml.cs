@@ -1,10 +1,10 @@
 ﻿namespace Translit.Views.Pages
 {
-	public partial class SettingsView
-	{
-		public SettingsView()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class SettingsView
+    {
+        public SettingsView()
+        {
+            InitializeComponent();
+        }
+    }
 }

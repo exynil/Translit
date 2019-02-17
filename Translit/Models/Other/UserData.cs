@@ -9,18 +9,6 @@ namespace Translit.Models.Other
 {
     public class UserData : ICloneable
     {
-        public string Id { get; set; }
-        public string UserName { get; set; }
-        public string ComputerName { get; set; }
-        public bool PermissionToChange { get; set; }
-        public bool PermissionToUse { get; set; }
-        public Size PrimaryMonitorSize { get; set; }
-        public string MacAddress { get; set; }
-        public FileCounter Counter { get; set; }
-        public DateTime FirstUsedDate { get; set; }
-        public DateTime LastUsedDate { get; set; }
-        public string ProgramVersion { get; set; }
-
         public UserData()
         {
             Id = FingerPrint.Value();
@@ -33,6 +21,36 @@ namespace Translit.Models.Other
             Counter = new FileCounter();
             FirstUsedDate = LastUsedDate = DateTime.Now;
             ProgramVersion = GetProgramVersion();
+        }
+
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string ComputerName { get; set; }
+        public bool PermissionToChange { get; set; }
+        public bool PermissionToUse { get; set; }
+        public Size PrimaryMonitorSize { get; set; }
+        public string MacAddress { get; set; }
+        public FileCounter Counter { get; set; }
+        public DateTime FirstUsedDate { get; set; }
+        public DateTime LastUsedDate { get; set; }
+        public string ProgramVersion { get; set; }
+
+        public object Clone()
+        {
+            return new UserData
+            {
+                Id = Id,
+                UserName = UserName,
+                ComputerName = ComputerName,
+                PermissionToChange = PermissionToChange,
+                PermissionToUse = PermissionToUse,
+                PrimaryMonitorSize = PrimaryMonitorSize,
+                MacAddress = MacAddress,
+                Counter = (FileCounter) Counter.Clone(),
+                FirstUsedDate = FirstUsedDate,
+                LastUsedDate = LastUsedDate,
+                ProgramVersion = ProgramVersion
+            };
         }
 
         public void UpdateAllData()
@@ -54,37 +72,19 @@ namespace Translit.Models.Other
             foreach (var mo in moc)
             {
                 if (macAddress == string.Empty)
-                {
-                    if ((bool)mo["IPEnabled"]) macAddress = mo["MacAddress"].ToString();
-                }
+                    if ((bool) mo["IPEnabled"])
+                        macAddress = mo["MacAddress"].ToString();
                 mo.Dispose();
             }
+
             return macAddress;
         }
 
-        string GetProgramVersion()
+        private string GetProgramVersion()
         {
             var version = Assembly.GetExecutingAssembly().GetName().Version;
 
             return $"{version.Major}.{version.Minor} ({version.Build})";
-        }
-
-        public object Clone()
-        {
-            return new UserData
-            {
-                Id = Id,
-                UserName = UserName,
-                ComputerName = ComputerName,
-                PermissionToChange = PermissionToChange,
-                PermissionToUse = PermissionToUse,
-                PrimaryMonitorSize = PrimaryMonitorSize,
-                MacAddress = MacAddress,
-                Counter = (FileCounter)Counter.Clone(),
-                FirstUsedDate = FirstUsedDate,
-                LastUsedDate = LastUsedDate,
-                ProgramVersion = ProgramVersion
-            };
         }
     }
 }

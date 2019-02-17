@@ -1,6 +1,4 @@
-﻿using LiteDB;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
@@ -8,138 +6,130 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using LiteDB;
+using Newtonsoft.Json;
 using Translit.Models.Other;
 using Translit.Properties;
 
 namespace Translit.Models.Pages
 {
     public class SymbolsEditorModel : ISymbolsEditorModel
-	{
-		public string ReasonPhrase { get; set; }
-		public string ConnectionString { get; }
-
-		public SymbolsEditorModel()
-		{
-			ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
-		    if (User.Token != null)
-		    {
-		        JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
-		    }
+    {
+        public SymbolsEditorModel()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+            if (User.Token != null)
+                JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
         }
 
-		// Получение коллекции символов из базы
-		public ObservableCollection<Symbol> GetSymbolsFromDatabase()
-		{
-			if (!File.Exists(ConnectionString)) return null;
+        public string ConnectionString { get; }
+        public string ReasonPhrase { get; set; }
 
-			using (var db = new LiteDatabase(ConnectionString))
-			{
-				var temp = db.GetCollection<Symbol>("Symbols").FindAll().ToList();
-				return new ObservableCollection<Symbol>(temp);
-			}
-		}
+        // Получение коллекции символов из базы
+        public ObservableCollection<Symbol> GetSymbolsFromDatabase()
+        {
+            if (!File.Exists(ConnectionString)) return null;
 
-		// Проверка длины допустимого значения
-		public bool CheckSymbolsLength(string cyryllic, string latin)
-		{
-			return !(cyryllic?.Length > 5) && !(latin?.Length > 5);
-		}
+            using (var db = new LiteDatabase(ConnectionString))
+            {
+                var temp = db.GetCollection<Symbol>("Symbols").FindAll().ToList();
+                return new ObservableCollection<Symbol>(temp);
+            }
+        }
 
-		// Добавление символа в глобальную базу
-		public async Task AddSymbol(string cyryllic, string latin)
-		{
-			const string link = "http://translit.osmium.kz/api/symbol?";
+        // Проверка длины допустимого значения
+        public bool CheckSymbolsLength(string cyryllic, string latin)
+        {
+            return !(cyryllic?.Length > 5) && !(latin?.Length > 5);
+        }
 
-			var client = new HttpClient();
+        // Добавление символа в глобальную базу
+        public async Task AddSymbol(string cyryllic, string latin)
+        {
+            const string link = "http://translit.osmium.kz/api/symbol?";
 
-			// Создаем параметры
-			var content = new FormUrlEncodedContent(new Dictionary<string, string>
-			{
-				{"token", User.Token},
-				{"cyrl", cyryllic},
-				{"latn", latin}
-			});
+            var client = new HttpClient();
 
-			//Выполняем запрос
-			var response = await client.PostAsync(link, content);
+            // Создаем параметры
+            var content = new FormUrlEncodedContent(new Dictionary<string, string>
+            {
+                {"token", User.Token},
+                {"cyrl", cyryllic},
+                {"latn", latin}
+            });
 
-			// Полученный ответ десериализуем в объект Word
-			var addedSymbol = JsonConvert.DeserializeObject<Symbol>(await response.Content.ReadAsStringAsync());
+            //Выполняем запрос
+            var response = await client.PostAsync(link, content);
 
-			// Выполняем следующие действия взамисимости от ответа сервера
-			if (response.StatusCode == HttpStatusCode.Created)
-			{
-				// Добавляем слово в локальную базу
-				using (var db = new LiteDatabase(ConnectionString))
-				{
-					var symbols = db.GetCollection<Symbol>("Symbols");
-					symbols.Insert(addedSymbol);
-				}
-			}
+            // Полученный ответ десериализуем в объект Word
+            var addedSymbol = JsonConvert.DeserializeObject<Symbol>(await response.Content.ReadAsStringAsync());
 
-			ReasonPhrase = response.ReasonPhrase;
-		}
+            // Выполняем следующие действия взамисимости от ответа сервера
+            if (response.StatusCode == HttpStatusCode.Created)
+                using (var db = new LiteDatabase(ConnectionString))
+                {
+                    var symbols = db.GetCollection<Symbol>("Symbols");
+                    symbols.Insert(addedSymbol);
+                }
 
-		public async Task EditSymbol(int id, string cyryllic, string latin)
-		{
-			const string link = "http://translit.osmium.kz/api/symbol?";
+            ReasonPhrase = response.ReasonPhrase;
+        }
 
-			var client = new HttpClient();
+        public async Task EditSymbol(int id, string cyryllic, string latin)
+        {
+            const string link = "http://translit.osmium.kz/api/symbol?";
 
-			// Создаем параметры
-			var values = new Dictionary<string, string>
-			{
-				{"token", User.Token},
-				{"id", id.ToString() }
-			};
+            var client = new HttpClient();
 
-			if (cyryllic != null) values.Add("cyrl", cyryllic);
-			if (latin != null) values.Add("latn", latin);
+            // Создаем параметры
+            var values = new Dictionary<string, string>
+            {
+                {"token", User.Token},
+                {"id", id.ToString()}
+            };
 
-			var content = new FormUrlEncodedContent(values);
+            if (cyryllic != null) values.Add("cyrl", cyryllic);
+            if (latin != null) values.Add("latn", latin);
 
-			// Выполняем запрос
-			var response = await client.PutAsync(link, content);
+            var content = new FormUrlEncodedContent(values);
 
-			if (response.StatusCode == HttpStatusCode.OK)
-			{
-				// Изменяем слово в локальной базе
-				using (var db = new LiteDatabase(ConnectionString))
-				{
-					var symbols = db.GetCollection<Symbol>("Symbols");
-					var symbol = symbols.FindById(id);
-					if (cyryllic != null) symbol.Cyryllic = cyryllic;
-					if (latin != null) symbol.Latin = latin;
-					symbols.Update(symbol);
-				}
-			}
+            // Выполняем запрос
+            var response = await client.PutAsync(link, content);
 
-			ReasonPhrase = response.ReasonPhrase;
-		}
+            if (response.StatusCode == HttpStatusCode.OK)
+                using (var db = new LiteDatabase(ConnectionString))
+                {
+                    var symbols = db.GetCollection<Symbol>("Symbols");
+                    var symbol = symbols.FindById(id);
+                    if (cyryllic != null) symbol.Cyryllic = cyryllic;
+                    if (latin != null) symbol.Latin = latin;
+                    symbols.Update(symbol);
+                }
 
-		public void DeleteSymbol(int id)
-		{
-			// Строим адрес
-			var link = $"http://translit.osmium.kz/api/symbol?token={User.Token}&id={id}";
+            ReasonPhrase = response.ReasonPhrase;
+        }
 
-			var client = new HttpClient();
+        public void DeleteSymbol(int id)
+        {
+            // Строим адрес
+            var link = $"http://translit.osmium.kz/api/symbol?token={User.Token}&id={id}";
 
-			// Выполняем запрос
-			var response = client.DeleteAsync(link).Result;
+            var client = new HttpClient();
 
-			// Выполняем следующие действия взамисимости от ответа сервера
-			if (response.StatusCode == HttpStatusCode.OK)
-			{
-				using (var db = new LiteDatabase(ConnectionString))
-				{
-					// Получаем коллекцию Words
-					var symbols = db.GetCollection<Symbol>("Symbols");
-					// Удаляем выбранный Id
-					symbols.Delete(id);
-				}
-			}
+            // Выполняем запрос
+            var response = client.DeleteAsync(link).Result;
 
-			ReasonPhrase = response.ReasonPhrase;
-		}
-	}
+            // Выполняем следующие действия взамисимости от ответа сервера
+            if (response.StatusCode == HttpStatusCode.OK)
+                using (var db = new LiteDatabase(ConnectionString))
+                {
+                    // Получаем коллекцию Words
+                    var symbols = db.GetCollection<Symbol>("Symbols");
+                    // Удаляем выбранный Id
+                    symbols.Delete(id);
+                }
+
+            ReasonPhrase = response.ReasonPhrase;
+        }
+    }
 }

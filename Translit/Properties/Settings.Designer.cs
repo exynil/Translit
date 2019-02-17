@@ -26,12 +26,12 @@ namespace Translit.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AutoSave {
+        public bool TransliterateToAnotherFile {
             get {
-                return ((bool)(this["AutoSave"]));
+                return ((bool)(this["TransliterateToAnotherFile"]));
             }
             set {
-                this["AutoSave"] = value;
+                this["TransliterateToAnotherFile"] = value;
             }
         }
         
@@ -128,6 +128,18 @@ namespace Translit.Properties {
             }
             set {
                 this["User"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SoundNotification {
+            get {
+                return ((bool)(this["SoundNotification"]));
+            }
+            set {
+                this["SoundNotification"] = value;
             }
         }
     }

@@ -11,53 +11,50 @@ namespace Translit
 {
     public partial class App
     {
-		public App()
-		{
-			InitializeComponent();
+        public App()
+        {
+            InitializeComponent();
         }
 
-		public static CultureInfo Language
-		{
-			get => Thread.CurrentThread.CurrentUICulture;
-			set
-			{
-				// Меняем язык приложения:
-				Thread.CurrentThread.CurrentUICulture = value;
+        public static CultureInfo Language
+        {
+            get => Thread.CurrentThread.CurrentUICulture;
+            set
+            {
+                // Меняем язык приложения:
+                Thread.CurrentThread.CurrentUICulture = value;
 
-				// Создаём ResourceDictionary для новой культуры
-				var dict = new ResourceDictionary
-				{
-					Source = new Uri($"Resources/Languages/language.{value.Name}.xaml", UriKind.Relative)
-				};
+                // Создаём ResourceDictionary для новой культуры
+                var dict = new ResourceDictionary
+                {
+                    Source = new Uri($"Resources/Languages/language.{value.Name}.xaml", UriKind.Relative)
+                };
 
-				Current.Resources.MergedDictionaries.Add(dict);
-			}
-		}
+                Current.Resources.MergedDictionaries.Add(dict);
+            }
+        }
 
-		private void App_OnExit(object sender, ExitEventArgs e)
-		{
+        private void App_OnExit(object sender, ExitEventArgs e)
+        {
             Analytics.SaveLocalAndUnsentUserData();
             Settings.Default.Save();
-		}
+        }
 
-	    private void App_OnStartup(object sender, StartupEventArgs e)
-	    {
+        private void App_OnStartup(object sender, StartupEventArgs e)
+        {
             Language = Settings.Default.DefaultLanguage;
 
-	        if (File.Exists(@"Translit.zip"))
-	        {
-	            try
-	            {
-                    Process.Start(@"Updater.exe");
-	                Environment.Exit(0);
-	            }
-	            catch (Exception)
-	            {
-	                // ignored
-	            }
-	        }
+            if (!File.Exists(@"Translit.zip")) return;
 
-            Analytics.Start();
+            try
+            {
+                Process.Start(@"Updater.exe");
+                Environment.Exit(0);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
-	}
+    }
 }

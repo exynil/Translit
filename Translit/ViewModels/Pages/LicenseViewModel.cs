@@ -4,31 +4,33 @@ using Translit.Models.Pages;
 
 namespace Translit.ViewModels.Pages
 {
-	class LicenseViewModel : INotifyPropertyChanged
-	{
-		private string _license;
-		public event PropertyChangedEventHandler PropertyChanged;
-		public LicenseModel Model { get; set; }
+    internal class LicenseViewModel : INotifyPropertyChanged
+    {
+        private string _license;
 
-		public string License
-		{
-			get => _license;
-			set
-			{
-				_license = value;
-				OnPropertyChanged();
-			}
-		}
+        public LicenseViewModel()
+        {
+            Model = new LicenseModel();
+            License = Model.ReadLicense();
+        }
 
-		public LicenseViewModel()
-		{
-			Model = new LicenseModel();
-			License = Model.ReadLicense();
-		}
+        public LicenseModel Model { get; set; }
 
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
+        public string License
+        {
+            get => _license;
+            set
+            {
+                _license = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
 }

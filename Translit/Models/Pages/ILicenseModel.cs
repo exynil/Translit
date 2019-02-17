@@ -1,7 +1,7 @@
 ﻿namespace Translit.Models.Pages
 {
-	interface ILicenseModel
-	{
-		string ReadLicense();
-	}
+    internal interface ILicenseModel
+    {
+        string ReadLicense();
+    }
 }

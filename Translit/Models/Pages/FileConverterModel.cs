@@ -200,7 +200,9 @@ namespace Translit.Models.Pages
                 nodes = rNodes.Descendants().Where(n => n.Name.LocalName == "t").ToList();
             }
             else
+            {
                 nodes = doc.Descendants().Where(n => n.Name.LocalName == "t").ToList();
+            }
 
             using (var db = new LiteDatabase(ConnectionString))
             {

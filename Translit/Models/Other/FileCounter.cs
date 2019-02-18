@@ -67,7 +67,7 @@ namespace Translit.Models.Other
 
         public FileCounter Subtract(FileCounter counter)
         {
-            if (counter == null) return (FileCounter)Clone();
+            if (counter == null) return (FileCounter) Clone();
 
             Word -= counter.Word;
             Excel -= counter.Excel;

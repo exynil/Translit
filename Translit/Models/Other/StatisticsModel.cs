@@ -1,17 +1,18 @@
-﻿using LiteDB;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Linq;
+using LiteDB;
 
 namespace Translit.Models.Other
 {
     public class StatisticsModel
     {
-        public string ConnectionString { get; set; }
-
         public StatisticsModel()
         {
             ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
         }
+
+        public string ConnectionString { get; set; }
+
         public UserData GetLocalUserData()
         {
             using (var db = new LiteDatabase(ConnectionString))

@@ -1,5 +1,4 @@
-﻿using MaterialDesignThemes.Wpf;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -11,6 +10,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
+using MaterialDesignThemes.Wpf;
 using Translit.Models.Other;
 using Translit.Models.Pages;
 using Translit.Properties;
@@ -33,8 +33,8 @@ namespace Translit.ViewModels.Pages
         private ICommand _previewDropCommand;
         private Visibility _progressBarVisibility;
         private string _symbolProgress;
-        private string _wordProgress;
         private string _timeSpent;
+        private string _wordProgress;
 
         public FileConverterViewModel()
         {
@@ -54,6 +54,7 @@ namespace Translit.ViewModels.Pages
 
         public DispatcherTimer Timer { get; set; }
         public Stopwatch Stopwatch { get; set; }
+
         public string TimeSpent
         {
             get => _timeSpent;
@@ -214,7 +215,7 @@ namespace Translit.ViewModels.Pages
                         Stopwatch.Reset();
                         Stopwatch.Start();
 
-                        var success = Model.TranslitFiles(new[] { dlg.FileName }, IgnoreSelectedText);
+                        var success = Model.TranslitFiles(new[] {dlg.FileName}, IgnoreSelectedText);
 
                         Stopwatch.Stop();
                         Timer.Stop();
@@ -232,6 +233,7 @@ namespace Translit.ViewModels.Pages
                         {
                             MessageQueue.Enqueue(GetRes("SnackBarStoppedByUser"));
                         }
+
                         GC.Collect();
                         GC.WaitForPendingFinalizers();
                     });
@@ -312,6 +314,7 @@ namespace Translit.ViewModels.Pages
                             {
                                 MessageQueue.Enqueue(GetRes("SnackBarStoppedByUser"));
                             }
+
                             GC.Collect();
                             GC.WaitForPendingFinalizers();
                         });
@@ -409,6 +412,7 @@ namespace Translit.ViewModels.Pages
                     {
                         MessageQueue.Enqueue(GetRes("SnackBarStoppedByUser"));
                     }
+
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                 });
@@ -456,6 +460,7 @@ namespace Translit.ViewModels.Pages
                     {
                         MessageQueue.Enqueue(GetRes("SnackBarStoppedByUser"));
                     }
+
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                 });

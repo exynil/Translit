@@ -1,19 +1,26 @@
-﻿using MaterialDesignThemes.Wpf;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
+using MaterialDesignThemes.Wpf;
 using Translit.Models.Other;
 using Translit.Models.Pages;
-using Application = System.Windows.Application;
 
 namespace Translit.ViewModels.Pages
 {
-    class BackgroundConverterViewModel : INotifyPropertyChanged
+    internal class BackgroundConverterViewModel : INotifyPropertyChanged
     {
         private string _activatorContent;
+
+        public BackgroundConverterViewModel()
+        {
+            Model = new BackgroundConverterModel();
+            MessageQueue = new SnackbarMessageQueue();
+            ActivatorContent = GetRes(Model.IsTransliteratorEnabled ? "ButtonDeactivate" : "ButtonActivate");
+        }
+
         public BackgroundConverterModel Model { get; set; }
         public SnackbarMessageQueue MessageQueue { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public string ActivatorContent
         {
@@ -23,18 +30,6 @@ namespace Translit.ViewModels.Pages
                 _activatorContent = value;
                 OnPropertyChanged();
             }
-        }
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public BackgroundConverterViewModel()
-        {
-            Model = new BackgroundConverterModel();
-            MessageQueue = new SnackbarMessageQueue();
-            ActivatorContent = GetRes(Model.IsTransliteratorEnabled ? "ButtonDeactivate" : "ButtonActivate");
         }
 
         public ICommand ActivateOrDeactivate
@@ -57,6 +52,13 @@ namespace Translit.ViewModels.Pages
                     }
                 });
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private string GetRes(string key)

@@ -90,10 +90,9 @@ namespace Translit.Models.Other
                     // Сохраняем локальную и не отправленную аналитику
                     SaveLocalAndUnsentUserData();
                 }
-                else if(LoadCloudUserData())
+                else if (LoadCloudUserData())
                 {
-                    
-                   SendUserData();
+                    SendUserData();
                 }
                 else
                 {

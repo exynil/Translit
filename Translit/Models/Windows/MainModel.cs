@@ -1,9 +1,4 @@
-﻿using FireSharp;
-using FireSharp.Config;
-using FireSharp.Interfaces;
-using LiteDB;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
@@ -13,6 +8,11 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using FireSharp;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using LiteDB;
+using Newtonsoft.Json;
 using Translit.Models.Other;
 using Translit.Properties;
 

@@ -1,24 +1,21 @@
-﻿using Gma.System.MouseKeyHook;
-using LiteDB;
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.Windows.Automation;
 using System.Windows.Forms;
-using Translit.Models.Other;
 using WindowsInput;
 using WindowsInput.Native;
+using Gma.System.MouseKeyHook;
+using LiteDB;
+using Translit.Models.Other;
 
 namespace Translit.Models.Pages
 {
-    class BackgroundConverterModel
+    internal class BackgroundConverterModel
     {
         public readonly IKeyboardMouseEvents GlobalHook;
-        public StringBuilder InputString { get; set; }
-        public InputSimulator Simulator { get; set; }
-        public bool IsTransliteratorEnabled { get; set; }
-        public Word[] Words;
         public Symbol[] Symbols;
+        public Word[] Words;
 
         public BackgroundConverterModel()
         {
@@ -32,6 +29,10 @@ namespace Translit.Models.Pages
                 Symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
             }
         }
+
+        public StringBuilder InputString { get; set; }
+        public InputSimulator Simulator { get; set; }
+        public bool IsTransliteratorEnabled { get; set; }
 
         private void GlobalHookKeyDown(object sender, KeyEventArgs e)
         {
@@ -60,21 +61,16 @@ namespace Translit.Models.Pages
                     var element = AutomationElement.FocusedElement;
 
                     if (element != null)
-                    {
                         if (element.TryGetCurrentPattern(TextPattern.Pattern, out var pattern))
                         {
-                            var tp = (TextPattern)pattern;
+                            var tp = (TextPattern) pattern;
 
                             InputString.Clear();
 
-                            foreach (var r in tp.GetSelection())
-                            {
-                                InputString.Append(r.GetText(-1));
-                            }
+                            foreach (var r in tp.GetSelection()) InputString.Append(r.GetText(-1));
 
                             TransliterateInputString(false);
                         }
-                    }
                 }
                 catch (Exception)
                 {
@@ -88,7 +84,6 @@ namespace Translit.Models.Pages
         private void TransliterateInputString(bool simulateBackspace)
         {
             foreach (var w in Words)
-            {
                 for (var j = 0; j < 3; j++)
                 {
                     var cyryllic = w.Cyryllic;
@@ -112,17 +107,12 @@ namespace Translit.Models.Pages
 
                     InputString.Replace(cyryllic, latin);
                 }
-            }
 
             Symbols.Aggregate(InputString, (current, s) => current.Replace(s.Cyryllic, s.Latin));
 
             if (simulateBackspace)
-            {
                 for (var i = 0; i < InputString.Length; i++)
-                {
                     Simulator.Keyboard.KeyDown(VirtualKeyCode.BACK).Sleep(10);
-                }
-            }
 
             Simulator.Keyboard.TextEntry(InputString.ToString());
 
@@ -131,10 +121,7 @@ namespace Translit.Models.Pages
 
         private void GlobalHookKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar != '\b')
-            {
-                InputString.Append(e.KeyChar);
-            }
+            if (e.KeyChar != '\b') InputString.Append(e.KeyChar);
         }
 
         public void Subscribe()

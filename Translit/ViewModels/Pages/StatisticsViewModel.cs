@@ -1,16 +1,15 @@
-﻿using MaterialDesignThemes.Wpf;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using MaterialDesignThemes.Wpf;
 using Translit.Models.Other;
 
 namespace Translit.ViewModels.Pages
 {
     internal class StatisticsViewModel : INotifyPropertyChanged
     {
-        public StatisticsModel Model { get; set; }
         private Dictionary<string, string> _statistics;
 
         public StatisticsViewModel()
@@ -22,6 +21,8 @@ namespace Translit.ViewModels.Pages
 
             UpdateStatistics();
         }
+
+        public StatisticsModel Model { get; set; }
 
         public SnackbarMessageQueue MessageQueue { get; set; }
 
@@ -48,10 +49,12 @@ namespace Translit.ViewModels.Pages
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public void UpdateStatistics()
         {
             var counter = new FileCounter();
-            
+
             counter.Add(Model.GetLocalUserData().Counter);
 
             counter.Add(Model.GetUnsentUserData().Counter);
@@ -66,10 +69,7 @@ namespace Translit.ViewModels.Pages
                 [GetRes("TextBlockTextDocuments")] = counter.Txt.ToString(),
                 [GetRes("TextBlockTotal")] = counter.GetSum().ToString()
             };
-
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

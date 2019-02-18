@@ -13,7 +13,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using Translit.Models.Other;
 using Translit.Properties;
 
@@ -21,10 +20,8 @@ namespace Translit.Models.Windows
 {
     internal class MainModel : IMainModel
     {
-        public DispatcherTimer Timer { get; set; }
         public MainModel()
         {
-            Timer = new DispatcherTimer();
             ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
 
             JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));

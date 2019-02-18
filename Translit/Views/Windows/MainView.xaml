@@ -48,6 +48,11 @@
                                 <materialDesign:PackIcon Kind="FormatText" />
                             </MenuItem.Icon>
                         </MenuItem>
+                        <MenuItem Command="{Binding OpenBackgroundConverter}" Header="{DynamicResource MenuItemBackgroundConverter}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Kind="Flash" />
+                            </MenuItem.Icon>
+                        </MenuItem>
                         <MenuItem Command="{Binding OpenSettings}" Header="{DynamicResource MenuItemSettings}">
                             <MenuItem.Icon>
                                 <materialDesign:PackIcon Kind="Settings" />

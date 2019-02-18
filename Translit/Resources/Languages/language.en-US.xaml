@@ -9,6 +9,7 @@
     <v:String x:Key="MenuItemReference">Reference</v:String>
     <v:String x:Key="MenuItemFileConverter">File Converter</v:String>
     <v:String x:Key="MenuItemTextConverter">Text Converter</v:String>
+    <v:String x:Key="MenuItemBackgroundConverter">Background Converter</v:String>
     <v:String x:Key="MenuItemWords">Words</v:String>
     <v:String x:Key="MenuItemSymbols">Symbols</v:String>
     <v:String x:Key="MenuItemSettings">Settings</v:String>
@@ -45,6 +46,17 @@
     <v:String x:Key="ButtonClear">Clear</v:String>
     <v:String x:Key="ButtonCopy">Copy</v:String>
     <v:String x:Key="SliderFontSize">Font Size</v:String>
+
+    <!--  Page Background Converter  -->
+    <v:String x:Key="ButtonActivate">Activate</v:String>
+    <v:String x:Key="ButtonDeactivate">Deactivate</v:String>
+    <v:String x:Key="SnackBarBackgroundTransliteratorActivated">Background transliterator activated</v:String>
+    <v:String x:Key="SnackBarBackgroundTransliteratorDeactivated">Background transliterator deactivated</v:String>
+    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Background converter allows you to transliterate typed text in other programs on the fly</v:String>
+    <v:String x:Key="TextBlockActivateBackgroundConverter">1) Activate background converter</v:String>
+    <v:String x:Key="TextBlockGoToTheDesiredProgram">2) Go to the desired program</v:String>
+    <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Enter some text or word</v:String>
+    <v:String x:Key="TextBlockPressThePauseBreakKey">4) Press the &quot;Pause Break&quot; key</v:String>
 
     <!--  Page SymbolsEditor and WordsEditor  -->
     <v:String x:Key="ToolTipAdd">Add</v:String>

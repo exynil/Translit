@@ -9,6 +9,7 @@
     <v:String x:Key="MenuItemReference">Анықтама</v:String>
     <v:String x:Key="MenuItemFileConverter">Файлдық конвертер</v:String>
     <v:String x:Key="MenuItemTextConverter">Мәтіндік конвертер</v:String>
+    <v:String x:Key="MenuItemBackgroundConverter">Фондық конвертер</v:String>
     <v:String x:Key="MenuItemWords">Сөздер</v:String>
     <v:String x:Key="MenuItemSymbols">Таңбалар</v:String>
     <v:String x:Key="MenuItemSettings">Қолданбалар</v:String>
@@ -45,6 +46,17 @@
     <v:String x:Key="ButtonClear">Тазалау</v:String>
     <v:String x:Key="ButtonCopy">Көшіру</v:String>
     <v:String x:Key="SliderFontSize">Қаріп өлшемі</v:String>
+
+    <!--  Page Background Converter  -->
+    <v:String x:Key="ButtonActivate">Іске қосу</v:String>
+    <v:String x:Key="ButtonDeactivate">Өшіру</v:String>
+    <v:String x:Key="SnackBarBackgroundTransliteratorActivated">Фондық транслитератор белсендірілген</v:String>
+    <v:String x:Key="SnackBarBackgroundTransliteratorDeactivated">Фондық транслитератор белсендірілген</v:String>
+    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Фонды түрлендіргіш сізге басқа бағдарламаларда жазылған мәтінді транслирлеуге мүмкіндік береді</v:String>
+    <v:String x:Key="TextBlockActivateBackgroundConverter">1) Фонды түрлендіргішті іске қосыңыз</v:String>
+    <v:String x:Key="TextBlockGoToTheDesiredProgram">2) Қалаған бағдарламаға өтіңіз</v:String>
+    <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Кейбір мәтінді немесе сөзді енгізіңіз</v:String>
+    <v:String x:Key="TextBlockPressThePauseBreakKey">4) &quot;Pause Break&quot; пернесін басыңыз</v:String>
 
     <!--  Page SymbolsEditor and WordsEditor  -->
     <v:String x:Key="ToolTipAdd">Қосу</v:String>

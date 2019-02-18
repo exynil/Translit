@@ -45,6 +45,7 @@ namespace Translit.ViewModels.Windows
         public MainModel Model { get; set; }
         public Page FileConverterView { get; set; }
         public Page TextConverterView { get; set; }
+        public Page BackgroundConverterView { get; set; }
         public Page SymbolsEditorView { get; set; }
         public Page WordsEditorView { get; set; }
         public Page SettingsView { get; set; }
@@ -160,6 +161,20 @@ namespace Translit.ViewModels.Windows
 
                     CurrentPage = TextConverterView;
                     CurrentPageName = GetRes("MenuItemTextConverter");
+                });
+            }
+        }
+
+        public ICommand OpenBackgroundConverter
+        {
+            get
+            {
+                return new DelegateCommand(o =>
+                {
+                    if (BackgroundConverterView == null) BackgroundConverterView = new BackgroundConverterView();
+
+                    CurrentPage = BackgroundConverterView;
+                    CurrentPageName = GetRes("MenuItemBackgroundConverter");
                 });
             }
         }

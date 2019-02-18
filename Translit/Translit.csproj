@@ -46,6 +46,9 @@
     <Reference Include="FireSharp, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FireSharp.2.0.4\lib\portable-net45+sl5+wp8+win8\FireSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
+    </Reference>
     <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
     </Reference>
@@ -110,9 +113,14 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsInput, Version=1.0.4.0, Culture=neutral, PublicKeyToken=9b287f7dc5073cad, processorArchitecture=MSIL">
+      <HintPath>..\packages\InputSimulator.1.0.4.0\lib\net20\WindowsInput.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -131,6 +139,7 @@
     <Compile Include="Models\Other\ProgramUrl.cs" />
     <Compile Include="Models\Other\User.cs" />
     <Compile Include="Models\Other\Word.cs" />
+    <Compile Include="Models\Pages\BackgroundConverterModel.cs" />
     <Compile Include="Models\Pages\DatabaseModel.cs" />
     <Compile Include="Models\Pages\FileConverterModel.cs" />
     <Compile Include="Models\Pages\IDatabaseModel.cs" />
@@ -146,6 +155,7 @@
     <Compile Include="Models\Windows\IMainModel.cs" />
     <Compile Include="Models\Windows\MainModel.cs" />
     <Compile Include="ViewModels\Pages\AboutViewModel.cs" />
+    <Compile Include="ViewModels\Pages\BackgroundConverterViewModel.cs" />
     <Compile Include="ViewModels\Pages\DatabaseViewModel.cs" />
     <Compile Include="ViewModels\Pages\FileConverterViewModel.cs" />
     <Compile Include="ViewModels\Pages\LicenseViewModel.cs" />
@@ -162,6 +172,9 @@
     </Compile>
     <Compile Include="Views\Pages\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\BackgroundConverterView.xaml.cs">
+      <DependentUpon>BackgroundConverterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\DatabaseView.xaml.cs">
       <DependentUpon>DatabaseView.xaml</DependentUpon>
@@ -221,6 +234,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\BackgroundConverterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

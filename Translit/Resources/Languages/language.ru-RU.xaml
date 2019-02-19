@@ -52,7 +52,7 @@
     <v:String x:Key="ButtonDeactivate">Деактивировать</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorActivated">Фоновый транслитератор активирован</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorDeactivated">Фоновый транслитератор деактивирован</v:String>
-    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Фоновый конвертер позволяет вам на лету транслитерировать набранный текст в других программах</v:String>
+    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Фоновый конвертер позволяет вам сразу транслитерировать набранный текст в других программах</v:String>
     <v:String x:Key="TextBlockActivateBackgroundConverter">1) Активируйте фоновый конвертер</v:String>
     <v:String x:Key="TextBlockGoToTheDesiredProgram">2) Перейдите в нужную программу</v:String>
     <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Введите какой-нибудь текст или слово</v:String>

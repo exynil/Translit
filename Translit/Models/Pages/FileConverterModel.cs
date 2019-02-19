@@ -705,10 +705,10 @@ namespace Translit.Models.Pages
             var powerPoint = new Microsoft.Office.Interop.PowerPoint.Application();
             var presentation = powerPoint.Presentations.Open(filename, WithWindow: MsoTriState.msoFalse);
             presentation.SaveAs(newFileName, PpSaveAsFileType.ppSaveAsOpenXMLPresentation);
+            presentation.Close();
 
             // Код вызывает нежелательное поведение, закрывает во время работы другие документы PowerPoint
-            // powerPoint.ActivePresentation.Close();
-            // powerPoint.Quit();
+            //powerPoint.Quit();
 
             if (!Settings.Default.TransliterateToAnotherFile) File.Delete(filename);
 

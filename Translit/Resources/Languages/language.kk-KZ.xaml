@@ -52,7 +52,7 @@
     <v:String x:Key="ButtonDeactivate">Өшіру</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorActivated">Фондық транслитератор белсендірілген</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorDeactivated">Фондық транслитератор белсендірілген</v:String>
-    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Фонды түрлендіргіш сізге басқа бағдарламаларда жазылған мәтінді транслирлеуге мүмкіндік береді</v:String>
+    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Фон конвертері басқа бағдарламаларда терілген мәтінді дереу транслитирлеуге мүмкіндік береді</v:String>
     <v:String x:Key="TextBlockActivateBackgroundConverter">1) Фонды түрлендіргішті іске қосыңыз</v:String>
     <v:String x:Key="TextBlockGoToTheDesiredProgram">2) Қалаған бағдарламаға өтіңіз</v:String>
     <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Кейбір мәтінді немесе сөзді енгізіңіз</v:String>

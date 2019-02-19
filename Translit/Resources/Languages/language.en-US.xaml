@@ -52,7 +52,7 @@
     <v:String x:Key="ButtonDeactivate">Deactivate</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorActivated">Background transliterator activated</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorDeactivated">Background transliterator deactivated</v:String>
-    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Background converter allows you to transliterate typed text in other programs on the fly</v:String>
+    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Background converter allows you to immediately transliterate typed text in other programs</v:String>
     <v:String x:Key="TextBlockActivateBackgroundConverter">1) Activate background converter</v:String>
     <v:String x:Key="TextBlockGoToTheDesiredProgram">2) Go to the desired program</v:String>
     <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Enter some text or word</v:String>

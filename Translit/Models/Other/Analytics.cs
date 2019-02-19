@@ -76,7 +76,6 @@ namespace Translit.Models.Other
                     }
                     catch (Exception)
                     {
-                        Debug.WriteLine("Отправить данные не удалось!");
                         Online = false;
                         SaveLocalAndUnsentUserData();
                         CloudUserData.Counter.Subtract(UnsentUserData.Counter);

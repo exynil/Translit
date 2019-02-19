@@ -1,12 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FireSharp;
 using FireSharp.Config;
@@ -208,6 +210,8 @@ namespace Translit.Models.Windows
         {
             Task.Factory.StartNew(() =>
             {
+                // Ждем 10 секунд пока загрузятся облачная аналитика
+                Thread.Sleep(10000);
                 using (var db = new LiteDatabase(ConnectionString))
                 {
                     var analytics = db.GetCollection<UserData>("Analytics");
@@ -216,7 +220,6 @@ namespace Translit.Models.Windows
                     if (localUserData == null) return;
 
                     if (localUserData.PermissionToUse) return;
-
                     Environment.Exit(0);
                 }
             });

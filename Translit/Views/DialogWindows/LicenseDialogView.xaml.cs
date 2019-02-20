@@ -13,6 +13,13 @@ namespace Translit.Views.DialogWindows
     {
         private string _license;
 
+        public LicenseDialogView()
+        {
+            InitializeComponent();
+            DataContext = this;
+            License = ReadLicense();
+        }
+
         public string License
         {
             get => _license;
@@ -23,12 +30,17 @@ namespace Translit.Views.DialogWindows
             }
         }
 
-        public LicenseDialogView()
+        public ICommand Accept
         {
-            InitializeComponent();
-            DataContext = this;
-            License = ReadLicense();
+            get { return new DelegateCommand(o => { DialogResult = true; }); }
         }
+
+        public ICommand Reject
+        {
+            get { return new DelegateCommand(o => { DialogResult = false; }); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public string ReadLicense()
         {
@@ -42,30 +54,6 @@ namespace Translit.Views.DialogWindows
                 return reader.ReadToEnd();
             }
         }
-
-        public ICommand Accept
-        {
-            get
-            {
-                return new DelegateCommand(o =>
-                {
-                    DialogResult = true;
-                });
-            }
-        }
-
-        public ICommand Reject
-        {
-            get
-            {
-                return new DelegateCommand(o =>
-                {
-                    DialogResult = false;
-                });
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

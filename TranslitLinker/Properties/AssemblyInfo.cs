@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+
 [assembly: AssemblyTitle("TranslitLinker")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]

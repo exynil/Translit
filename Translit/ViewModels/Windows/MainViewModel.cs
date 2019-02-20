@@ -35,13 +35,9 @@ namespace Translit.ViewModels.Windows
                 var licenseDialogView = new LicenseDialogView();
 
                 if (licenseDialogView.ShowDialog() == true)
-                {
                     Settings.Default.LicenseAcceptance = true;
-                }
                 else
-                {
                     Environment.Exit(0);
-                }
             }
 
             if (OpenFileConverter.CanExecute(null)) OpenFileConverter.Execute(null);

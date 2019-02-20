@@ -17,7 +17,6 @@ namespace Translit.Models.Pages
         public readonly IKeyboardMouseEvents GlobalHook;
         public Symbol[] Symbols;
         public Word[] Words;
-        public string ConnectionString { get; }
 
         public BackgroundConverterModel()
         {
@@ -26,6 +25,8 @@ namespace Translit.Models.Pages
             InputString = new StringBuilder();
             Simulator = new InputSimulator();
         }
+
+        public string ConnectionString { get; }
 
         public StringBuilder InputString { get; set; }
         public InputSimulator Simulator { get; set; }

@@ -3,19 +3,16 @@ using System.Linq;
 
 namespace TranslitLinker
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        private static void Main()
         {
 #if DEBUG
-			const string translit = @"..\..\..\Translit\bin\Debug";
+            const string translit = @"..\..\..\Translit\bin\Debug";
 #else
             var translit = @"..\..\..\Translit\bin\Release";
 #endif
-            if (Directory.Exists("Translit"))
-            {
-                Directory.Delete(@"Translit", true);
-            }
+            if (Directory.Exists("Translit")) Directory.Delete(@"Translit", true);
 
             DirectoryCopy(translit, @".\Translit", true);
             Sort();
@@ -26,20 +23,14 @@ namespace TranslitLinker
             var files = new DirectoryInfo(@".\Translit").EnumerateFiles()
                 .Where(f => f.Extension == ".xml" || f.Extension == ".pdb").ToArray();
 
-            foreach (var f in files)
-            {
-                File.Delete(f.FullName);
-            }
+            foreach (var f in files) File.Delete(f.FullName);
 
             files = new DirectoryInfo(@".\Translit").EnumerateFiles()
-                 .Where(f => f.Extension == ".dll").ToArray();
+                .Where(f => f.Extension == ".dll").ToArray();
 
             Directory.CreateDirectory(@"Translit\Libraries");
 
-            foreach (var f in files)
-            {
-                File.Move(f.FullName, $@"Translit\Libraries\{f.Name}");
-            }
+            foreach (var f in files) File.Move(f.FullName, $@"Translit\Libraries\{f.Name}");
         }
 
         private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
@@ -48,18 +39,13 @@ namespace TranslitLinker
             var dir = new DirectoryInfo(sourceDirName);
 
             if (!dir.Exists)
-            {
                 throw new DirectoryNotFoundException(
                     "Source directory does not exist or could not be found: "
                     + sourceDirName);
-            }
 
             var dirs = dir.GetDirectories();
             // If the destination directory doesn't exist, create it.
-            if (!Directory.Exists(destDirName))
-            {
-                Directory.CreateDirectory(destDirName);
-            }
+            if (!Directory.Exists(destDirName)) Directory.CreateDirectory(destDirName);
 
             // Get the files in the directory and copy them to the new location.
             var files = dir.GetFiles();

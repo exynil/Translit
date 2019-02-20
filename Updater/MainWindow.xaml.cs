@@ -9,19 +9,19 @@ using System.Windows;
 namespace Updater
 {
     /// <summary>
-    /// Логика Updater
-    /// 1 - Удалить все файлы кроме [Файлов исключений]
-    /// 2 - Удалить все папки кроме [Папок исключений]
-    /// 3 - Распаковать архив с обновлением Translit.zip в текущую директорию
-    /// 4 - Удалить архив с обновлением
-    /// 5 - Запустить Translit
-    /// 6 - Выйти
+    ///     Логика Updater
+    ///     1 - Удалить все файлы кроме [Файлов исключений]
+    ///     2 - Удалить все папки кроме [Папок исключений]
+    ///     3 - Распаковать архив с обновлением Translit.zip в текущую директорию
+    ///     4 - Удалить архив с обновлением
+    ///     5 - Запустить Translit
+    ///     6 - Выйти
     /// </summary>
     public partial class MainWindow
     {
         public string ArchiveWithUpdate = @".\Translit.zip";
-        public string[] ExceptionalFiles = { "updater.exe", "localdb.db", "translit.zip" };
-        public string[] ExceptionalFoldes = { "logs" };
+        public string[] ExceptionalFiles = {"updater.exe", "localdb.db", "translit.zip"};
+        public string[] ExceptionalFoldes = {"logs"};
 
         public MainWindow()
         {
@@ -39,7 +39,6 @@ namespace Updater
 
                 // Удаляем файлы
                 foreach (var f in files)
-                {
                     try
                     {
                         File.Delete(f);
@@ -48,7 +47,6 @@ namespace Updater
                     {
                         // ignored
                     }
-                }
 
                 // Выбираем все папки не входящий в список папок исключений
                 var directories = new DirectoryInfo(Environment.CurrentDirectory)
@@ -58,7 +56,6 @@ namespace Updater
 
                 // Удаляем папки
                 foreach (var d in directories)
-                {
                     try
                     {
                         Directory.Delete(d, true);
@@ -67,7 +64,6 @@ namespace Updater
                     {
                         // ignored
                     }
-                }
 
                 // Раскпаковываем программу
                 using (var archive = ZipFile.OpenRead(ArchiveWithUpdate))
@@ -80,8 +76,6 @@ namespace Updater
 
                 // Запускаем Translit.exe
                 Process.Start(@"Translit.exe");
-
-
             }).Wait();
 
             // Выходим из программы

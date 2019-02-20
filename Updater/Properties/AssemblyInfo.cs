@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
+
 [assembly: AssemblyTitle("Updater")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]

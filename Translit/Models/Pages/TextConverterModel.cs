@@ -10,7 +10,7 @@ namespace Translit.Models.Pages
     {
         public TextConverterModel()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDbConnection"].ConnectionString;
         }
 
         public string ConnectionString { get; set; }

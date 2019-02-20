@@ -1,7 +1,11 @@
-﻿using System;
+﻿using FireSharp;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using LiteDB;
+using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,11 +14,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using FireSharp;
-using FireSharp.Config;
-using FireSharp.Interfaces;
-using LiteDB;
-using Newtonsoft.Json;
 using Translit.Models.Other;
 using Translit.Properties;
 
@@ -24,7 +23,7 @@ namespace Translit.Models.Windows
     {
         public MainModel()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDbConnection"].ConnectionString;
 
             JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
             CheckAndDownloadUpdate();

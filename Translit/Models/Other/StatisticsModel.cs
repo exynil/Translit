@@ -8,7 +8,7 @@ namespace Translit.Models.Other
     {
         public StatisticsModel()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDbConnection"].ConnectionString;
         }
 
         public string ConnectionString { get; set; }

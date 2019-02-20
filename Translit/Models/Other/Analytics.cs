@@ -23,7 +23,7 @@ namespace Translit.Models.Other
             {
                 if (Online) return;
 
-                ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+                ConnectionString = ConfigurationManager.ConnectionStrings["LiteDbConnection"].ConnectionString;
 
                 using (var db = new LiteDatabase(ConnectionString))
                 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Windows.Automation;
@@ -16,18 +17,14 @@ namespace Translit.Models.Pages
         public readonly IKeyboardMouseEvents GlobalHook;
         public Symbol[] Symbols;
         public Word[] Words;
+        public string ConnectionString { get; }
 
         public BackgroundConverterModel()
         {
+            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDbConnection"].ConnectionString;
             GlobalHook = Hook.GlobalEvents();
             InputString = new StringBuilder();
             Simulator = new InputSimulator();
-
-            using (var db = new LiteDatabase("LocalDb.db"))
-            {
-                Words = db.GetCollection<Word>("Words").FindAll().ToArray();
-                Symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
-            }
         }
 
         public StringBuilder InputString { get; set; }
@@ -126,6 +123,7 @@ namespace Translit.Models.Pages
 
         public void Subscribe()
         {
+            LoadWordsAnSymbols();
             IsTransliteratorEnabled = true;
             GlobalHook.KeyPress += GlobalHookKeyPress;
             GlobalHook.KeyDown += GlobalHookKeyDown;
@@ -139,6 +137,23 @@ namespace Translit.Models.Pages
 
             //It is recommened to dispose it
             //GlobalHook.Dispose();
+        }
+
+        public bool CollectionExists()
+        {
+            using (var db = new LiteDatabase(ConnectionString))
+            {
+                return db.CollectionExists("Symbols") && db.CollectionExists("Words");
+            }
+        }
+
+        public void LoadWordsAnSymbols()
+        {
+            using (var db = new LiteDatabase(ConnectionString))
+            {
+                Words = db.GetCollection<Word>("Words").FindAll().ToArray();
+                Symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
+            }
         }
     }
 }

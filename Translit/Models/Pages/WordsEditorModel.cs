@@ -19,7 +19,7 @@ namespace Translit.Models.Pages
 
         public WordsEditorModel()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDbConnection"].ConnectionString;
             if (User.Token != null)
                 JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
         }

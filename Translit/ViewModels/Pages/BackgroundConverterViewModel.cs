@@ -44,11 +44,15 @@ namespace Translit.ViewModels.Pages
                         ActivatorContent = GetRes("ButtonActivate");
                         MessageQueue.Enqueue(GetRes("SnackBarBackgroundTransliteratorDeactivated"));
                     }
-                    else
+                    else if (Model.CollectionExists())
                     {
                         Model.Subscribe();
                         ActivatorContent = GetRes("ButtonDeactivate");
                         MessageQueue.Enqueue(GetRes("SnackBarBackgroundTransliteratorActivated"));
+                    }
+                    else
+                    {
+                        MessageQueue.Enqueue(GetRes("SnackBarDatabaseNotFound"));
                     }
                 });
             }

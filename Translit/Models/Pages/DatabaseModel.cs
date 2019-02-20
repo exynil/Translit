@@ -19,7 +19,7 @@ namespace Translit.Models.Pages
 
         public DatabaseModel()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDbConnection"].ConnectionString;
         }
 
         public int PercentOfWords

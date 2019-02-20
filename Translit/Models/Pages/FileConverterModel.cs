@@ -30,7 +30,7 @@ namespace Translit.Models.Pages
 
         public FileConverterModel()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDatabaseConnection"].ConnectionString;
+            ConnectionString = ConfigurationManager.ConnectionStrings["LiteDbConnection"].ConnectionString;
             Files = new Queue<string>();
         }
 

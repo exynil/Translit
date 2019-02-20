@@ -44,7 +44,7 @@ namespace Translit.ViewModels.Windows
 
             UpdatePopupBox();
 
-            UserName = $"{User.LastName} {User.FirstName}";
+            UserName = Settings.Default.UserName;
 
             Analytics.Start();
 
@@ -438,7 +438,8 @@ namespace Translit.ViewModels.Windows
 
                                 if (WordsEditorView != null) WordsEditorView = null;
 
-                                UserName = $"{User.LastName} {User.FirstName}";
+                                Settings.Default.UserName = $"{User.LastName} {User.FirstName}";
+                                UserName = Settings.Default.UserName;
                                 UpdatePopupBox();
                                 Login = "";
                             }

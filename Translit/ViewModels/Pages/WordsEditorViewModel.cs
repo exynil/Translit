@@ -75,8 +75,8 @@ namespace Translit.ViewModels.Pages
                     // Ожидаем ответ пользователя
                     if (addDialogView.ShowDialog() == true)
                     {
-                        var cyryllic = addDialogView.TextBoxAddCyryllic.Text;
-                        var latin = addDialogView.TextBoxAddLatin.Text;
+                        var cyryllic = addDialogView.Cyryllic;
+                        var latin = addDialogView.Latin;
 
                         // Закрываем диалоговое окно
                         addDialogView.Close();
@@ -141,8 +141,8 @@ namespace Translit.ViewModels.Pages
                     if (editDialogView.ShowDialog() == true)
                     {
                         // Получаем измененные данные
-                        var cyryllicModified = editDialogView.TextBoxEditCyryllic.Text;
-                        var latinModified = editDialogView.TextBoxEditLatin.Text;
+                        var cyryllicModified = editDialogView.Cyryllic;
+                        var latinModified = editDialogView.Latin;
 
                         // Закрываем диалоговое окно
                         editDialogView.Close();

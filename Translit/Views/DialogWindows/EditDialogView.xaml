@@ -31,17 +31,17 @@
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 			<TextBox
-				x:Name="TextBoxEditCyryllic"
+				Text="{Binding Cyryllic}"
 				Grid.Row="0"
 				Margin="10,0,10,0"
 				materialDesign:HintAssist.Hint="{DynamicResource HintCyryllic}" />
 			<TextBox
-				x:Name="TextBoxEditLatin"
+				Text="{Binding Latin}"
 				Grid.Row="1"
 				Margin="10,0,10,0"
 				materialDesign:HintAssist.Hint="{DynamicResource HintLatin}" />
 			<TextBlock
-				x:Name="TextBlockMessage"
+				Text="{Binding Message}"
 				Grid.Row="2"
 				Margin="10,0,10,0"
 				HorizontalAlignment="Center"
@@ -50,7 +50,7 @@
 			<WrapPanel Grid.Row="3" HorizontalAlignment="Center">
 				<Button
 					Margin="5"
-					Click="Accept_Click"
+					Command="{Binding Accept}"
 					Content="{DynamicResource ButtonSave}"
 					IsDefault="True" />
 				<Button

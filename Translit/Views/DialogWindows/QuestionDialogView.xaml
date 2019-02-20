@@ -27,7 +27,7 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<TextBlock
-				x:Name="TextBlockQuestion"
+				Text="{Binding Question}"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
 				TextWrapping="Wrap" />
@@ -37,7 +37,7 @@
 				VerticalAlignment="Center">
 				<Button
 					Margin="5"
-					Click="Accept_Click"
+					Command="{Binding Accept}"
 					Content="{DynamicResource ButtonYes}"
 					IsDefault="True" />
 				<Button

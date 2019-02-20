@@ -1,19 +1,49 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Input;
+using Translit.Models.Other;
 
 namespace Translit.Views.DialogWindows
 {
-    public partial class QuestionDialogView
+    public partial class QuestionDialogView : INotifyPropertyChanged
     {
+        private string _question;
+
+        public string Question
+        {
+            get => _question;
+            set
+            {
+                _question = value;
+                OnPropertyChanged();
+            }
+        }
+
         public QuestionDialogView(string question)
         {
             InitializeComponent();
-            TextBlockQuestion.Text = question;
+            DataContext = this;
+            Question = question;
         }
 
-        private void Accept_Click(object sender, RoutedEventArgs e)
+        public ICommand Accept
         {
-            DialogResult = true;
-            Close();
+            get
+            {
+                return new DelegateCommand(o =>
+                {
+                    DialogResult = true;
+                    Close();
+                });
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

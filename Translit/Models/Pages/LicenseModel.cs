@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Windows;
 
 namespace Translit.Models.Pages
@@ -13,7 +14,7 @@ namespace Translit.Models.Pages
 
             if (licenseStream == null) return "";
 
-            using (var reader = new StreamReader(licenseStream))
+            using (var reader = new StreamReader(licenseStream, Encoding.Default))
             {
                 return reader.ReadToEnd();
             }

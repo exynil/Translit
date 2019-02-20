@@ -21,7 +21,7 @@
 	mc:Ignorable="d">
 	<GroupBox
 		Margin="20"
-		Header="{DynamicResource TitleAdding}"
+		Header="{DynamicResource HeaderAdding}"
 		Style="{DynamicResource MaterialDesignCardGroupBox}">
 		<Grid>
 			<Grid.RowDefinitions>

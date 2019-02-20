@@ -1,0 +1,45 @@
+﻿<Window x:Class="Translit.Views.DialogWindows.LicenseDialogView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Width="500"
+        Height="600"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        TextElement.FontSize="13"
+        TextElement.FontWeight="Regular"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStyle="None"
+        mc:Ignorable="d">
+    <Grid>
+        <GroupBox
+            Margin="20"
+            Header="{DynamicResource HeaderLicenseAgreement}"
+            Style="{DynamicResource MaterialDesignCardGroupBox}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="0">
+                    <TextBlock
+                        Height="Auto"
+                        Margin="5"
+                        VerticalAlignment="Stretch"
+                        Text="{Binding License}"
+                        TextWrapping="Wrap" />
+                </ScrollViewer>
+                <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal">
+                    <Button Content="{DynamicResource ButtonReject}" Margin="5" Command="{Binding Reject}"></Button>
+                    <Button Content="{DynamicResource ButtonAccept}" Margin="5" Command="{Binding Accept}"></Button>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

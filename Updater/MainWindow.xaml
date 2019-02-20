@@ -9,6 +9,7 @@
     Height="300"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
+    Loaded="MainWindow_OnLoaded"
     WindowStyle="None"
     mc:Ignorable="d">
     <Grid Background="#202020">
@@ -20,7 +21,7 @@
                 Foreground="#00FF54"
                 Text="Translit" />
             <ProgressBar
-                Height="5"
+                Height="4"
                 Margin="20"
                 Background="#404040"
                 BorderBrush="#404040"

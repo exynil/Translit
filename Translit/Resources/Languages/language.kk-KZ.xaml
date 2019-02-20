@@ -151,7 +151,6 @@
     <v:String x:Key="HintStartTyping">Мәтінді енгізуді бастаңыз...</v:String>
 
     <!--  Titles  -->
-    <v:String x:Key="TitleDelete">Жою</v:String>
     <v:String x:Key="TitleAdding">Қосу</v:String>
     <v:String x:Key="TitleEditing">Өңдеу</v:String>
 
@@ -163,6 +162,9 @@
     <v:String x:Key="ButtonCancel">Болдырмау</v:String>
     <v:String x:Key="ButtonAdd">қосу</v:String>
     <v:String x:Key="ARebootOfTheProgramIsRequired">Бағдарламаны қайта жүктеу қажет. Қайта жүктелсін бе?</v:String>
+    <v:String x:Key="ButtonAccept">Қабылдау</v:String>
+    <v:String x:Key="ButtonReject">Қабылдамау</v:String>
+    <v:String x:Key="HeaderLicenseAgreement">Лицензиялық келісім</v:String>
 
     <!--  Add Dialog Window  -->
     <v:String x:Key="TextBlockPleaseFillInAllFields">Барлық өрістерді толтырыңыз</v:String>

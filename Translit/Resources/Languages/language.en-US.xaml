@@ -151,7 +151,6 @@
     <v:String x:Key="HintStartTyping">Start typing...</v:String>
 
     <!--  Titles  -->
-    <v:String x:Key="TitleDelete">Delete</v:String>
     <v:String x:Key="TitleAdding">Adding</v:String>
     <v:String x:Key="TitleEditing">Editing</v:String>
 
@@ -163,6 +162,9 @@
     <v:String x:Key="ButtonCancel">Cancel</v:String>
     <v:String x:Key="ButtonAdd">Add</v:String>
     <v:String x:Key="ARebootOfTheProgramIsRequired">A reboot of the program is required. Reboot?</v:String>
+    <v:String x:Key="ButtonAccept">Accept</v:String>
+    <v:String x:Key="ButtonReject">Reject</v:String>
+    <v:String x:Key="HeaderLicenseAgreement">License agreement</v:String>
 
     <!--  Add Dialog Window  -->
     <v:String x:Key="TextBlockPleaseFillInAllFields">Please fill in all fields</v:String>

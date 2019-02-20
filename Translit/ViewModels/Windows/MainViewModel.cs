@@ -30,8 +30,19 @@ namespace Translit.ViewModels.Windows
 
         public MainViewModel()
         {
-            Model = new MainModel();
-            MessageQueue = new SnackbarMessageQueue();
+            if (!Settings.Default.LicenseAcceptance)
+            {
+                var licenseDialogView = new LicenseDialogView();
+
+                if (licenseDialogView.ShowDialog() == true)
+                {
+                    Settings.Default.LicenseAcceptance = true;
+                }
+                else
+                {
+                    Environment.Exit(0);
+                }
+            }
 
             if (OpenFileConverter.CanExecute(null)) OpenFileConverter.Execute(null);
 
@@ -40,6 +51,9 @@ namespace Translit.ViewModels.Windows
             UserName = $"{User.LastName} {User.FirstName}";
 
             Analytics.Start();
+
+            Model = new MainModel();
+            MessageQueue = new SnackbarMessageQueue();
         }
 
         public MainModel Model { get; set; }
@@ -311,9 +325,9 @@ namespace Translit.ViewModels.Windows
                     }
 
                     // Просим пользователя перезагрузить программу
-                    var questionView = new QuestionView(GetRes("ARebootOfTheProgramIsRequired"));
+                    var questionDialogView = new QuestionDialogView(GetRes("ARebootOfTheProgramIsRequired"));
 
-                    if (questionView.ShowDialog() != true) return;
+                    if (questionDialogView.ShowDialog() != true) return;
                     Application.Restart();
                     System.Windows.Application.Current.Shutdown();
                 });
@@ -340,9 +354,9 @@ namespace Translit.ViewModels.Windows
                     }
 
                     // Просим пользователя перезагрузить программу
-                    var questionView = new QuestionView(GetRes("ARebootOfTheProgramIsRequired"));
+                    var questionDialogView = new QuestionDialogView(GetRes("ARebootOfTheProgramIsRequired"));
 
-                    if (questionView.ShowDialog() != true) return;
+                    if (questionDialogView.ShowDialog() != true) return;
                     Application.Restart();
                     System.Windows.Application.Current.Shutdown();
                 });
@@ -369,9 +383,9 @@ namespace Translit.ViewModels.Windows
                     }
 
                     // Просим пользователя перезагрузить программу
-                    var questionView = new QuestionView(GetRes("ARebootOfTheProgramIsRequired"));
+                    var questionDialogView = new QuestionDialogView(GetRes("ARebootOfTheProgramIsRequired"));
 
-                    if (questionView.ShowDialog() != true) return;
+                    if (questionDialogView.ShowDialog() != true) return;
                     Application.Restart();
                     System.Windows.Application.Current.Shutdown();
                 });

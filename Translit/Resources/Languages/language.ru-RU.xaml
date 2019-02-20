@@ -151,9 +151,8 @@
     <v:String x:Key="HintStartTyping">Начните вводить текст...</v:String>
 
     <!--  Titles  -->
-    <v:String x:Key="TitleDelete">Удаление</v:String>
-    <v:String x:Key="TitleAdding">Добавление</v:String>
-    <v:String x:Key="TitleEditing">Редактирование</v:String>
+    <v:String x:Key="HeaderAdding">Добавление</v:String>
+    <v:String x:Key="HeaderEditing">Редактирование</v:String>
 
     <!--  DialogWindows  -->
     <v:String x:Key="TextBlockDoYouReallyWantToDelete">Вы действительно хотите удалить?</v:String>
@@ -163,6 +162,9 @@
     <v:String x:Key="ButtonCancel">Отменить</v:String>
     <v:String x:Key="ButtonAdd">Добавить</v:String>
     <v:String x:Key="ARebootOfTheProgramIsRequired">Требуется перезагрузка программы. Перезагрузить?</v:String>
+    <v:String x:Key="ButtonAccept">Принять</v:String>
+    <v:String x:Key="ButtonReject">Отказаться</v:String>
+    <v:String x:Key="HeaderLicenseAgreement">Лицензионное соглашение</v:String>
 
     <!--  Add Dialog Window  -->
     <v:String x:Key="TextBlockPleaseFillInAllFields">Пожалуйста, заполните все поля</v:String>

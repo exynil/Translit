@@ -2,9 +2,9 @@
 
 namespace Translit.Views.DialogWindows
 {
-    public partial class QuestionView
+    public partial class QuestionDialogView
     {
-        public QuestionView(string question)
+        public QuestionDialogView(string question)
         {
             InitializeComponent();
             TextBlockQuestion.Text = question;

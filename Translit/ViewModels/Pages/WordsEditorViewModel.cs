@@ -202,9 +202,9 @@ namespace Translit.ViewModels.Pages
 
                     // Получаем подтверждение пользователя
                     // Получаем подтверждение пользователя
-                    var questionView = new QuestionView(GetRes("TextBlockDoYouReallyWantToDelete"));
+                    var questionDialogView = new QuestionDialogView(GetRes("TextBlockDoYouReallyWantToDelete"));
 
-                    if (questionView.ShowDialog() == true)
+                    if (questionDialogView.ShowDialog() == true)
                         Task.Factory.StartNew(() =>
                         {
                             Model.DeleteWord(SelectedWord.Id);

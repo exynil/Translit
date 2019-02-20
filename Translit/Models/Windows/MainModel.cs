@@ -119,7 +119,7 @@ namespace Translit.Models.Windows
 
                 try
                 {
-                    pu = client.Get("Update").ResultAs<ProgramUrl>();
+                    pu = client.Get("Translit").ResultAs<ProgramUrl>();
                 }
                 catch (Exception)
                 {

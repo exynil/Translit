@@ -4,13 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FDDCCB81-204C-431E-9F7C-7379820C46C0}</ProjectGuid>
+    <ProjectGuid>{72A7DD0C-D3D3-4978-89D8-BD3119B94748}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TranslitCollector</RootNamespace>
-    <AssemblyName>TranslitCollector</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>TranslitLinker</RootNamespace>
+    <AssemblyName>TranslitLinker</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>

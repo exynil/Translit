@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Updater
 {
@@ -13,7 +14,8 @@ namespace Updater
     /// 2 - Удалить все папки кроме [Папок исключений]
     /// 3 - Распаковать архив с обновлением Translit.zip в текущую директорию
     /// 4 - Удалить архив с обновлением
-    /// 5 - Запустить программу
+    /// 5 - Запустить Translit
+    /// 6 - Выйти
     /// </summary>
     public partial class MainWindow
     {
@@ -24,10 +26,9 @@ namespace Updater
         public MainWindow()
         {
             InitializeComponent();
-            Update();
         }
 
-        private void Update()
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -80,9 +81,11 @@ namespace Updater
                 // Запускаем Translit.exe
                 Process.Start(@"Translit.exe");
 
-                // Выходим из программы
-                Close();
-            });
+
+            }).Wait();
+
+            // Выходим из программы
+            Close();
         }
     }
 }

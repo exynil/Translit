@@ -4,7 +4,7 @@
     xmlns:v="clr-namespace:System;assembly=mscorlib">
     <!--  Main Window Menu  -->
     <v:String x:Key="MenuItemMain">Главная</v:String>
-    <v:String x:Key="MenuItemAdditionally">Дополнительно</v:String>
+    <v:String x:Key="MenuItemAdvanced">Дополнительно</v:String>
     <v:String x:Key="MenuItemLanguage">Язык</v:String>
     <v:String x:Key="MenuItemReference">Справка</v:String>
     <v:String x:Key="MenuItemFileConverter">Файловый конвертер</v:String>
@@ -134,7 +134,7 @@
     <v:String x:Key="SnackBarWelcome">Добро пожаловать</v:String>
     <v:String x:Key="SnackBarWrongLoginOrPassword">Не верный логин или пароль</v:String>
     <v:String x:Key="SnackBarNotAllowedLength">Не допустимая длина</v:String>
-    <v:String x:Key="SnackBarDatabaseNotFound">База данных не найдена</v:String>
+    <v:String x:Key="SnackBarDatabaseNotFound">База данных не найдена, перейдите в раздел "Дополнительно, База данных"</v:String>
     <v:String x:Key="SnackBarTransliterationCompleted">Транслитерация завершена</v:String>
     <v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Выделите запись, чтобы редактировать или удалить</v:String>
 

@@ -75,7 +75,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="{DynamicResource MenuItemAdditionally}">
+                    <MenuItem Header="{DynamicResource MenuItemAdvanced}">
                         <MenuItem Command="{Binding OpenSymbols}" Header="{DynamicResource MenuItemSymbols}">
                             <MenuItem.Icon>
                                 <materialDesign:PackIcon Kind="AlphaABox" />

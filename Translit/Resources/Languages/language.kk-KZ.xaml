@@ -4,7 +4,7 @@
     xmlns:v="clr-namespace:System;assembly=mscorlib">
     <!--  Main Window Menu  -->
     <v:String x:Key="MenuItemMain">Бастысы</v:String>
-    <v:String x:Key="MenuItemAdditionally">Қосымша</v:String>
+    <v:String x:Key="MenuItemAdvanced">Қосымша</v:String>
     <v:String x:Key="MenuItemLanguage">Тіл</v:String>
     <v:String x:Key="MenuItemReference">Анықтама</v:String>
     <v:String x:Key="MenuItemFileConverter">Файлдық конвертер</v:String>
@@ -13,7 +13,7 @@
     <v:String x:Key="MenuItemWords">Сөздер</v:String>
     <v:String x:Key="MenuItemSymbols">Таңбалар</v:String>
     <v:String x:Key="MenuItemSettings">Қолданбалар</v:String>
-    <v:String x:Key="MenuItemDatabase">Деректер базасы</v:String>
+    <v:String x:Key="MenuItemDatabase">Дерекқор</v:String>
     <v:String x:Key="MenuItemStatistics">Статистика</v:String>
     <v:String x:Key="MenuItemAbout">Бағдарлама туралы</v:String>
     <v:String x:Key="MenuItemLicense">Лицензия</v:String>
@@ -134,7 +134,7 @@
     <v:String x:Key="SnackBarWelcome">Хош келдіңіз</v:String>
     <v:String x:Key="SnackBarWrongLoginOrPassword">Логин немесе құпиясөз теріс</v:String>
     <v:String x:Key="SnackBarNotAllowedLength">Жол берілмеуі тиіс өлшем</v:String>
-    <v:String x:Key="SnackBarDatabaseNotFound">Деректер базасы табылмады</v:String>
+    <v:String x:Key="SnackBarDatabaseNotFound">Дерекқор табылмады, «Қосымша, Дерекқор» өтіңіз</v:String>
     <v:String x:Key="SnackBarTransliterationCompleted">Транслитерация аяқталды</v:String>
     <v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Өңдеу немесе жою үшін жазбаны таңдаңыз</v:String>
 

@@ -38,12 +38,12 @@ namespace Translit.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("ru-RU")]
-        public global::System.Globalization.CultureInfo DefaultLanguage {
+        public global::System.Globalization.CultureInfo Language {
             get {
-                return ((global::System.Globalization.CultureInfo)(this["DefaultLanguage"]));
+                return ((global::System.Globalization.CultureInfo)(this["Language"]));
             }
             set {
-                this["DefaultLanguage"] = value;
+                this["Language"] = value;
             }
         }
         
@@ -56,18 +56,6 @@ namespace Translit.Properties {
             }
             set {
                 this["FingerPrint"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string UserName {
-            get {
-                return ((string)(this["UserName"]));
-            }
-            set {
-                this["UserName"] = value;
             }
         }
         

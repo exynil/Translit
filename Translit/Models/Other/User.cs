@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Translit.Properties;
 
 namespace Translit.Models.Other
 {

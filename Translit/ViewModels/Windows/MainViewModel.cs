@@ -43,13 +43,10 @@ namespace Translit.ViewModels.Windows
             if (OpenFileConverter.CanExecute(null)) OpenFileConverter.Execute(null);
 
             UpdatePopupBox();
-
-            UserName = Settings.Default.UserName;
-
-            Analytics.Start();
-
             Model = new MainModel();
             MessageQueue = new SnackbarMessageQueue();
+            UserName = $"{User.LastName} {User.FirstName}";
+            Analytics.Start();
         }
 
         public MainModel Model { get; set; }
@@ -309,7 +306,7 @@ namespace Translit.ViewModels.Windows
                 {
                     if (App.Language.Name == "ru-RU") return;
 
-                    App.Language = Settings.Default.DefaultLanguage = new CultureInfo("ru-RU");
+                    App.Language = Settings.Default.Language = new CultureInfo("ru-RU");
 
                     try
                     {
@@ -338,7 +335,7 @@ namespace Translit.ViewModels.Windows
                 {
                     if (App.Language.Name == "en-US") return;
 
-                    App.Language = Settings.Default.DefaultLanguage = new CultureInfo("en-US");
+                    App.Language = Settings.Default.Language = new CultureInfo("en-US");
 
                     try
                     {
@@ -367,7 +364,7 @@ namespace Translit.ViewModels.Windows
                 {
                     if (App.Language.Name == "kk-KZ") return;
 
-                    App.Language = Settings.Default.DefaultLanguage = new CultureInfo("kk-KZ");
+                    App.Language = Settings.Default.Language = new CultureInfo("kk-KZ");
 
                     try
                     {
@@ -438,8 +435,7 @@ namespace Translit.ViewModels.Windows
 
                                 if (WordsEditorView != null) WordsEditorView = null;
 
-                                Settings.Default.UserName = $"{User.LastName} {User.FirstName}";
-                                UserName = Settings.Default.UserName;
+                                UserName = $"{User.LastName} {User.FirstName}";
                                 UpdatePopupBox();
                                 Login = "";
                             }

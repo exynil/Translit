@@ -7,9 +7,9 @@
     <v:String x:Key="MenuItemAdvanced">Дополнительно</v:String>
     <v:String x:Key="MenuItemLanguage">Язык</v:String>
     <v:String x:Key="MenuItemReference">Справка</v:String>
-    <v:String x:Key="MenuItemFileConverter">Файловый конвертер</v:String>
-    <v:String x:Key="MenuItemTextConverter">Текстовый конвертер</v:String>
-    <v:String x:Key="MenuItemBackgroundConverter">Фоновый конвертер</v:String>
+    <v:String x:Key="MenuItemFileConverter">Файловый транслит</v:String>
+    <v:String x:Key="MenuItemTextConverter">Текстовый транслит</v:String>
+    <v:String x:Key="MenuItemBackgroundConverter">Фоновый транслит</v:String>
     <v:String x:Key="MenuItemWords">Слова</v:String>
     <v:String x:Key="MenuItemSymbols">Символы</v:String>
     <v:String x:Key="MenuItemSettings">Настройки</v:String>
@@ -52,11 +52,13 @@
     <v:String x:Key="ButtonDeactivate">Деактивировать</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorActivated">Фоновый транслитератор активирован</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorDeactivated">Фоновый транслитератор деактивирован</v:String>
-    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Фоновый конвертер позволяет вам сразу транслитерировать набранный текст в других программах</v:String>
-    <v:String x:Key="TextBlockActivateBackgroundConverter">1) Активируйте фоновый конвертер</v:String>
+    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Фоновый транслитератор позволяет вам сразу транслитерировать набранный текст в других программах</v:String>
+    <v:String x:Key="TextBlockActivateBackgroundConverter">1) Активируйте фоновый транслитератор</v:String>
     <v:String x:Key="TextBlockGoToTheDesiredProgram">2) Перейдите в нужную программу</v:String>
     <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Введите какой-нибудь текст или слово</v:String>
-    <v:String x:Key="TextBlockPressThePauseBreakKey">4) Нажмите клавишу &quot;Pause Break&quot;</v:String>
+    <v:String x:Key="TextBlockPressThePauseBreakKey">4) Нажмите клавишу 'Pause Break'</v:String>
+    <v:String x:Key="TextBlockTransliterationOfTheSelectedText">'Shift + Home' - транслитерация выделенного текста</v:String>
+    <v:String x:Key="TextBlockFlushBuffer">'Shift + Pause Break' - очистка буфера (необязательно)</v:String>
 
     <!--  Page SymbolsEditor and WordsEditor  -->
     <v:String x:Key="ToolTipAdd">Добавить</v:String>
@@ -88,12 +90,12 @@
     <v:String x:Key="ListViewFileType">Тип файла</v:String>
     <v:String x:Key="ListViewQuantity">Количество</v:String>
     <v:String x:Key="SnackBarStatisticsUpdated">Статистика обновлена</v:String>
-    <v:String x:Key="TextBlockWordDocuments">Документы Word:</v:String>
-    <v:String x:Key="TextBlockExcelSpreadsheets">Таблицы Excel:</v:String>
-    <v:String x:Key="TextBlockPowerPointPresentations">Презентации Power Point:</v:String>
-    <v:String x:Key="TextBlockPdfDocuments">Документы PDF:</v:String>
-    <v:String x:Key="TextBlockRtfDocuments">Документы RTF:</v:String>
-    <v:String x:Key="TextBlockTextDocuments">Текстовые документы:</v:String>
+    <v:String x:Key="TextBlockWordDocuments">Документы Word</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheets">Таблицы Excel</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentations">Презентации Power Point</v:String>
+    <v:String x:Key="TextBlockPdfDocuments">Документы PDF</v:String>
+    <v:String x:Key="TextBlockRtfDocuments">Документы RTF</v:String>
+    <v:String x:Key="TextBlockTextDocuments">Текстовые документы</v:String>
 
     <!--  Page About  -->
     <v:String x:Key="TextBlockDescription">Программа для автоматической транслитерации документов Word, таблиц Excel и презентаций Power Point с кириллицы на латиницу.</v:String>

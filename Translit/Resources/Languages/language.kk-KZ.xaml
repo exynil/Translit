@@ -7,9 +7,9 @@
     <v:String x:Key="MenuItemAdvanced">Қосымша</v:String>
     <v:String x:Key="MenuItemLanguage">Тіл</v:String>
     <v:String x:Key="MenuItemReference">Анықтама</v:String>
-    <v:String x:Key="MenuItemFileConverter">Файлдық конвертер</v:String>
-    <v:String x:Key="MenuItemTextConverter">Мәтіндік конвертер</v:String>
-    <v:String x:Key="MenuItemBackgroundConverter">Фондық конвертер</v:String>
+    <v:String x:Key="MenuItemFileConverter">Файлдық транслит</v:String>
+    <v:String x:Key="MenuItemTextConverter">Мәтіндік транслит</v:String>
+    <v:String x:Key="MenuItemBackgroundConverter">Фондық транслит</v:String>
     <v:String x:Key="MenuItemWords">Сөздер</v:String>
     <v:String x:Key="MenuItemSymbols">Таңбалар</v:String>
     <v:String x:Key="MenuItemSettings">Қолданбалар</v:String>
@@ -52,11 +52,13 @@
     <v:String x:Key="ButtonDeactivate">Өшіру</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorActivated">Фондық транслитератор белсендірілген</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorDeactivated">Фондық транслитератор белсендірілген</v:String>
-    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Фон конвертері басқа бағдарламаларда терілген мәтінді дереу транслитирлеуге мүмкіндік береді</v:String>
-    <v:String x:Key="TextBlockActivateBackgroundConverter">1) Фонды түрлендіргішті іске қосыңыз</v:String>
+    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Фондық транслитератор басқа бағдарламаларда терілген мәтінді дереу транслитирлеуге мүмкіндік береді</v:String>
+    <v:String x:Key="TextBlockActivateBackgroundConverter">1) Фондық транслитераторды іске қосыңыз</v:String>
     <v:String x:Key="TextBlockGoToTheDesiredProgram">2) Қалаған бағдарламаға өтіңіз</v:String>
     <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Кейбір мәтінді немесе сөзді енгізіңіз</v:String>
-    <v:String x:Key="TextBlockPressThePauseBreakKey">4) &quot;Pause Break&quot; пернесін басыңыз</v:String>
+    <v:String x:Key="TextBlockPressThePauseBreakKey">4) 'Pause Break' пернесін басыңыз</v:String>
+    <v:String x:Key="TextBlockTransliterationOfTheSelectedText">'Shift + Home' - таңдалған мәтінді транслитерациялау</v:String>
+    <v:String x:Key="TextBlockFlushBuffer">'Shift + Pause Break' - буферді тазалау (міндетті емес)</v:String>
 
     <!--  Page SymbolsEditor and WordsEditor  -->
     <v:String x:Key="ToolTipAdd">Қосу</v:String>
@@ -88,12 +90,12 @@
     <v:String x:Key="ListViewFileType">Файл түрі</v:String>
     <v:String x:Key="ListViewQuantity">Саны</v:String>
     <v:String x:Key="SnackBarStatisticsUpdated">Статистика жаңартылды</v:String>
-    <v:String x:Key="TextBlockWordDocuments">Word құжаттары:</v:String>
-    <v:String x:Key="TextBlockExcelSpreadsheets">Excel электрондық кестелері:</v:String>
-    <v:String x:Key="TextBlockPowerPointPresentations">Power Point ұсыныстары:</v:String>
-    <v:String x:Key="TextBlockPdfDocuments">PDF құжаттары:</v:String>
-    <v:String x:Key="TextBlockRtfDocuments">RTF құжаттары:</v:String>
-    <v:String x:Key="TextBlockTextDocuments">Мәтіндік құжаттар:</v:String>
+    <v:String x:Key="TextBlockWordDocuments">Word құжаттары</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheets">Excel электрондық кестелері</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentations">Power Point ұсыныстары</v:String>
+    <v:String x:Key="TextBlockPdfDocuments">PDF құжаттары</v:String>
+    <v:String x:Key="TextBlockRtfDocuments">RTF құжаттары</v:String>
+    <v:String x:Key="TextBlockTextDocuments">Мәтіндік құжаттар</v:String>
 
     <!--  Page About  -->
     <v:String x:Key="TextBlockDescription">Word құжаттарын, Excel кестелерін және Power Point презентацияларын кириллицадан латиницаға автоматты түрде аударуға арналған бағдарлама.</v:String>

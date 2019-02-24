@@ -7,9 +7,9 @@
     <v:String x:Key="MenuItemAdvanced">Advanced</v:String>
     <v:String x:Key="MenuItemLanguage">Language</v:String>
     <v:String x:Key="MenuItemReference">Reference</v:String>
-    <v:String x:Key="MenuItemFileConverter">File Converter</v:String>
-    <v:String x:Key="MenuItemTextConverter">Text Converter</v:String>
-    <v:String x:Key="MenuItemBackgroundConverter">Background Converter</v:String>
+    <v:String x:Key="MenuItemFileConverter">File translit</v:String>
+    <v:String x:Key="MenuItemTextConverter">Text translit</v:String>
+    <v:String x:Key="MenuItemBackgroundConverter">Background translit</v:String>
     <v:String x:Key="MenuItemWords">Words</v:String>
     <v:String x:Key="MenuItemSymbols">Symbols</v:String>
     <v:String x:Key="MenuItemSettings">Settings</v:String>
@@ -52,11 +52,13 @@
     <v:String x:Key="ButtonDeactivate">Deactivate</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorActivated">Background transliterator activated</v:String>
     <v:String x:Key="SnackBarBackgroundTransliteratorDeactivated">Background transliterator deactivated</v:String>
-    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Background converter allows you to immediately transliterate typed text in other programs</v:String>
-    <v:String x:Key="TextBlockActivateBackgroundConverter">1) Activate background converter</v:String>
+    <v:String x:Key="TextBlockBackgroundConverterAllowsYouTo">Background transliterator allows you to immediately transliterate typed text in other programs</v:String>
+    <v:String x:Key="TextBlockActivateBackgroundConverter">1) Activate background transliterator</v:String>
     <v:String x:Key="TextBlockGoToTheDesiredProgram">2) Go to the desired program</v:String>
     <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Enter some text or word</v:String>
-    <v:String x:Key="TextBlockPressThePauseBreakKey">4) Press the &quot;Pause Break&quot; key</v:String>
+    <v:String x:Key="TextBlockPressThePauseBreakKey">4) Press the 'Pause Break' key</v:String>
+    <v:String x:Key="TextBlockTransliterationOfTheSelectedText">'Shift + Home' - transliteration of selected text</v:String>
+    <v:String x:Key="TextBlockFlushBuffer">Shift + Pause Break' - flush buffer (optional)</v:String>
 
     <!--  Page SymbolsEditor and WordsEditor  -->
     <v:String x:Key="ToolTipAdd">Add</v:String>
@@ -88,12 +90,12 @@
     <v:String x:Key="ListViewFileType">File type</v:String>
     <v:String x:Key="ListViewQuantity">Quantity</v:String>
     <v:String x:Key="SnackBarStatisticsUpdated">Statistics updated</v:String>
-    <v:String x:Key="TextBlockWordDocuments">Word documents:</v:String>
-    <v:String x:Key="TextBlockExcelSpreadsheets">Excel spreadsheets:</v:String>
-    <v:String x:Key="TextBlockPowerPointPresentations">Power Point presentations:</v:String>
-    <v:String x:Key="TextBlockPdfDocuments">PDF documents:</v:String>
-    <v:String x:Key="TextBlockRtfDocuments">RTF documents:</v:String>
-    <v:String x:Key="TextBlockTextDocuments">Text documents:</v:String>
+    <v:String x:Key="TextBlockWordDocuments">Word documents</v:String>
+    <v:String x:Key="TextBlockExcelSpreadsheets">Excel spreadsheets</v:String>
+    <v:String x:Key="TextBlockPowerPointPresentations">Power Point presentations</v:String>
+    <v:String x:Key="TextBlockPdfDocuments">PDF documents</v:String>
+    <v:String x:Key="TextBlockRtfDocuments">RTF documents</v:String>
+    <v:String x:Key="TextBlockTextDocuments">Text documents</v:String>
 
     <!--  Page About  -->
     <v:String x:Key="TextBlockDescription">Program for automatic transliteration of Word documents, Excel spreadsheets and Power Point presentations from cyrillic to latin.</v:String>

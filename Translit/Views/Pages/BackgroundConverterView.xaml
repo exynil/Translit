@@ -45,6 +45,20 @@
                 Margin="5"
                 Text="{DynamicResource TextBlockPressThePauseBreakKey}"
                 TextWrapping="Wrap" />
+            <Border
+                Height="1"
+                Margin="5, 20"
+                HorizontalAlignment="Stretch"
+                Background="{DynamicResource MaterialDesignDivider}"
+                SnapsToDevicePixels="True" />
+            <TextBlock
+                Margin="5"
+                Text="{DynamicResource TextBlockTransliterationOfTheSelectedText}"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Margin="5"
+                Text="{DynamicResource TextBlockFlushBuffer}"
+                TextWrapping="Wrap" />
             <Button
                 Margin="5,20"
                 HorizontalAlignment="Center"

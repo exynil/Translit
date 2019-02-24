@@ -39,6 +39,8 @@ namespace Translit.Models.Pages
         public bool TransliterationState { get; set; }
         public bool Stop { get; set; }
 
+        public int Errors { get; set; }
+
         public int Left
         {
             get => _left;
@@ -84,7 +86,7 @@ namespace Translit.Models.Pages
         public bool TranslitFiles(string[] files, bool? ignoreSelectedText)
         {
             AddFiles(files);
-
+            Errors = 0;
             TransliterationState = true;
 
             while (Files.Count > 0)
@@ -105,36 +107,42 @@ namespace Translit.Models.Pages
                 var fileInfo = new FileInfo(file);
 
                 if (fileInfo.Length == 0) continue;
-
-                if (file.ToLower().EndsWith(".doc") || file.ToLower().EndsWith(".docx"))
+                try
                 {
-                    TranslitWordFile(file, ignoreSelectedText);
-                    Analytics.UnsentUserData.Counter.IncreaseWord();
+                    if (file.ToLower().EndsWith(".doc") || file.ToLower().EndsWith(".docx"))
+                    {
+                        TranslitWordFile(file, ignoreSelectedText);
+                        Analytics.UnsentUserData.Counter.IncreaseWord();
+                    }
+                    else if (file.ToLower().EndsWith(".xls") || file.ToLower().EndsWith(".xlsx"))
+                    {
+                        TranslitExcelFile(file);
+                        Analytics.UnsentUserData.Counter.IncreaseExcel();
+                    }
+                    else if (file.ToLower().EndsWith(".ppt") || file.ToLower().EndsWith(".pptx"))
+                    {
+                        TranslitPowerPointFile(file);
+                        Analytics.UnsentUserData.Counter.IncreasePowerPoint();
+                    }
+                    else if (file.ToLower().EndsWith(".txt"))
+                    {
+                        TranslitTxtFile(file);
+                        Analytics.UnsentUserData.Counter.IncreaseTxt();
+                    }
+                    else if (file.ToLower().EndsWith(".pdf"))
+                    {
+                        TranslitPdfOrRtfFile(file);
+                        Analytics.UnsentUserData.Counter.IncreasePdf();
+                    }
+                    else if (file.ToLower().EndsWith(".rtf"))
+                    {
+                        TranslitPdfOrRtfFile(file);
+                        Analytics.UnsentUserData.Counter.IncreaseRtf();
+                    }
                 }
-                else if (file.ToLower().EndsWith(".xls") || file.ToLower().EndsWith(".xlsx"))
+                catch (Exception)
                 {
-                    TranslitExcelFile(file);
-                    Analytics.UnsentUserData.Counter.IncreaseExcel();
-                }
-                else if (file.ToLower().EndsWith(".ppt") || file.ToLower().EndsWith(".pptx"))
-                {
-                    TranslitPowerPointFile(file);
-                    Analytics.UnsentUserData.Counter.IncreasePowerPoint();
-                }
-                else if (file.ToLower().EndsWith(".txt"))
-                {
-                    TranslitTxtFile(file);
-                    Analytics.UnsentUserData.Counter.IncreaseTxt();
-                }
-                else if (file.ToLower().EndsWith(".pdf"))
-                {
-                    TranslitPdfOrRtfFile(file);
-                    Analytics.UnsentUserData.Counter.IncreasePdf();
-                }
-                else if (file.ToLower().EndsWith(".rtf"))
-                {
-                    TranslitPdfOrRtfFile(file);
-                    Analytics.UnsentUserData.Counter.IncreaseRtf();
+                    Errors++;
                 }
             }
 

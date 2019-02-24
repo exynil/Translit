@@ -209,7 +209,7 @@ namespace Translit.Models.Windows
         {
             Task.Factory.StartNew(() =>
             {
-                // Ждем 10 секунд пока загрузятся облачная аналитика
+                // Ждем 10 секунд пока загрузится облачная аналитика
                 Thread.Sleep(10000);
                 using (var db = new LiteDatabase(ConnectionString))
                 {

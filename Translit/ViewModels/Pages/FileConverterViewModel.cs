@@ -35,6 +35,7 @@ namespace Translit.ViewModels.Pages
         private string _symbolProgress;
         private string _timeSpent;
         private string _wordProgress;
+        private string _errors;
 
         public FileConverterViewModel()
         {
@@ -54,6 +55,16 @@ namespace Translit.ViewModels.Pages
 
         public DispatcherTimer Timer { get; set; }
         public Stopwatch Stopwatch { get; set; }
+
+        public string Errors
+        {
+            get => _errors;
+            set
+            {
+                _errors = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string TimeSpent
         {
@@ -224,7 +235,7 @@ namespace Translit.ViewModels.Pages
 
                         if (success)
                         {
-                            MessageQueue.Enqueue(GetRes("SnackBarTransliterationCompleted"));
+                            MessageQueue.Enqueue($"{GetRes("SnackBarTransliterationCompleted")} {Model.Errors}");
                             if (!Settings.Default.SoundNotification) return;
                             var soundPlayer = new SoundPlayer(@"sounds\notification.wav");
                             soundPlayer.PlaySync();
@@ -305,7 +316,7 @@ namespace Translit.ViewModels.Pages
 
                             if (success)
                             {
-                                MessageQueue.Enqueue(GetRes("SnackBarTransliterationCompleted"));
+                                MessageQueue.Enqueue($"{GetRes("SnackBarTransliterationCompleted")} {Model.Errors}");
                                 if (!Settings.Default.SoundNotification) return;
                                 var soundPlayer = new SoundPlayer(@"sounds\notification.wav");
                                 soundPlayer.PlaySync();
@@ -403,7 +414,7 @@ namespace Translit.ViewModels.Pages
 
                     if (success)
                     {
-                        MessageQueue.Enqueue(GetRes("SnackBarTransliterationCompleted"));
+                        MessageQueue.Enqueue($"{GetRes("SnackBarTransliterationCompleted")} {Model.Errors}");
                         if (!Settings.Default.SoundNotification) return;
                         var soundPlayer = new SoundPlayer(@"sounds\notification.wav");
                         soundPlayer.PlaySync();
@@ -451,7 +462,7 @@ namespace Translit.ViewModels.Pages
 
                     if (success)
                     {
-                        MessageQueue.Enqueue(GetRes("SnackBarTransliterationCompleted"));
+                        MessageQueue.Enqueue($"{GetRes("SnackBarTransliterationCompleted")} {Model.Errors}");
                         if (!Settings.Default.SoundNotification) return;
                         var soundPlayer = new SoundPlayer(@"sounds\notification.wav");
                         soundPlayer.PlaySync();
@@ -470,7 +481,7 @@ namespace Translit.ViewModels.Pages
         private void UpdateTimeSpent(object sender, EventArgs e)
         {
             var span = Stopwatch.Elapsed;
-            TimeSpent = $"{span.Hours:00}:{span.Minutes:00}:{span.Seconds:00}:{span.Milliseconds:00}";
+            TimeSpent = $"{span.Hours:00}:{span.Minutes:00}:{span.Seconds:00}";
         }
 
         private void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)

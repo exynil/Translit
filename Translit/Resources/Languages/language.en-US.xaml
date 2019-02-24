@@ -135,7 +135,7 @@
     <v:String x:Key="SnackBarWrongLoginOrPassword">Wrong login or password</v:String>
     <v:String x:Key="SnackBarNotAllowedLength">Not allowed length</v:String>
     <v:String x:Key="SnackBarDatabaseNotFound">Database not found, go to "Advanced, Database"</v:String>
-    <v:String x:Key="SnackBarTransliterationCompleted">Transliteration completed</v:String>
+    <v:String x:Key="SnackBarTransliterationCompleted">Transliteration completed. Number of mistakes:</v:String>
     <v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Highlight an entry to edit or delete</v:String>
 
     <!--  DataGridTextColumn Header  -->

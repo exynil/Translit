@@ -135,7 +135,7 @@
     <v:String x:Key="SnackBarWrongLoginOrPassword">Не верный логин или пароль</v:String>
     <v:String x:Key="SnackBarNotAllowedLength">Не допустимая длина</v:String>
     <v:String x:Key="SnackBarDatabaseNotFound">База данных не найдена, перейдите в раздел "Дополнительно, База данных"</v:String>
-    <v:String x:Key="SnackBarTransliterationCompleted">Транслитерация завершена</v:String>
+    <v:String x:Key="SnackBarTransliterationCompleted">Транслитерация завершена. Кол-во ошибок: </v:String>
     <v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Выделите запись, чтобы редактировать или удалить</v:String>
 
     <!--  DataGridTextColumn Header  -->

@@ -89,10 +89,15 @@
                     Style="{StaticResource MaterialDesignCheckBox}"
                     ToolTip="{DynamicResource ToolTipIgnoreSelectedText}" />
                 <TextBlock
-                    Margin="95,0"
+                    HorizontalAlignment="Center"
                     FontSize="30"
                     FontWeight="Bold"
                     Text="{Binding TimeSpent}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Margin="95,0"
+                    HorizontalAlignment="Center"
+                    Text="{Binding Errors}"
                     TextWrapping="Wrap" />
             </StackPanel>
         </DockPanel>

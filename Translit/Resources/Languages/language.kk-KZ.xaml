@@ -135,7 +135,7 @@
     <v:String x:Key="SnackBarWrongLoginOrPassword">Логин немесе құпиясөз теріс</v:String>
     <v:String x:Key="SnackBarNotAllowedLength">Жол берілмеуі тиіс өлшем</v:String>
     <v:String x:Key="SnackBarDatabaseNotFound">Дерекқор табылмады, «Қосымша, Дерекқор» өтіңіз</v:String>
-    <v:String x:Key="SnackBarTransliterationCompleted">Транслитерация аяқталды</v:String>
+    <v:String x:Key="SnackBarTransliterationCompleted">Транслитерация аяқталды. Қателер саны:</v:String>
     <v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Өңдеу немесе жою үшін жазбаны таңдаңыз</v:String>
 
     <!--  DataGridTextColumn Header  -->

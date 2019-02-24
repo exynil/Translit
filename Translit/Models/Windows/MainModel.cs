@@ -71,7 +71,7 @@ namespace Translit.Models.Windows
                 // Даем разрешение на редактирование
                 Settings.Default.PermissionToChange = true;
 
-                Analytics.SendUserData();
+                Analytics.SendUserDataAsync();
 
                 JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
                 return 2;
@@ -91,7 +91,7 @@ namespace Translit.Models.Windows
             // Удаляем метку авторизации
             Settings.Default.PermissionToChange = false;
 
-            Analytics.SendUserData();
+            Analytics.SendUserDataAsync();
 
             User.Clear();
         }

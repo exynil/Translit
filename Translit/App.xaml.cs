@@ -36,12 +36,13 @@ namespace Translit
 
         private void App_OnExit(object sender, ExitEventArgs e)
         {
-            Analytics.SaveLocalAndUnsentUserData();
+            Analytics.SendUserData();
             Settings.Default.Save();
         }
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
+
             Language = Settings.Default.Language;
 
             if (!File.Exists(@"Translit.zip")) return;

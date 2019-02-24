@@ -45,11 +45,11 @@ namespace Translit.Models.Other
                     if (CloudUserData == null) CloudUserData = new UserData();
                 }
 
-                SendUserData();
+                SendUserDataAsync();
             });
         }
 
-        public static void SendUserData()
+        public static void SendUserDataAsync()
         {
             Task.Factory.StartNew(() =>
             {
@@ -90,13 +90,60 @@ namespace Translit.Models.Other
                 }
                 else if (LoadCloudUserData())
                 {
-                    SendUserData();
+                    SendUserDataAsync();
                 }
                 else
                 {
                     SaveLocalAndUnsentUserData();
                 }
             });
+        }
+
+        public static void SendUserData()
+        {
+            IFirebaseClient client = new FirebaseClient(new FirebaseConfig
+            {
+                BasePath = "https://translit-10dad.firebaseio.com/",
+                AuthSecret = "1V3A4v70wJZeZuvh4VwDmeV562zDSjuF4qDnrqtF"
+            });
+
+            // Если мы в сети
+            if (Online)
+            {
+                // Обновляем облачные данные пользователя
+                CloudUserData.UpdateAllData();
+
+                // Прибавляем к облачному счетчику данные неотправленного счетчика
+                CloudUserData.Counter.Add(UnsentUserData.Counter);
+
+                // Пытаемся отправить данные
+                try
+                {
+                    client.Set($"Analytics/{LocalUserData.Id}", CloudUserData);
+                }
+                catch (Exception)
+                {
+                    Online = false;
+                    SaveLocalAndUnsentUserData();
+                    CloudUserData.Counter.Subtract(UnsentUserData.Counter);
+                    return;
+                }
+
+                // Если данные отправились сбрасываем данные неотправленного счетчика
+                UnsentUserData.Counter.Reset();
+                // Копируем облачные данные в локальные локальные
+                LocalUserData = (UserData)CloudUserData.Clone();
+                // Сохраняем локальную и не отправленную аналитику
+                SaveLocalAndUnsentUserData();
+            }
+            else if (LoadCloudUserData())
+            {
+                SendUserDataAsync();
+            }
+            else
+            {
+                SaveLocalAndUnsentUserData();
+            }
         }
 
         // Сохраняем локальную аналитику и неотправленную аналитику

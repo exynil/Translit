@@ -96,7 +96,7 @@ namespace Translit.Models.Pages
                     Files.Clear();
                     Stop = false;
                     TransliterationState = false;
-                    Analytics.SendUserData();
+                    Analytics.SendUserDataAsync();
                     return false;
                 }
 
@@ -147,7 +147,7 @@ namespace Translit.Models.Pages
             }
 
             TransliterationState = false;
-            Analytics.SendUserData();
+            Analytics.SendUserDataAsync();
             return true;
         }
 

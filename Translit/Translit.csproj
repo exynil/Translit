@@ -324,7 +324,7 @@
     <Resource Include="Translit.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\TxtDocuments\LICENSE.txt" />
+    <Resource Include="Resources\TextDocuments\LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Sounds\Notification.wav">

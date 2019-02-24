@@ -44,7 +44,7 @@ namespace Translit.Views.DialogWindows
 
         public string ReadLicense()
         {
-            var license = new Uri("resources/txtdocuments/license.txt", UriKind.Relative);
+            var license = new Uri("resources/textdocuments/license.txt", UriKind.Relative);
             var licenseStream = Application.GetResourceStream(license)?.Stream;
 
             if (licenseStream == null) return "";

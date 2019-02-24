@@ -39,14 +39,12 @@ namespace Translit.ViewModels.Windows
                 else
                     Environment.Exit(0);
             }
-
+            Analytics.Start();
             if (OpenFileConverter.CanExecute(null)) OpenFileConverter.Execute(null);
-
             UpdatePopupBox();
             Model = new MainModel();
             MessageQueue = new SnackbarMessageQueue();
             UserName = $"{User.LastName} {User.FirstName}";
-            Analytics.Start();
         }
 
         public MainModel Model { get; set; }

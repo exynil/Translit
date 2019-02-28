@@ -1,10 +1,8 @@
-﻿using System.ComponentModel;
-using System.Diagnostics;
+﻿using MaterialDesignThemes.Wpf;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using MaterialDesignThemes.Wpf;
 using Translit.Models.Other;
 using Translit.Models.Pages;
 

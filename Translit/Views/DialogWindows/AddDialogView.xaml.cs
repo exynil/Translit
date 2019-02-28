@@ -46,6 +46,7 @@ namespace Translit.Views.DialogWindows
         {
             InitializeComponent();
             DataContext = this;
+            Owner = Application.Current.MainWindow;
         }
 
         public ICommand Accept

@@ -198,7 +198,7 @@ namespace Translit.ViewModels.Pages
                         {
                             IsIndeterminate = false;
                             CanUpdate = true;
-                            UpdateButtonContent = GetRes("ButtonUpdate");
+                            UpdateButtonContent = GetRes(Model.CollectionExists() ? "ButtonUpdate" : "ButtonDownload");
                             MessageQueue.Enqueue(GetRes("SnackBarBadInternetConnection"));
                         }
                     });

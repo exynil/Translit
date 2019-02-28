@@ -15,6 +15,14 @@ namespace Translit.Models.Pages
 
         public string ConnectionString { get; set; }
 
+        public bool CollectionExists()
+        {
+            using (var db = new LiteDatabase(ConnectionString))
+            {
+                return db.CollectionExists("Symbols") && db.CollectionExists("Words");
+            }
+        }
+
         public string Transliterate(string text)
         {
             if (!File.Exists(ConnectionString)) return null;

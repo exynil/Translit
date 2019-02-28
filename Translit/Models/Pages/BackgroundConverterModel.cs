@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Gma.System.MouseKeyHook;
+using LiteDB;
+using System;
 using System.ComponentModel;
 using System.Configuration;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Automation;
 using System.Windows.Forms;
+using Translit.Models.Other;
 using WindowsInput;
 using WindowsInput.Native;
-using Gma.System.MouseKeyHook;
-using LiteDB;
-using Translit.Models.Other;
 
 namespace Translit.Models.Pages
 {

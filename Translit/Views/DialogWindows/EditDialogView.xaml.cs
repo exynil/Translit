@@ -45,6 +45,7 @@ namespace Translit.Views.DialogWindows
         {
             InitializeComponent();
             DataContext = this;
+            Owner = Application.Current.MainWindow;
             Cyryllic = cyryllic;
             Latin = latin;
         }

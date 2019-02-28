@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using Translit.Models.Other;
 
@@ -23,6 +24,7 @@ namespace Translit.Views.DialogWindows
         {
             InitializeComponent();
             DataContext = this;
+            Owner = Application.Current.MainWindow;
             Question = question;
         }
 

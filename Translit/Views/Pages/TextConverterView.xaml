@@ -24,6 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
@@ -85,6 +86,11 @@
                 ToolTip="{DynamicResource SliderFontSize}"
                 Value="{Binding FontSize, UpdateSourceTrigger=PropertyChanged}" />
         </WrapPanel>
+        <materialDesign:Snackbar
+            Grid.Row="2"
+            HorizontalAlignment="Stretch"
+            IsActive="False"
+            MessageQueue="{Binding MessageQueue}" />
     </Grid>
 </Page>
 

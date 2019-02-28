@@ -16,7 +16,7 @@
 	TextElement.Foreground="{DynamicResource MaterialDesignBody}"
 	TextOptions.TextFormattingMode="Ideal"
 	TextOptions.TextRenderingMode="Auto"
-	WindowStartupLocation="CenterScreen"
+	WindowStartupLocation="CenterOwner"
 	WindowStyle="None"
 	mc:Ignorable="d">
 	<GroupBox

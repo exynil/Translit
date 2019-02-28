@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using MaterialDesignThemes.Wpf;
 using Translit.Models.Other;
 using Translit.Models.Pages;
 using Translit.Properties;
@@ -18,10 +19,12 @@ namespace Translit.ViewModels.Pages
         public TextConverterViewModel()
         {
             Model = new TextConverterModel();
+            MessageQueue = new SnackbarMessageQueue();
             FontSize = Settings.Default.TextConverterFontSize;
         }
 
         public TextConverterModel Model { get; set; }
+        public SnackbarMessageQueue MessageQueue { get; set; }
 
         public string Cyryllic
         {
@@ -29,7 +32,14 @@ namespace Translit.ViewModels.Pages
             set
             {
                 _cyryllic = value;
-                Transliterate();
+                if (Model.CollectionExists())
+                {
+                    Transliterate();
+                }
+                else
+                {
+                    MessageQueue.Enqueue(GetRes("SnackBarDatabaseNotFound"));
+                }
                 OnPropertyChanged();
             }
         }

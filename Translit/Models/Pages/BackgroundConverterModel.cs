@@ -22,23 +22,23 @@ namespace Translit.Models.Pages
         {
             ConnectionString = ConfigurationManager.ConnectionStrings["LiteDbConnection"].ConnectionString;
             GlobalHook = Hook.GlobalEvents();
-            InputString = new StringBuilder();
+            InputText = new StringBuilder();
             Simulator = new InputSimulator();
         }
 
         public string ConnectionString { get; }
 
-        public StringBuilder InputString { get; set; }
+        public StringBuilder InputText { get; set; }
         public InputSimulator Simulator { get; set; }
         public bool IsTransliteratorEnabled { get; set; }
 
         private void GlobalHookKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Back && InputString.Length != 0)
+            if (e.KeyCode == Keys.Back && InputText.Length != 0)
             {
-                InputString.Remove(InputString.Length - 1, 1);
+                InputText.Remove(InputText.Length - 1, 1);
             }
-            else if (e.KeyCode == Keys.Pause && !e.Shift && InputString.Length != 0)
+            else if (e.KeyCode == Keys.Pause && !e.Shift && InputText.Length != 0)
             {
                 GlobalHook.KeyDown -= GlobalHookKeyDown;
 
@@ -48,7 +48,7 @@ namespace Translit.Models.Pages
             }
             else if (e.Shift && e.KeyCode == Keys.Pause)
             {
-                InputString.Clear();
+                InputText.Clear();
             }
             else if (e.Shift && e.KeyCode == Keys.Home)
             {
@@ -63,9 +63,9 @@ namespace Translit.Models.Pages
                         {
                             var tp = (TextPattern) pattern;
 
-                            InputString.Clear();
+                            InputText.Clear();
 
-                            foreach (var r in tp.GetSelection()) InputString.Append(r.GetText(-1));
+                            foreach (var r in tp.GetSelection()) InputText.Append(r.GetText(-1));
 
                             TransliterateInputString(false);
                         }
@@ -103,23 +103,23 @@ namespace Translit.Models.Pages
                             break;
                     }
 
-                    InputString.Replace(cyryllic, latin);
+                    InputText.Replace(cyryllic, latin);
                 }
 
-            Symbols.Aggregate(InputString, (current, s) => current.Replace(s.Cyryllic, s.Latin));
+            Symbols.Aggregate(InputText, (current, s) => current.Replace(s.Cyryllic, s.Latin));
 
             if (simulateBackspace)
-                for (var i = 0; i < InputString.Length; i++)
+                for (var i = 0; i < InputText.Length; i++)
                     Simulator.Keyboard.KeyDown(VirtualKeyCode.BACK).Sleep(10);
 
-            Simulator.Keyboard.TextEntry(InputString.ToString());
+            Simulator.Keyboard.TextEntry(InputText.ToString());
 
-            InputString.Clear();
+            InputText.Clear();
         }
 
         private void GlobalHookKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar != '\b') InputString.Append(e.KeyChar);
+            if (e.KeyChar != '\b') InputText.Append(e.KeyChar);
         }
 
         public void Subscribe()

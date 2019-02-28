@@ -57,9 +57,10 @@
     <v:String x:Key="TextBlockGoToTheDesiredProgram">2) Перейдите в нужную программу</v:String>
     <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Введите какой-нибудь текст или слово</v:String>
     <v:String x:Key="TextBlockPressThePauseBreakKey">4) Нажмите клавишу 'Pause Break'</v:String>
-    <v:String x:Key="TextBlockTransliterationOfTypedText">'Pause Break' - транслитерация набранного текста</v:String>
-    <v:String x:Key="TextBlockFlushBuffer">'Shift + Pause Break' - очистка буфера (необязательно)</v:String>
-    <v:String x:Key="TextBlockTransliterationOfTheSelectedText">'Shift + Home' - транслитерация выделенного текста</v:String>
+    <v:String x:Key="TextBlockTransliterationOfTypedText">Pause Break - транслитерация набранного текста</v:String>
+    <v:String x:Key="TextBlockFlushBuffer">Shift + Pause Break - очистка буфера (необязательно)</v:String>
+    <v:String x:Key="TextBlockTransliterationOfTheSelectedText">Shift + Home - транслитерация выделенного текста</v:String>
+    <v:String x:Key="TextBlockBufferTextTransliteration">Shift + END - транслитерация текста из буффера</v:String>
     <v:String x:Key="HeaderTheTextYouEntered">Введённый вами текст...</v:String>
 
     <!--  Page SymbolsEditor and WordsEditor  -->

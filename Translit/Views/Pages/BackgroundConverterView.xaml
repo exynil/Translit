@@ -69,6 +69,10 @@
                 Margin="3"
                 Text="{DynamicResource TextBlockTransliterationOfTheSelectedText}"
                 TextWrapping="Wrap" />
+            <TextBlock
+                Margin="3"
+                Text="{DynamicResource TextBlockBufferTextTransliteration}"
+                TextWrapping="Wrap" />
             <Button
                 Margin="3,20"
                 HorizontalAlignment="Center"

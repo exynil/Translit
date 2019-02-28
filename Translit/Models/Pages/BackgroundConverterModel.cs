@@ -84,6 +84,16 @@ namespace Translit.Models.Pages
 
                 GlobalHook.KeyDown += GlobalHookKeyDown;
             }
+            else if (e.Shift && e.KeyCode == Keys.End)
+            {
+                GlobalHook.KeyDown -= GlobalHookKeyDown;
+
+                InputText.Clear();
+                InputText.Append(Clipboard.GetText().Replace("\n", ""));
+                TransliterateInputText(false);
+
+                GlobalHook.KeyDown += GlobalHookKeyDown;
+            }
         }
 
         private void TransliterateInputText(bool simulateBackspace)

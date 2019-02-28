@@ -56,10 +56,11 @@
     <v:String x:Key="TextBlockActivateBackgroundConverter">1) Фондық транслитераторды іске қосыңыз</v:String>
     <v:String x:Key="TextBlockGoToTheDesiredProgram">2) Қалаған бағдарламаға өтіңіз</v:String>
     <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Кейбір мәтінді немесе сөзді енгізіңіз</v:String>
-    <v:String x:Key="TextBlockPressThePauseBreakKey">4) 'Pause Break' пернесін басыңыз</v:String>
-    <v:String x:Key="TextBlockTransliterationOfTypedText">'Pause Break' - терілген мәтінді транслитерациялау</v:String>
-    <v:String x:Key="TextBlockFlushBuffer">'Shift + Pause Break' - буферді тазалау (міндетті емес)</v:String>
-    <v:String x:Key="TextBlockTransliterationOfTheSelectedText">'Shift + Home' - таңдалған мәтінді транслитерациялау</v:String>
+    <v:String x:Key="TextBlockPressThePauseBreakKey">4) Pause Break пернесін басыңыз</v:String>
+    <v:String x:Key="TextBlockTransliterationOfTypedText">Pause Break - терілген мәтінді транслитерациялау</v:String>
+    <v:String x:Key="TextBlockFlushBuffer">Shift + Pause Break - буферді тазалау (міндетті емес)</v:String>
+    <v:String x:Key="TextBlockTransliterationOfTheSelectedText">Shift + Home - таңдалған мәтінді транслитерациялау</v:String>
+    <v:String x:Key="TextBlockBufferTextTransliteration">Shift + END - аралық мәтін транслитерациясы</v:String>
     <v:String x:Key="HeaderTheTextYouEntered">Сіз енгізген мәтін...</v:String>
 
     <!--  Page SymbolsEditor and WordsEditor  -->

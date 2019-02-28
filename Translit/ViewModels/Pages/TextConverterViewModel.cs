@@ -33,13 +33,9 @@ namespace Translit.ViewModels.Pages
             {
                 _cyryllic = value;
                 if (Model.CollectionExists())
-                {
                     Transliterate();
-                }
                 else
-                {
                     MessageQueue.Enqueue(GetRes("SnackBarDatabaseNotFound"));
-                }
                 OnPropertyChanged();
             }
         }

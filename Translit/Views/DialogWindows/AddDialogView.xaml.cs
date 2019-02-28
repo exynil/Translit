@@ -12,6 +12,13 @@ namespace Translit.Views.DialogWindows
         private string _latin;
         private string _message;
 
+        public AddDialogView()
+        {
+            InitializeComponent();
+            DataContext = this;
+            Owner = Application.Current.MainWindow;
+        }
+
         public string Cyryllic
         {
             get => _cyryllic;
@@ -42,13 +49,6 @@ namespace Translit.Views.DialogWindows
             }
         }
 
-        public AddDialogView()
-        {
-            InitializeComponent();
-            DataContext = this;
-            Owner = Application.Current.MainWindow;
-        }
-
         public ICommand Accept
         {
             get
@@ -63,13 +63,13 @@ namespace Translit.Views.DialogWindows
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         // Получение ресурса по ключу
         public string GetRes(string key)
         {
             return Application.Current.Resources[key].ToString();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

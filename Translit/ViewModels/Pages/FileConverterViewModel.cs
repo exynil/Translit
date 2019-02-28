@@ -23,6 +23,7 @@ namespace Translit.ViewModels.Pages
 {
     internal class FileConverterViewModel : INotifyPropertyChanged
     {
+        private string _errors;
         private string _fileName;
         private bool _ignoreSelectedText;
         private string _left;
@@ -35,7 +36,6 @@ namespace Translit.ViewModels.Pages
         private string _symbolProgress;
         private string _timeSpent;
         private string _wordProgress;
-        private string _errors;
 
         public FileConverterViewModel()
         {

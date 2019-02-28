@@ -132,7 +132,7 @@ namespace Translit.Models.Other
                 // Если данные отправились сбрасываем данные неотправленного счетчика
                 UnsentUserData.Counter.Reset();
                 // Копируем облачные данные в локальные локальные
-                LocalUserData = (UserData)CloudUserData.Clone();
+                LocalUserData = (UserData) CloudUserData.Clone();
                 // Сохраняем локальную и не отправленную аналитику
                 SaveLocalAndUnsentUserData();
             }

@@ -12,6 +12,15 @@ namespace Translit.Views.DialogWindows
         private string _latin;
         private string _message;
 
+        public EditDialogView(string cyryllic, string latin)
+        {
+            InitializeComponent();
+            DataContext = this;
+            Owner = Application.Current.MainWindow;
+            Cyryllic = cyryllic;
+            Latin = latin;
+        }
+
         public string Cyryllic
         {
             get => _cyryllic;
@@ -41,14 +50,6 @@ namespace Translit.Views.DialogWindows
                 OnPropertyChanged();
             }
         }
-        public EditDialogView(string cyryllic, string latin)
-        {
-            InitializeComponent();
-            DataContext = this;
-            Owner = Application.Current.MainWindow;
-            Cyryllic = cyryllic;
-            Latin = latin;
-        }
 
         public ICommand Accept
         {
@@ -64,13 +65,13 @@ namespace Translit.Views.DialogWindows
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         // Получение ресурса по ключу
         public string GetRes(string key)
         {
             return Application.Current.Resources[key].ToString();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

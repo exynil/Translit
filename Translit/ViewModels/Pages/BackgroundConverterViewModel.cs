@@ -1,8 +1,8 @@
-﻿using MaterialDesignThemes.Wpf;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using MaterialDesignThemes.Wpf;
 using Translit.Models.Other;
 using Translit.Models.Pages;
 
@@ -19,11 +19,6 @@ namespace Translit.ViewModels.Pages
             Model.PropertyChanged += OnModelPropertyChanged;
             MessageQueue = new SnackbarMessageQueue();
             ActivatorContent = GetRes(Model.IsTransliteratorEnabled ? "ButtonDeactivate" : "ButtonActivate");
-        }
-
-        private void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            InputText = Model.InputText.ToString();
         }
 
         public BackgroundConverterModel Model { get; set; }
@@ -76,6 +71,11 @@ namespace Translit.ViewModels.Pages
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            InputText = Model.InputText.ToString();
+        }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

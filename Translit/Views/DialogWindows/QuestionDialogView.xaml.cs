@@ -10,6 +10,14 @@ namespace Translit.Views.DialogWindows
     {
         private string _question;
 
+        public QuestionDialogView(string question)
+        {
+            InitializeComponent();
+            DataContext = this;
+            Owner = Application.Current.MainWindow;
+            Question = question;
+        }
+
         public string Question
         {
             get => _question;
@@ -18,14 +26,6 @@ namespace Translit.Views.DialogWindows
                 _question = value;
                 OnPropertyChanged();
             }
-        }
-
-        public QuestionDialogView(string question)
-        {
-            InitializeComponent();
-            DataContext = this;
-            Owner = Application.Current.MainWindow;
-            Question = question;
         }
 
         public ICommand Accept

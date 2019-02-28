@@ -1,6 +1,4 @@
-﻿using Gma.System.MouseKeyHook;
-using LiteDB;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
@@ -8,9 +6,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Automation;
 using System.Windows.Forms;
-using Translit.Models.Other;
 using WindowsInput;
 using WindowsInput.Native;
+using Gma.System.MouseKeyHook;
+using LiteDB;
+using Translit.Models.Other;
 
 namespace Translit.Models.Pages
 {
@@ -34,6 +34,8 @@ namespace Translit.Models.Pages
 
         public InputSimulator Simulator { get; set; }
         public bool IsTransliteratorEnabled { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void GlobalHookKeyDown(object sender, KeyEventArgs e)
         {
@@ -163,8 +165,6 @@ namespace Translit.Models.Pages
                 Symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

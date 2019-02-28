@@ -42,7 +42,6 @@ namespace Translit
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-
             Language = Settings.Default.Language;
 
             if (!File.Exists(@"Translit.zip")) return;

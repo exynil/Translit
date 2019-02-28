@@ -102,7 +102,6 @@
             </StackPanel>
         </DockPanel>
         <materialDesign:Snackbar
-            x:Name="SnackbarNotification"
             HorizontalAlignment="Stretch"
             IsActive="False"
             MessageQueue="{Binding MessageQueue}" />

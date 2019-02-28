@@ -486,7 +486,7 @@ namespace Translit.ViewModels.Pages
 
         private void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            FileName = ShortenFileName(Model.FileName, 75);
+            FileName = CutText(Model.FileName, 75);
             PercentOfWords = Model.PercentOfWords;
             PercentOfSymbols = Model.PercentOfSymbols;
 
@@ -495,13 +495,13 @@ namespace Translit.ViewModels.Pages
             SymbolProgress = $"{GetRes("TextBlockCharacterTransliteration")}: {PercentOfSymbols}%";
         }
 
-        private string ShortenFileName(string filename, int requiredLength)
+        private string CutText(string text, int requiredLength)
         {
-            if (filename == null) return "";
-            if (filename.Length <= requiredLength) return filename;
+            if (text == null) return "";
+            if (text.Length <= requiredLength) return text;
 
-            var left = filename.Substring(0, requiredLength / 2 - 3);
-            var right = filename.Substring(filename.Length - requiredLength / 2);
+            var left = text.Substring(0, requiredLength / 2 - 3);
+            var right = text.Substring(text.Length - requiredLength / 2);
             return $"{left}...{right}";
         }
     }

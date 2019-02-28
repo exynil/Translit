@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Automation;
 using System.Windows.Forms;
@@ -12,7 +15,7 @@ using Translit.Models.Other;
 
 namespace Translit.Models.Pages
 {
-    internal class BackgroundConverterModel
+    internal class BackgroundConverterModel : INotifyPropertyChanged
     {
         public readonly IKeyboardMouseEvents GlobalHook;
         public Symbol[] Symbols;
@@ -29,6 +32,7 @@ namespace Translit.Models.Pages
         public string ConnectionString { get; }
 
         public StringBuilder InputText { get; set; }
+
         public InputSimulator Simulator { get; set; }
         public bool IsTransliteratorEnabled { get; set; }
 
@@ -37,18 +41,20 @@ namespace Translit.Models.Pages
             if (e.KeyCode == Keys.Back && InputText.Length != 0)
             {
                 InputText.Remove(InputText.Length - 1, 1);
+                OnPropertyChanged();
             }
             else if (e.KeyCode == Keys.Pause && !e.Shift && InputText.Length != 0)
             {
                 GlobalHook.KeyDown -= GlobalHookKeyDown;
 
-                TransliterateInputString(true);
+                TransliterateInputText(true);
 
                 GlobalHook.KeyDown += GlobalHookKeyDown;
             }
             else if (e.Shift && e.KeyCode == Keys.Pause)
             {
                 InputText.Clear();
+                OnPropertyChanged();
             }
             else if (e.Shift && e.KeyCode == Keys.Home)
             {
@@ -67,7 +73,7 @@ namespace Translit.Models.Pages
 
                             foreach (var r in tp.GetSelection()) InputText.Append(r.GetText(-1));
 
-                            TransliterateInputString(false);
+                            TransliterateInputText(false);
                         }
                 }
                 catch (Exception)
@@ -79,7 +85,7 @@ namespace Translit.Models.Pages
             }
         }
 
-        private void TransliterateInputString(bool simulateBackspace)
+        private void TransliterateInputText(bool simulateBackspace)
         {
             foreach (var w in Words)
                 for (var j = 0; j < 3; j++)
@@ -115,11 +121,13 @@ namespace Translit.Models.Pages
             Simulator.Keyboard.TextEntry(InputText.ToString());
 
             InputText.Clear();
+            OnPropertyChanged();
         }
 
         private void GlobalHookKeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar != '\b') InputText.Append(e.KeyChar);
+            OnPropertyChanged();
         }
 
         public void Subscribe()
@@ -155,6 +163,13 @@ namespace Translit.Models.Pages
                 Words = db.GetCollection<Word>("Words").FindAll().ToArray();
                 Symbols = db.GetCollection<Symbol>("Symbols").FindAll().ToArray();
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

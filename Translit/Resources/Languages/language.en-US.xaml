@@ -60,6 +60,7 @@
     <v:String x:Key="TextBlockTransliterationOfTypedText">'Pause Break' - transliteration of typed text</v:String>
     <v:String x:Key="TextBlockFlushBuffer">Shift + Pause Break' - flush buffer (optional)</v:String>
     <v:String x:Key="TextBlockTransliterationOfTheSelectedText">'Shift + Home' - transliteration of selected text</v:String>
+    <v:String x:Key="HeaderTheTextYouEntered">The text you entered...</v:String>
 
     <!--  Page SymbolsEditor and WordsEditor  -->
     <v:String x:Key="ToolTipAdd">Add</v:String>
@@ -137,7 +138,7 @@
     <v:String x:Key="SnackBarWelcome">Welcome</v:String>
     <v:String x:Key="SnackBarWrongLoginOrPassword">Wrong login or password</v:String>
     <v:String x:Key="SnackBarNotAllowedLength">Not allowed length</v:String>
-    <v:String x:Key="SnackBarDatabaseNotFound">Database not found, go to "Advanced, Database"</v:String>
+    <v:String x:Key="SnackBarDatabaseNotFound">Database not found, go to &quot;Advanced, Database&quot;</v:String>
     <v:String x:Key="SnackBarTransliterationCompleted">Transliteration completed. Number of mistakes:</v:String>
     <v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Highlight an entry to edit or delete</v:String>
 

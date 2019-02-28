@@ -60,6 +60,7 @@
     <v:String x:Key="TextBlockTransliterationOfTypedText">'Pause Break' - транслитерация набранного текста</v:String>
     <v:String x:Key="TextBlockFlushBuffer">'Shift + Pause Break' - очистка буфера (необязательно)</v:String>
     <v:String x:Key="TextBlockTransliterationOfTheSelectedText">'Shift + Home' - транслитерация выделенного текста</v:String>
+    <v:String x:Key="HeaderTheTextYouEntered">Введённый вами текст...</v:String>
 
     <!--  Page SymbolsEditor and WordsEditor  -->
     <v:String x:Key="ToolTipAdd">Добавить</v:String>
@@ -137,8 +138,8 @@
     <v:String x:Key="SnackBarWelcome">Добро пожаловать</v:String>
     <v:String x:Key="SnackBarWrongLoginOrPassword">Не верный логин или пароль</v:String>
     <v:String x:Key="SnackBarNotAllowedLength">Не допустимая длина</v:String>
-    <v:String x:Key="SnackBarDatabaseNotFound">База данных не найдена, перейдите в раздел "Дополнительно, База данных"</v:String>
-    <v:String x:Key="SnackBarTransliterationCompleted">Транслитерация завершена. Кол-во ошибок: </v:String>
+    <v:String x:Key="SnackBarDatabaseNotFound">База данных не найдена, перейдите в раздел &quot;Дополнительно, База данных&quot;</v:String>
+    <v:String x:Key="SnackBarTransliterationCompleted">Транслитерация завершена. Кол-во ошибок:</v:String>
     <v:String x:Key="SnackBarHighlightAnEntryToEditOrDelete">Выделите запись, чтобы редактировать или удалить</v:String>
 
     <!--  DataGridTextColumn Header  -->

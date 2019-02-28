@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using MaterialDesignThemes.Wpf;
@@ -11,16 +13,33 @@ namespace Translit.ViewModels.Pages
     internal class BackgroundConverterViewModel : INotifyPropertyChanged
     {
         private string _activatorContent;
+        private string _inputText;
 
         public BackgroundConverterViewModel()
         {
             Model = new BackgroundConverterModel();
+            Model.PropertyChanged += OnModelPropertyChanged;
             MessageQueue = new SnackbarMessageQueue();
             ActivatorContent = GetRes(Model.IsTransliteratorEnabled ? "ButtonDeactivate" : "ButtonActivate");
         }
 
+        private void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            InputText = Model.InputText.ToString();
+        }
+
         public BackgroundConverterModel Model { get; set; }
         public SnackbarMessageQueue MessageQueue { get; set; }
+
+        public string InputText
+        {
+            get => _inputText;
+            set
+            {
+                _inputText = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string ActivatorContent
         {

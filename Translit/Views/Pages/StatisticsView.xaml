@@ -44,7 +44,6 @@
                 Kind="Reload" />
         </Button>
         <materialDesign:Snackbar
-            x:Name="SnackbarNotification"
             Grid.Row="1"
             HorizontalAlignment="Stretch"
             IsActive="False"

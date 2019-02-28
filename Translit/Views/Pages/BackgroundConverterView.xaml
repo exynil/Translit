@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:Translit.ViewModels.Pages"
     Title="BackgroundConverterView"
-    d:DesignHeight="450"
+    d:DesignHeight="650"
     d:DesignWidth="400"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{DynamicResource MaterialDesignFont}"
@@ -21,56 +21,78 @@
         <pages:BackgroundConverterViewModel />
     </Page.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <StackPanel
+            Grid.Row="0"
             Width="350"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
             <TextBlock
-                Margin="5,20"
+                Margin="3,10"
                 Text="{DynamicResource TextBlockBackgroundConverterAllowsYouTo}"
                 TextWrapping="Wrap" />
             <TextBlock
-                Margin="5"
+                Margin="3"
                 Text="{DynamicResource TextBlockActivateBackgroundConverter}"
                 TextWrapping="Wrap" />
             <TextBlock
-                Margin="5"
+                Margin="3"
                 Text="{DynamicResource TextBlockGoToTheDesiredProgram}"
                 TextWrapping="Wrap" />
             <TextBlock
-                Margin="5"
+                Margin="3"
                 Text="{DynamicResource TextBlockEnterSomeTextOrWord}"
                 TextWrapping="Wrap" />
             <TextBlock
-                Margin="5"
+                Margin="3"
                 Text="{DynamicResource TextBlockPressThePauseBreakKey}"
                 TextWrapping="Wrap" />
             <Border
                 Height="1"
-                Margin="5, 20"
+                Margin="3,10"
                 HorizontalAlignment="Stretch"
                 Background="{DynamicResource MaterialDesignDivider}"
                 SnapsToDevicePixels="True" />
             <TextBlock
-                Margin="5"
+                Margin="3"
                 Text="{DynamicResource TextBlockTransliterationOfTypedText}"
                 TextWrapping="Wrap" />
             <TextBlock
-                Margin="5"
+                Margin="3"
                 Text="{DynamicResource TextBlockFlushBuffer}"
                 TextWrapping="Wrap" />
             <TextBlock
-                Margin="5"
+                Margin="3"
                 Text="{DynamicResource TextBlockTransliterationOfTheSelectedText}"
                 TextWrapping="Wrap" />
             <Button
-                Margin="5,20"
+                Margin="3,20"
                 HorizontalAlignment="Center"
                 Command="{Binding ActivateOrDeactivate}"
                 Content="{Binding ActivatorContent}" />
         </StackPanel>
+        <GroupBox
+            Grid.Row="1"
+            Margin="50,16,50,16"
+            Background="WhiteSmoke"
+            DockPanel.Dock="Bottom"
+            Header="{DynamicResource HeaderTheTextYouEntered}"
+            Style="{DynamicResource MaterialDesignCardGroupBox}">
+            <TextBox
+                Height="60"
+                Margin="3"
+                VerticalAlignment="Stretch"
+                IsReadOnly="True"
+                Text="{Binding InputText}"
+                TextWrapping="Wrap"
+                VerticalScrollBarVisibility="Auto" />
+        </GroupBox>
         <materialDesign:Snackbar
-            x:Name="SnackbarNotification"
+            Grid.Row="2"
             HorizontalAlignment="Stretch"
             IsActive="False"
             MessageQueue="{Binding MessageQueue}" />

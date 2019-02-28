@@ -130,17 +130,5 @@ namespace Translit.Properties {
                 this["SoundNotification"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool LicenseAcceptance {
-            get {
-                return ((bool)(this["LicenseAcceptance"]));
-            }
-            set {
-                this["LicenseAcceptance"] = value;
-            }
-        }
     }
 }

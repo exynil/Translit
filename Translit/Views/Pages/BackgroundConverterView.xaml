@@ -53,11 +53,15 @@
                 SnapsToDevicePixels="True" />
             <TextBlock
                 Margin="5"
-                Text="{DynamicResource TextBlockTransliterationOfTheSelectedText}"
+                Text="{DynamicResource TextBlockTransliterationOfTypedText}"
                 TextWrapping="Wrap" />
             <TextBlock
                 Margin="5"
                 Text="{DynamicResource TextBlockFlushBuffer}"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Margin="5"
+                Text="{DynamicResource TextBlockTransliterationOfTheSelectedText}"
                 TextWrapping="Wrap" />
             <Button
                 Margin="5,20"

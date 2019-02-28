@@ -167,9 +167,6 @@
     <Compile Include="Views\DialogWindows\EditDialogView.xaml.cs">
       <DependentUpon>EditDialogView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DialogWindows\LicenseDialogView.xaml.cs">
-      <DependentUpon>LicenseDialogView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\DialogWindows\QuestionDialogView.xaml.cs">
       <DependentUpon>QuestionDialogView.xaml</DependentUpon>
     </Compile>
@@ -231,10 +228,6 @@
     <Page Include="Views\DialogWindows\EditDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
-    <Page Include="Views\DialogWindows\LicenseDialogView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DialogWindows\QuestionDialogView.xaml">
       <SubType>Designer</SubType>

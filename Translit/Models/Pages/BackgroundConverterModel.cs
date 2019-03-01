@@ -44,7 +44,7 @@ namespace Translit.Models.Pages
                 InputText.Remove(InputText.Length - 1, 1);
                 OnPropertyChanged();
             }
-            else if (e.KeyCode == Keys.Pause && !e.Shift && InputText.Length != 0)
+            else if (!e.Shift && e.KeyCode == Keys.Pause && InputText.Length != 0)
             {
                 GlobalHook.KeyDown -= GlobalHookKeyDown;
 
@@ -53,11 +53,6 @@ namespace Translit.Models.Pages
                 GlobalHook.KeyDown += GlobalHookKeyDown;
             }
             else if (e.Shift && e.KeyCode == Keys.Pause)
-            {
-                InputText.Clear();
-                OnPropertyChanged();
-            }
-            else if (e.Shift && e.KeyCode == Keys.Home)
             {
                 GlobalHook.KeyDown -= GlobalHookKeyDown;
 
@@ -68,7 +63,7 @@ namespace Translit.Models.Pages
                     if (element != null)
                         if (element.TryGetCurrentPattern(TextPattern.Pattern, out var pattern))
                         {
-                            var tp = (TextPattern) pattern;
+                            var tp = (TextPattern)pattern;
 
                             InputText.Clear();
 
@@ -83,6 +78,12 @@ namespace Translit.Models.Pages
                 }
 
                 GlobalHook.KeyDown += GlobalHookKeyDown;
+            }
+            else if (e.Control && e.Shift && e.KeyCode == Keys.Delete)
+            {
+                InputText.Clear();
+                OnPropertyChanged();
+               
             }
             else if (e.Shift && e.KeyCode == Keys.End)
             {

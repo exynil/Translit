@@ -58,8 +58,8 @@
     <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Кейбір мәтінді немесе сөзді енгізіңіз</v:String>
     <v:String x:Key="TextBlockPressThePauseBreakKey">4) Pause Break пернесін басыңыз</v:String>
     <v:String x:Key="TextBlockTransliterationOfTypedText">Pause Break - терілген мәтінді транслитерациялау</v:String>
-    <v:String x:Key="TextBlockFlushBuffer">Shift + Pause Break - буферді тазалау (міндетті емес)</v:String>
-    <v:String x:Key="TextBlockTransliterationOfTheSelectedText">Shift + Home - таңдалған мәтінді транслитерациялау</v:String>
+    <v:String x:Key="TextBlockFlushBuffer">Ctrl + Shift + Delete - буферді тазалау (міндетті емес)</v:String>
+    <v:String x:Key="TextBlockTransliterationOfTheSelectedText">Shift + Pause Break - таңдалған мәтінді транслитерациялау</v:String>
     <v:String x:Key="TextBlockBufferTextTransliteration">Shift + END - аралық мәтін транслитерациясы</v:String>
     <v:String x:Key="HeaderTheTextYouEntered">Сіз енгізген мәтін...</v:String>
 

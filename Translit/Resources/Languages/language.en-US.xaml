@@ -58,8 +58,8 @@
     <v:String x:Key="TextBlockEnterSomeTextOrWord">3) Enter some text or word</v:String>
     <v:String x:Key="TextBlockPressThePauseBreakKey">4) Press the 'Pause Break' key</v:String>
     <v:String x:Key="TextBlockTransliterationOfTypedText">Pause Break - transliteration of typed text</v:String>
-    <v:String x:Key="TextBlockFlushBuffer">Shift + Pause Break - flush buffer (optional)</v:String>
-    <v:String x:Key="TextBlockTransliterationOfTheSelectedText">Shift + Home - transliteration of selected text</v:String>
+    <v:String x:Key="TextBlockFlushBuffer">Ctrl + Shift + Delete - flush buffer (optional)</v:String>
+    <v:String x:Key="TextBlockTransliterationOfTheSelectedText">Shift + Pause Break - transliteration of selected text</v:String>
     <v:String x:Key="TextBlockBufferTextTransliteration">Shift + END - buffer text transliteration</v:String>
     <v:String x:Key="HeaderTheTextYouEntered">The text you entered...</v:String>
 

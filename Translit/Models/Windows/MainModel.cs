@@ -1,4 +1,9 @@
-﻿using System;
+﻿using FireSharp;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using LiteDB;
+using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
@@ -9,13 +14,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using FireSharp;
-using FireSharp.Config;
-using FireSharp.Interfaces;
-using LiteDB;
-using Newtonsoft.Json;
 using Translit.Models.Other;
 using Translit.Properties;
+using Translit.Views.DialogWindows;
 
 namespace Translit.Models.Windows
 {
@@ -26,9 +27,39 @@ namespace Translit.Models.Windows
             ConnectionString = ConfigurationManager.ConnectionStrings["LiteDbConnection"].ConnectionString;
 
             JsonConvert.DeserializeObject<User>(Rc4.Calc(Settings.Default.FingerPrint, Settings.Default.User));
+
+            CheckActivation();
             CheckAndDownloadUpdate();
-            DownlaodUpdater();
+            CheckAndDownlaodUpdater();
             CheckPermission();
+        }
+
+        private void CheckActivation()
+        {
+            using (var db = new LiteDatabase(ConnectionString))
+            {
+                var activatedComputers = db.GetCollection<ActivatedComputer>("ActivatedComputers");
+
+                var result = activatedComputers.Exists(Query.EQ("_id", FingerPrint.Value()));
+
+                if (result) return;
+
+                var activationView = new ActivationDialogView();
+
+                if (activationView.ShowDialog() == true)
+                {
+                    // Добавляем этот компьютер в локальную базу активированных компьютеров
+                    activatedComputers.Upsert(new ActivatedComputer
+                    {
+                        Id = FingerPrint.Value(),
+                        ActivationDate = DateTime.Now
+                    });
+                }
+                else
+                {
+                    Environment.Exit(0);
+                }
+            }
         }
 
         public static string ConnectionString { get; set; }
@@ -160,7 +191,7 @@ namespace Translit.Models.Windows
                 File.Move(@"Translit.tmp", @"Translit.zip");
         }
 
-        private void DownlaodUpdater()
+        private void CheckAndDownlaodUpdater()
         {
             Task.Factory.StartNew(() =>
             {

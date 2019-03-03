@@ -171,6 +171,17 @@
     <v:String x:Key="ButtonReject">Қабылдамау</v:String>
     <v:String x:Key="HeaderLicenseAgreement">Лицензиялық келісім</v:String>
 
+    <!--  ActivationDialogView  -->
+    <v:String x:Key="HeaderProgramActivation">Бағдарламаны белсендіру</v:String>
+    <v:String x:Key="HintKey">Кілт</v:String>
+    <v:String x:Key="HintNumber">Нөмірі</v:String>
+    <v:String x:Key="ButtonExit">Шығу</v:String>
+    <v:String x:Key="SnackBarPleaseFillInAllFields">Барлық өрістерді толтырыңыз.</v:String>
+    <v:String x:Key="SnackBarActivationPleaseWait">Қосылу, күте тұрыңыз</v:String>
+    <v:String x:Key="SnackBarFailedToActivateCheckYourInternetConnection">Іске қосылмады, интернет байланысын тексеріңіз.</v:String>
+    <v:String x:Key="SnackBarTheKeyIsNotValid">Кілт жарамсыз</v:String>
+    <v:String x:Key="SnackBarMaximumNumberOfActivationsReached">Қол жеткізілген белсендірудің максималды саны</v:String>
+
     <!--  Add Dialog Window  -->
     <v:String x:Key="TextBlockPleaseFillInAllFields">Барлық өрістерді толтырыңыз</v:String>
 </ResourceDictionary>

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslitLinker", "TranslitLinker\TranslitLinker.csproj", "{72A7DD0C-D3D3-4978-89D8-BD3119B94748}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslitKeyGen", "TranslitKeyGen\TranslitKeyGen.csproj", "{B6CB158E-7458-4D53-B172-A52380643FF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{72A7DD0C-D3D3-4978-89D8-BD3119B94748}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72A7DD0C-D3D3-4978-89D8-BD3119B94748}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72A7DD0C-D3D3-4978-89D8-BD3119B94748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6CB158E-7458-4D53-B172-A52380643FF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6CB158E-7458-4D53-B172-A52380643FF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6CB158E-7458-4D53-B172-A52380643FF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6CB158E-7458-4D53-B172-A52380643FF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

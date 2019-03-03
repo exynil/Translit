@@ -1,0 +1,68 @@
+﻿<Window
+    x:Class="Translit.Views.DialogWindows.ActivationDialogView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="500"
+    Height="300"
+    AllowsTransparency="True"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    ResizeMode="NoResize"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Grid>
+        <GroupBox Header="{DynamicResource HeaderProgramActivation}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBox
+                    Grid.Row="0"
+                    Height="Auto"
+                    Margin="5"
+                    VerticalAlignment="Stretch"
+                    materialDesign:HintAssist.Hint="{DynamicResource HintKey}"
+                    AcceptsReturn="True"
+                    Text="{Binding Key}"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto" />
+                <TextBox
+                    Grid.Row="1"
+                    Margin="5"
+                    materialDesign:HintAssist.Hint="{DynamicResource HintNumber}"
+                    Text="{Binding Number}"
+                    TextWrapping="Wrap" />
+                <StackPanel
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Button
+                        Margin="20"
+                        Command="{Binding Accept}"
+                        Content="{DynamicResource ButtonActivate}"
+                        IsDefault="True"
+                        IsEnabled="{Binding IsEnabled}" />
+                    <Button
+                        Margin="20"
+                        Content="{DynamicResource ButtonExit}"
+                        IsCancel="True" />
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+        <materialDesign:Snackbar
+            HorizontalAlignment="Stretch"
+            IsActive="False"
+            MessageQueue="{Binding MessageQueue}" />
+    </Grid>
+</Window>

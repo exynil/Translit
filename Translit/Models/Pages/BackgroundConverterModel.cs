@@ -63,7 +63,7 @@ namespace Translit.Models.Pages
                     if (element != null)
                         if (element.TryGetCurrentPattern(TextPattern.Pattern, out var pattern))
                         {
-                            var tp = (TextPattern)pattern;
+                            var tp = (TextPattern) pattern;
 
                             InputText.Clear();
 
@@ -83,7 +83,6 @@ namespace Translit.Models.Pages
             {
                 InputText.Clear();
                 OnPropertyChanged();
-               
             }
             else if (e.Shift && e.KeyCode == Keys.End)
             {
